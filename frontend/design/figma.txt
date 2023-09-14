@@ -1,1 +1,8 @@
 https://www.figma.com/file/ShRmNLlnwjHYRsrLxfGRqC/Untitled?type=design&node-id=1-2&mode=design&t=3Yoc1LvaCyG5QJet-0
+
+colors:
+темно-зеленый - 0D4647
+зеленый - 37765E
+светло-ленеый - 7CA682
+светло-бежевый - E5DFB0
+бежевый - E6C15F
