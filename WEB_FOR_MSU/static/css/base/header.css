@@ -1,0 +1,125 @@
+* {
+    margin: 0px;
+    box-sizing: border-box;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+header {
+    display: flex;
+    
+    top: -10px;
+    height: 200px;
+    background-color: white;
+    width: 100%;
+
+    position: fixed;
+}
+
+
+.logo {
+    background-image: url("../../photos/msu_logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 200px;
+    
+    position: relative;
+    top: -20px;
+}
+
+.logo_contacts {
+    display: flex;
+    justify-content: space-around;
+    width: 120px;
+
+    position: relative;
+    top: 120px;
+    left: 40px;
+}
+
+
+.header_buttons {
+    display: flex;
+    justify-content: space-around;
+
+    position: relative;
+    top: 50px;
+    left: 20px;
+    width: 900px;
+}
+
+.header_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all .2s ease-out;
+
+    width: 180px;
+    height: 60px;
+    background-color: #9F1A59;
+    border-radius: 0px 16px;
+}
+
+.header_button:hover {
+    transform: scale(1.1);
+}
+
+.header_button p {
+    color: white;
+    font-size: 24px;
+
+}
+
+
+.personal_account_info {
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    width: 100px;
+    top: 50px;
+    left: 80px;
+
+    text-align: end;
+
+    color: black;
+}
+
+.personal_account_photo {
+    position: relative;
+    left: 200px;
+    top: -30px;
+
+    background-color: #9F1A59;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.progress_bar {
+    height: 20px;
+    width: 20px;
+    background-color: red;
+    position: relative;
+    top: 180px;
+
+    animation: scaleProgress auto linear;
+
+}
+
+@keyframes scaleProgress {
+    0% {
+        transform: scaleX(0);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
