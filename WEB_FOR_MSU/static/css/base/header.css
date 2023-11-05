@@ -11,47 +11,44 @@ a {
 
 
 header {
+    position: relative;
     display: flex;
-    
-    top: -10px;
-    height: 200px;
+    justify-content: space-around;
+
+
+    height: 150px;
     background-color: white;
     width: 100%;
+    z-index: 1;
 
-    position: fixed;
+    position: sticky;
+    top: 0px;
 }
 
 
 .logo {
+}
+
+.msu_logo {
     background-image: url("../../photos/msu_logo.png");
     background-size: contain;
     background-repeat: no-repeat;
-    width: 200px;
-    height: 200px;
-    
-    position: relative;
-    top: -20px;
+    width: 160px;
+    height: 160px;
 }
 
 .logo_contacts {
+    width: 120px;
     display: flex;
     justify-content: space-around;
-    width: 120px;
-
-    position: relative;
-    top: 120px;
-    left: 40px;
 }
 
 
 .header_buttons {
+    width: 800px;
+    
     display: flex;
     justify-content: space-around;
-
-    position: relative;
-    top: 50px;
-    left: 20px;
-    width: 900px;
 }
 
 .header_button {
@@ -74,29 +71,24 @@ header {
 .header_button p {
     color: white;
     font-size: 24px;
-
 }
 
+.personal_account {
+    display: flex;
+    justify-content: space-between;
+    width: 240px;
+}
 
 .personal_account_info {
     display: flex;
     flex-direction: column;
-
-    position: relative;
-    width: 100px;
-    top: 50px;
-    left: 80px;
-
     text-align: end;
 
     color: black;
+    font-size: 18px;
 }
 
 .personal_account_photo {
-    position: relative;
-    left: 200px;
-    top: -30px;
-
     background-color: #9F1A59;
     width: 100px;
     height: 100px;
@@ -108,7 +100,6 @@ header {
     width: 20px;
     background-color: red;
     position: relative;
-    top: 180px;
 
     animation: scaleProgress auto linear;
 
