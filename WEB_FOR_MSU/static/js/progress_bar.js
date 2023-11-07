@@ -1,6 +1,6 @@
 "use strict";
 
-window.onscroll = function() {
+window.onscroll = function () {
     pageScroll();
 };
 

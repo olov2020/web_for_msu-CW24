@@ -110,7 +110,7 @@ header {
     position: absolute;
     top: 140px;
     width: 100%;
-    height: 8px;
+    height: 4px;
     background-color: #ccc;
 
 }
@@ -118,7 +118,7 @@ header {
 .progress_bar {
     background-color: #9F1A59;
     width: 0%;
-    height: 8px;
+    height: 4px;
 }
 
 @keyframes scaleProgress {
