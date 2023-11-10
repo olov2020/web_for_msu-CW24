@@ -6,7 +6,8 @@
     <title>{{title}}</title>
     <link href="../static/css/base/header.css" rel="stylesheet">
     <link href="../static/css/base/footer.css" rel="stylesheet">
-    <script type="text/javascript" src="../static/js/progress_bar.js"></script>
+    <script type="text/javascript" src="../static/js/base/progress_bar.js"></script>
+    <script type="text/javascript" src="../static/js/base/hidden_menu.js"></script>
 </head>
 
 <body>
@@ -54,18 +55,83 @@
             </div>
         </div>
 
+        <div class="hidden_menu">
+            <div class="hidden_menu_block hidden_menu_courses">
+                <div class="hidden_menu_triangle"></div>
+                <div class="hidden_menu_body">
+                    <div class="hidden_menu_text">
+                        <p>Расписание</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Мои курсы</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Все курсы</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Ведомость</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Списки зачетных курсов</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden_menu_block hidden_menu_events">
+                <div class="hidden_menu_triangle"></div>
+                <div class="hidden_menu_body">
+                    <div class="hidden_menu_text">
+                        <p>Конкурс Научных Работ</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Открытый Чемпионат</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Выездная Школа</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Летняя Школа</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Летний Лагерь</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Вступительные испытания</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden_menu_block hidden_menu_community">
+                <div class="hidden_menu_triangle"></div>
+                <div class="hidden_menu_body">
+                    <div class="hidden_menu_text">
+                        <p>Об ЭМШ</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Люди</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Список учащихся</p>
+                    </div>
+                    <div class="hidden_menu_text">
+                        <p>Архив событий</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="personal_account">
             <div class="personal_account_info">
                 <div class="personal_account_name">
-                    <p>Владимир</p>
+                    <p>{{user.name}}</p>
                 </div>
 
                 <div class="personal_account_surname">
-                    <p>Виноградов</p>
+                    <p>{{user.surname}}</p>
                 </div>
 
                 <div class="personal_account_status">
-                    <p>Преподаватель</p>
+                    <p>{{user.status}}</p>
                 </div>
             </div>
 
@@ -78,6 +144,8 @@
             <div class="progress_bar" id="progress_bar"></div>
         </div>
     </header>
+
+    {% block content %}{% endblock %}
 
     <footer>
         <div class="address">

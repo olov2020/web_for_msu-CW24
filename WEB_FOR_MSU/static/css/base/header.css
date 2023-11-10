@@ -19,10 +19,10 @@ header {
     height: 140px;
     background-color: white;
     width: 100%;
-    z-index: 1;
 
     position: sticky;
     top: 0px;
+    z-index: 10;
 }
 
 
@@ -46,7 +46,6 @@ header {
     width: 120px;
     display: flex;
     justify-content: space-around;
-    z-index: 1;
 
     color: black;
     font-size: 18px;
@@ -82,11 +81,47 @@ header {
     font-size: 24px;
 }
 
+
+.hidden_menu {
+    position: absolute;
+    
+    display: flex;
+    justify-content: space-around;
+    width: 600px;
+    top: 80%;
+    left: 35%;
+    z-index: 9;
+}
+
+.hidden_menu_courses {
+    visibility: hidden;
+}
+
+.hidden_menu_text {
+    background-color: #FFB3CC;
+    font-size: 18px;
+    color: black;
+    padding: 10px;
+    border-bottom: 1px solid #9F1A59;
+    width: 200px;
+    height: auto;
+    
+    transition: all .1s ease-out;
+}
+
+.hidden_menu_text:hover {
+    border-radius: 16px;
+    transform: scale(1.1);
+    background-color: #E094AD;
+    color: white;
+}
+
+
 .personal_account {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 240px;
+    width: 220px;
 }
 
 .personal_account_info {
@@ -100,8 +135,8 @@ header {
 
 .personal_account_photo {
     background-color: #9F1A59;
-    width: 100px;
-    height: 100px;
+    min-width: 100px;
+    min-height: 100px;
     border-radius: 50%;
 }
 
