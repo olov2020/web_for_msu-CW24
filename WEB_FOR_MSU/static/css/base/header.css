@@ -72,7 +72,7 @@ header {
     border-radius: 0px 16px;
 }
 
-.header_button:hover {
+.header_button_mouseon {
     transform: scale(1.1);
 }
 
@@ -84,17 +84,35 @@ header {
 
 .hidden_menu {
     position: absolute;
-    
     display: flex;
-    justify-content: space-around;
-    width: 600px;
-    top: 80%;
-    left: 35%;
+
+    top: 102px;
     z-index: 9;
 }
 
 .hidden_menu_courses {
     visibility: hidden;
+    position: relative;
+    left: 70px;
+    height: auto;
+}
+
+.hidden_menu_events {
+    visibility: hidden;
+    position: relative;
+    left: 60px;
+    height: auto;
+}
+
+.hidden_menu_community {
+    visibility: hidden;
+    position: relative;
+    left: 35px;
+    height: auto;
+}
+
+.hidden_menu_body {
+    height: auto;
 }
 
 .hidden_menu_text {
@@ -103,9 +121,9 @@ header {
     color: black;
     padding: 10px;
     border-bottom: 1px solid #9F1A59;
-    width: 200px;
+    width: auto;
     height: auto;
-    
+
     transition: all .1s ease-out;
 }
 
