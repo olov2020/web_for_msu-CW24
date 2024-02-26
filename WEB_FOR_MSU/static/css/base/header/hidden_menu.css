@@ -1,21 +1,24 @@
 .hidden_menu {
     position: absolute;
-    display:flex;
+    display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     width: 800px;
-    visibility: hidden;
-    top: 102px;
+    top: 100px;
     z-index: 9;
 }
 
 .hidden_menu_block {
-    height: auto;
     width: 180px;
 }
 
-.hidden_menu_body {
-    height: auto;
+.hidden_menu_courses,
+.hidden_menu_events,
+.hidden_menu_community {
+    visibility: hidden;
 }
+
+.hidden_menu_body {}
 
 .hidden_menu_text {
     background-color: #FFB3CC;

@@ -43,7 +43,6 @@
                 <div class="header_button news">
                     <p>Новости</p>
                 </div>
-
                 <div class="header_button courses">
                     <p>Курсы</p>
                 </div>
@@ -170,31 +169,6 @@
             <p>Copyright © 2023 ЭМШ. All Rights Reserved</p>
         </div>
     </footer>
-
-    <script>
-        "use strict";
-
-        var header_table = document.querySelector(".header_table");
-        var hidden_menu = document.querySelector(".hidden_menu");
-
-        header_table.addEventListener("mouseover", function() {
-            hidden_menu.style.visibility = "visible";
-        });
-
-        hidden_menu.addEventListener("mouseover", function() {
-            hidden_menu_courses.style.visibility = "visible";
-        });
-
-        header_table.addEventListener("mouseout", function() {
-            hidden_menu.style.visibility = "hidden";
-        });
-
-        hidden_menu.addEventListener("mouseout", function() {
-            hidden_menu.style.visibility = "hidden";
-        });
-
-    </script>
-
 </body>
 
 </html>
