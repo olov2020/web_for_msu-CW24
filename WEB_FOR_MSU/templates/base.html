@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
-    <link href="../static/css/base/header.css" rel="stylesheet">
+    <link href="../static/css/base/header/header.css" rel="stylesheet">
+    <link href="../static/css/base/header/hidden_menu.css" rel="stylesheet">
     <link href="../static/css/base/footer.css" rel="stylesheet">
-    <script type="text/javascript" src="../static/js/base/progress_bar.js"></script>
-    <script type="text/javascript" src="../static/js/base/hidden_menu.js"></script>
+    <script src="../static/js/base/progress_bar.js"></script>
+    <script src="../static/js/base/hidden_menu.js"></script>
 </head>
 
 <body>
@@ -37,88 +38,91 @@
             </div>
         </div>
 
-        <div class="header_buttons">
-            <div class="header_button news">
-                <p>Новости</p>
+        <div class='header_table'>
+            <div class="header_buttons">
+                <div class="header_button news">
+                    <p>Новости</p>
+                </div>
+
+                <div class="header_button courses">
+                    <p>Курсы</p>
+                </div>
+
+                <div class="header_button events">
+                    <p>События</p>
+                </div>
+
+                <div class="header_button community">
+                    <p>Сообщество</p>
+                </div>
             </div>
 
-            <div class="header_button courses">
-                <p>Курсы</p>
-            </div>
+            <div class="hidden_menu">
+                <div class="hidden_menu_block">
+                </div>
 
-            <div class="header_button events">
-                <p>События</p>
-            </div>
+                <div class="hidden_menu_block hidden_menu_courses">
+                    <div class="hidden_menu_body">
+                        <div class="hidden_menu_text">
+                            <p>Расписание</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Мои курсы</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Все курсы</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Ведомость</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Списки зачетных курсов</p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="header_button community">
-                <p>Сообщество</p>
+                <div class="hidden_menu_block hidden_menu_events">
+                    <div class="hidden_menu_body">
+                        <div class="hidden_menu_text">
+                            <p>Конкурс Научных Работ</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Открытый Чемпионат</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Выездная Школа</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Летняя Школа</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Летний Лагерь</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Вступительные испытания</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden_menu_block hidden_menu_community">
+                    <div class="hidden_menu_body">
+                        <div class="hidden_menu_text">
+                            <p>Об ЭМШ</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Люди</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Список учащихся</p>
+                        </div>
+                        <div class="hidden_menu_text">
+                            <p>Архив событий</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="hidden_menu">
-            <div class="hidden_menu_block hidden_menu_courses">
-                <div class="hidden_menu_triangle"></div>
-                <div class="hidden_menu_body">
-                    <div class="hidden_menu_text">
-                        <p>Расписание</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Мои курсы</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Все курсы</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Ведомость</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Списки зачетных курсов</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hidden_menu_block hidden_menu_events">
-                <div class="hidden_menu_triangle"></div>
-                <div class="hidden_menu_body">
-                    <div class="hidden_menu_text">
-                        <p>Конкурс Научных Работ</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Открытый Чемпионат</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Выездная Школа</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Летняя Школа</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Летний Лагерь</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Вступительные испытания</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hidden_menu_block hidden_menu_community">
-                <div class="hidden_menu_triangle"></div>
-                <div class="hidden_menu_body">
-                    <div class="hidden_menu_text">
-                        <p>Об ЭМШ</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Люди</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Список учащихся</p>
-                    </div>
-                    <div class="hidden_menu_text">
-                        <p>Архив событий</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="personal_account">
             <div class="personal_account_info">
@@ -159,8 +163,7 @@
             <p class="footer_header">Контакты:</p>
             <p>Телефон - 8 (495) 939-16-06</p>
             <p>E-mail - info@emsch.ru</p>
-            <p>Вконтакте -</p>
-            <p>Телеграм -</p>
+            <p>Вконтакте - https://vk.com/emsch</p>
         </div>
 
         <div class="copyright">
@@ -171,91 +174,23 @@
     <script>
         "use strict";
 
-        var courses = document.querySelector(".courses");
-        var hidden_menu_courses = document.querySelector(".hidden_menu_courses");
+        var header_table = document.querySelector(".header_table");
+        var hidden_menu = document.querySelector(".hidden_menu");
 
-        courses.addEventListener("mouseover", function() {
-                hidden_menu_courses.style.visibility = "visible";
-                courses.classList.add("header_button_mouseon");
-            }
+        header_table.addEventListener("mouseover", function() {
+            hidden_menu.style.visibility = "visible";
+        });
 
-        );
-
-        hidden_menu_courses.addEventListener("mouseover", function() {
+        hidden_menu.addEventListener("mouseover", function() {
             hidden_menu_courses.style.visibility = "visible";
-                courses.classList.add("header_button_mouseon");
         });
 
-        courses.addEventListener("mouseout", function() {
-                hidden_menu_courses.style.visibility = "hidden";
-                courses.classList.remove("header_button_mouseon");
-            }
-
-        );
-
-        hidden_menu_courses.addEventListener("mouseout", function() {
-            hidden_menu_courses.style.visibility = "hidden";
-            courses.classList.remove("header_button_mouseon");
+        header_table.addEventListener("mouseout", function() {
+            hidden_menu.style.visibility = "hidden";
         });
 
-
-
-        var events = document.querySelector(".events");
-        var hidden_menu_events = document.querySelector(".hidden_menu_events");
-
-        events.addEventListener("mouseover", function() {
-                hidden_menu_events.style.visibility = "visible";
-                events.classList.add("header_button_mouseon");
-            }
-
-        );
-
-        hidden_menu_events.addEventListener("mouseover", function() {
-            hidden_menu_events.style.visibility = "visible";
-                events.classList.add("header_button_mouseon");
-        });
-
-        events.addEventListener("mouseout", function() {
-                hidden_menu_events.style.visibility = "hidden";
-                events.classList.remove("header_button_mouseon");
-            }
-
-        );
-
-        hidden_menu_events.addEventListener("mouseout", function() {
-            hidden_menu_events.style.visibility = "hidden";
-            events.classList.remove("header_button_mouseon");
-        });
-
-
-
-
-
-        var community = document.querySelector(".community");
-        var hidden_menu_community = document.querySelector(".hidden_menu_community");
-
-        community.addEventListener("mouseover", function() {
-                hidden_menu_community.style.visibility = "visible";
-            community.classList.add("header_button_mouseon");
-            }
-
-        );
-
-        hidden_menu_community.addEventListener("mouseover", function() {
-            hidden_menu_community.style.visibility = "visible";
-            community.classList.add("header_button_mouseon");
-        });
-
-        community.addEventListener("mouseout", function() {
-                hidden_menu_community.style.visibility = "hidden";
-                community.classList.remove("header_button_mouseon");
-            }
-
-        );
-
-        hidden_menu_community.addEventListener("mouseout", function() {
-            hidden_menu_community.style.visibility = "hidden";
-            community.classList.remove("header_button_mouseon");
+        hidden_menu.addEventListener("mouseout", function() {
+            hidden_menu.style.visibility = "hidden";
         });
 
     </script>

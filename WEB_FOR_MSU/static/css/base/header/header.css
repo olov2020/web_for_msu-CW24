@@ -33,7 +33,7 @@ header {
 }
 
 .msu_logo {
-    background-image: url("../../photos/msu_logo.png");
+    background-image: url("../../../photos/msu_logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     width: 160px;
@@ -52,18 +52,22 @@ header {
 }
 
 
+.header_table {
+    display: flex;
+}
+
 .header_buttons {
     width: 800px;
-
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .header_button {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    flex-direction: column;
+    
     transition: all .2s ease-out;
 
     width: 180px;
@@ -72,66 +76,9 @@ header {
     border-radius: 0px 16px;
 }
 
-.header_button_mouseon {
-    transform: scale(1.1);
-}
-
 .header_button p {
     color: white;
     font-size: 24px;
-}
-
-
-.hidden_menu {
-    position: absolute;
-    display: flex;
-
-    top: 102px;
-    z-index: 9;
-}
-
-.hidden_menu_courses {
-    visibility: hidden;
-    position: relative;
-    left: 70px;
-    height: auto;
-}
-
-.hidden_menu_events {
-    visibility: hidden;
-    position: relative;
-    left: 60px;
-    height: auto;
-}
-
-.hidden_menu_community {
-    visibility: hidden;
-    position: relative;
-    left: 35px;
-    height: auto;
-}
-
-.hidden_menu_body {
-    height: auto;
-}
-
-.hidden_menu_text {
-    background-color: #FFB3CC;
-    font-size: 18px;
-    color: black;
-    padding: 10px;
-    border-bottom: 1px solid #9F1A59;
-    width: auto;
-    height: auto;
-
-    transition: all .1s ease-out;
-}
-
-.hidden_menu_text:hover {
-    border-radius: 16px;
-    transform: scale(1.1);
-    background-color: #E094AD;
-    color: white;
 }
 
 
@@ -139,7 +86,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 220px;
+    margin-left: 20px;
+    width: 200px;
 }
 
 .personal_account_info {
