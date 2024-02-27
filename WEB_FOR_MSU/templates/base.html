@@ -10,12 +10,15 @@
     <link href="../static/css/base/footer.css" rel="stylesheet">
     <script src="../static/js/base/progress_bar.js"></script>
     <script src="../static/js/base/hidden_menu.js"></script>
+    {% block head %}{% endblock %}
 </head>
 
 <body>
     <header>
         <div class="logo">
-            <a href="#home.html"><div class="msu_logo"></div></a>
+            <a href='home'>
+                <div class="msu_logo"></div>
+            </a>
             <div class="logo_contacts">
                 <div class="logo_contact logo_contacts_tg">
                     <a href="https://t.me/+I64hhfiK5vs1N2Vi">tg</a>
@@ -125,23 +128,25 @@
 
 
         <div class="personal_account">
-            <div class="personal_account_info">
-                <div class="personal_account_name">
-                    <p>{{user.name}}</p>
+            <a href='account'>
+                <div class="personal_account_info">
+                    <div class="personal_account_name">
+                        <p>{{user.name}}</p>
+                    </div>
+
+                    <div class="personal_account_surname">
+                        <p>{{user.surname}}</p>
+                    </div>
+
+                    <div class="personal_account_status">
+                        <p>{{user.status}}</p>
+                    </div>
                 </div>
+            </a>
 
-                <div class="personal_account_surname">
-                    <p>{{user.surname}}</p>
-                </div>
-
-                <div class="personal_account_status">
-                    <p>{{user.status}}</p>
-                </div>
-            </div>
-
-            <div class="personal_account_photo">
-
-            </div>
+            <a href='account'>
+                <div class="personal_account_photo"></div>
+            </a>
         </div>
 
         <div class="progress_bar_container">

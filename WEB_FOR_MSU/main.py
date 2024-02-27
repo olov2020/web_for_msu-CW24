@@ -13,16 +13,28 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (f'postgresql+psycopg2://'
                                          + f'{os.getenv("DB_PORT")}/'
                                          + f'{os.getenv("DB_NAME")}')
 
+
 # db = SQLAlchemy(app)
 
 
-@app.route('/')
+@app.route('/home')
 def index():
     user = {'name': 'Vladimir',
             'surname': 'Vinogradov',
             'status': 'Teacher',
             }
     return render_template('home.html',
+                           title='Home',
+                           user=user)
+
+
+@app.route('/account')
+def schedule():
+    user = {'name': 'Vladimir',
+            'surname': 'Vinogradov',
+            'status': 'Teacher',
+            }
+    return render_template('account.html',
                            title='Home',
                            user=user)
 
