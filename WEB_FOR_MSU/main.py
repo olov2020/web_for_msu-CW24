@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (f'postgresql+psycopg2://'
                                          + f'{os.getenv("DB_PORT")}/'
                                          + f'{os.getenv("DB_NAME")}')
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 
 @app.route('/')
