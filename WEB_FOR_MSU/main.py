@@ -9,7 +9,7 @@ def index():
             'surname': 'Vinogradov',
             'status': 'Teacher',
             }
-    return render_template('index.html',
+    return render_template('home.html',
                            title='Home',
                            user=user)
 
