@@ -1,0 +1,7 @@
+main {
+    position: relative;
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

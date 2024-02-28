@@ -3,10 +3,6 @@ main {
     display: inline-block;
 }
 
-.text {
-    font-size: 20px;
-}
-
 
 .block_photo {
     position: relative;
@@ -21,6 +17,14 @@ main {
     height: 200px;
     width: 200px;
     border-radius: 50%;
-    background-color: black;
     margin-bottom: 20px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.block_photo_text {
+    color: #9F1A59;
+    font-size: 20px;
 }

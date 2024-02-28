@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link href="../static/css/registration/registration.css" rel="stylesheet">
+</head>
+{% endblock %}
+
+
+{% block account %}
+<a href='registration'>
+    <div class='header_registartion'>
+        <p>Войти</p>
+    </div>
+</a>
+{% endblock %}
+
+
+{% block main %}
+
+<div class='registration'>
+    <div class='entrance'>
+        <div class='email'>
+            <input class='entrance_email' type='email' placeholder='Ваш email'>
+        </div>
+
+        <div class='password'>
+            <input class='entrance_password' type='password' placeholder='Ваш пароль'>
+            <p>Забыли пароль?</p>
+        </div>
+    </div>
+
+    <div class='entrance_buttons'>
+        <div class='button_enter'>
+            <p>Войти</p>
+        </div>
+        <div class='button_registration'>
+            <p>Зарегистрироваться</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
