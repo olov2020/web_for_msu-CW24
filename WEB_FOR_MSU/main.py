@@ -34,14 +34,14 @@ def home():
                            user=user)
 
 
-@app.route('/registration')
-def registration():
+@app.route('/entrance')
+def entrance():
     user = {'name': 'Vladimir',
             'surname': 'Vinogradov',
             'status': 'Teacher',
             }
-    return render_template('registration.html',
-                           title='Registration',
+    return render_template('entrance.html',
+                           title='Entrance',
                            user=user)
 
 

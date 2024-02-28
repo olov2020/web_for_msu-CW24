@@ -11,7 +11,8 @@
 }
 
 
-.entrance, .entrance_buttons {
+.block_entrance,
+.entrance_buttons {
     display: flex;
     flex-direction: column;
 }
@@ -20,11 +21,9 @@ input {
     width: 300px;
     height: 40px;
     border-radius: 16px;
-    background-color: #F7B7CE;
-    opacity: 50%;
+    background-color: #fcccde;
     padding-left: 10px;
     border: 1px solid #9F1A59;
-    color: white;
 }
 
 .password > input {
