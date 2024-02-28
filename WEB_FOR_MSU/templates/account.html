@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 
 {% block head %}
+
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <link href="../static/css/account/account.css" rel="stylesheet">
+    <script src="../static/js/account/account.js"></script>
 </head>
 {% endblock %}
 
 {% block content %}
 
-<main>
-    <p>kldjfswlkfj</p>
+<main class='main'>
+    <div class='block_photo'>
+        <div class='photo'></div>
+        <div class='block_photo_text text'>
+            <p>Ваша фотография</p>
+        </div>
+    </div>
 </main>
 
 {% endblock %}

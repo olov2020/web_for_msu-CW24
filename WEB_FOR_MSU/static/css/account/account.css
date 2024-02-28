@@ -1,0 +1,26 @@
+main {
+    margin: 50px;
+    display: inline-block;
+}
+
+.text {
+    font-size: 20px;
+}
+
+
+.block_photo {
+    position: relative;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-color: black;
+    margin-bottom: 20px;
+}

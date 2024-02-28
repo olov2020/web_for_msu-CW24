@@ -35,7 +35,7 @@ def schedule():
             'status': 'Teacher',
             }
     return render_template('account.html',
-                           title='Home',
+                           title='Account',
                            user=user)
 
 
