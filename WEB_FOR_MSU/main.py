@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
+from data.db_session import global_init, db
 import os
 
 load_dotenv()
@@ -12,8 +13,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (f'postgresql+psycopg2://'
                                          + f'{os.getenv("DB_HOST")}:'
                                          + f'{os.getenv("DB_PORT")}/'
                                          + f'{os.getenv("DB_NAME")}')
-
-db = SQLAlchemy(app)
 
 
 @app.route('/')
@@ -38,4 +37,5 @@ def index():
 #
 
 if __name__ == '__main__':
+    global_init(app)
     app.run(debug=True)
