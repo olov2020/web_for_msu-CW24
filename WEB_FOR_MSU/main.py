@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (f'postgresql+psycopg2://'
                                          + f'{os.getenv("DB_HOST")}:'
                                          + f'{os.getenv("DB_PORT")}/'
                                          + f'{os.getenv("DB_NAME")}')
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 
 @app.route('/')
@@ -47,7 +47,4 @@ def login_page():
 #
 
 if __name__ == '__main__':
-    # global_init(app)
-    # with app.app_context():
-    #     get_db().create_all()
     app.run(debug=True)

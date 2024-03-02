@@ -11,8 +11,7 @@ def global_init(app):
         return
 
     db = SQLAlchemy(app)
-    from . import all_models
-
+    from . import models
 
 def get_db():
     global db
