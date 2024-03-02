@@ -87,7 +87,6 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-left: 20px;
-    width: 200px;
 }
 
 .personal_account_info {
@@ -97,6 +96,7 @@ header {
 
     color: black;
     font-size: 18px;
+    margin-right: 20px;
 }
 
 .personal_account_photo {

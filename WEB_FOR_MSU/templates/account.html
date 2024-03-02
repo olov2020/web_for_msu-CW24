@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link href="../static/css/account/account.css" rel="stylesheet">
+    <script src="../static/js/account/account.js"></script>
+</head>
+{% endblock %}
+
+{% block account %}
+
+<a href='account'>
+    <div class="personal_account_info">
+        <div class="personal_account_name">
+            <p>{{user.name}}</p>
+        </div>
+
+        <div class="personal_account_surname">
+            <p>{{user.surname}}</p>
+        </div>
+
+        <div class="personal_account_status">
+            <p>{{user.status}}</p>
+        </div>
+    </div>
+</a>
+
+<a href='account'>
+    <div class="personal_account_photo"></div>
+</a>
+{% endblock %}
+
+{% block main %}
+
+<div class='account'>
+    <div class='block_photo'>
+        <div>
+            <img src="{{ user.photo }}" alt="User Image" class='photo'>
+        </div>
+        <div class='block_photo_text text'>
+            <p>Изменить фотографию</p>
+        </div>
+    </div>
+    
+    <div class='block_changes'>
+        <div class='block_text'>
+           <p>Имя*</p>
+            <input>
+        </div>
+        
+        <div class='block_text'>
+           <p>Фамилия*</p>
+            <input>
+        </div>
+        
+        <div class='block_text'>
+           <p>Отчество</p>
+            <input>
+        </div>
+        
+        <div class='block_text'>
+           <p>E-mail*</p>
+            <input>
+        </div>
+        
+        <div class='block_text'>
+           <p>Телефон*</p>
+            <input>
+        </div>
+        
+        <div class='block_text'>
+           <p>Школа*</p>
+            <input>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

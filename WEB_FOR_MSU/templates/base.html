@@ -7,15 +7,19 @@
     <link rel="icon" type="image/x-icon" href="../static/photos/msu_logo.png">
     <link href="../static/css/base/header/header.css" rel="stylesheet">
     <link href="../static/css/base/header/hidden_menu.css" rel="stylesheet">
+    <link href="../static/css/base/main.css" rel="stylesheet">
     <link href="../static/css/base/footer.css" rel="stylesheet">
     <script src="../static/js/base/progress_bar.js"></script>
     <script src="../static/js/base/hidden_menu.js"></script>
+    {% block head %}{% endblock %}
 </head>
 
 <body>
     <header>
         <div class="logo">
-            <a href="#home.html"><div class="msu_logo"></div></a>
+            <a href='/'>
+                <div class="msu_logo"></div>
+            </a>
             <div class="logo_contacts">
                 <div class="logo_contact logo_contacts_tg">
                     <a href="https://t.me/+I64hhfiK5vs1N2Vi">tg</a>
@@ -125,31 +129,18 @@
 
 
         <div class="personal_account">
-            <div class="personal_account_info">
-                <div class="personal_account_name">
-                    <p>{{user.name}}</p>
-                </div>
-
-                <div class="personal_account_surname">
-                    <p>{{user.surname}}</p>
-                </div>
-
-                <div class="personal_account_status">
-                    <p>{{user.status}}</p>
-                </div>
-            </div>
-
-            <div class="personal_account_photo">
-
-            </div>
+            {% block account %}{% endblock %}
         </div>
+
 
         <div class="progress_bar_container">
             <div class="progress_bar" id="progress_bar"></div>
         </div>
     </header>
 
-    {% block content %}{% endblock %}
+    <main>
+        {% block main %}{% endblock %}
+    </main>
 
     <footer>
         <div class="address">

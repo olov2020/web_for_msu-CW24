@@ -1,0 +1,46 @@
+.account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.block_photo {
+    position: relative;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+
+    object-fit: cover;
+    background-position: left;
+    background-repeat: no-repeat;
+}
+
+.block_photo_text {
+    color: #9F1A59;
+    font-size: 18px;
+}
+
+
+.block_text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 500px;
+    margin-bottom: 20px;
+}
+
+.block_text > p {
+    width: 100px;
+    justify-content: end;
+}
