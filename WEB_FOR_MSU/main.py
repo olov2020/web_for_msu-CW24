@@ -1,7 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
-from data.db_session import global_init, db
+# from data.data_base import global_init, get_db
 import os
 
 load_dotenv()
@@ -13,6 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (f'postgresql+psycopg2://'
                                          + f'{os.getenv("DB_HOST")}:'
                                          + f'{os.getenv("DB_PORT")}/'
                                          + f'{os.getenv("DB_NAME")}')
+db = SQLAlchemy(app)
 
 
 @app.route('/')
@@ -26,6 +27,15 @@ def index():
                            user=user)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        print(email, password)
+    return render_template('login.html')
+
+
 # @app.route('/schedule')
 # def schedule():
 #     return render_template('schedule.html')
@@ -37,5 +47,7 @@ def index():
 #
 
 if __name__ == '__main__':
-    global_init(app)
+    # global_init(app)
+    # with app.app_context():
+    #     get_db().create_all()
     app.run(debug=True)

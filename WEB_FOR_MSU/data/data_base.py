@@ -9,5 +9,11 @@ def global_init(app):
         return
     if not app:
         return
-    db = SQLAlchemy(app)
 
+    db = SQLAlchemy(app)
+    from . import all_models
+
+
+def get_db():
+    global db
+    return db
