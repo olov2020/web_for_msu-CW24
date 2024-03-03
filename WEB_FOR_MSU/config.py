@@ -23,16 +23,16 @@ class BaseConfig:
 class DevelopementConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DEVELOPMENT_DATABASE_URI') or \
-                              'postgresql+psycopg2://root:pass@localhost:5432/emsh_db'
+                              'postgresql+psycopg2://user:123@localhost:5433/emsh_db'
 
 
 class TestingConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('TESTING_DATABASE_URI') or \
-                              'postgresql+psycopg2://root:pass@localhost:5432/emsh_db'
+                              'postgresql+psycopg2://user:123@localhost:5433/emsh_db'
 
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.getenv('PRODUCTION_DATABASE_URI') or \
-                              'postgresql+psycopg2://root:pass@localhost:5432/emsh_db'
+                              'postgresql+psycopg2://user:123@localhost:5433/emsh_db'

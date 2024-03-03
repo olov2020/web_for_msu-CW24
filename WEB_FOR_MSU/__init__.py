@@ -18,8 +18,6 @@ def create_app(config):
     app.config.from_object(config)
 
     db.init_app(app)
-    with app.app_context():
-        db.create_all()
     # mail.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
@@ -27,6 +25,8 @@ def create_app(config):
     from .views.home import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    with app.app_context():
+        db.create_all()
     # from .admin import home as admin_blueprint
     # app.register_blueprint(admin_blueprint)
 
