@@ -1,4 +1,3 @@
-# from WEB_FOR_MSU import db, login_manager
 from WEB_FOR_MSU import db, login_manager
 from datetime import datetime
 from flask import current_app
@@ -23,7 +22,4 @@ class User(db.Model, UserMixin):
     role = db.relationship('Role', backref='users')
 
 
-class Role(db.Model):
-    __tablename__ = 'role'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(), nullable=False)
+

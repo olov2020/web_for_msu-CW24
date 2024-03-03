@@ -1,8 +1,9 @@
 import os
 
 from flask import request, render_template, current_app, redirect, url_for, flash
-from flask_login import login_required, login_user, current_user, logout_user
-from WEB_FOR_MSU.models import User
+from flask_login import login_required, login_user
+# from WEB_FOR_MSU.models.user import User
+from WEB_FOR_MSU.models import *
 
 # from .forms import ContactForm, LoginForm
 # from app.utils import send_mail

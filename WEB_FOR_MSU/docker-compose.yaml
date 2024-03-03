@@ -8,5 +8,5 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_DB: emsh_db
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
