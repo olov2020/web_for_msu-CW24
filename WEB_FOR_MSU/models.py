@@ -1,5 +1,5 @@
 # from WEB_FOR_MSU import db, login_manager
-from WEB_FOR_MSU import db
+from WEB_FOR_MSU import db, login_manager
 from datetime import datetime
 from flask import current_app
 from flask_login import (LoginManager, UserMixin, login_required,
@@ -7,9 +7,9 @@ from flask_login import (LoginManager, UserMixin, login_required,
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.query.get(int(user_id))
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 class User(db.Model, UserMixin):
