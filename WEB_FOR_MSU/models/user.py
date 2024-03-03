@@ -21,5 +21,9 @@ class User(db.Model, UserMixin):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     role = db.relationship('Role', backref='users')
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
 
-
+    def verify_password(self, password):
+        return self.password == password  # пока не добавлена регистрация
+        # return check_password_hash(self.password, password)
