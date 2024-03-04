@@ -20,12 +20,18 @@
         </div>
         <div>
             {{ form.email(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <div>
             {{ form.password.label }}
         </div>
         <div>
             {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <div>{{ form.remember() }} </div>
         <div>{{ form.remember.label }}</div>
