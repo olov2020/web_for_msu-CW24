@@ -15,7 +15,6 @@ from flask import Blueprint
 main = Blueprint('home', __name__)
 
 
-@login_required
 @main.route('/')
 @main.route('/home')
 def home():
