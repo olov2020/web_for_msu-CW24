@@ -26,8 +26,8 @@ def home():
                            user=user)
 
 
-@main.route('/entrance', methods=['GET', 'POST'])
-def entrance():
+@main.route('/login', methods=['GET', 'POST'])
+def login():
     if current_user.is_authenticated:
         return redirect(url_for('.home'))
     login_form = LoginForm()
