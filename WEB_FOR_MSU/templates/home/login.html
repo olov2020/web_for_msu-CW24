@@ -3,7 +3,6 @@
 {% block head %}
 
 <head>
-    <meta charset="UTF-8">
     <title>{{title}}</title>
     <link href="../../static/css/login/login.css" rel="stylesheet">
     <script src="../../static/js/login/login.js"></script>
@@ -21,12 +20,18 @@
         </div>
         <div>
             {{ form.email(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <div>
             {{ form.password.label }}
         </div>
         <div>
             {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <div>{{ form.remember() }} </div>
         <div>{{ form.remember.label }}</div>

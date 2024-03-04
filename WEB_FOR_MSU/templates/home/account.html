@@ -3,7 +3,6 @@
 {% block head %}
 
 <head>
-    <meta charset="UTF-8">
     <title>{{title}}</title>
     <link href="../../static/css/account/account.css" rel="stylesheet">
     <script src="../../static/js/account/account.js"></script>
@@ -44,48 +43,55 @@
             <p>Изменить фотографию</p>
         </div>
     </div>
-    
+
     <div class='block_changes'>
         <div class='block_text'>
-           <p>Имя*</p>
+            <p>Имя</p>
             <input>
         </div>
-        
+
         <div class='block_text'>
-           <p>Фамилия*</p>
+            <p>Фамилия</p>
             <input>
         </div>
-        
+
         <div class='block_text'>
-           <p>Отчество</p>
+            <p>Отчество</p>
             <input>
         </div>
-        
+
         <div class='block_text'>
-           <p>E-mail*</p>
+            <p>E-mail</p>
             <input>
         </div>
-        
+
         <div class='block_text'>
-           <p>Пароль*</p>
+            <p>Пароль</p>
             <input>
         </div>
-        
+
         <div class='block_text'>
-           <p>Телефон*</p>
+            <p>Телефон</p>
             <input>
         </div>
-        
+
         <div class='block_text'>
-           <p>Школа*</p>
+            <p>Школа</p>
             <input>
         </div>
+
+        <form action='' method='post'>
+            <input type='submit' value='Изменить данные'>
+        </form>
     </div>
 </div>
 
 <div class='logout'>
     <form action='' method='post'>
-        <div>{{ form_logout.submit(value="выйти", class="button_registration") }}</div>
+        <div>
+            {{ form_logout.field }}
+            <input type='submit' value='Выйти'>
+        </div>
     </form>
 </div>
 
