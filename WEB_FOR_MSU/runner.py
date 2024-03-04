@@ -1,7 +1,7 @@
 import os
 from WEB_FOR_MSU import create_app
 
-app = create_app(os.getenv('FLASK_ENV') or 'config.DevelopementConfig')
+app = create_app(os.getenv('FLASK_ENV') or 'WEB_FOR_MSU.config.DevelopementConfig')
 
 
 if __name__ == '__main__':
