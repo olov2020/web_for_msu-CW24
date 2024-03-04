@@ -8,7 +8,7 @@ db = SQLAlchemy()
 # mail = Mail()
 migrate = Migrate()
 login_manager = LoginManager()
-login_manager.login_view = 'home.home'
+login_manager.login_view = 'home.login'
 
 
 # Фабрика приложения

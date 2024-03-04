@@ -46,8 +46,8 @@ def login():
     return render_template('home/login.html', title='Login', form=login_form)
 
 
-@login_required
 @main.route('/account', methods=['GET', 'POST'])
+@login_required
 def account():
     image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'Me in msu.jpg')
     logout_form = LogoutForm()
