@@ -1,7 +1,9 @@
 import os
 
 from flask import request, render_template, current_app, redirect, url_for, flash
-from flask_login import login_required, login_user, current_user
+from flask_login import login_required, login_user, current_user, logout_user
+
+from WEB_FOR_MSU.forms.logout import LogoutForm
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
 
@@ -45,9 +47,13 @@ def login():
 
 
 @login_required
-@main.route('/account')
+@main.route('/account', methods=['GET', 'POST'])
 def account():
     image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'Me in msu.jpg')
+    logout_form = LogoutForm()
+    if logout_form.is_submitted():
+        logout_user()
+        return redirect(url_for('.home'))
     user = {'name': 'Vladimir',
             'surname': 'Vinogradov',
             'status': 'Teacher',
@@ -55,7 +61,8 @@ def account():
             }
     return render_template('home/account.html',
                            title='Account',
-                           user=user)
+                           user=user,
+                           form_logout=logout_form)
 
 # @app.route('/schedule')
 # def schedule():
