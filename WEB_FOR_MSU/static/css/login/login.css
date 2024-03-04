@@ -12,7 +12,7 @@
 
 
 .block_login,
-.entrance_buttons {
+.login_buttons {
     display: flex;
     flex-direction: column;
 }
