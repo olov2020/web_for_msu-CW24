@@ -23,7 +23,8 @@ def home():
             }
     return render_template('home/home.html',
                            title='Home',
-                           user=user)
+                           user=user,
+                           authenticated=current_user.is_authenticated)
 
 
 @main.route('/login', methods=['GET', 'POST'])
