@@ -11,6 +11,11 @@
 }
 
 
+.login {
+    z-index:10;
+}
+
+
 .block_login,
 .login_buttons {
     display: flex;

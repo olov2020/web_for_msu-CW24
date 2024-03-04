@@ -6,44 +6,31 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <link href="../../static/css/login/login.css" rel="stylesheet">
+    <script src="../../static/js/login/login.js"></script>
 </head>
 {% endblock %}
 
 
 {% block main %}
 
-
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.email.label }}<br>
-        {{ form.email(size=32) }}
-    </p>
-    <p>
-        {{ form.password.label }}<br>
-        {{ form.password(size=32) }}
-    </p>
-    <p>{{ form.remember() }} {{ form.remember.label }}</p>
-    <p>{{ form.submit() }}</p>
-</form>
-
-<div class='block_login'>
-    <div class='email'>
-        <input class='login_email' type='email' placeholder='Ваш email'>
-    </div>
-
-    <div class='password'>
-        <input class='login_password' type='password' placeholder='Ваш пароль'>
-        <p>Забыли пароль?</p>
-    </div>
-</div>
-
-<div class='login_buttons'>
-    <div class='button_enter'>
-        <p>Войти</p>
-    </div>
-    <div class='button_registration'>
-        <p>Зарегистрироваться</p>
-    </div>
+<div class='login'>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.email.label }}
+        </div>
+        <div>
+            {{ form.email(size=32) }}
+        </div>
+        <div>
+            {{ form.password.label }}
+        </div>
+        <div>
+            {{ form.password(size=32) }}
+        </div>
+        <div>{{ form.remember() }} </div>
+        <div>{{ form.remember.label }}</div>
+        <div>{{ form.submit() }}</div>
+    </form>
 </div>
 {% endblock %}
