@@ -10,11 +10,38 @@
 {% endblock %}
 
 {% block account %}
+
+{% if authenticated == False %}
 <a href='login'>
     <div class='header_registartion'>
         <p>Войти</p>
     </div>
 </a>
+{% endif %}
+
+
+{% if authenticated %}
+<a href='account'>
+    <div class="personal_account_info">
+        <div class="personal_account_name">
+            <p>{{user.name}}</p>
+        </div>
+
+        <div class="personal_account_surname">
+            <p>{{user.surname}}</p>
+        </div>
+
+        <div class="personal_account_status">
+            <p>{{user.status}}</p>
+        </div>
+    </div>
+</a>
+
+<a href='account'>
+    <div class="personal_account_photo"></div>
+</a>
+{% endif %}
+
 {% endblock %}
 
 {% block main %}
