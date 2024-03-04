@@ -11,7 +11,7 @@
 }
 
 
-.block_entrance,
+.block_login,
 .entrance_buttons {
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@ input {
 }
 
 
-.entrance_buttons {
+.login_buttons {
     margin-top: 100px;
     align-items: center;
 }
