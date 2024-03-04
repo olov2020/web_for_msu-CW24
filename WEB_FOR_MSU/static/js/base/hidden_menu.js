@@ -1,10 +1,6 @@
 "use strict";
 
 window.onload = function() {
-    var hidden_menu = document.querySelector('.hidden_menu');
-    hidden_menu.addEventListener('mouseout', function() {
-    });
-    
     var hidden_menu_courses = document.querySelector(".hidden_menu_courses");
 
     hidden_menu_courses.addEventListener("mouseover", function () {
