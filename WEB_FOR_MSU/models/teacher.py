@@ -29,4 +29,5 @@ class Teacher(db.Model):
     passport_issued_by = db.Column(db.String(), nullable=False)
     registration_address = db.Column(db.String(), nullable=False)
     was_pupil = db.Column(db.Boolean, default=False)
+    courses = db.relationship('Course', secondary='teacher_course', backref='teachers')
     # TODO add foreign keys: entrance_id	organizational_meeting_ids	FA_id	KNR_id	KOTE_id	VS_id	NS_ids	OK_ids	OC_ids	LS_id	graduation_id	council_id	method_council_id

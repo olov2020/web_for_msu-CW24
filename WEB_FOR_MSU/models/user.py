@@ -1,7 +1,6 @@
 from WEB_FOR_MSU import db, login_manager
 from datetime import datetime
-from flask_login import (LoginManager, UserMixin, login_required,
-                         login_user, current_user, logout_user)
+from flask_security import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -17,9 +16,12 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(), nullable=False)
     image = db.Column(db.String(), nullable=False, default='default.jpg')
     created_on = db.Column(db.DateTime(), default=None)
-    updated_on = db.Column(db.DateTime(), default=None, onupdate=datetime.utcnow)
+    updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     role = db.relationship('Role', backref='users')
+    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
+
+    active = True
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

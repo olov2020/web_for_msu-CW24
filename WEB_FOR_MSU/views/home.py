@@ -38,7 +38,7 @@ def login():
         password = login_form.password.data
         user = User.query.filter_by(email=email).first()  # чтобы заработало, надо в базу данных добавить пользователей
         if user and user.verify_password(password):
-            login_user(user, remember=login_form.remember.data)
+            login_user(user, remember=login_form.remember.data, force=True)
             return redirect(url_for('.home'))
         flash("Invalid username/password", 'error')
         return redirect(url_for('.login'))
