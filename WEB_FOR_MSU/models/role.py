@@ -1,5 +1,4 @@
-from WEB_FOR_MSU import db, login_manager
-from flask import current_app
+from WEB_FOR_MSU import db
 
 
 class Role(db.Model):
