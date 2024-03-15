@@ -45,3 +45,12 @@ INSERT INTO public.course (id, name, formula, course_review_number, direction, e
                 ');
 
 INSERT INTO public.teacher_course (id, teacher_id, course_id, year) VALUES (1, 1, 1, 2024);
+
+INSERT INTO public.schedule (id, course_id, lesson_number, date, theme, plan, additional_info)
+VALUES (1, 1, 1, '2023-10-03', 'Введение', e'Знакомство со школьниками, рассказ о себе, целях курса и установка необходимого по, (проведение теста, если будет избыток желающих)
+Рассказ о веб-сервисе, который основан на Git. Рассказ о git. Создание собственного аккаунта', null);
+
+INSERT INTO public.schedule (id, course_id, lesson_number, date, theme, plan, additional_info)
+VALUES (2, 1, 2, '2023-10-10', e'Основы python
+', e'Обучение основам языка python - ввод и вывод информации, типы данных
+', null);
