@@ -54,3 +54,10 @@ INSERT INTO public.schedule (id, course_id, lesson_number, date, theme, plan, ad
 VALUES (2, 1, 2, '2023-10-10', e'Основы python
 ', e'Обучение основам языка python - ввод и вывод информации, типы данных
 ', null);
+
+INSERT INTO public.pupil_course (id, pupil_id, course_id, year, crediting, finished, term1_mark, term2_mark)
+VALUES (1, 1, 1, 2023, true, false, 5, null);
+
+INSERT INTO public.mark (id, pupil_id, schedule_id, mark, comment)
+VALUES (1, 1, 1, 5, 'Лучший питонист');
+
