@@ -5,3 +5,5 @@ from .teacher import Teacher
 from .course import Course
 from .teacher_course import TeacherCourse
 from .schedule import Schedule
+from .pupil_course import PupilCourse
+from .mark import Mark

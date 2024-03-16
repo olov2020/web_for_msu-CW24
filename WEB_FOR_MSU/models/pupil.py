@@ -38,4 +38,5 @@ class Pupil(db.Model):
     security_key_card = db.Column(db.String())
     graduating = db.Column(db.Boolean, default=False)
     achievements = db.Column(db.String())
+    courses = db.relationship('Course', secondary='pupil_course', backref='pupils')
     # TODO: add foreign keys: KNR_id	VS_id	NS_id	OK_id	OC_id	LS_ids	graduation_id
