@@ -8,7 +8,7 @@ class Teacher(db.Model):
     user = db.relationship('User', backref='teacher')
     name = db.Column(db.String(), nullable=False)
     surname = db.Column(db.String(), nullable=False)
-    patronymic = db.Column(db.String(), nullable=False)
+    patronymic = db.Column(db.String())
     second_surname = db.Column(db.String())
     nickname = db.Column(db.String(), nullable=False)
     birth_date = db.Column(db.Date(), nullable=False)
