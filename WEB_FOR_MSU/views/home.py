@@ -3,7 +3,6 @@ import os
 from flask import request, render_template, current_app, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
 
-from WEB_FOR_MSU.forms.logout import LogoutForm
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
 
@@ -28,6 +27,18 @@ def home():
                            authenticated=current_user.is_authenticated)
 
 
+@main.route('/registration', methods=['GET', 'POST'])
+def registration():
+    if current_user.is_authenticated:
+        return redirect(url_for('.home'))
+    registration_form = RegistrationForm()
+    if registration_form.validate_on_submit():
+        print("Форма прошла, саму регситрацию пока не добавил")
+    return render_template('home/registration.html',
+                           title='Registration',
+                           form_registration=registration_form)
+
+
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -49,6 +60,7 @@ def login():
 @login_required
 def account():
     image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'Me in msu.jpg')
+    account_form = AccountForm()
     logout_form = LogoutForm()
     if logout_form.is_submitted():
         logout_user()
@@ -61,7 +73,8 @@ def account():
     return render_template('home/account.html',
                            title='Account',
                            user=user,
-                           form_logout=logout_form)
+                           form_logout=logout_form,
+                           form_account=account_form)
 
 # @app.route('/schedule')
 # def schedule():
