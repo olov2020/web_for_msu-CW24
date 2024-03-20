@@ -1,6 +1,6 @@
 .hidden_menu {
     position: absolute;
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: flex-start;
     width: 800px;
