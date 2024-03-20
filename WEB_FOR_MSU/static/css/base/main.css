@@ -1,7 +1,21 @@
+* {
+    margin: 0px;
+    box-sizing: border-box;
+    padding: 0px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
 main {
     position: relative;
     margin: 50px;
     display: flex;
     align-items: center;
     flex-direction: column;
+    min-height: 100%;
+    /* in case footer not being at the bottom for 100% of brouser page
+    delete 1 tag hier*/
 }

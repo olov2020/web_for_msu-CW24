@@ -56,10 +56,10 @@ input {
     align-items: center;
     color: white;
     font-size: 20px;
+    transition: all .1s ease-out;
 }
 
 .button_enter:hover {
-    transition: 1 ease-in-out .1s;
     transform: scale(1.1);
 }
 
