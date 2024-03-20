@@ -19,7 +19,7 @@ class Course(db.Model):
     course_format = db.Column(db.String(), nullable=False)
     target_audience = db.Column(db.String(), nullable=False)
     short_description = db.Column(db.String(), nullable=False)
-    number_of_listeners = db.Column(db.Integer, nullable=False)
+    number_of_listeners = db.Column(db.String(), nullable=False)
     selection = db.Column(db.String(), nullable=False)
     assessment = db.Column(db.String(), nullable=False)
     platform_format = db.Column(db.String(), nullable=False)
