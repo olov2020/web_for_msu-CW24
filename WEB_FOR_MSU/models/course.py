@@ -12,6 +12,7 @@ class Course(db.Model):
     emsh_grades = db.Column(db.String(), nullable=False)
     distribution = db.Column(db.String())
     intern_work = db.Column(db.String())
+    emsh_lesson = db.Column(db.String())
     additional_info_for_auditory = db.Column(db.String())
     course_purpose = db.Column(db.String(), nullable=False)
     course_objectives = db.Column(db.String(), nullable=False)
