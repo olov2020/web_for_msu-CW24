@@ -15,27 +15,42 @@
 <div class='login'>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <div>
-            {{ form.email.label }}
+        <div class='container_text'>
+            {{ form.email.label(class='text') }}
+
+            {% if form.email.errors %}
+            {{ form.email(class='input error_input', size=32, placeholder='Некорректный ввод', value='') }}
+            {% else %}
+            {{ form.email(class='input', size=32, placeholder='Введите email') }}
+            {% endif %}
+
+
         </div>
-        <div>
-            {{ form.email(size=32) }}
-            {% for error in form.email.errors %}
-            <div style="color: red;">[{{ error }}]</div>
-            {% endfor %}
+
+        <div class='container_text'>
+            {{ form.password.label(class='text') }}
+
+            {% if form.password.errors %}
+            {{ form.password(class='input error_input', size=32, placeholder='Некорректный ввод', value='') }}
+            {% else %}
+            {{ form.password(class='input', size=32, placeholder='Введите пароль') }}
+            {% endif %}
         </div>
-        <div>
-            {{ form.password.label }}
+
+        <div class='container_remember'>
+            {{ form.remember.label(class='text') }}
+            {{ form.remember(class='checkbox remember') }}
         </div>
-        <div>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-            <div style="color: red;">[{{ error }}]</div>
-            {% endfor %}
+
+        <div class='enter'>
+            <a href='/registration'>
+                <div class='button_registration'>
+                    <p>Зарегистрироваться</p>
+                </div>
+            </a>
+
+            <div>{{ form.submit(class="submit_button") }}</div>
         </div>
-        <div>{{ form.remember() }} </div>
-        <div>{{ form.remember.label }}</div>
-        <div>{{ form.submit(class="button_enter", placeholder="войти") }}</div>
     </form>
 </div>
 {% endblock %}

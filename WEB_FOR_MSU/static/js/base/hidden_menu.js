@@ -76,4 +76,4 @@ window.onload = function() {
         hidden_menu.style.display = "none";
     });
 
-}
+};
