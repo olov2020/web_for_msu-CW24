@@ -24,7 +24,7 @@
         {{ form_account.image }}
     </div>
 
-    <form action="" method="patch" novalidate>
+    <form action="" method="post" novalidate>
         {{ form_account.hidden_tag() }}
 
         {% for field in form_account if field.id != 'image' and field.id != 'submit_logout' %}

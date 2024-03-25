@@ -108,17 +108,16 @@ def login():
     return render_template('home/login.html', title='Login', form_login=login_form)
 
 
-@main.route('/account', methods=['GET', 'POST', 'PATCH'])
+@main.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
     image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'Me in msu.jpg')
-    account_form = AccountForm()
     logout_form = LogoutForm()
-    if request.method == 'POST':
-        if logout_form.is_submitted():
-            logout_user()
-            return redirect(url_for('.home'))
-    if account_form.validate_on_submit():
+    account_form = AccountForm()
+    if logout_form.submit.data and logout_form.is_submitted():
+        logout_user()
+        return redirect(url_for('.home'))
+    if account_form.submit_save.data and account_form.validate():
         print("Valid form")
         image = account_form.image.data
         if image:
