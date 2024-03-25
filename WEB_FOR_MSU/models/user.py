@@ -1,3 +1,5 @@
+import uuid
+
 from WEB_FOR_MSU import db, login_manager
 from datetime import datetime
 from flask_security import UserMixin
@@ -19,9 +21,16 @@ class User(db.Model, UserMixin):
     updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     role = db.relationship('Role', backref='users')
-    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
+    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False, default=str(uuid.uuid4()))
 
     active = True
+
+    def __init__(self, email, password, role_id, image='default.jpg'):
+        self.email = email
+        self.password = generate_password_hash(password)
+        self.image = image
+        self.role_id = role_id
+        self.created_on = datetime.utcnow()
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -29,3 +38,9 @@ class User(db.Model, UserMixin):
     def verify_password(self, password):
         return self.password == password  # пока не добавлена регистрация
         # return check_password_hash(self.password, password)
+
+    @staticmethod
+    def add_user(email, password, role_id, image='default.jpg'):
+        user = User(email=email, password=password, role_id=role_id, image=image)
+        db.session.add(user)
+        db.session.commit()

@@ -15,4 +15,3 @@ class AccountForm(FlaskForm):
     school = StringField("Школа: ")
     image = FileField("Обновить фото профиля", validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif', 'bmp'])])
     submit_save = SubmitField("Сохранить")
-    submit_logout = SubmitField("Выйти из аккаунта")

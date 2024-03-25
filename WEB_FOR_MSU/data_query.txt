@@ -12,11 +12,11 @@ INSERT INTO public.pupil (id, user_id, name, surname, patronymic, birth_date, ni
                           passport_number, passport_series, passport_date, passport_issued_by, registration_address,
                           parent1_name, parent1_surname, parent1_patronymic, parent1_phone, parent1_email, parent2_name,
                           parent2_surname, parent2_patronymic, parent2_phone, parent2_email, school, school_grade,
-                          emsh_grade, enroll_way, agreement, how_know, mailing, organization_fee, "present_FA", security_key_card, graduating,
+                          enroll_way, agreement, how_know, mailing, organization_fee, "present_FA", security_key_card, graduating,
                           achievements)
 VALUES (1, 1, 'Дмитрий', 'Мухин', 'Владимирович', '2004-03-15', 'backender', null, null, '+79851234567', '123456',
         '1234', '2024-03-15', 'Москва', 'Москва', 'Владимир', 'Мухин', 'Николаевич', '+79291234567', 'parent1@mail.ru',
-        null, null, null, null, null, 'Лицей ВШЭ', 11, 11, 'Вступительные', 'default.pdf', 'От друзей', true, '2023', '2023', '2023', true,
+        null, null, null, null, null, 'Лицей ВШЭ', 11, 'Вступительные', 'default.pdf', 'От друзей', true, '2023', '2023', '2023', true,
         'Лучший питонист');
 
 INSERT INTO public.teacher (id, user_id, name, surname, patronymic, second_surname, nickname, birth_date, date_of_death, phone, telegram, vk, school, school_date_start, school_date_end, university, university_date_start, university_date_end, workplace, passport_number, passport_series, passport_date, passport_issued_by, registration_address, was_pupil) VALUES (1, 2, 'Владимир', 'Виноградов', 'Андреевич', null, 'frontender', '2004-09-06', null, '+79161234567', null, null, 'Лицей ВШЭ', '2019-09-01', '2022-06-30', 'ВШЭ', '2022-09-01', null, 'ВШЭ БПИ228', '123456', '1234', '2024-03-15', 'Москва', 'Москва', true);

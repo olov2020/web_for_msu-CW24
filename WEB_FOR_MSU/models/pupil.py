@@ -31,7 +31,6 @@ class Pupil(db.Model):
     parent2_email = db.Column(db.String())
     school = db.Column(db.String(), nullable=False)
     school_grade = db.Column(db.Integer, nullable=False)
-    emsh_grade = db.Column(db.Integer, nullable=False)
     enroll_way = db.Column(db.String(), nullable=False)
     agreement = db.Column(db.String, nullable=False)
     how_know = db.Column(db.String())
@@ -42,4 +41,70 @@ class Pupil(db.Model):
     graduating = db.Column(db.Boolean, default=False)
     achievements = db.Column(db.String())
     courses = db.relationship('Course', secondary='pupil_course', backref='pupils')
+
     # TODO: add foreign keys: KNR_id	VS_id	NS_id	OK_id	OC_id	LS_ids	graduation_id
+
+    def __init__(self, user_id, name, surname, birth_date, nickname, phone, passport_number, passport_series,
+                 passport_date, passport_issued_by, registration_address, parent1_name, parent1_surname,
+                 parent1_patronymic, parent1_phone, parent1_email, school, school_grade, enroll_way,
+                 agreement, organization_fee, present_FA, security_key_card, graduating, achievements, mailing=False,
+                 patronymic=None, telegram=None, vk=None, parent2_name=None, parent2_surname=None,
+                 parent2_patronymic=None, parent2_phone=None, parent2_email=None, how_know=None):
+        self.user_id = user_id
+        self.name = name
+        self.surname = surname
+        self.patronymic = patronymic
+        self.birth_date = birth_date
+        self.nickname = nickname
+        self.telegram = telegram
+        self.vk = vk
+        self.phone = phone
+        self.passport_number = passport_number
+        self.passport_series = passport_series
+        self.passport_date = passport_date
+        self.passport_issued_by = passport_issued_by
+        self.registration_address = registration_address
+        self.parent1_name = parent1_name
+        self.parent1_surname = parent1_surname
+        self.parent1_patronymic = parent1_patronymic
+        self.parent1_phone = parent1_phone
+        self.parent1_email = parent1_email
+        self.parent2_name = parent2_name
+        self.parent2_surname = parent2_surname
+        self.parent2_patronymic = parent2_patronymic
+        self.parent2_phone = parent2_phone
+        self.parent2_email = parent2_email
+        self.school = school
+        self.school_grade = school_grade
+        self.enroll_way = enroll_way
+        self.agreement = agreement
+        self.how_know = how_know
+        self.mailing = mailing
+        self.organization_fee = organization_fee
+        self.present_FA = present_FA
+        self.security_key_card = security_key_card
+        self.graduating = graduating
+        self.achievements = achievements
+
+    @staticmethod
+    def add_pupil(user_id, name, surname, birth_date, nickname, phone, passport_number, passport_series,
+                  passport_date, passport_issued_by, registration_address, parent1_name, parent1_surname,
+                  parent1_patronymic, parent1_phone, parent1_email, school, school_grade, emsh_grade, enroll_way,
+                  agreement, organization_fee, present_FA, security_key_card, graduating, achievements, mailing=False,
+                  patronymic=None, telegram=None, vk=None, parent2_name=None, parent2_surname=None,
+                  parent2_patronymic=None, parent2_phone=None, parent2_email=None, how_know=None):
+        pupil = Pupil(user_id=user_id, name=name, surname=surname, birth_date=birth_date, nickname=nickname,
+                      phone=phone, passport_number=passport_number, passport_series=passport_series,
+                      passport_date=passport_date, passport_issued_by=passport_issued_by,
+                      registration_address=registration_address, parent1_name=parent1_name,
+                      parent1_surname=parent1_surname, parent1_patronymic=parent1_patronymic,
+                      parent1_phone=parent1_phone, parent1_email=parent1_email, school=school,
+                      school_grade=school_grade, enroll_way=enroll_way,
+                      agreement=agreement, organization_fee=organization_fee, present_FA=present_FA,
+                      security_key_card=security_key_card, graduating=graduating, achievements=achievements,
+                      mailing=mailing, patronymic=patronymic, telegram=telegram, vk=vk,
+                      parent2_name=parent2_name, parent2_surname=parent2_surname,
+                      parent2_patronymic=parent2_patronymic, parent2_phone=parent2_phone,
+                      parent2_email=parent2_email, how_know=how_know)
+        db.session.add(pupil)
+        db.session.commit()
