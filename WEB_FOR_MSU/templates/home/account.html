@@ -11,7 +11,7 @@
 
 <form action='' method='post'>
     <div>
-        {{ form_logout.submit(class='form_submit_button', style='width:200px; height: 60px')}}
+        {{ form_logout.submit(class='header_account_button')}}
     </div>
 </form>
 {% endblock %}
@@ -24,7 +24,7 @@
         {{ form_account.image }}
     </div>
 
-    <form action="" method="post" novalidate>
+    <form action="" method="patch" novalidate>
         {{ form_account.hidden_tag() }}
 
         {% for field in form_account if field.id != 'image' and field.id != 'submit_logout' %}
@@ -66,7 +66,13 @@
     </form>
 
     <div class='statistics'>
+        <div>
+            <p>Ваш статус и достижения</p>
+        </div>
 
+        <div>
+            <p></p>
+        </div>
     </div>
 </div>
 {% endblock %}

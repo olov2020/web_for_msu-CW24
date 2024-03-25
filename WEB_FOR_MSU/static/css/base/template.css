@@ -1,5 +1,5 @@
 /* for button <login> in header of the page */
-.header_registartion {
+.header_account_button {
     width: 160px;
     height: 60px;
 
@@ -9,6 +9,7 @@
 
     background-color: #9F1A59;
     border-radius: 16px;
+    border: 0px solid white;
 
     color: white;
     font-size: 24px;
@@ -36,7 +37,7 @@
 }
 
 .form_submit_button:hover,
-.header_registartion:hover {
+.header_account_button:hover {
     transform: scale(1.05);
 }
 
