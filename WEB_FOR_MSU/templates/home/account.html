@@ -9,40 +9,26 @@
 
 {% block account %}
 
-<a href='account'>
-    <div class="personal_account_info">
-        <div class="personal_account_name">
-            <p>{{user.name}}</p>
-        </div>
-
-        <div class="personal_account_surname">
-            <p>{{user.surname}}</p>
-        </div>
-
-        <div class="personal_account_status">
-            <p>{{user.status}}</p>
-        </div>
+<form action='' method='post'>
+    <div>
+        {{ form_logout.submit(class='form_submit_button', style='width:200px; height: 60px')}}
     </div>
-</a>
-
-<a href='account'>
-    <div class="personal_account_photo"></div>
-</a>
+</form>
 {% endblock %}
 
 {% block main %}
 
 <div class='account'>
-   <div class='account_photo'>
-            <image src='{{ user.photo }}' class='photo'></image>
-            {{ form_account.image }}
-        </div>
-   
+    <div class='account_photo'>
+        <image src='{{ user.photo }}' class='photo'></image>
+        {{ form_account.image }}
+    </div>
+
     <form action="" method="post" novalidate>
         {{ form_account.hidden_tag() }}
-        
+
         {% for field in form_account if field.id != 'image' and field.id != 'submit_logout' %}
-        
+
         <div class='form_container_text'>
             {% if field.type == 'FileField' %}
             {{ field.label(class='form_text') }}
@@ -78,16 +64,9 @@
 
         {% endfor %}
     </form>
-    
+
     <div class='statistics'>
-        
+
     </div>
 </div>
-
-<form action='' method='post'>
-    <div>
-        {{ form_logout.submit(class='form_submit_button')}}
-    </div>
-</form>
-
 {% endblock %}
