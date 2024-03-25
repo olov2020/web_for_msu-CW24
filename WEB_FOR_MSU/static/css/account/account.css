@@ -1,18 +1,16 @@
 .account {
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: space-between;
     width: 100%;
 }
 
 
-.block_photo {
-    position: relative;
-    left: 0px;
+.account_photo {
+    width: 350px; 
     display: flex;
-    justify-content: center;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
 }
 
 .photo {
@@ -26,25 +24,6 @@
     background-repeat: no-repeat;
 }
 
-.block_photo_text {
-    color: #9F1A59;
-    font-size: 18px;
-}
-
-
-.block_text {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 500px;
-    margin-bottom: 20px;
-}
-
-.block_text > p {
-    width: 100px;
-    justify-content: end;
-}
-
-.submit_button {
-    margin-top: 100px;
+.statistics {
+    width: 350px;
 }

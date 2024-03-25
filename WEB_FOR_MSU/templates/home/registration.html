@@ -31,7 +31,7 @@
             </div>
             {% endif %}
 
-            {% if field.type == 'StringField' %}
+            {% if field.type == 'StringField' or field.type == 'PasswordField' %}
             {{ field.label(class='form_text') }}
             <div>
                 {% if field.errors %}

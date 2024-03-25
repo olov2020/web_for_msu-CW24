@@ -33,60 +33,60 @@
 {% block main %}
 
 <div class='account'>
-    <div class='block_photo'>
-        <div>
-            <img src="{{ user.photo }}" alt="User Image" class='photo'>
+   <div class='account_photo'>
+            <image src='{{ user.photo }}' class='photo'></image>
+            {{ form_account.image }}
         </div>
-        <div class='block_photo_text text'>
-            <p>Изменить фотографию</p>
-        </div>
-    </div>
+   
+    <form action="" method="post" novalidate>
+        {{ form_account.hidden_tag() }}
+        
+        {% for field in form_account if field.id != 'image' and field.id != 'submit_logout' %}
+        
+        <div class='form_container_text'>
+            {% if field.type == 'FileField' %}
+            {{ field.label(class='form_text') }}
+            <div>
+                {{ field(class='form_file_button') }}
+            </div>
+            {% endif %}
 
-    <div class='block_changes'>
-        <div class='block_text'>
-            <p>Имя</p>
-            <input>
-        </div>
+            {% if field.type == 'StringField' or field.type == 'PasswordField' %}
+            {{ field.label(class='form_text') }}
+            <div>
+                {% if field.errors %}
+                {{ field(class='form_input form_input_error', size=32, placeholder='Поле обязательно для заполнения', value='') }}
+                {% else %}
+                {{ field(class='form_input', size=32) }}
+                {% endif %}
+            </div>
+            {% endif %}
 
-        <div class='block_text'>
-            <p>Фамилия</p>
-            <input>
-        </div>
+            {% if field.type == 'SelectField' %}
+            {{ field.label(class='form_text') }}
+            <div>
+                {{ field(class='form_input') }}
+            </div>
+            {% endif %}
 
-        <div class='block_text'>
-            <p>Отчество</p>
-            <input>
-        </div>
-
-        <div class='block_text'>
-            <p>E-mail</p>
-            <input>
-        </div>
-
-        <div class='block_text'>
-            <p>Пароль</p>
-            <input>
-        </div>
-
-        <div class='block_text'>
-            <p>Телефон</p>
-            <input>
-        </div>
-
-        <div class='block_text'>
-            <p>Школа</p>
-            <input>
+            {% if field.type == 'SubmitField' %}
+            <div>
+                {{ field(class='form_submit_button') }}
+            </div>
+            {% endif %}
         </div>
 
-        <form action='' method='post'>
-            <input type='submit' value='Изменить данные'>
-        </form>
+        {% endfor %}
+    </form>
+    
+    <div class='statistics'>
+        
     </div>
 </div>
 
 <form action='' method='post'>
     <div>
-        {{ form_logout.submit(value='Выйти', class='form_submit_button')}}
+        {{ form_logout.submit(class='form_submit_button')}}
     </div>
 </form>
 
