@@ -17,33 +17,5 @@ main {
     flex-direction: column;
     min-height: 100%;
     /* in case footer not being at the bottom for 100% of brouser page
-    delete 1 tag hier*/
-}
-
-.submit_button {
-    width: 300px;
-    height: 40px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #9F1A59;
-    border: 0px;
-    border-radius: 16px;
-
-    color: white;
-    font-size: 20px;
-
-    transition: all .1s ease-out;
-}
-
-.submit_button:hover {
-    transform: scale(1.05);
-}
-
-.error {
-    padding: 5px;
-    
-    color: red;
+    delete 1 tag heighter*/
 }

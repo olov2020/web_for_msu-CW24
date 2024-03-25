@@ -53,7 +53,7 @@ def login():
             return redirect(url_for('.home'))
         flash("Invalid username/password", 'error')
         return redirect(url_for('.login'))
-    return render_template('home/login.html', title='Login', form=login_form)
+    return render_template('home/login.html', title='Login', form_login=login_form)
 
 
 @main.route('/account', methods=['GET', 'POST'])

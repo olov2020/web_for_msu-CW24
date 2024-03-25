@@ -2,11 +2,9 @@
 
 {% block head %}
 
-<head>
-    <title>{{title}}</title>
-    <link href="../../static/css/login/login.css" rel="stylesheet">
-    <script src="../../static/js/login/login.js"></script>
-</head>
+<title>{{title}}</title>
+<link href="../../static/css/login/login.css" rel="stylesheet">
+<script src="../../static/js/login/login.js"></script>
 {% endblock %}
 
 
@@ -14,32 +12,32 @@
 
 <div class='login'>
     <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <div class='container_text'>
-            {{ form.email.label(class='text') }}
+        {{ form_login.hidden_tag() }}
+        <div class='form_container_text'>
+            {{ form_login.email.label(class='form_text') }}
 
-            {% if form.email.errors %}
-            {{ form.email(class='input error_input', size=32, placeholder='Некорректный ввод', value='') }}
+            {% if form_login.email.errors %}
+            {{ form_login.email(class='form_input form_input_error', size=32, placeholder='Некорректный ввод', value='') }}
             {% else %}
-            {{ form.email(class='input', size=32, placeholder='Введите email') }}
+            {{ form_login.email(class='form_input', size=32, placeholder='Введите email') }}
             {% endif %}
 
 
         </div>
 
-        <div class='container_text'>
-            {{ form.password.label(class='text') }}
+        <div class='form_container_text'>
+            {{ form_login.password.label(class='form_text') }}
 
-            {% if form.password.errors %}
-            {{ form.password(class='input error_input', size=32, placeholder='Некорректный ввод', value='') }}
+            {% if form_login.password.errors %}
+            {{ form_login.password(class='form_input form_input_error', size=32, placeholder='Некорректный ввод', value='') }}
             {% else %}
-            {{ form.password(class='input', size=32, placeholder='Введите пароль') }}
+            {{ form_login.password(class='form_input', size=32, placeholder='Введите пароль') }}
             {% endif %}
         </div>
 
         <div class='container_remember'>
-            {{ form.remember.label(class='text') }}
-            {{ form.remember(class='checkbox remember') }}
+            {{ form_login.remember.label(class='form_text') }}
+            {{ form_login.remember(class='checkbox remember') }}
         </div>
 
         <div class='enter'>
@@ -49,7 +47,7 @@
                 </div>
             </a>
 
-            <div>{{ form.submit(class="submit_button") }}</div>
+            <div>{{ form_login.submit(class="submit_button") }}</div>
         </div>
     </form>
 </div>

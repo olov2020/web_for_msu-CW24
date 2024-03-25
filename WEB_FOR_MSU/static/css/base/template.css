@@ -1,0 +1,67 @@
+/* for button <login> in header of the page */
+.header_registartion {
+    width: 160px;
+    height: 60px;
+    background-color: #9F1A59;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+}
+
+/* for button like <login>, <logout> and etc. */
+.submit_button {
+    width: 300px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #9F1A59;
+    border: 0px;
+    border-radius: 16px;
+
+    color: white;
+    font-size: 20px;
+
+    transition: all .1s ease-out;
+}
+
+.submit_button:hover {
+    transform: scale(1.05);
+}
+
+/* for field inside form */
+.form_container_text {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+
+    margin-bottom: 10px;
+}
+
+/* for input form fields */
+.form_input {
+    width: 300px;
+    height: 40px;
+
+    border-radius: 16px;
+    padding-left: 10px;
+    border: 2px solid #9F1A59;
+
+    background-color: #fcccde;
+}
+
+/* for input forms with errors */
+.form_input_error {
+    border-color: red;
+    background-color: white;
+}
+
+/* for fields label in forms */
+.form_text {
+    padding: 5px;
+}
