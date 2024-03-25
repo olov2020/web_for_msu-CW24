@@ -2,13 +2,18 @@
 .header_registartion {
     width: 160px;
     height: 60px;
-    background-color: #9F1A59;
-    border-radius: 16px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-color: #9F1A59;
+    border-radius: 16px;
+
     color: white;
     font-size: 24px;
+
+    transition: all .1s ease-out;
 }
 
 /* for button like <login>, <logout> and etc. */
@@ -30,7 +35,8 @@
     transition: all .1s ease-out;
 }
 
-.form_submit_button:hover {
+.form_submit_button:hover,
+.header_registartion:hover {
     transform: scale(1.05);
 }
 
