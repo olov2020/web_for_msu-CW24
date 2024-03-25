@@ -12,7 +12,7 @@
 }
 
 /* for button like <login>, <logout> and etc. */
-.submit_button {
+.form_submit_button {
     width: 300px;
     height: 40px;
 
@@ -30,7 +30,7 @@
     transition: all .1s ease-out;
 }
 
-.submit_button:hover {
+.form_submit_button:hover {
     transform: scale(1.05);
 }
 
@@ -50,6 +50,7 @@
 
     border-radius: 16px;
     padding-left: 10px;
+    padding-right: 10px;
     border: 2px solid #9F1A59;
 
     background-color: #fcccde;
@@ -64,4 +65,19 @@
 /* for fields label in forms */
 .form_text {
     padding: 5px;
+}
+
+/* for fields with checkbox in form */
+.form_checkbox {
+    width: 16px;
+    height: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* for form containers with checkbox */
+.form_container_checkbox {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
 }

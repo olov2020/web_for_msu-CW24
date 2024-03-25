@@ -35,9 +35,9 @@
             {% endif %}
         </div>
 
-        <div class='container_remember'>
+        <div class='form_container_checkbox'>
             {{ form_login.remember.label(class='form_text') }}
-            {{ form_login.remember(class='checkbox remember') }}
+            {{ form_login.remember(class='form_checkbox') }}
         </div>
 
         <div class='enter'>
@@ -47,7 +47,7 @@
                 </div>
             </a>
 
-            <div>{{ form_login.submit(class="submit_button") }}</div>
+            <div>{{ form_login.submit(class='form_submit_button') }}</div>
         </div>
     </form>
 </div>

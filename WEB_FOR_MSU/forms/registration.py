@@ -16,7 +16,7 @@ class RegistrationForm(FlaskForm):
                        choices=[('pupil', 'Ученик'), ('teacher', 'Учитель')],
                        validators=[DataRequired()])
     grade = SelectField('Класс',
-                        choices=[(i, str(i)) for i in range(1, 12)],
+                        choices=[(i, str(i)) for i in range(8, 12)] + [('graduated', 'Закончил школу')],
                         validators=[DataRequired()])
     school = StringField("Школа: ", validators=[DataRequired()])
     passport_series = StringField("Серия паспорта: ", validators=[DataRequired()])
