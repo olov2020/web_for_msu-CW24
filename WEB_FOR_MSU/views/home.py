@@ -1,5 +1,6 @@
 import os
 
+import dotenv
 from flask import request, render_template, current_app, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
 
@@ -10,6 +11,7 @@ from WEB_FOR_MSU.forms import *
 # from app.utils import send_mail
 
 from flask import Blueprint
+import boto3
 
 main = Blueprint('home', __name__)
 
@@ -38,11 +40,14 @@ def registration():
                 flash('User with this email already exists', 'error')
                 return redirect(url_for('.registration'))
             role = Role.query.filter_by(name=registration_form.role.data).first()
-            image = registration_form.image.data if registration_form.image.data else 'default.jpg'
+            image_name = 'default.jpg'
+            if registration_form.image.data:
+                image_name = 'my_image.jpg'
+                upload_to_yandex_s3(registration_form.image.data, 'emshfiles', image_name)
             User.add_user(email=registration_form.email.data,
                           password=registration_form.password.data,
                           role_id=role.id,
-                          image=image)
+                          image=image_name)
             pupil = Pupil.add_pupil(user_id=user.id,
                                     name=registration_form.name.data,
                                     surname=registration_form.surname.data,
@@ -71,6 +76,18 @@ def registration():
                            form_registration=registration_form)
 
 
+def upload_to_yandex_s3(file, bucket, object_name):
+    print(0)
+    s3_client = boto3.client('s3',
+                             endpoint_url='https://storage.yandexcloud.net',
+                             region_name='ru-central1',
+                             aws_access_key_id=dotenv.get_key('../.env', 'ACCESS_KEY_S3'),
+                             aws_secret_access_key=dotenv.get_key('../.env', 'SECRET_KEY_S3'))
+
+    s3_client.upload_file(file, bucket, object_name)
+    print(1)
+
+
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -97,9 +114,18 @@ def account():
     image = os.path.join(current_app.config['UPLOAD_FOLDER'], 'Me in msu.jpg')
     account_form = AccountForm()
     logout_form = LogoutForm()
-    if logout_form.is_submitted():
+    if logout_form.validate_on_submit():
         logout_user()
         return redirect(url_for('.home'))
+    if account_form.validate_on_submit():
+        print("Valid form")
+        image = account_form.image.data
+        if image:
+            print("Saving image")
+            image_name = 'my_image.jpg'
+            upload_to_yandex_s3(image, 'emshfiles', image_name)
+            print("Image saved")
+
     user = {'name': 'Vladimir',
             'surname': 'Vinogradov',
             'status': 'Teacher',
