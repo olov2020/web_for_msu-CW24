@@ -60,6 +60,12 @@
                 {{ field(class='form_submit_button') }}
             </div>
             {% endif %}
+            
+            {% if field.type == 'DateField' %}
+            <div>
+                {{ field }}
+            </div>
+            {% endif %}
         </div>
 
         {% endfor %}
