@@ -33,7 +33,39 @@ def registration():
         return redirect(url_for('.home'))
     registration_form = RegistrationForm()
     if registration_form.validate_on_submit():
-        print("Форма прошла, саму регситрацию пока не добавил")
+        if registration_form.role.data == 'pupil':
+            if User.query.filter_by(email=registration_form.email.data).first() is not None:
+                flash('User with this email already exists', 'error')
+                return redirect(url_for('.registration'))
+            role = Role.query.filter_by(name=registration_form.role.data).first()
+            image = registration_form.image.data if registration_form.image.data else 'default.jpg'
+            User.add_user(email=registration_form.email.data,
+                          password=registration_form.password.data,
+                          role_id=role.id,
+                          image=image)
+            pupil = Pupil.add_pupil(user_id=user.id,
+                                    name=registration_form.name.data,
+                                    surname=registration_form.surname.data,
+                                    birth_date=registration_form.birth_date.data,
+                                    nickname=registration_form.nickname.data,
+                                    phone=registration_form.phone.data,
+                                    passport_number=registration_form.passport_number.data,
+                                    passport_series=registration_form.passport_series.data,
+                                    passport_date=registration_form.passport_date.data,
+                                    passport_issued_by=registration_form.passport_issued_by.data,
+                                    registration_address=registration_form.registration_address.data,
+                                    parent1_name=registration_form.parent1_name.data,
+                                    parent1_surname=registration_form.parent1_surname.data,
+                                    parent1_patronymic=registration_form.parent1_patronymic.data,
+                                    parent1_phone=registration_form.parent1_phone.data,
+                                    parent1_email=registration_form.email.data,
+                                    school=registration_form.school.data,
+                                    school_grade=registration_form.grade.data,
+                                    enroll_way="Вступительные",
+                                    agreement=registration_form.agreement.name,
+                                    organization_fee=None,
+                                    )
+
     return render_template('home/registration.html',
                            title='Registration',
                            form_registration=registration_form)
@@ -47,11 +79,14 @@ def login():
     if login_form.validate_on_submit():
         email = login_form.email.data
         password = login_form.password.data
-        user = User.query.filter_by(email=email).first()  # чтобы заработало, надо в базу данных добавить пользователей
-        if user and user.verify_password(password):
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            flash("Нет пользователя с такой почтой", 'error')
+        elif not user.verify_password(password):
+            flash("Неверный пароль", 'error')
+        else:
             login_user(user, remember=login_form.remember.data, force=True)
             return redirect(url_for('.home'))
-        flash("Invalid username/password", 'error')
         return redirect(url_for('.login'))
     return render_template('home/login.html', title='Login', form_login=login_form)
 

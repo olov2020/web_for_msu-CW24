@@ -11,9 +11,10 @@ class RegistrationForm(FlaskForm):
     surname = StringField("Фамилия: ", validators=[DataRequired()])
     patronymic = StringField("Отчество: ")
     email = StringField("Email: ", validators=[DataRequired(), Email()])
+    password = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=8)])
     phone = StringField("Телефон: ", validators=[DataRequired()])
     role = SelectField('Статус',
-                       choices=[('pupil', 'Ученик'), ('teacher', 'Учитель')],
+                       choices=[('pupil', 'Ученик'), ('teacher', 'Преподаватель')],
                        validators=[DataRequired()])
     grade = SelectField('Класс',
                         choices=[(i, str(i)) for i in range(8, 12)] + [('graduated', 'Закончил школу')],

@@ -11,3 +11,4 @@ Werkzeug~=3.0.1
 alembic~=1.13.1
 email_validator
 flask-security-too
+boto3
