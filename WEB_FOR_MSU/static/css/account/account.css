@@ -1,13 +1,13 @@
 .account {
     display: flex;
     align-items: top;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
 }
 
 
 .account_photo {
-    width: 350px;
+    width: 300px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -25,5 +25,5 @@
 }
 
 .statistics {
-    width: 350px;
+    width: 300px;
 }
