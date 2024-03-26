@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import Form, ValidationError
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField
+from wtforms.fields.simple import EmailField
 from wtforms.validators import DataRequired, Email, Length
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
@@ -9,7 +10,7 @@ class AccountForm(FlaskForm):
     name = StringField("Имя: ")
     surname = StringField("Фамилия: ")
     patronymic = StringField("Отчество: ")
-    email = StringField("Email: ", validators=[Email()])
+    email = EmailField("Email: ", validators=[Email()])
     password = PasswordField("Пароль: ", validators=[Length(min=4, max=100)])
     phone = StringField("Телефон: ")
     school = StringField("Школа: ")

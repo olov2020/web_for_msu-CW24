@@ -3,10 +3,13 @@
 }
 
 .registration {
-    margin-top: 5px;
-    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    
     padding: 5px;
+}
 
+.registration_text {
     font-size: 18px;
-    color: #9F1A59;
+    color: #9F1A59;    
 }
