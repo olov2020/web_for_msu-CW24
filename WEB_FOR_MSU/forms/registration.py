@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import Form, ValidationError
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from wtforms.fields.simple import TelField
 from wtforms.validators import DataRequired, Email, Length
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
@@ -12,7 +13,7 @@ class RegistrationForm(FlaskForm):
     patronymic = StringField("Отчество: ")
     email = StringField("Email: ", validators=[DataRequired(), Email()])
     password = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=8)])
-    phone = StringField("Телефон: ", validators=[DataRequired()])
+    phone = TelField("Телефон: ", validators=[DataRequired()])
     role = SelectField('Статус',
                        choices=[('pupil', 'Ученик'), ('teacher', 'Преподаватель')],
                        validators=[DataRequired()])
