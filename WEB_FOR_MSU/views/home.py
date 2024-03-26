@@ -31,16 +31,23 @@ def home():
                            authenticated=current_user.is_authenticated)
 
 
-@main.route('/registration/pupil', methods=['GET', 'POST'])
-def pupil_registration():
+@main.route('/registration/<registration_type>', methods=['GET', 'POST'])
+def registration(registration_type):
+    if registration_type not in ['pupil', 'teacher']:
+        return redirect(url_for('.login'))
     if current_user.is_authenticated:
         return redirect(url_for('.home'))
-    registration_form = RegistrationForm()
+    registration_form = RegistrationForm
+    if registration_type == 'pupil':
+        registration_form = RegistrationForm()
+    elif registration_type == 'teacher':
+        registration_form = TeacherRegistrationForm()
+
     if registration_form.validate_on_submit():
         if User.query.filter_by(email=registration_form.email.data).first() is not None:
             flash('Пользователь с такой почтой уже существует', 'error')
-            return redirect(url_for('.pupil_registration'))
-        role = Role.query.filter_by(name='pupil').first()
+            return redirect(url_for('.registration', registration_type=registration_type))
+        role = Role.query.filter_by(name=registration_type).first()
         user = User.add_user(email=registration_form.email.data,
                              password=registration_form.password.data,
                              role_id=role.id,
@@ -50,28 +57,6 @@ def pupil_registration():
         return redirect(url_for('.home'))
 
     return render_template('home/registration.html',
-                           title='Registration',
-                           form_registration=registration_form)
-
-
-@main.route('/registration/teacher', methods=['GET', 'POST'])
-def teacher_registration():
-    if current_user.is_authenticated:
-        return redirect(url_for('.home'))
-    registration_form = TeacherRegistrationForm()
-    if registration_form.validate_on_submit():
-        if User.query.filter_by(email=registration_form.email.data).first() is not None:
-            flash('Преподаватель с такой почтой уже существует', 'error')
-            return redirect(url_for('.teacher_registration'))
-        role = Role.query.filter_by(name='teacher').first()
-        user = User.add_user(email=registration_form.email.data,
-                             password=registration_form.password.data,
-                             role_id=role.id,
-                             form=registration_form)
-        login_user(user, force=True)
-        return redirect(url_for('.home'))
-
-    return render_template('home/registration_teacher.html',
                            title='Registration',
                            form_registration=registration_form)
 

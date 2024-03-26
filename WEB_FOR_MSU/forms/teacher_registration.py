@@ -7,31 +7,40 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
 class TeacherRegistrationForm(FlaskForm):
-    image = FileField("Фото профиля", validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif', 'bmp']), FileRequired()])
-    name = StringField("Имя: ", validators=[DataRequired()])
-    surname = StringField("Фамилия: ", validators=[DataRequired()])
+    image = FileField("Фото профиля. Доступные форматы: '.jpg', '.png', '.jpeg', '.gif', '.bmp'", validators=[
+        FileAllowed(['jpg', 'png', 'jpeg', 'gif', 'bmp'], message="Некорректный формат файла"),
+        FileRequired(message="Необходимо выбрать файл")])
+    name = StringField("Имя: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    surname = StringField("Фамилия: ", validators=[DataRequired("Поле обязательно для заполнения")])
     second_surname = StringField("Вторая фамилия: ")
     patronymic = StringField("Отчество: ")
-    birth_date = DateField("Дата рождения: ", validators=[DataRequired()])
-    email = EmailField("Email: ", validators=[DataRequired(), Email()])
-    password = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=8,
-                                                                            message="Пароль должен содержать не менее 8 символов")])
-    phone = TelField("Телефон: ", validators=[DataRequired()])
+    birth_date = DateField("Дата рождения: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    email = EmailField("Email: ", validators=[DataRequired("Поле обязательно для заполнения"),
+                                              Email(message="Почта введена некорректно")])
+    password = PasswordField("Пароль: ",
+                             validators=[DataRequired("Поле обязательно для заполнения"),
+                                         Length(min=8, message="Пароль должен содержать не менее 8 символов")])
+    phone = TelField("Телефон: ", validators=[DataRequired("Поле обязательно для заполнения")])
     # role = SelectField('Статус',
     #                    choices=[('pupil', 'Ученик'), ('teacher', 'Преподаватель')],
-    #                    validators=[DataRequired()])
-    school = StringField("Школа: ", validators=[DataRequired()])
-    school_started = DateField("Дата поступления в школу: ", validators=[DataRequired()])
-    school_finished = DateField("Дата окончания школы: ", validators=[DataRequired()])
-    university = StringField("Университет: ", validators=[DataRequired()])
-    university_started = DateField("Дата поступления в университет: ", validators=[DataRequired()])
-    university_finished = DateField("Дата окончания университета: ", validators=[DataRequired()])
-    workplace = StringField("Место работы: ", validators=[DataRequired()])
-    passport_series = StringField("Серия паспорта: ", validators=[DataRequired()])
-    passport_number = StringField("Номер паспорта: ", validators=[DataRequired()])
-    passport_date = DateField("Дата выдачи паспорта: ", validators=[DataRequired()])
-    passport_issued_by = StringField("Кем выдан паспорт: ", validators=[DataRequired()])
-    registration_address = StringField("Адрес регистрации: ", validators=[DataRequired()])
+    #                    validators=[DataRequired("Поле обязательно для заполнения")])
+    school = StringField("Школа: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    school_started = DateField("Дата поступления в школу: ",
+                               validators=[DataRequired("Поле обязательно для заполнения")])
+    school_finished = DateField("Дата окончания школы: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    university = StringField("Университет: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    university_started = DateField("Дата поступления в университет: ",
+                                   validators=[DataRequired("Поле обязательно для заполнения")])
+    university_finished = DateField("Дата окончания университета: ",
+                                    validators=[DataRequired("Поле обязательно для заполнения")])
+    workplace = StringField("Место работы: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    passport_series = StringField("Серия паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    passport_number = StringField("Номер паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    passport_date = DateField("Дата выдачи паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    passport_issued_by = StringField("Кем выдан паспорт: ",
+                                     validators=[DataRequired("Поле обязательно для заполнения")])
+    registration_address = StringField("Адрес регистрации: ",
+                                       validators=[DataRequired("Поле обязательно для заполнения")])
     tg = StringField("Telegram: ")
     vk = StringField("VK: ")
     was_pupil = BooleanField("Был учеником ЭМШ")
