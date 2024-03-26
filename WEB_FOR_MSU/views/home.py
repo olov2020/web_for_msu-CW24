@@ -32,19 +32,21 @@ def home():
 
 
 @main.route('/registration/pupil', methods=['GET', 'POST'])
-def registration():
+def pupil_registration():
     if current_user.is_authenticated:
         return redirect(url_for('.home'))
     registration_form = RegistrationForm()
     if registration_form.validate_on_submit():
         if User.query.filter_by(email=registration_form.email.data).first() is not None:
             flash('Пользователь с такой почтой уже существует', 'error')
-            return redirect(url_for('.registration/pupil'))
+            return redirect(url_for('.pupil_registration'))
         role = Role.query.filter_by(name='pupil').first()
-        User.add_user(email=registration_form.email.data,
-                      password=registration_form.password.data,
-                      role_id=role.id,
-                      form=registration_form)
+        user = User.add_user(email=registration_form.email.data,
+                             password=registration_form.password.data,
+                             role_id=role.id,
+                             form=registration_form)
+
+        login_user(user, force=True)
         return redirect(url_for('.home'))
 
     return render_template('home/registration.html',
@@ -58,14 +60,15 @@ def teacher_registration():
         return redirect(url_for('.home'))
     registration_form = TeacherRegistrationForm()
     if registration_form.validate_on_submit():
-        if Teacher.query.filter_by(email=registration_form.email.data).first() is not None:
+        if User.query.filter_by(email=registration_form.email.data).first() is not None:
             flash('Преподаватель с такой почтой уже существует', 'error')
-            return redirect(url_for('.registration/teacher'))
+            return redirect(url_for('.teacher_registration'))
         role = Role.query.filter_by(name='teacher').first()
-        User.add_user(email=registration_form.email.data,
-                      password=registration_form.password.data,
-                      role_id=role.id,
-                      form=registration_form)
+        user = User.add_user(email=registration_form.email.data,
+                             password=registration_form.password.data,
+                             role_id=role.id,
+                             form=registration_form)
+        login_user(user, force=True)
         return redirect(url_for('.home'))
 
     return render_template('home/registration_teacher.html',
@@ -84,7 +87,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if not user:
             flash("Нет пользователя с такой почтой", 'error')
-        elif not user.verify_password(password):
+        elif not user.check_password(password):
             flash("Неверный пароль", 'error')
         else:
             login_user(user, remember=login_form.remember.data, force=True)
@@ -104,9 +107,26 @@ def account():
         return redirect(url_for('.home'))
     if account_form.submit_save.data and account_form.validate():
         if current_user.check_password(account_form.password.data):
-            image = account_form.image.data
-            if image:
-                controller.change_user_image(image)
+            if account_form.email.data:
+                if account_form.email.data != current_user.email and User.query.filter_by(
+                        email=account_form.email.data).first() is not None:
+                    flash('Пользователь с такой почтой уже существует', 'error')
+                    return redirect(url_for('.account'))
+                current_user.set_email(account_form.email.data)
+            if account_form.image.data:
+                controller.change_user_image(account_form.image.data)
+            if account_form.new_password.data:
+                current_user.set_password(account_form.new_password.data)
+            if account_form.name.data:
+                current_user.set_name(account_form.name.data)
+            if account_form.surname.data:
+                current_user.set_surname(account_form.surname.data)
+            if account_form.patronymic.data:
+                current_user.set_patronymic(account_form.patronymic.data)
+            if account_form.school.data:
+                current_user.set_school(account_form.school.data)
+            if account_form.phone.data:
+                current_user.set_phone(account_form.phone.data)
 
     image = controller.get_user_image()
     user = {'name': current_user.get_name(),
