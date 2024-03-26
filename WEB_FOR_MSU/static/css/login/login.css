@@ -5,11 +5,16 @@
 .registration {
     display: flex;
     justify-content: center;
-    
-    padding: 5px;
+    align-items: center;
+    flex-direction: column;
 }
 
 .registration_text {
+    height: auto;
     font-size: 18px;
-    color: #9F1A59;    
+    color: #9F1A59;
+}
+
+.registration_container {
+    margin-top: 10px;
 }

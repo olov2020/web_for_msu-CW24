@@ -68,7 +68,7 @@ def teacher_registration():
                       form=registration_form)
         return redirect(url_for('.home'))
 
-    return render_template('home/teacher_registration.html',
+    return render_template('home/registration_teacher.html',
                            title='Registration',
                            form_registration=registration_form)
 

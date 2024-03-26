@@ -44,9 +44,17 @@
             <div>{{ form_login.submit(class='form_submit_button') }}</div>
 
             <div class='registration'>
-                <a href='/registration'>
-                    <p class='registration_text'>Зарегистрироваться</p>
-                </a>
+                <div class='registration_container'>
+                    <a href='/registration/pupil'>
+                        <p class='registration_text'>Зарегистрироваться ученику</p>
+                    </a>
+                </div>
+
+                <div class='registration_container'>
+                    <a href='/registration/teacher'>
+                        <p class='registration_text'>Зарегистрироваться преподавателю</p>
+                    </a>
+                </div>
             </div>
         </div>
     </form>
