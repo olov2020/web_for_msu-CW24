@@ -6,6 +6,7 @@ class Pupil(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref='pupil')
+    email = db.Column(db.String(), nullable=False)
     name = db.Column(db.String(), nullable=False)
     surname = db.Column(db.String(), nullable=False)
     patronymic = db.Column(db.String())
@@ -44,13 +45,14 @@ class Pupil(db.Model):
 
     # TODO: add foreign keys: KNR_id	VS_id	NS_id	OK_id	OC_id	LS_ids	graduation_id
 
-    def __init__(self, user_id, name, surname, birth_date, nickname, phone, passport_number, passport_series,
+    def __init__(self, user_id, email, name, surname, birth_date, nickname, phone, passport_number, passport_series,
                  passport_date, passport_issued_by, registration_address, parent1_name, parent1_surname,
                  parent1_patronymic, parent1_phone, parent1_email, school, school_grade, enroll_way,
                  agreement, organization_fee, present_FA, security_key_card, graduating, achievements, mailing=False,
                  patronymic=None, telegram=None, vk=None, parent2_name=None, parent2_surname=None,
                  parent2_patronymic=None, parent2_phone=None, parent2_email=None, how_know=None):
         self.user_id = user_id
+        self.email = email
         self.name = name
         self.surname = surname
         self.patronymic = patronymic
@@ -90,6 +92,7 @@ class Pupil(db.Model):
     def add_pupil(user_id, form, agreement):
         pupil = Pupil(
             user_id=user_id,
+            email=form.email.data,
             name=form.name.data,
             surname=form.surname.data,
             patronymic=form.patronymic.data,
@@ -120,7 +123,7 @@ class Pupil(db.Model):
             organization_fee=None,
             present_FA=None,
             security_key_card=None,
-            graduating=form.grade.data == 11,
+            graduating=form.grade.data == '11',
             achievements=None,
             mailing=form.mailing.data,
             how_know=form.how_know.data

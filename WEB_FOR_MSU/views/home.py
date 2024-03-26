@@ -31,26 +31,45 @@ def home():
                            authenticated=current_user.is_authenticated)
 
 
-@main.route('/registration', methods=['GET', 'POST'])
+@main.route('/registration/pupil', methods=['GET', 'POST'])
 def registration():
     if current_user.is_authenticated:
         return redirect(url_for('.home'))
     registration_form = RegistrationForm()
     if registration_form.validate_on_submit():
-        if registration_form.role.data == 'pupil':
-            if User.query.filter_by(email=registration_form.email.data).first() is not None:
-                flash('User with this email already exists', 'error')
-                return redirect(url_for('.registration'))
-            role = Role.query.filter_by(name=registration_form.role.data).first()
-            User.add_user(email=registration_form.email.data,
-                          password=registration_form.password.data,
-                          role_id=role.id,
-                          form=registration_form)
+        if User.query.filter_by(email=registration_form.email.data).first() is not None:
+            flash('Пользователь с такой почтой уже существует', 'error')
+            return redirect(url_for('.registration/pupil'))
+        role = Role.query.filter_by(name='pupil').first()
+        User.add_user(email=registration_form.email.data,
+                      password=registration_form.password.data,
+                      role_id=role.id,
+                      form=registration_form)
+        return redirect(url_for('.home'))
 
     return render_template('home/registration.html',
                            title='Registration',
                            form_registration=registration_form)
 
+@main.route('/registration/teacher', methods=['GET', 'POST'])
+def teacher_registration():
+    if current_user.is_authenticated:
+        return redirect(url_for('.home'))
+    registration_form = TeacherRegistrationForm()
+    if registration_form.validate_on_submit():
+        if Teacher.query.filter_by(email=registration_form.email.data).first() is not None:
+            flash('Преподаватель с такой почтой уже существует', 'error')
+            return redirect(url_for('.registration/teacher'))
+        role = Role.query.filter_by(name='teacher').first()
+        User.add_user(email=registration_form.email.data,
+                      password=registration_form.password.data,
+                      role_id=role.id,
+                      form=registration_form)
+        return redirect(url_for('.home'))
+
+    return render_template('home/teacher_registration.html',
+                           title='Registration',
+                           form_registration=registration_form)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
