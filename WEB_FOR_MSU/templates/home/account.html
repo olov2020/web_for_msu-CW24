@@ -44,7 +44,7 @@
                 {% if field.errors %}
                 {{ field(class='form_input form_input_error', size=32, placeholder='Поле обязательно для заполнения', value='') }}
                 {% else %}
-                {{ field(class='form_input', size=32) }}
+                {{ field(class='form_input', size=32, value=user[field.id]) }}
                 {% endif %}
             </div>
             {% endif %}
@@ -68,7 +68,7 @@
                 {% if field.errors %}
                 {{ field(class='form_input form_input_error phone', size=32, placeholder='Поле обязательно для заполнения', value='') }}
                 {% else %}
-                {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
+                {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99', value=user[field.id]) }}
                 {% endif %}
             </div>
             {% endif %}
@@ -79,7 +79,7 @@
                 {% if field.errors %}
                 {{ field(class='form_input form_input_error email', size=32, placeholder='Поле обязательно для заполнения', value='') }}
                 {% else %}
-                {{ field(class='form_input email', placeholder='example@mail.ru') }}
+                {{ field(class='form_input email', placeholder='example@mail.ru', value=user[field.id]) }}
                 {% endif %}
             </div>
             {% endif %}

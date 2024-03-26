@@ -129,7 +129,13 @@ def account():
     user = {'name': 'Vladimir',
             'surname': 'Vinogradov',
             'status': 'Teacher',
+            'patronymic': 'Andreevich',
             'photo': image,
+            'email': 'example@mail.ru',
+            'old_password': '',
+            'new_password': '',
+            'phone': '+7 (987) 324-21-12',
+            'school': '1234',
             }
     return render_template('home/account.html',
                            title='Account',
