@@ -7,6 +7,7 @@
 <script src="../../static/js/registration/registration.js"></script>
 <script src="/static/js/jquery/jquery-3.7.1.min.js"></script>
 <script src="/static/js/jquery/jquery.maskedinput.min.js"></script>
+
 {% endblock %}
 
 {% block account %}
@@ -81,6 +82,13 @@
                 {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
             </div>
             {% endif %}
+
+            {% if field.type == 'EmailField' %}
+            {{ field.label(class='form_text') }}
+            <div>
+                {{ field(class='form_input email', placeholder='example@mail.ru') }}
+            </div>
+            {% endif %}
         </div>
 
         {% endfor %}
@@ -88,6 +96,7 @@
 </div>
 
 <script>
-$('.phone').mask('+7 (999) 999-99-99');
+    $('.phone').mask('+7 (999) 999-99-99');
+
 </script>
 {% endblock %}
