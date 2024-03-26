@@ -1,22 +1,15 @@
-import os
-import uuid
-from os.path import splitext
 
-import dotenv
 from flask import request, render_template, current_app, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
-
+from WEB_FOR_MSU.controllers import *
 from WEB_FOR_MSU.forms import *
 # from app.utils import send_mail
 
 from flask import Blueprint
-import boto3
-from dotenv import load_dotenv
-from werkzeug.utils import secure_filename
-from PIL import Image
+
 
 main = Blueprint('home', __name__)
 
@@ -39,6 +32,7 @@ def registration():
     if current_user.is_authenticated:
         return redirect(url_for('.home'))
     registration_form = RegistrationForm()
+    controller = ImageController()
     if registration_form.validate_on_submit():
         if registration_form.role.data == 'pupil':
             if User.query.filter_by(email=registration_form.email.data).first() is not None:
@@ -46,9 +40,9 @@ def registration():
                 return redirect(url_for('.registration'))
             role = Role.query.filter_by(name=registration_form.role.data).first()
             image_name = 'default.jpg'
-            if registration_form.image.data:
-                image_name = 'my_image.jpg'
-                upload_to_yandex_s3(registration_form.image.data, 'emshfiles', image_name)
+            image = registration_form.image.data
+            if image:
+                controller.save_user_image(image)
             User.add_user(email=registration_form.email.data,
                           password=registration_form.password.data,
                           role_id=role.id,
@@ -81,99 +75,6 @@ def registration():
                            form_registration=registration_form)
 
 
-def upload_to_yandex_s3(file, bucket, object_name):
-    load_dotenv()
-    if bucket == "images":
-        bucket = os.getenv("IMAGES_BUCKET")
-    s3_client = boto3.client('s3',
-                             endpoint_url='https://storage.yandexcloud.net',
-                             region_name='ru-central1',
-                             aws_access_key_id=os.getenv('ACCESS_KEY_S3'),
-                             aws_secret_access_key=os.getenv('SECRET_KEY_S3'))
-
-    s3_client.upload_file(file, bucket, object_name)
-
-
-def download_from_yandex_s3(bucket, object_name, download_path):
-    load_dotenv()
-    if bucket == "images":
-        bucket = os.getenv("IMAGES_BUCKET")
-    s3_client = boto3.client('s3',
-                             endpoint_url='https://storage.yandexcloud.net',
-                             region_name='ru-central1',
-                             aws_access_key_id=os.getenv('ACCESS_KEY_S3'),
-                             aws_secret_access_key=os.getenv('SECRET_KEY_S3'))
-
-    s3_client.download_file(bucket, object_name, download_path)
-
-
-def get_from_yandex_s3(bucket, object_name):
-    load_dotenv()
-    if bucket == "images":
-        bucket = os.getenv("IMAGES_BUCKET")
-    url = f"https://storage.yandexcloud.net/{bucket}/{object_name}"
-    return url
-
-
-def check_file_exists_yandex_s3(bucket, object_name):
-    load_dotenv()
-    if bucket == "images":
-        bucket = os.getenv("IMAGES_BUCKET")
-    s3_client = boto3.client('s3',
-                             endpoint_url='https://storage.yandexcloud.net',
-                             region_name='ru-central1',
-                             aws_access_key_id=os.getenv('ACCESS_KEY_S3'),
-                             aws_secret_access_key=os.getenv('SECRET_KEY_S3'))
-    try:
-        s3_client.head_object(Bucket=bucket, Key=object_name)
-        return True
-    except Exception as e:
-        return False
-
-
-def delete_from_yandex_s3(bucket, object_name):
-    load_dotenv()
-    if bucket == "images":
-        bucket = os.getenv("IMAGES_BUCKET")
-    s3_client = boto3.client('s3',
-                             endpoint_url='https://storage.yandexcloud.net',
-                             region_name='ru-central1',
-                             aws_access_key_id=os.getenv('ACCESS_KEY_S3'),
-                             aws_secret_access_key=os.getenv('SECRET_KEY_S3'))
-
-    s3_client.delete_object(Bucket=bucket, Key=object_name)
-
-
-def generate_unique_filename(original_filename):
-    filename, file_extension = splitext(original_filename)
-    unique_filename = str(uuid.uuid4())
-    return unique_filename + ".jpeg"
-
-
-def reduce_image_size(image_path, output_path, quality=20):
-    image = Image.open(image_path)
-    image.save(output_path, "JPEG", quality=quality)
-
-
-def save_user_image(image):
-    filename = "temp.jpeg"
-    path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-    image.save(path)
-    reduce_image_size(path, path)
-    image_name = generate_unique_filename(image.filename)
-    upload_to_yandex_s3(path, "images", image_name)
-    if current_user.image != "default.png":
-        delete_from_yandex_s3("images", current_user.image)
-    current_user.image = image_name
-    current_user.save()
-    os.remove(path)
-
-
-def get_user_image():
-    image_name = current_user.image
-    if not check_file_exists_yandex_s3("images", image_name):
-        image_name = "default.png"
-    return get_from_yandex_s3("images", image_name)
 
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -201,15 +102,16 @@ def login():
 def account():
     logout_form = LogoutForm()
     account_form = AccountForm()
+    controller = ImageController()
     if logout_form.submit.data and logout_form.is_submitted():
         logout_user()
         return redirect(url_for('.home'))
     if account_form.submit_save.data and account_form.validate():
         image = account_form.image.data
         if image:
-            save_user_image(image)
+            controller.save_user_image(image)
 
-    image = get_user_image()
+    image = controller.get_user_image()
     user = {'name': current_user.get_name(),
             'surname': current_user.get_surname(),
             'status': current_user.get_role(),
