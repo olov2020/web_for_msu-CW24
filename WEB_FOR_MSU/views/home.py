@@ -36,20 +36,16 @@ def registration():
     if current_user.is_authenticated:
         return redirect(url_for('.home'))
     registration_form = RegistrationForm()
-    controller = ImageController()
     if registration_form.validate_on_submit():
         if registration_form.role.data == 'pupil':
             if User.query.filter_by(email=registration_form.email.data).first() is not None:
                 flash('User with this email already exists', 'error')
                 return redirect(url_for('.registration'))
             role = Role.query.filter_by(name=registration_form.role.data).first()
-            image_name = 'default.png'
             User.add_user(email=registration_form.email.data,
                           password=registration_form.password.data,
                           role_id=role.id,
-                          image=image_name,
-                          form=registration_form,
-                          agreement=registration_form.agreement.data)
+                          form=registration_form)
 
     return render_template('home/registration.html',
                            title='Registration',

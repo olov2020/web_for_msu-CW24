@@ -4,6 +4,8 @@ from WEB_FOR_MSU import db, login_manager
 from datetime import datetime
 from flask_security import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from WEB_FOR_MSU.controllers import ImageController
 from WEB_FOR_MSU.models.pupil import Pupil
 
 
@@ -37,16 +39,23 @@ class User(db.Model, UserMixin):
         self.password = generate_password_hash(password)
 
     def verify_password(self, password):
-        return self.password == password  # пока не добавлена регистрация
-        # return check_password_hash(self.password, password)
+        # return self.password == password  # пока не добавлена регистрация
+        return check_password_hash(self.password, password)
 
     def save(self):
         db.session.add(self)
         db.session.commit()
 
     @staticmethod
-    def add_user(email, password, role_id, form, agreement, image='default.jpg'):
-        user = User(email=email, password=password, role_id=role_id, image=image)
+    def add_user(email, password, role_id, form):
+        image = form.image.data
+        controller = ImageController()
+        if image:
+            image = controller.save_user_image(image)
+        else:
+            image = 'default.png'
+        agreement = controller.save_user_agreement(form.agreement.data)
+        user = User(email=email, password=password, image=image, role_id=role_id)
         db.session.add(user)
         db.session.commit()
         if user.role == 'pupil':
@@ -87,5 +96,3 @@ class User(db.Model, UserMixin):
             return self.pupil[0].school
         elif self.role == 'teacher':
             return self.teacher[0].school
-
-

@@ -14,6 +14,8 @@ class ImageController:
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
+        elif bucket == "documents":
+            bucket = os.getenv("DOCUMENTS_BUCKET")
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',
@@ -26,6 +28,8 @@ class ImageController:
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
+        elif bucket == "documents":
+            bucket = os.getenv("DOCUMENTS_BUCKET")
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',
@@ -38,6 +42,8 @@ class ImageController:
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
+        elif bucket == "documents":
+            bucket = os.getenv("DOCUMENTS_BUCKET")
         url = f"https://storage.yandexcloud.net/{bucket}/{object_name}"
         return url
 
@@ -45,6 +51,8 @@ class ImageController:
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
+        elif bucket == "documents":
+            bucket = os.getenv("DOCUMENTS_BUCKET")
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',
@@ -68,21 +76,27 @@ class ImageController:
 
         s3_client.delete_object(Bucket=bucket, Key=object_name)
 
+    def generate_unique_imagename(self, original_filename):
+        unique_filename = str(uuid.uuid4())
+        return unique_filename + ".jpeg"
+
     def generate_unique_filename(self, original_filename):
         filename, file_extension = splitext(original_filename)
         unique_filename = str(uuid.uuid4())
-        return unique_filename + ".jpeg"
+        return unique_filename + file_extension
+
 
     def reduce_image_size(self, image_path, output_path, quality=20):
         image = Image.open(image_path)
         image.convert("RGB").save(output_path, "JPEG", quality=quality)
+
 
     def change_user_image(self, image):
         filename = "temp.jpeg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
         self.reduce_image_size(path, path)
-        image_name = self.generate_unique_filename(image.filename)
+        image_name = self.generate_unique_imagename(image.filename)
         self.upload_to_yandex_s3(path, "images", image_name)
         if current_user.image != "default.png":
             self.delete_from_yandex_s3("images", current_user.image)
@@ -90,11 +104,26 @@ class ImageController:
         current_user.save()
         os.remove(path)
 
+
+    def save_user_image(self, image):
+        filename = "temp.jpeg"
+        path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        image.save(path)
+        self.reduce_image_size(path, path)
+        image_name = self.generate_unique_imagename(image.filename)
+        self.upload_to_yandex_s3(path, "images", image_name)
+        os.remove(path)
+        return image_name
+
+
     def save_user_agreement(self, agreement):
         filename = self.generate_unique_filename(agreement.filename)
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         agreement.save(path)
-        self.upload_to_yandex_s3(path, "files", filename)
+        self.upload_to_yandex_s3(path, "documents", filename)
+        os.remove(path)
+        return filename
+
 
     def get_user_image(self):
         image_name = current_user.image
