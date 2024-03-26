@@ -1,4 +1,3 @@
-
 from flask import request, render_template, current_app, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
 
@@ -9,7 +8,6 @@ from WEB_FOR_MSU.forms import *
 # from app.utils import send_mail
 
 from flask import Blueprint
-
 
 main = Blueprint('home', __name__)
 
@@ -73,8 +71,6 @@ def registration():
     return render_template('home/registration.html',
                            title='Registration',
                            form_registration=registration_form)
-
-
 
 
 @main.route('/login', methods=['GET', 'POST'])
