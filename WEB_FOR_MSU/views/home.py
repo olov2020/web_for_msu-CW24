@@ -51,6 +51,7 @@ def registration():
                            title='Registration',
                            form_registration=registration_form)
 
+
 @main.route('/registration/teacher', methods=['GET', 'POST'])
 def teacher_registration():
     if current_user.is_authenticated:
@@ -70,6 +71,7 @@ def teacher_registration():
     return render_template('home/teacher_registration.html',
                            title='Registration',
                            form_registration=registration_form)
+
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -101,9 +103,10 @@ def account():
         logout_user()
         return redirect(url_for('.home'))
     if account_form.submit_save.data and account_form.validate():
-        image = account_form.image.data
-        if image:
-            controller.change_user_image(image)
+        if current_user.check_password(account_form.password.data):
+            image = account_form.image.data
+            if image:
+                controller.change_user_image(image)
 
     image = controller.get_user_image()
     user = {'name': current_user.get_name(),

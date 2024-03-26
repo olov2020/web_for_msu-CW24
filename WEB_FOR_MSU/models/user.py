@@ -6,7 +6,7 @@ from flask_security import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from WEB_FOR_MSU.controllers import ImageController
-from WEB_FOR_MSU.models import Teacher
+from WEB_FOR_MSU.models.teacher import Teacher
 from WEB_FOR_MSU.models.pupil import Pupil
 
 
