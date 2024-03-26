@@ -11,6 +11,7 @@ class RegistrationForm(FlaskForm):
     name = StringField("Имя: ", validators=[DataRequired()])
     surname = StringField("Фамилия: ", validators=[DataRequired()])
     patronymic = StringField("Отчество: ")
+    birth_date = DateField("Дата рождения: ", validators=[DataRequired()])
     email = EmailField("Email: ", validators=[DataRequired(), Email()])
     password = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=8)])
     phone = TelField("Телефон: ", validators=[DataRequired()])

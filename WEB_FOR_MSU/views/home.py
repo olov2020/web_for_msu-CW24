@@ -15,10 +15,13 @@ main = Blueprint('home', __name__)
 @main.route('/')
 @main.route('/home')
 def home():
-    user = {'name': 'Vladimir',
-            'surname': 'Vinogradov',
-            'status': 'Teacher',
-            }
+    if current_user.is_authenticated:
+        user = {'name': current_user.get_name(),
+                'surname': current_user.get_surname(),
+                'status': current_user.get_role(),
+                }
+    else:
+        user = None
     return render_template('home/home.html',
                            title='Home',
                            user=user,
