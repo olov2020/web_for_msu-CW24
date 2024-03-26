@@ -16,9 +16,12 @@ main = Blueprint('home', __name__)
 @main.route('/home')
 def home():
     if current_user.is_authenticated:
+        controller = ImageController()
+        image = controller.get_user_image()
         user = {'name': current_user.get_name(),
                 'surname': current_user.get_surname(),
                 'status': current_user.get_role(),
+                'photo': image,
                 }
     else:
         user = None
@@ -40,6 +43,7 @@ def registration():
                 flash('User with this email already exists', 'error')
                 return redirect(url_for('.registration'))
             role = Role.query.filter_by(name=registration_form.role.data).first()
+            image_name = 'default.png'
             User.add_user(email=registration_form.email.data,
                           password=registration_form.password.data,
                           role_id=role.id,
