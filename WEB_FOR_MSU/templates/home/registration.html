@@ -29,7 +29,11 @@
             {% if field.type == 'FileField' %}
             {{ field.label(class='form_text') }}
             <div>
+                {% if field.errors %}
+                {{ field(class='form_file_button form_file_button_error') }}
+                {% else %}
                 {{ field(class='form_file_button') }}
+                {% endif %}
             </div>
             {% endif %}
 
@@ -37,7 +41,12 @@
             {{ field.label(class='form_text') }}
             <div>
                 {% if field.errors %}
-                {{ field(class='form_input form_input_error', size=32, placeholder='Поле обязательно для заполнения', value='') }}
+                
+                {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+                
+                {{ field(class='form_input form_input_error', size=32, placeholder=field.errors, value='') }}
                 {% else %}
                 {{ field(class='form_input', size=32, placeholder='Введите данные') }}
                 {% endif %}
