@@ -40,36 +40,12 @@ def registration():
                 flash('User with this email already exists', 'error')
                 return redirect(url_for('.registration'))
             role = Role.query.filter_by(name=registration_form.role.data).first()
-            image_name = 'default.jpg'
-            image = registration_form.image.data
-            if image:
-                controller.save_user_image(image)
             User.add_user(email=registration_form.email.data,
                           password=registration_form.password.data,
                           role_id=role.id,
-                          image=image_name)
-            pupil = Pupil.add_pupil(user_id=user.id,
-                                    name=registration_form.name.data,
-                                    surname=registration_form.surname.data,
-                                    birth_date=registration_form.birth_date.data,
-                                    nickname=registration_form.nickname.data,
-                                    phone=registration_form.phone.data,
-                                    passport_number=registration_form.passport_number.data,
-                                    passport_series=registration_form.passport_series.data,
-                                    passport_date=registration_form.passport_date.data,
-                                    passport_issued_by=registration_form.passport_issued_by.data,
-                                    registration_address=registration_form.registration_address.data,
-                                    parent1_name=registration_form.parent1_name.data,
-                                    parent1_surname=registration_form.parent1_surname.data,
-                                    parent1_patronymic=registration_form.parent1_patronymic.data,
-                                    parent1_phone=registration_form.parent1_phone.data,
-                                    parent1_email=registration_form.email.data,
-                                    school=registration_form.school.data,
-                                    school_grade=registration_form.grade.data,
-                                    enroll_way="Вступительные",
-                                    agreement=registration_form.agreement.name,
-                                    organization_fee=None,
-                                    )
+                          image=image_name,
+                          form=registration_form,
+                          agreement=registration_form.agreement.data)
 
     return render_template('home/registration.html',
                            title='Registration',
@@ -108,7 +84,7 @@ def account():
     if account_form.submit_save.data and account_form.validate():
         image = account_form.image.data
         if image:
-            controller.save_user_image(image)
+            controller.change_user_image(image)
 
     image = controller.get_user_image()
     user = {'name': current_user.get_name(),

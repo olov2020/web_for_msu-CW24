@@ -77,7 +77,7 @@ class ImageController:
         image = Image.open(image_path)
         image.convert("RGB").save(output_path, "JPEG", quality=quality)
 
-    def save_user_image(self, image):
+    def change_user_image(self, image):
         filename = "temp.jpeg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
@@ -89,6 +89,12 @@ class ImageController:
         current_user.image = image_name
         current_user.save()
         os.remove(path)
+
+    def save_user_agreement(self, agreement):
+        filename = self.generate_unique_filename(agreement.filename)
+        path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        agreement.save(path)
+        self.upload_to_yandex_s3(path, "files", filename)
 
     def get_user_image(self):
         image_name = current_user.image

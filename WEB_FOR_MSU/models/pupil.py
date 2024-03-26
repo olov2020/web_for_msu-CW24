@@ -87,24 +87,43 @@ class Pupil(db.Model):
         self.achievements = achievements
 
     @staticmethod
-    def add_pupil(user_id, name, surname, birth_date, nickname, phone, passport_number, passport_series,
-                  passport_date, passport_issued_by, registration_address, parent1_name, parent1_surname,
-                  parent1_patronymic, parent1_phone, parent1_email, school, school_grade, emsh_grade, enroll_way,
-                  agreement, organization_fee, present_FA, security_key_card, graduating, achievements, mailing=False,
-                  patronymic=None, telegram=None, vk=None, parent2_name=None, parent2_surname=None,
-                  parent2_patronymic=None, parent2_phone=None, parent2_email=None, how_know=None):
-        pupil = Pupil(user_id=user_id, name=name, surname=surname, birth_date=birth_date, nickname=nickname,
-                      phone=phone, passport_number=passport_number, passport_series=passport_series,
-                      passport_date=passport_date, passport_issued_by=passport_issued_by,
-                      registration_address=registration_address, parent1_name=parent1_name,
-                      parent1_surname=parent1_surname, parent1_patronymic=parent1_patronymic,
-                      parent1_phone=parent1_phone, parent1_email=parent1_email, school=school,
-                      school_grade=school_grade, enroll_way=enroll_way,
-                      agreement=agreement, organization_fee=organization_fee, present_FA=present_FA,
-                      security_key_card=security_key_card, graduating=graduating, achievements=achievements,
-                      mailing=mailing, patronymic=patronymic, telegram=telegram, vk=vk,
-                      parent2_name=parent2_name, parent2_surname=parent2_surname,
-                      parent2_patronymic=parent2_patronymic, parent2_phone=parent2_phone,
-                      parent2_email=parent2_email, how_know=how_know)
+    def add_pupil(user_id, form, agreement):
+        pupil = Pupil(
+            user_id=user_id,
+            name=form.name.data,
+            surname=form.surname.data,
+            patronymic=form.patronymic.data,
+            birth_date=form.birth_date.data,
+            nickname=form.nickname.data,
+            telegram=form.tg.data,
+            vk=form.vk.data,
+            phone=form.phone.data,
+            passport_number=form.passport_number.data,
+            passport_series=form.passport_series.data,
+            passport_date=form.passport_date.data,
+            passport_issued_by=form.passport_issued_by.data,
+            registration_address=form.registration_address.data,
+            parent1_name=form.parent1_name.data,
+            parent1_surname=form.parent1_surname.data,
+            parent1_patronymic=form.parent1_patronymic.data,
+            parent1_phone=form.parent1_phone.data,
+            parent1_email=form.email.data,
+            parent2_name=form.parent2_name.data,
+            parent2_surname=form.parent2_surname.data,
+            parent2_patronymic=form.parent2_patronymic.data,
+            parent2_phone=form.parent2_phone.data,
+            parent2_email=form.parent2_email.data,
+            school=form.school.data,
+            school_grade=form.grade.data,
+            enroll_way="Вступительные",
+            agreement=agreement,
+            organization_fee=None,
+            present_FA=None,
+            security_key_card=None,
+            graduating=form.grade.data == 11,
+            achievements=None,
+            mailing=form.mailing.data,
+            how_know=form.how_know.data
+        )
         db.session.add(pupil)
         db.session.commit()

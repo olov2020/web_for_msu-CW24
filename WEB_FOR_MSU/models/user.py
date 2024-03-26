@@ -4,6 +4,7 @@ from WEB_FOR_MSU import db, login_manager
 from datetime import datetime
 from flask_security import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from WEB_FOR_MSU.models.pupil import Pupil
 
 
 @login_manager.user_loader
@@ -44,10 +45,12 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
     @staticmethod
-    def add_user(email, password, role_id, image='default.jpg'):
+    def add_user(email, password, role_id, form, agreement, image='default.jpg'):
         user = User(email=email, password=password, role_id=role_id, image=image)
         db.session.add(user)
         db.session.commit()
+        if user.role == 'pupil':
+            Pupil.add_pupil(user_id=user.id, form=form, agreement=agreement)
 
     def get_name(self):
         if self.role == 'pupil':
@@ -84,3 +87,5 @@ class User(db.Model, UserMixin):
             return self.pupil[0].school
         elif self.role == 'teacher':
             return self.teacher[0].school
+
+
