@@ -6,6 +6,7 @@ from flask_security import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from WEB_FOR_MSU.controllers import ImageController
+from WEB_FOR_MSU.models import Teacher
 from WEB_FOR_MSU.models.pupil import Pupil
 
 
@@ -60,6 +61,8 @@ class User(db.Model, UserMixin):
         db.session.commit()
         if user.role == 'pupil':
             Pupil.add_pupil(user_id=user.id, form=form, agreement=agreement)
+        if user.role == 'teacher':
+            Teacher.add_teacher(user_id=user.id, form=form)
 
     def get_name(self):
         if self.role == 'pupil':

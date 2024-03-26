@@ -1,9 +1,9 @@
 INSERT INTO public.role (id, name)
-VALUES (1, 'pupil');
+VALUES (0, 'pupil');
 INSERT INTO public.role (id, name)
-VALUES (2, 'teacher');
+VALUES (1, 'teacher');
 INSERT INTO public.role (id, name)
-VALUES (3, 'admin');
+VALUES (2, 'admin');
 
 INSERT INTO public."user" (id, email, password, image, created_on, updated_on, role_id, fs_uniquifier) VALUES (1, 'pupil@mail.ru', '1234', 'default.png', null, null, 1, '1');
 INSERT INTO public."user" (id, email, password, image, created_on, updated_on, role_id, fs_uniquifier) VALUES (2, 'teacher@mail.ru', '1234', 'default.png', null, null, 2, '2');
