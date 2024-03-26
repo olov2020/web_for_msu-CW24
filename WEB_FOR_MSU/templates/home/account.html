@@ -5,6 +5,7 @@
 <title>{{title}}</title>
 <link href="../../static/css/account/account.css" rel="stylesheet">
 <script src="../../static/js/account/account.js"></script>
+<script src='/static/js/base/templates.js'></script>
 {% endblock %}
 
 {% block account %}
@@ -58,6 +59,28 @@
             {% if field.type == 'SubmitField' %}
             <div>
                 {{ field(class='form_submit_button') }}
+            </div>
+            {% endif %}
+
+            {% if field.type == 'TelField' %}
+            {{ field.label(class='form_text') }}
+            <div>
+                {% if field.errors %}
+                {{ field(class='form_input form_input_error phone', size=32, placeholder='Поле обязательно для заполнения', value='') }}
+                {% else %}
+                {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if field.type == 'EmailField' %}
+            {{ field.label(class='form_text') }}
+            <div>
+                {% if field.errors %}
+                {{ field(class='form_input form_input_error email', size=32, placeholder='Поле обязательно для заполнения', value='') }}
+                {% else %}
+                {{ field(class='form_input email', placeholder='example@mail.ru') }}
+                {% endif %}
             </div>
             {% endif %}
         </div>

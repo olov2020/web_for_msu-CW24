@@ -5,8 +5,7 @@
 <title>{{title}}</title>
 <link href="../../static/css/registration/registration.css" rel="stylesheet">
 <script src="../../static/js/registration/registration.js"></script>
-<script src="/static/js/jquery/jquery-3.7.1.min.js"></script>
-<script src="/static/js/jquery/jquery.maskedinput.min.js"></script>
+<script src='/static/js/base/templates.js'></script>
 
 {% endblock %}
 
@@ -79,14 +78,22 @@
             {% if field.type == 'TelField' %}
             {{ field.label(class='form_text') }}
             <div>
+                {% if field.errors %}
+                {{ field(class='form_input form_input_error phone', size=32, placeholder='Поле обязательно для заполнения', value='') }}
+                {% else %}
                 {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
+                {% endif %}
             </div>
             {% endif %}
 
             {% if field.type == 'EmailField' %}
             {{ field.label(class='form_text') }}
             <div>
+                {% if field.errors %}
+                {{ field(class='form_input form_input_error email', size=32, placeholder='Поле обязательно для заполнения', value='') }}
+                {% else %}
                 {{ field(class='form_input email', placeholder='example@mail.ru') }}
+                {% endif %}
             </div>
             {% endif %}
         </div>
@@ -94,9 +101,4 @@
         {% endfor %}
     </form>
 </div>
-
-<script>
-    $('.phone').mask('+7 (999) 999-99-99');
-
-</script>
 {% endblock %}
