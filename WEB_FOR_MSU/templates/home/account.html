@@ -22,13 +22,16 @@
 <div class='account'>
     <div class='account_photo'>
         <image src='{{ user.photo }}' class='photo'></image>
-        {{ form_account.image }}
+<!--        <form action="" method="post" enctype="multipart/form-data" novalidate>-->
+<!--        {{ form_account.hidden_tag() }}-->
+<!--            {{ form_account.image }}-->
+<!--        </form>-->
     </div>
 
-    <form action="" method="post" novalidate>
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form_account.hidden_tag() }}
 
-        {% for field in form_account if field.id != 'image' and field.id != 'submit_logout' %}
+        {% for field in form_account if field.id != 'submit_logout' %}
 
         <div class='form_container_text'>
             {% if field.type == 'FileField' %}
@@ -42,7 +45,8 @@
             {{ field.label(class='form_text') }}
             <div>
                 {% if field.errors %}
-                {{ field(class='form_input form_input_error', size=32, placeholder='Поле обязательно для заполнения', value='') }}
+                {{ field(class='form_input form_input_error', size=32, placeholder='Поле обязательно для заполнения',
+                value='') }}
                 {% else %}
                 {{ field(class='form_input', size=32, value=user[field.id]) }}
                 {% endif %}

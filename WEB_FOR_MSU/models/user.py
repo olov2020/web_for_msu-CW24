@@ -39,8 +39,48 @@ class User(db.Model, UserMixin):
         return self.password == password  # пока не добавлена регистрация
         # return check_password_hash(self.password, password)
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
     @staticmethod
     def add_user(email, password, role_id, image='default.jpg'):
         user = User(email=email, password=password, role_id=role_id, image=image)
         db.session.add(user)
         db.session.commit()
+
+    def get_name(self):
+        if self.role == 'pupil':
+            return self.pupil[0].name
+        elif self.role == 'teacher':
+            return self.teacher[0].name
+
+    def get_surname(self):
+        if self.role == 'pupil':
+            return self.pupil[0].surname
+        elif self.role == 'teacher':
+            return self.teacher[0].surname
+
+    def get_patronymic(self):
+        if self.role == 'pupil':
+            return self.pupil[0].patronymic
+        elif self.role == 'teacher':
+            return self.teacher[0].patronymic
+
+    def get_role(self):
+        if self.role == 'pupil':
+            return 'Ученик'
+        elif self.role == 'teacher':
+            return 'Преподаватель'
+
+    def get_phone(self):
+        if self.role == 'pupil':
+            return self.pupil[0].phone
+        elif self.role == 'teacher':
+            return self.teacher[0].phone
+
+    def get_school(self):
+        if self.role == 'pupil':
+            return self.pupil[0].school
+        elif self.role == 'teacher':
+            return self.teacher[0].school

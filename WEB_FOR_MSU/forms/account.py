@@ -12,6 +12,7 @@ class AccountForm(FlaskForm):
     patronymic = StringField("Отчество: ")
     email = EmailField("Email: ", validators=[Email()])
     password = PasswordField("Пароль: ", validators=[Length(min=4, max=100)])
+    new_password = PasswordField("Новый пароль: ")
     phone = TelField("Телефон: ")
     school = StringField("Школа: ")
     image = FileField("Обновить фото профиля", validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif', 'bmp'])])
