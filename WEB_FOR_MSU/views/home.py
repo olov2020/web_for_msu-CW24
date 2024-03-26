@@ -91,7 +91,10 @@ def account():
         logout_user()
         return redirect(url_for('.home'))
     if account_form.submit_save.data and account_form.validate():
-        if current_user.check_password(account_form.password.data):
+        if not current_user.check_password(account_form.password.data):
+            flash('Неверный пароль', 'error')
+            return redirect(url_for('.account'))
+        else:
             if account_form.email.data:
                 if account_form.email.data != current_user.email and User.query.filter_by(
                         email=account_form.email.data).first() is not None:
