@@ -58,6 +58,7 @@ def registration(registration_type):
 
     return render_template('home/registration.html',
                            title='Registration',
+                           user={},
                            form_registration=registration_form)
 
 
@@ -78,7 +79,8 @@ def login():
             login_user(user, remember=login_form.remember.data, force=True)
             return redirect(url_for('.home'))
         return redirect(url_for('.login'))
-    return render_template('home/login.html', title='Login', form_login=login_form)
+    return render_template('home/login.html', title='Login',
+                           user={}, form_login=login_form)
 
 
 @main.route('/account', methods=['GET', 'POST'])
