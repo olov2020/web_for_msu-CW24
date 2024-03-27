@@ -1,8 +1,12 @@
 "use strict";
 
-window.onload = function() {
+window.addEventListener('load', function () {
+    showHiddenMenu();
+});
+
+function showHiddenMenu() {
     var hidden_menu = document.querySelector(".hidden_menu");
-    
+
     var hidden_menu_courses = document.querySelector(".hidden_menu_courses");
 
     hidden_menu_courses.addEventListener("mouseover", function () {

@@ -59,7 +59,7 @@ def registration(registration_type):
     return render_template('home/registration.html',
                            title='Registration',
                            user={},
-                           authenticated=False,
+                           authenticated=current_user.is_authenticated,
                            form_registration=registration_form)
 
 
@@ -149,8 +149,20 @@ def account():
 @main.route('/marks', methods=['GET', 'POST'])
 @login_required
 def marks():
+    if current_user.is_authenticated:
+        image_service = ImageService()
+        image = image_service.get_user_image()
+        user = {'name': current_user.get_name(),
+                'surname': current_user.get_surname(),
+                'status': current_user.get_role(),
+                'photo': image,
+                }
+    else:
+        user = None
     return render_template('home/marks.html',
-                           title='Marks')
+                           title='Marks',
+                           authenticated=current_user.is_authenticated,
+                           user=user, )
 
 # @app.route('/schedule')
 # def schedule():
