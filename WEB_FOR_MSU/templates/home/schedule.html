@@ -22,7 +22,14 @@
             </div>
 
             <div>
-
+                {% for lesson in lessons_in_week %}
+                <div class='lesson'>
+                    {{ lesson.date(class='date') }}
+                    {{ lesson.emsh_lesson }}
+                    {{ lesson.auditory }}
+                    {{ lesson.course_name(class='{{ course_type }}') }}
+                </div>
+                {% endfor %}
             </div>
         </div>
 
