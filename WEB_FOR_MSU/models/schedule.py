@@ -11,3 +11,4 @@ class Schedule(db.Model):
     theme = db.Column(db.String())
     plan = db.Column(db.String())
     additional_info = db.Column(db.String())
+    pupils = db.relationship('Mark', back_populates='schedule')

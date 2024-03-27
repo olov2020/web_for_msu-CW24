@@ -59,6 +59,7 @@ def registration(registration_type):
     return render_template('home/registration.html',
                            title='Registration',
                            user={},
+                           authenticated=current_user.is_authenticated,
                            form_registration=registration_form)
 
 
@@ -78,7 +79,7 @@ def login():
         else:
             login_user(user, remember=login_form.remember.data, force=True)
             return redirect(url_for('.home'))
-        return redirect(url_for('.login'))
+        return redirect(request.args.get("next") or url_for('.login'))
     return render_template('home/login.html', title='Login',
                            user={}, form_login=login_form)
 
@@ -143,6 +144,25 @@ def account():
                            user=user,
                            form_logout=logout_form,
                            form_account=account_form)
+
+
+@main.route('/marks<int:course_id>', methods=['GET', 'POST'])
+@login_required
+def marks(course_id):
+    if current_user.is_authenticated:
+        image_service = ImageService()
+        image = image_service.get_user_image()
+        user = {'name': current_user.get_name(),
+                'surname': current_user.get_surname(),
+                'status': current_user.get_role(),
+                'photo': image,
+                }
+    else:
+        user = None
+    return render_template('home/marks.html',
+                           title='Marks',
+                           authenticated=current_user.is_authenticated,
+                           user=user, )
 
 # @app.route('/schedule')
 # def schedule():

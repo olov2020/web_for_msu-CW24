@@ -10,11 +10,8 @@
 {% endblock %}
 
 {% block account %}
-<a href='/login'>
-    <div class='header_account_button'>
-        <p>Войти</p>
-    </div>
-</a>
+
+{% include '/base_template/checkAccount.html' %}
 {% endblock %}
 
 

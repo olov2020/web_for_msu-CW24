@@ -1,10 +1,10 @@
 'use strict';
 
 window.addEventListener('load', function () {
-    hideFlashMessage();
+    hideFlashMessages();
 });
 
-function hideFlashMessage () {
+function hideFlashMessages() {
     var inputs = document.querySelectorAll('input[type=email], input[type=text], input[type=password], input[type=phone]');
     var flash_message = document.getElementsByClassName('flash_message');
 
