@@ -1,5 +1,8 @@
+from datetime import datetime, timedelta
+
 from WEB_FOR_MSU import db
 from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse
+from WEB_FOR_MSU.output_models import LessonSchedule
 
 
 class CourseService:
@@ -70,3 +73,21 @@ class CourseService:
         db.session.add(teacher_course)
         db.session.commit()
         return True
+
+    @staticmethod
+    def get_lessons_in_week(date_start, course_id):
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        lessons = course.lessons
+        result = []
+        for lesson in lessons:
+            if date_start <= lesson.date <= date_start + timedelta(days=7):
+                result.append(LessonSchedule(
+                    course_name=course.name,
+                    course_type=course.direction,
+                    auditory=course.auditory,
+                    date=lesson.date,
+                    emsh_lesson=course.emsh_lesson
+                ))
+        return result
