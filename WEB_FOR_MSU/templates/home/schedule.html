@@ -17,7 +17,7 @@
 <div class='schedule'>
     <div class='schedule_weeks'>
         <div>
-            <div>
+            <div class='week'>
                 <p>Текущая неделя</p>
             </div>
 
@@ -33,7 +33,7 @@
                     <div>
                     {{ lesson.auditory }}
                     </div>
-                    <div class='lesson_name {{ course_type }}'>
+                    <div class='lesson_name {{ lesson.course_type }}'>
                         {{ lesson.course_name }}
                     </div>
                 </div>
