@@ -10,6 +10,8 @@ db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
 login_manager.login_view = 'home.login'
+login_manager.login_message = 'Авторизуйтесь для доступа к этой странице'
+login_manager.login_message_category = "error"
 security = Security()
 
 
