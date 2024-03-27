@@ -1,12 +1,11 @@
 from datetime import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import Form, ValidationError
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, DateField
 from wtforms.fields.numeric import IntegerField
 from wtforms.fields.simple import TelField, EmailField
-from wtforms.validators import DataRequired, Email, Length, Optional, NumberRange
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms.validators import DataRequired, Email, Length, NumberRange
 
 
 class TeacherRegistrationForm(FlaskForm):
@@ -24,12 +23,7 @@ class TeacherRegistrationForm(FlaskForm):
                              validators=[DataRequired("Поле обязательно для заполнения"),
                                          Length(min=8, message="Не менее 8 символов в пароле")])
     phone = TelField("Телефон: ", validators=[DataRequired("Поле обязательно для заполнения")])
-    # role = SelectField('Статус',
-    #                    choices=[('pupil', 'Ученик'), ('teacher', 'Преподаватель')],
-    #                    validators=[DataRequired("Поле обязательно для заполнения")])
     school = StringField("Школа: ", validators=[DataRequired("Поле обязательно для заполнения")])
-    # school_started = DateField("Дата поступления в школу: ",
-    #                            validators=[DataRequired("Поле обязательно для заполнения")])
     school_finished = IntegerField(
         "Год окончания школы: ",
         validators=[DataRequired("Поле обязательно для заполнения"),
@@ -38,9 +32,6 @@ class TeacherRegistrationForm(FlaskForm):
                         max=datetime.now().year,
                         message=f"Год в пределах от 1900 до {datetime.now().year}")])
     university = StringField("Университет: ", validators=[DataRequired("Поле обязательно для заполнения")])
-    # university_started = IntegerField("Год поступления в университет: ",
-    #                                   validators=[DataRequired("Поле обязательно для заполнения"),
-    #                                               NumberRange(min=1900, max=datetime.now().year)])
     university_finished = IntegerField(
         "Год окончания ВУЗа: ",
         validators=[DataRequired("Поле обязательно для заполнения"),

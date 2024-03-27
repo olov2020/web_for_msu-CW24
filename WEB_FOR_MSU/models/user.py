@@ -33,14 +33,18 @@ class User(db.Model, UserMixin):
         self.created_on = datetime.utcnow()
 
     def set_password(self, password):
+        if self.password == generate_password_hash(password):
+            return False
         self.password = generate_password_hash(password)
+        db.session.commit()
+        return True
 
     def check_password(self, password):
         # return self.password == password  # пока не добавлена регистрация
         return check_password_hash(self.password, password)
 
     def save(self):
-        db.session.add(self)
+        # db.session.add(self)
         db.session.commit()
 
     def get_name(self):
@@ -81,45 +85,71 @@ class User(db.Model, UserMixin):
 
     def set_email(self, email):
         if self.email == email:
-            return
+            return False
         self.email = email
         if self.role == 'pupil':
             self.pupil[0].email = email
         elif self.role == 'teacher':
             self.teacher[0].email = email
         db.session.commit()
+        return True
 
     def set_name(self, name):
         if self.role == 'pupil':
+            if self.pupil[0].name == name:
+                return False
             self.pupil[0].name = name
         elif self.role == 'teacher':
+            if self.teacher[0].name == name:
+                return False
             self.teacher[0].name = name
         db.session.commit()
+        return True
 
     def set_surname(self, surname):
         if self.role == 'pupil':
+            if self.pupil[0].surname == surname:
+                return False
             self.pupil[0].surname = surname
         elif self.role == 'teacher':
+            if self.teacher[0].surname == surname:
+                return False
             self.teacher[0].surname = surname
         db.session.commit()
+        return True
 
     def set_patronymic(self, patronymic):
         if self.role == 'pupil':
+            if self.pupil[0].patronymic == patronymic:
+                return False
             self.pupil[0].patronymic = patronymic
         elif self.role == 'teacher':
+            if self.teacher[0].patronymic == patronymic:
+                return False
             self.teacher[0].patronymic = patronymic
         db.session.commit()
+        return True
 
     def set_phone(self, phone):
         if self.role == 'pupil':
+            if self.pupil[0].phone == phone:
+                return False
             self.pupil[0].phone = phone
         elif self.role == 'teacher':
+            if self.teacher[0].phone == phone:
+                return False
             self.teacher[0].phone = phone
         db.session.commit()
+        return True
 
     def set_school(self, school):
         if self.role == 'pupil':
+            if self.pupil[0].school == school:
+                return False
             self.pupil[0].school = school
         elif self.role == 'teacher':
+            if self.teacher[0].school == school:
+                return False
             self.teacher[0].school = school
         db.session.commit()
+        return True

@@ -1,5 +1,5 @@
 from WEB_FOR_MSU import db
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse
 
 
 class CourseService:
@@ -31,3 +31,42 @@ class CourseService:
         db.session.commit()
         return course
 
+    @staticmethod
+    def get_pupils(course_id):
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        return [assoc.pupil for assoc in course.pupils]
+
+    @staticmethod
+    def get_teachers(course_id):
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        return [assoc.teacher for assoc in course.teachers]
+
+    @staticmethod
+    def get_all_courses():
+        return Course.query.all()
+
+    @staticmethod
+    def add_pupil_to_course(course_id, pupil_id, year):
+        course = Course.query.get(course_id)
+        pupil = Pupil.query.get(pupil_id)
+        if not course or not pupil:
+            return False
+        pupil_course = PupilCourse(pupil_id=pupil_id, course_id=course_id, year=year)
+        db.session.add(pupil_course)
+        db.session.commit()
+        return True
+
+    @staticmethod
+    def add_teacher_to_course(course_id, teacher_id, year):
+        course = Course.query.get(course_id)
+        teacher = Teacher.query.get(teacher_id)
+        if not course or not teacher:
+            return False
+        teacher_course = TeacherCourse(teacher_id=teacher_id, course_id=course_id, year=year)
+        db.session.add(teacher_course)
+        db.session.commit()
+        return True

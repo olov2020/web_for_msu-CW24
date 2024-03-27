@@ -26,6 +26,7 @@ class Course(db.Model):
     platform_format = db.Column(db.String(), nullable=False)
     additional_info = db.Column(db.String(), nullable=False)
     pupils = db.relationship('PupilCourse', back_populates='course')
+    teachers = db.relationship('TeacherCourse', back_populates='course')
 
     def __init__(self, name, formula, course_review_number, direction, emsh_grades, distribution, intern_work,
                  emsh_lesson,

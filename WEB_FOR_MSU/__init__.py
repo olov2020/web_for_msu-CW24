@@ -25,20 +25,14 @@ def create_app(config):
     login_manager.init_app(app)
 
     from .views.home import main as main_blueprint
-    from WEB_FOR_MSU.models import User, Role, Course, Pupil, Teacher, PupilCourse, TeacherCourse
+    from WEB_FOR_MSU.models import User, Role
 
     app.register_blueprint(main_blueprint)
     user_datastore = SQLAlchemySessionUserDatastore(db.session, User, Role)
     security.init_app(app, user_datastore)
     with app.app_context():
         db.create_all()
-        # course = Course.query.get(1)
-        # pupil = Pupil.query.get(1)
-        # pupil_course = PupilCourse(pupil_id=pupil.id, course_id=course.id, year=2024)
-        # # pupil_course.pupil = pupil
-        # # course.pupils.append(pupil_course)
-        # db.session.add(pupil_course)  # добавляем pupil_course в сессию
-        # db.session.commit()
+
     # from .admin import home as admin_blueprint
     # app.register_blueprint(admin_blueprint)
 

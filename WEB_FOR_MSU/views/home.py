@@ -102,21 +102,29 @@ def account():
                         email=account_form.email.data).first() is not None:
                     flash('Пользователь с такой почтой уже существует', 'error')
                     return redirect(url_for('.account'))
-                current_user.set_email(account_form.email.data)
+                if current_user.set_email(account_form.email.data):
+                    flash('Почта успешно изменена', 'success')
             if account_form.image.data:
                 image_service.change_user_image(account_form.image.data)
+                flash('Фото успешно изменено', 'success')
             if account_form.new_password.data:
-                current_user.set_password(account_form.new_password.data)
+                if current_user.set_password(account_form.new_password.data):
+                    flash('Пароль успешно изменен', 'success')
             if account_form.name.data:
-                current_user.set_name(account_form.name.data)
+                if current_user.set_name(account_form.name.data):
+                    flash('Имя успешно изменено', 'success')
             if account_form.surname.data:
-                current_user.set_surname(account_form.surname.data)
+                if current_user.set_surname(account_form.surname.data):
+                    flash('Фамилия успешно изменена', 'success')
             if account_form.patronymic.data:
-                current_user.set_patronymic(account_form.patronymic.data)
+                if current_user.set_patronymic(account_form.patronymic.data):
+                    flash('Отчество успешно изменено', 'success')
             if account_form.school.data:
-                current_user.set_school(account_form.school.data)
+                if current_user.set_school(account_form.school.data):
+                    flash('Школа успешно изменена', 'success')
             if account_form.phone.data:
-                current_user.set_phone(account_form.phone.data)
+                if current_user.set_phone(account_form.phone.data):
+                    flash('Телефон успешно изменен', 'success')
 
     image = image_service.get_user_image()
     user = {'name': current_user.get_name(),
