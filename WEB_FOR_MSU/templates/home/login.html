@@ -17,6 +17,8 @@
         {% for field in form_login if field.id != 'submit' %}
         {% include '/base_template/form.html' %}
         {% endfor %}
+        
+        {% include '/base_template/flash.html' %}
 
         <div class='enter'>
             <div>{{ form_login.submit(class='form_submit_button') }}</div>
