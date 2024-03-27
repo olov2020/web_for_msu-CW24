@@ -22,7 +22,7 @@ class TeacherRegistrationForm(FlaskForm):
                                               Email(message="Почта введена некорректно")])
     password = PasswordField("Пароль: ",
                              validators=[DataRequired("Поле обязательно для заполнения"),
-                                         Length(min=8, message="Пароль должен содержать не менее 8 символов")])
+                                         Length(min=8, message="Не менее 8 символов в пароле")])
     phone = TelField("Телефон: ", validators=[DataRequired("Поле обязательно для заполнения")])
     # role = SelectField('Статус',
     #                    choices=[('pupil', 'Ученик'), ('teacher', 'Преподаватель')],
@@ -30,16 +30,24 @@ class TeacherRegistrationForm(FlaskForm):
     school = StringField("Школа: ", validators=[DataRequired("Поле обязательно для заполнения")])
     # school_started = DateField("Дата поступления в школу: ",
     #                            validators=[DataRequired("Поле обязательно для заполнения")])
-    school_finished = IntegerField("Год окончания школы: ",
-                                   validators=[DataRequired("Поле обязательно для заполнения"),
-                                               NumberRange(min=1900, max=datetime.now().year + 5)])
+    school_finished = IntegerField(
+        "Год окончания школы: ",
+        validators=[DataRequired("Поле обязательно для заполнения"),
+                    NumberRange(
+                        min=1900,
+                        max=datetime.now().year,
+                        message=f"Год в пределах от 1900 до {datetime.now().year}")])
     university = StringField("Университет: ", validators=[DataRequired("Поле обязательно для заполнения")])
     # university_started = IntegerField("Год поступления в университет: ",
     #                                   validators=[DataRequired("Поле обязательно для заполнения"),
     #                                               NumberRange(min=1900, max=datetime.now().year)])
-    university_finished = IntegerField("Год окончания ВУЗа: ",
-                                       validators=[DataRequired("Поле обязательно для заполнения"),
-                                                   NumberRange(min=1900, max=datetime.now().year + 6)])
+    university_finished = IntegerField(
+        "Год окончания ВУЗа: ",
+        validators=[DataRequired("Поле обязательно для заполнения"),
+                    NumberRange(
+                        min=1900,
+                        max=datetime.now().year + 6,
+                        message=f"Год в пределах от 1900 до {datetime.now().year + 6}")])
     workplace = StringField("Место работы: ")
     passport_series = StringField("Серия паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])
     passport_number = StringField("Номер паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])

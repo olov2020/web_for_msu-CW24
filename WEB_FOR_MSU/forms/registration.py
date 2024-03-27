@@ -18,7 +18,7 @@ class RegistrationForm(FlaskForm):
                        validators=[DataRequired("Поле обязательно для заполнения"), Email('Почта введена некорректно')])
     password = PasswordField("Пароль: ",
                              validators=[DataRequired("Поле обязательно для заполнения"),
-                                         Length(min=8, message="Пароль должен содержать не менее 8 символов")])
+                                         Length(min=8, message="Не менее 8 символов в пароле")])
     phone = TelField("Телефон: ", validators=[DataRequired("Поле обязательно для заполнения")])
     # role = SelectField('Статус',
     #                    choices=[('pupil', 'Ученик'), ('teacher', 'Преподаватель')],
