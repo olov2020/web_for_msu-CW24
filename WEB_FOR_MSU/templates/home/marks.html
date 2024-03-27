@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>{{title}}</title>
+<link href="../../static/css/account/account.css" rel="stylesheet">
+<script src="../../static/js/account/account.js"></script>
+{% endblock %}
+
+{% block account %}
+
+{% include '/base_template/chechAccount.html' %}
+{% endblock %}
+
+{% block main %}
+
+<div class='account'>
+    <div class='account_photo'>
+        <image src='{{ user.photo }}' class='photo'></image>
+    </div>
+
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
+        {% include '/base_template/flash.html' %}
+        {{ form_account.hidden_tag() }}
+
+        {% for field in form_account if field.id != 'submit_logout' %}
+        {% include '/base_template/form.html' %}
+        {% endfor %}
+    </form>
+
+    <div class='statistics'>
+
+    </div>
+</div>
+{% endblock %}

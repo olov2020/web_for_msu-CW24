@@ -59,6 +59,7 @@ def registration(registration_type):
     return render_template('home/registration.html',
                            title='Registration',
                            user={},
+                           authenticated=False,
                            form_registration=registration_form)
 
 
@@ -145,11 +146,11 @@ def account():
                            form_account=account_form)
 
 
-@main.route('/grades', methods=['GET', 'POST'])
+@main.route('/marks', methods=['GET', 'POST'])
 @login_required
-def grades():
-    return render_template('home/grades.html',
-                           title='Grades')
+def marks():
+    return render_template('home/marks.html',
+                           title='Marks')
 
 # @app.route('/schedule')
 # def schedule():
