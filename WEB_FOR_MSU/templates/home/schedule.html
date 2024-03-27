@@ -27,7 +27,7 @@
                     {{ lesson.date(class='date') }}
                     {{ lesson.emsh_lesson }}
                     {{ lesson.auditory }}
-                    {{ lesson.course_name(class='{{ course_type }}') }}
+                    {{ lesson.course_name(class='lesson_name {{ course_type }}') }}
                 </div>
                 {% endfor %}
             </div>
@@ -39,7 +39,14 @@
             </div>
 
             <div>
-
+                {% for lesson in lessons_in_two_weeks %}
+                <div class='lesson'>
+                    {{ lesson.date(class='date') }}
+                    {{ lesson.emsh_lesson }}
+                    {{ lesson.auditory }}
+                    {{ lesson.course_name(class='lesson_name {{ course_type }}') }}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
