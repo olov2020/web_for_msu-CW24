@@ -15,10 +15,10 @@ class Pupil(db.Model):
     telegram = db.Column(db.String())
     vk = db.Column(db.String())
     phone = db.Column(db.String(), nullable=False)
-    passport_number = db.Column(db.String(), nullable=False)
-    passport_series = db.Column(db.String(), nullable=False)
-    passport_date = db.Column(db.Date(), nullable=False)
-    passport_issued_by = db.Column(db.String(), nullable=False)
+    passport_number = db.Column(db.String())
+    passport_series = db.Column(db.String())
+    passport_date = db.Column(db.Date())
+    passport_issued_by = db.Column(db.String())
     registration_address = db.Column(db.String(), nullable=False)
     parent1_name = db.Column(db.String(), nullable=False)
     parent1_surname = db.Column(db.String(), nullable=False)
@@ -46,8 +46,8 @@ class Pupil(db.Model):
 
     # TODO: add foreign keys: KNR_id	VS_id	NS_id	OK_id	OC_id	LS_ids	graduation_id
 
-    def __init__(self, user_id, email, name, surname, birth_date, nickname, phone, passport_number, passport_series,
-                 passport_date, passport_issued_by, registration_address, parent1_name, parent1_surname,
+    def __init__(self, user_id, email, name, surname, birth_date, nickname, phone,
+                 registration_address, parent1_name, parent1_surname,
                  parent1_patronymic, parent1_phone, parent1_email, school, school_grade, enroll_way,
                  agreement, organization_fee, present_FA, security_key_card, graduating, achievements, mailing=False,
                  patronymic=None, telegram=None, vk=None, parent2_name=None, parent2_surname=None,
@@ -62,10 +62,10 @@ class Pupil(db.Model):
         self.telegram = telegram
         self.vk = vk
         self.phone = phone
-        self.passport_number = passport_number
-        self.passport_series = passport_series
-        self.passport_date = passport_date
-        self.passport_issued_by = passport_issued_by
+        self.passport_number = None
+        self.passport_series = None
+        self.passport_date = None
+        self.passport_issued_by = None
         self.registration_address = registration_address
         self.parent1_name = parent1_name
         self.parent1_surname = parent1_surname

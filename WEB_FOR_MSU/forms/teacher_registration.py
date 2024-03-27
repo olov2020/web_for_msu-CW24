@@ -40,11 +40,6 @@ class TeacherRegistrationForm(FlaskForm):
                         max=datetime.now().year + 6,
                         message=f"Год в пределах от 1900 до {datetime.now().year + 6}")])
     workplace = StringField("Место работы: ")
-    passport_series = StringField("Серия паспорта: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    passport_number = StringField("Номер паспорта: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    passport_date = DateField("Дата выдачи паспорта: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    passport_issued_by = StringField("Кем выдан паспорт: *",
-                                     validators=[DataRequired("Поле обязательно для заполнения")])
     registration_address = StringField("Адрес регистрации: *",
                                        validators=[DataRequired("Поле обязательно для заполнения")])
     tg = StringField("Telegram: ")
