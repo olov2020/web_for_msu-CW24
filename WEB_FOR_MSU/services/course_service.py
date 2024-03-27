@@ -95,7 +95,7 @@ class CourseService:
                 if date_start <= lesson.date < get_next_monday(date_start):
                     result.append(LessonSchedule(
                         course_name=course.name,
-                        course_type=assoc.crediting,
+                        course_type=str(assoc.crediting),
                         auditory=course.auditory,
                         date=lesson.date.strftime('%d.%m'),
                         lesson_time=course.lesson_time
