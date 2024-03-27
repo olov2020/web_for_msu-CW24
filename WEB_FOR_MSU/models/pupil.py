@@ -42,6 +42,7 @@ class Pupil(db.Model):
     graduating = db.Column(db.Boolean, default=False)
     achievements = db.Column(db.String())
     courses = db.relationship('PupilCourse', back_populates='pupil')
+    schedules = db.relationship('Mark', back_populates='pupil')
 
     # TODO: add foreign keys: KNR_id	VS_id	NS_id	OK_id	OC_id	LS_ids	graduation_id
 

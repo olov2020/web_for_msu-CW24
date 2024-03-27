@@ -144,6 +144,13 @@ def account():
                            form_logout=logout_form,
                            form_account=account_form)
 
+
+@main.route('/grades', methods=['GET', 'POST'])
+@login_required
+def grades():
+    return render_template('home/grades.html',
+                           title='Grades')
+
 # @app.route('/schedule')
 # def schedule():
 #     return render_template('schedule.html')
