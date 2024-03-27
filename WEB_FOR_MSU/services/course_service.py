@@ -17,7 +17,7 @@ class CourseService:
             emsh_grades=form.emsh_grades.data,
             distribution=form.distribution.data,
             intern_work=form.intern_work.data,
-            emsh_lesson=form.emsh_lesson.data,
+            lesson_time=form.lesson_time.data,
             additional_info_for_auditory=form.additional_info_for_auditory.data,
             course_purpose=form.course_purpose.data,
             course_objectives=form.course_objectives.data,
@@ -91,12 +91,13 @@ class CourseService:
             course = assoc.course
             lessons = course.lessons
             for lesson in lessons:
-                if date_start <= lesson.date < date_start + get_next_monday(date_start):
+                flag = date_start <= lesson.date
+                if date_start <= lesson.date < get_next_monday(date_start):
                     result.append(LessonSchedule(
                         course_name=course.name,
-                        course_type=course.direction,
+                        course_type=assoc.crediting,
                         auditory=course.auditory,
                         date=lesson.date,
-                        emsh_lesson=course.emsh_lesson
+                        lesson_time=course.lesson_time
                     ))
         return result

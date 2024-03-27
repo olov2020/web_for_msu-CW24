@@ -22,7 +22,7 @@ VALUES (1, 1, 'Дмитрий', 'Мухин', 'Владимирович', '2004-
 INSERT INTO public.teacher (id, user_id, name, surname, patronymic, second_surname, nickname, birth_date, date_of_death, phone, telegram, vk, school, school_date_start, school_date_end, university, university_date_start, university_date_end, workplace, passport_number, passport_series, passport_date, passport_issued_by, registration_address, was_pupil) VALUES (1, 2, 'Владимир', 'Виноградов', 'Андреевич', null, 'frontender', '2004-09-06', null, '+79161234567', null, null, 'Лицей ВШЭ', '2019-09-01', '2022-06-30', 'ВШЭ', '2022-09-01', null, 'ВШЭ БПИ228', '123456', '1234', '2024-03-15', 'Москва', 'Москва', true);
 
 
-INSERT INTO public.course (id, name, auditory, formula, course_review_number, direction, emsh_grades, distribution, intern_work, emsh_lesson, additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format, target_audience, short_description, number_of_listeners, selection, assessment, platform_format, additional_info) VALUES (1, 'Приручение python''а', '101', e'Приблизительное распределение веса различных элементов контроля:
+INSERT INTO public.course (id, name, auditory, formula, course_review_number, direction, emsh_grades, distribution, intern_work, lesson_time, additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format, target_audience, short_description, number_of_listeners, selection, assessment, platform_format, additional_info) VALUES (1, 'Приручение python''а', '101', e'Приблизительное распределение веса различных элементов контроля:
                 - Летучки - 20%
                 - Проекты - 30%
                 - Экзамен - 50%', 'в первый раз', 'Третий путь', '9-11', 'Владимир отвечает за весь курс', null, 'Вторник 17:20 - 18:40', e'Необходима компьютерная аудитория
@@ -44,8 +44,6 @@ INSERT INTO public.course (id, name, auditory, formula, course_review_number, di
                 ', 'Курс будет читаться очно. При возникновении внештатных ситуаций курс будет проводиться на платформе Discord', e'Желательно наличие у школьников своих ноутбуков
                 ');
 
-INSERT INTO public.teacher_course (id, teacher_id, course_id, year) VALUES (1, 1, 1, 2024);
-
 INSERT INTO public.schedule (id, course_id, lesson_number, date, theme, plan, additional_info)
 VALUES (1, 1, 1, '2024-03-27', 'Введение', e'Знакомство со школьниками, рассказ о себе, целях курса и установка необходимого по, (проведение теста, если будет избыток желающих)
 Рассказ о веб-сервисе, который основан на Git. Рассказ о git. Создание собственного аккаунта', null);
@@ -54,9 +52,10 @@ INSERT INTO public.schedule (id, course_id, lesson_number, date, theme, plan, ad
 VALUES (2, 1, 2, '2024-04-03', e'Основы python
 ', e'Обучение основам языка python - ввод и вывод информации, типы данных
 ', null);
-
 INSERT INTO public.pupil_course (id, pupil_id, course_id, year, crediting, finished, term1_mark, term2_mark)
 VALUES (1, 1, 1, 2024, true, false, 5, null);
+
+INSERT INTO public.teacher_course (id, teacher_id, course_id, year) VALUES (1, 1, 1, 2024);
 
 INSERT INTO public.mark (id, pupil_id, schedule_id, mark, comment)
 VALUES (1, 1, 1, '5', 'Лучший питонист');
