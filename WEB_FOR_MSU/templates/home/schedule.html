@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>{{title}}</title>
+<link href="../../static/css/schedule/schedule.css" rel="stylesheet">
+<script src="../../static/js/schedule/schedule.js"></script>
+{% endblock %}
+
+{% block account %}
+
+{% include '/base_template/checkAccount.html' %}
+{% endblock %}
+
+{% block main %}
+
+<div class='schedule'>
+    
+</div>
+{% endblock %}
