@@ -3,7 +3,7 @@ from flask_login import login_required, login_user, current_user, logout_user
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
-from WEB_FOR_MSU.controllers import *
+from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
 # from app.utils import send_mail
 
@@ -16,8 +16,8 @@ main = Blueprint('home', __name__)
 @main.route('/home')
 def home():
     if current_user.is_authenticated:
-        controller = ImageController()
-        image = controller.get_user_image()
+        image_service = ImageService()
+        image = image_service.get_user_image()
         user = {'name': current_user.get_name(),
                 'surname': current_user.get_surname(),
                 'status': current_user.get_role(),
@@ -48,10 +48,10 @@ def registration(registration_type):
             flash('Пользователь с такой почтой уже существует', 'error')
             return redirect(url_for('.registration', registration_type=registration_type))
         role = Role.query.filter_by(name=registration_type).first()
-        user = User.add_user(email=registration_form.email.data,
-                             password=registration_form.password.data,
-                             role_id=role.id,
-                             form=registration_form)
+        user = UserService.add_user(email=registration_form.email.data,
+                                    password=registration_form.password.data,
+                                    role_id=role.id,
+                                    form=registration_form)
 
         login_user(user, force=True)
         return redirect(url_for('.home'))
@@ -86,7 +86,7 @@ def login():
 def account():
     logout_form = LogoutForm()
     account_form = AccountForm()
-    controller = ImageController()
+    image_service = ImageService()
     if logout_form.submit.data and logout_form.is_submitted():
         logout_user()
         return redirect(url_for('.home'))
@@ -102,7 +102,7 @@ def account():
                     return redirect(url_for('.account'))
                 current_user.set_email(account_form.email.data)
             if account_form.image.data:
-                controller.change_user_image(account_form.image.data)
+                image_service.change_user_image(account_form.image.data)
             if account_form.new_password.data:
                 current_user.set_password(account_form.new_password.data)
             if account_form.name.data:
@@ -116,7 +116,7 @@ def account():
             if account_form.phone.data:
                 current_user.set_phone(account_form.phone.data)
 
-    image = controller.get_user_image()
+    image = image_service.get_user_image()
     user = {'name': current_user.get_name(),
             'surname': current_user.get_surname(),
             'status': current_user.get_role(),

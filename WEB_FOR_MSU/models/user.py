@@ -5,10 +5,6 @@ from datetime import datetime
 from flask_security import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from WEB_FOR_MSU.controllers import ImageController
-from WEB_FOR_MSU.models.teacher import Teacher
-from WEB_FOR_MSU.models.pupil import Pupil
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -46,24 +42,6 @@ class User(db.Model, UserMixin):
     def save(self):
         db.session.add(self)
         db.session.commit()
-
-    @staticmethod
-    def add_user(email, password, role_id, form):
-        image = form.image.data
-        controller = ImageController()
-        if image:
-            image = controller.save_user_image(image)
-        else:
-            image = 'default.png'
-        user = User(email=email, password=password, image=image, role_id=role_id)
-        db.session.add(user)
-        db.session.commit()
-        if user.role == 'pupil':
-            agreement = controller.save_user_agreement(form.agreement.data)
-            Pupil.add_pupil(user_id=user.id, form=form, agreement=agreement)
-        if user.role == 'teacher':
-            Teacher.add_teacher(user_id=user.id, form=form)
-        return user
 
     def get_name(self):
         if self.role == 'pupil':

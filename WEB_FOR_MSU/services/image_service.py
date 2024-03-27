@@ -9,7 +9,7 @@ from flask import current_app
 from flask_login import current_user
 
 
-class ImageController:
+class ImageService:
     def upload_to_yandex_s3(self, file, bucket, object_name):
         load_dotenv()
         if bucket == "images":

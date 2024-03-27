@@ -25,4 +25,30 @@ class Course(db.Model):
     assessment = db.Column(db.String(), nullable=False)
     platform_format = db.Column(db.String(), nullable=False)
     additional_info = db.Column(db.String(), nullable=False)
-    
+    pupils = db.relationship('PupilCourse', back_populates='course')
+
+    def __init__(self, name, formula, course_review_number, direction, emsh_grades, distribution, intern_work,
+                 emsh_lesson,
+                 additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format,
+                 target_audience, short_description, number_of_listeners, selection, assessment, platform_format,
+                 additional_info):
+        self.name = name
+        self.formula = formula
+        self.course_review_number = course_review_number
+        self.direction = direction
+        self.emsh_grades = emsh_grades
+        self.distribution = distribution
+        self.intern_work = intern_work
+        self.emsh_lesson = emsh_lesson
+        self.additional_info_for_auditory = additional_info_for_auditory
+        self.course_purpose = course_purpose
+        self.course_objectives = course_objectives
+        self.course_features = course_features
+        self.course_format = course_format
+        self.target_audience = target_audience
+        self.short_description = short_description
+        self.number_of_listeners = number_of_listeners
+        self.selection = selection
+        self.assessment = assessment
+        self.platform_format = platform_format
+        self.additional_info = additional_info

@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from flask_wtf import FlaskForm
 from wtforms import Form, ValidationError
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from wtforms.fields.numeric import IntegerField
 from wtforms.fields.simple import TelField, EmailField
-from wtforms.validators import DataRequired, Email, Length, Optional
+from wtforms.validators import DataRequired, Email, Length, Optional, NumberRange
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
@@ -25,15 +28,19 @@ class TeacherRegistrationForm(FlaskForm):
     #                    choices=[('pupil', 'Ученик'), ('teacher', 'Преподаватель')],
     #                    validators=[DataRequired("Поле обязательно для заполнения")])
     school = StringField("Школа: ", validators=[DataRequired("Поле обязательно для заполнения")])
-    school_started = DateField("Дата поступления в школу: ",
-                               validators=[DataRequired("Поле обязательно для заполнения")])
-    school_finished = DateField("Дата окончания школы: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    # school_started = DateField("Дата поступления в школу: ",
+    #                            validators=[DataRequired("Поле обязательно для заполнения")])
+    school_finished = IntegerField("Год окончания школы: ",
+                                   validators=[DataRequired("Поле обязательно для заполнения"),
+                                               NumberRange(min=1900, max=datetime.now().year)])
     university = StringField("Университет: ", validators=[DataRequired("Поле обязательно для заполнения")])
-    university_started = DateField("Дата поступления в университет: ",
-                                   validators=[DataRequired("Поле обязательно для заполнения")])
-    university_finished = DateField("Дата окончания университета: ",
-                                    validators=[DataRequired("Поле обязательно для заполнения")])
-    workplace = StringField("Место работы: ", validators=[DataRequired("Поле обязательно для заполнения")])
+    # university_started = IntegerField("Год поступления в университет: ",
+    #                                   validators=[DataRequired("Поле обязательно для заполнения"),
+    #                                               NumberRange(min=1900, max=datetime.now().year)])
+    university_finished = IntegerField("Год окончания ВУЗа: ",
+                                       validators=[DataRequired("Поле обязательно для заполнения"),
+                                                   NumberRange(min=1900, max=datetime.now().year + 6)])
+    workplace = StringField("Место работы: ")
     passport_series = StringField("Серия паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])
     passport_number = StringField("Номер паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])
     passport_date = DateField("Дата выдачи паспорта: ", validators=[DataRequired("Поле обязательно для заполнения")])
