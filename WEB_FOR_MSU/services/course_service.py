@@ -97,7 +97,7 @@ class CourseService:
                         course_name=course.name,
                         course_type=assoc.crediting,
                         auditory=course.auditory,
-                        date=str(lesson.date),
+                        date=lesson.date.strftime('%d.%m'),
                         lesson_time=course.lesson_time
                     ))
         return result
