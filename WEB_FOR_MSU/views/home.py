@@ -79,7 +79,7 @@ def login():
         else:
             login_user(user, remember=login_form.remember.data, force=True)
             return redirect(url_for('.home'))
-        return redirect(url_for('.login'))
+        return redirect(request.args.get("next") or url_for('.login'))
     return render_template('home/login.html', title='Login',
                            user={}, form_login=login_form)
 
@@ -146,9 +146,9 @@ def account():
                            form_account=account_form)
 
 
-@main.route('/marks', methods=['GET', 'POST'])
+@main.route('/marks<int:course_id>', methods=['GET', 'POST'])
 @login_required
-def marks():
+def marks(course_id):
     if current_user.is_authenticated:
         image_service = ImageService()
         image = image_service.get_user_image()
