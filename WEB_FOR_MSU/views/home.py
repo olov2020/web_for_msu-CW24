@@ -174,11 +174,19 @@ def schedule():
     date_start = datetime.now().date()
     lessons_in_week = CourseService.get_lessons_in_week(date_start, current_user.id)
     lessons_in_two_weeks = CourseService.get_lessons_in_week(get_next_monday(date_start), current_user.id)
+    image_service = ImageService()
+    image = image_service.get_user_image()
+    user = {'name': current_user.get_name(),
+            'surname': current_user.get_surname(),
+            'status': current_user.get_role(),
+            'photo': image,
+            }
     return render_template('home/schedule.html',
                            title='Schedule',
                            authenticated=current_user.is_authenticated,
                            lessons_in_week=lessons_in_week,
-                           lessons_in_two_weeks=lessons_in_two_weeks)
+                           lessons_in_two_weeks=lessons_in_two_weeks,
+                           user=user, )
 # @app.route('/schedule')
 # def schedule():
 #     return render_template('schedule.html')
