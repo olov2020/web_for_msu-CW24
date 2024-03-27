@@ -1,15 +1,23 @@
+.schedule {
+    display: flex;
+    align-items: top;
+    justify-content: space-around;
+    width: 100%;
+}
+
 .lesson {
-    width: 400px;
+    width: 500px;
     height: 40px;
     
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: row;
 }
 
 .lesson_name {
     align-items: center;
-    width: 100px;
+    width: 200px;
 }
 
 .date {
@@ -24,4 +32,8 @@
 
 .false {
     background-color: #D2C2FF;
+}
+
+.calendar {
+    width: 500px;
 }
