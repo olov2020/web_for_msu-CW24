@@ -1,11 +1,12 @@
 <script src='../../static/js/base_template/flash.js'></script>
 
-
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 <div class='flash_message'>
     {% for message in messages %}
-    {{ message }}
+    <div>
+        {{ message }}
+    </div>
     {% endfor %}
 </div>
 {% endif %}

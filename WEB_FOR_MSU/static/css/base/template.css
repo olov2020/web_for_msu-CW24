@@ -121,17 +121,27 @@ form{
 .flash_message {
     position: relative;
     top: 0%;
-
-    width: 300px;
-    height: 40px;
+    
+    width: 100%;
     margin-bottom: 20px;
+    padding: 5px;
 
     display: flex;
     justify-content: center;
     text-align: center;
     flex-direction: column;
 
-    background-color: white;
-    color: red;
+    background-color: #e3d340;
+    color: black;
+    border: 1px solid black;
     font-size: 20px;
+}
+
+/* for different types of flash messages */
+.flash_message_error {
+    color: red;
+}
+
+.flash_message_success {
+    color: green;
 }
