@@ -101,7 +101,7 @@ form{
 /* for file fields */
 .form_container_file {
     width: 300px;
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,17 +121,17 @@ form{
 .flash_message {
     position: relative;
     top: 0%;
-    
+
     width: 300px;
     height: 40px;
-    
+    margin-bottom: 20px;
+
     display: flex;
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    
-    background-color: #9F1A59;
-    color: white;
-    border-radius: 16px;
+
+    background-color: white;
+    color: red;
     font-size: 20px;
 }
