@@ -49,10 +49,10 @@
             <div>
                 {% for lesson in lessons_in_two_weeks %}
                 <div class='lesson'>
-                    {{ lesson.date(class='date') }}
+                    {{ lesson.date }}
                     {{ lesson.lesson_time }}
                     {{ lesson.auditory }}
-                    {{ lesson.course_name(class='lesson_name {{ course_type }}') }}
+                    {{ lesson.course_name }}
                 </div>
                 {% endfor %}
             </div>
