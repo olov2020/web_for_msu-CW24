@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from WEB_FOR_MSU import db
 from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse
 from WEB_FOR_MSU.output_models import LessonSchedule
+from WEB_FOR_MSU.functions import get_next_monday
 
 
 class CourseService:
@@ -75,19 +76,27 @@ class CourseService:
         return True
 
     @staticmethod
-    def get_lessons_in_week(date_start, course_id):
-        course = Course.query.get(course_id)
-        if not course:
+    def get_lessons_in_week(date_start, user_id):
+        user = User.query.get(user_id)
+        if not user:
             return []
-        lessons = course.lessons
+        pupil = user.pupil[0]
+        if not pupil:
+            return []
+        associations = pupil.courses
+        if not associations:
+            return []
         result = []
-        for lesson in lessons:
-            if date_start <= lesson.date <= date_start + timedelta(days=7):
-                result.append(LessonSchedule(
-                    course_name=course.name,
-                    course_type=course.direction,
-                    auditory=course.auditory,
-                    date=lesson.date,
-                    emsh_lesson=course.emsh_lesson
-                ))
+        for assoc in associations:
+            course = assoc.course
+            lessons = course.lessons
+            for lesson in lessons:
+                if date_start <= lesson.date < date_start + get_next_monday(date_start):
+                    result.append(LessonSchedule(
+                        course_name=course.name,
+                        course_type=course.direction,
+                        auditory=course.auditory,
+                        date=lesson.date,
+                        emsh_lesson=course.emsh_lesson
+                    ))
         return result

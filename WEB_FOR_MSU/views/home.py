@@ -7,6 +7,7 @@ from flask_login import login_required, login_user, current_user, logout_user
 from WEB_FOR_MSU.models import *
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
+from WEB_FOR_MSU.functions import get_next_monday
 # from app.utils import send_mail
 
 from flask import Blueprint
@@ -172,7 +173,7 @@ def marks(course_id):
 def schedule():
     date_start = datetime.now().date()
     lessons_in_week = CourseService.get_lessons_in_week(date_start, current_user.id)
-    lessons_in_two_weeks = CourseService.get_lessons_in_week(date_start + timedelta(days=7), current_user.id)
+    lessons_in_two_weeks = CourseService.get_lessons_in_week(get_next_monday(date_start), current_user.id)
     return render_template('home/schedule.html',
                            title='Schedule',
                            authenticated=current_user.is_authenticated,
