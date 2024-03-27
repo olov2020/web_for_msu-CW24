@@ -32,7 +32,7 @@ class TeacherRegistrationForm(FlaskForm):
     #                            validators=[DataRequired("Поле обязательно для заполнения")])
     school_finished = IntegerField("Год окончания школы: ",
                                    validators=[DataRequired("Поле обязательно для заполнения"),
-                                               NumberRange(min=1900, max=datetime.now().year)])
+                                               NumberRange(min=1900, max=datetime.now().year + 5)])
     university = StringField("Университет: ", validators=[DataRequired("Поле обязательно для заполнения")])
     # university_started = IntegerField("Год поступления в университет: ",
     #                                   validators=[DataRequired("Поле обязательно для заполнения"),

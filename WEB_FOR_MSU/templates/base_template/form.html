@@ -1,0 +1,90 @@
+<div class='form_container_text'>
+    {% if field.type == 'FileField' %}
+    <div class='form_container_file'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {% if field.errors %}
+            {{ field(class='form_file_button form_file_button_error') }}
+            {% else %}
+            {{ field(class='form_file_button') }}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if field.type == 'StringField' or field.type == 'PasswordField' %}
+    {{ field.label(class='form_text') }}
+    <div>
+        {% if field.errors %}
+
+        {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
+        {% else %}
+        {{ field(class='form_input', size=32, placeholder='Введите данные') }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if field.type == 'SelectField' %}
+    {{ field.label(class='form_text') }}
+    <div>
+        {{ field(class='form_input') }}
+    </div>
+    {% endif %}
+
+    {% if field.type == 'BooleanField' %}
+    <div class='form_container_checkbox'>
+        {{ field.label(class='form_text') }}
+        {{ field(class='form_checkbox') }}
+    </div>
+    {% endif %}
+
+    {% if field.type == 'SubmitField' %}
+    <div>
+        {{ field(class='form_submit_button') }}
+    </div>
+    {% endif %}
+
+    {% if field.type == 'DateField' %}
+    {{ field.label(class='form_text') }}
+    <div>
+        {% if field.errors %}
+        {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
+        {% else %}
+        {{ field(class='form_input', size=32) }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if field.type == 'TelField' %}
+    {{ field.label(class='form_text') }}
+    <div>
+        {% if field.errors %}
+        {{ field(class='form_input form_input_error phone', size=32, placeholder=field.errors[0], value='') }}
+        {% else %}
+        {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if field.type == 'EmailField' %}
+    {{ field.label(class='form_text') }}
+    <div>
+        {% if field.errors %}
+        {{ field(class='form_input form_input_error email', size=32, placeholder=field.errors[0], value='') }}
+        {% else %}
+        {{ field(class='form_input email', placeholder='example@mail.ru') }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if field.type == 'IntegerField' %}
+    {{ field.label(class='form_text') }}
+    <div>
+        {% if field.errors %}
+        {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
+        {% else %}
+        {{ field(class='form_input', placeholder='2024') }}
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
