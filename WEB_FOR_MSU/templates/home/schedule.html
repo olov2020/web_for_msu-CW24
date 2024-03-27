@@ -15,6 +15,44 @@
 {% block main %}
 
 <div class='schedule'>
-    
+    <div class='schedule_weeks'>
+        <div>
+            <div>
+                <p>Текущая неделя</p>
+            </div>
+
+            <div>
+                {% for lesson in lessons_in_week %}
+                <div class='lesson'>
+                    {{ lesson.date(class='date') }}
+                    {{ lesson.emsh_lesson }}
+                    {{ lesson.auditory }}
+                    {{ lesson.course_name(class='lesson_name {{ course_type }}') }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <p>Следующая неделя</p>
+            </div>
+
+            <div>
+                {% for lesson in lessons_in_two_weeks %}
+                <div class='lesson'>
+                    {{ lesson.date(class='date') }}
+                    {{ lesson.emsh_lesson }}
+                    {{ lesson.auditory }}
+                    {{ lesson.course_name(class='lesson_name {{ course_type }}') }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class='calendar'>
+
+    </div>
 </div>
 {% endblock %}

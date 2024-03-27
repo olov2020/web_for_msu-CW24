@@ -1,0 +1,27 @@
+.lesson {
+    width: 400px;
+    height: 40px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lesson_name {
+    align-items: center;
+    width: 100px;
+}
+
+.date {
+    padding: 5px;
+    
+    border: 1px solid #fcccde;
+}
+
+.true {
+    background-color: #460FDB;
+}
+
+.false {
+    background-color: #D2C2FF;
+}
