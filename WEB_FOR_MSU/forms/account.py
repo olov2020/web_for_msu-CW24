@@ -10,12 +10,12 @@ class AccountForm(FlaskForm):
     name = StringField("Имя: ")
     surname = StringField("Фамилия: ")
     patronymic = StringField("Отчество: ")
-    email = EmailField("Email: ", validators=[Email(message="Почта введена некорректно")])
-    password = PasswordField("Пароль: ",
-                             validators=[Length(min=8, message="Пароль должен содержать не менее 8 символов")])
+    email = EmailField("Email: ", validators=[Optional(), Email(message="Почта введена некорректно")])
+    password = PasswordField("Пароль: *",
+                             validators=[Length(min=8, message="Не менее 8 символов в пароле")])
     new_password = PasswordField("Новый пароль: ",
                                  validators=[Optional(),
-                                             Length(min=8, message="Пароль должен содержать не менее 8 символов")])
+                                             Length(min=8, message="Не менее 8 символов в пароле")])
     phone = TelField("Телефон: ")
     school = StringField("Школа: ")
     image = FileField("Обновить фото профиля. Доступные форматы: '.jpg', '.png', '.jpeg', '.gif', '.bmp'",
