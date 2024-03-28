@@ -62,6 +62,7 @@ def registration(registration_type):
                 if pupil.name == registration_form.name.data and pupil.surname == registration_form.surname.data:
                     roles = [Role.query.filter_by(name='pupil').first()]
                     user_exists = True
+                    registration_form.was_pupil.data = True
                 else:
                     flash('Пользователь с такой почтой уже существует', 'error')
                     return redirect(url_for('.registration', registration_type=registration_type))

@@ -93,9 +93,10 @@ class CourseService:
             lessons = course.lessons
             for lesson in lessons:
                 if date_start <= lesson.date < get_next_monday(date_start):
+                    course_type = str(assoc.crediting) if user.is_pupil() else 'none'
                     result.append(LessonSchedule(
                         course_name=course.name,
-                        course_type=str(assoc.crediting),
+                        course_type=course_type,
                         auditory=course.auditory,
                         date=lesson.date.strftime('%d.%m'),
                         lesson_time=course.lesson_time
