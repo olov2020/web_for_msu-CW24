@@ -7,3 +7,4 @@ from .teacher_course import TeacherCourse
 from .schedule import Schedule
 from .pupil_course import PupilCourse
 from .mark import Mark
+from .user_role import user_role

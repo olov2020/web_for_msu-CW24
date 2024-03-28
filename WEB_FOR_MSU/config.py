@@ -10,6 +10,7 @@ class BaseConfig:
     SECRET_KEY = os.getenv('SECRET_KEY') or 'A SECRET KEY'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join('static', 'photos', 'people_photo')
+    SECURITY_MSG_UNAUTHENTICATED = ("Авторизуйтесь для доступа к этой странице", "error")
 
     # ##### настройка Flask-Mail #####
     # MAIL_SERVER = 'smtp.googlemail.com'

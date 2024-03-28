@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from flask import request, render_template, current_app, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
+from flask_security import auth_required
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
@@ -23,7 +24,7 @@ def home():
         image = image_service.get_user_image()
         user = {'name': current_user.get_name(),
                 'surname': current_user.get_surname(),
-                'status': current_user.get_role(),
+                'status': current_user.get_role_name(),
                 'photo': image,
                 }
     else:
@@ -45,16 +46,33 @@ def registration(registration_type):
         registration_form = RegistrationForm()
     elif registration_type == 'teacher':
         registration_form = TeacherRegistrationForm()
-
+    roles = []
+    user_exists = False
     if registration_form.validate_on_submit():
         if User.query.filter_by(email=registration_form.email.data).first() is not None:
-            flash('Пользователь с такой почтой уже существует', 'error')
-            return redirect(url_for('.registration', registration_type=registration_type))
+            if registration_type == 'pupil':
+                flash('Пользователь с такой почтой уже существует', 'error')
+                return redirect(url_for('.registration', registration_type=registration_type))
+            elif registration_type == 'teacher':
+                teacher = Teacher.query.filter_by(email=registration_form.email.data).first()
+                if teacher is not None:
+                    flash('Преподаватель с такой почтой уже существует', 'error')
+                    return redirect(url_for('.registration', registration_type=registration_type))
+                pupil = Pupil.query.filter_by(email=registration_form.email.data).first()
+                if pupil.name == registration_form.name.data and pupil.surname == registration_form.surname.data:
+                    roles = [Role.query.filter_by(name='pupil').first()]
+                    user_exists = True
+                else:
+                    flash('Пользователь с такой почтой уже существует', 'error')
+                    return redirect(url_for('.registration', registration_type=registration_type))
+
         role = Role.query.filter_by(name=registration_type).first()
+        roles.append(role)
         user = UserService.add_user(email=registration_form.email.data,
                                     password=registration_form.password.data,
-                                    role_id=role.id,
-                                    form=registration_form)
+                                    roles=roles,
+                                    form=registration_form,
+                                    user_exists=user_exists)
 
         login_user(user, force=True)
         return redirect(url_for('.home'))
@@ -81,14 +99,14 @@ def login():
             flash("Неверный пароль", 'error')
         else:
             login_user(user, remember=login_form.remember.data, force=True)
-            return redirect(url_for('.home'))
-        return redirect(request.args.get("next") or url_for('.login'))
+            return redirect(request.args.get("next") or url_for('.home'))
+        return redirect(url_for('.login'))
     return render_template('home/login.html', title='Login',
                            user={}, form_login=login_form)
 
 
 @main.route('/account', methods=['GET', 'POST'])
-@login_required
+@auth_required()
 def account():
     logout_form = LogoutForm()
     account_form = AccountForm()
@@ -133,7 +151,7 @@ def account():
     image = image_service.get_user_image()
     user = {'name': current_user.get_name(),
             'surname': current_user.get_surname(),
-            'status': current_user.get_role(),
+            'status': current_user.get_role_name(),
             'patronymic': current_user.get_patronymic(),
             'photo': image,
             'email': current_user.email,
@@ -150,14 +168,14 @@ def account():
 
 
 @main.route('/marks<int:course_id>', methods=['GET', 'POST'])
-@login_required
+@auth_required()
 def marks(course_id):
     if current_user.is_authenticated:
         image_service = ImageService()
         image = image_service.get_user_image()
         user = {'name': current_user.get_name(),
                 'surname': current_user.get_surname(),
-                'status': current_user.get_role(),
+                'status': current_user.get_role_name(),
                 'photo': image,
                 }
     else:
@@ -169,7 +187,7 @@ def marks(course_id):
 
 
 @main.route('/schedule', methods=['GET', 'POST'])
-@login_required
+@auth_required()
 def schedule():
     date_start = datetime.now().date()
     lessons_in_week = CourseService.get_lessons_in_week(date_start, current_user.id)
@@ -178,7 +196,7 @@ def schedule():
     image = image_service.get_user_image()
     user = {'name': current_user.get_name(),
             'surname': current_user.get_surname(),
-            'status': current_user.get_role(),
+            'status': current_user.get_role_name(),
             'photo': image,
             }
     return render_template('home/schedule.html',

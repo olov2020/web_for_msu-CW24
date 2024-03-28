@@ -11,6 +11,7 @@ class CourseService:
     def add_course(form):
         course = Course(
             name=form.name.data,
+            auditory=form.auditory.data,
             formula=form.formula.data,
             course_review_number=form.course_review_number.data,
             direction=form.direction.data,
@@ -80,10 +81,10 @@ class CourseService:
         user = User.query.get(user_id)
         if not user:
             return []
-        pupil = user.pupil[0]
-        if not pupil:
-            return []
-        associations = pupil.courses
+        if user.is_teacher():
+            associations = user.teacher[0].courses
+        else:
+            associations = user.pupil[0].courses
         if not associations:
             return []
         result = []
@@ -91,7 +92,6 @@ class CourseService:
             course = assoc.course
             lessons = course.lessons
             for lesson in lessons:
-                flag = date_start <= lesson.date
                 if date_start <= lesson.date < get_next_monday(date_start):
                     result.append(LessonSchedule(
                         course_name=course.name,

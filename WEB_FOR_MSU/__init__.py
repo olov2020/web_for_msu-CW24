@@ -10,8 +10,6 @@ db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
 login_manager.login_view = 'home.login'
-login_manager.login_message = 'Авторизуйтесь для доступа к этой странице'
-login_manager.login_message_category = "error"
 security = Security()
 
 
@@ -32,8 +30,6 @@ def create_app(config):
     app.register_blueprint(main_blueprint)
     user_datastore = SQLAlchemySessionUserDatastore(db.session, User, Role)
     security.init_app(app, user_datastore)
-    with app.app_context():
-        db.create_all()
 
     # from .admin import home as admin_blueprint
     # app.register_blueprint(admin_blueprint)
