@@ -28,6 +28,10 @@ def add_course():
         teacher_course_form.id.data = teacher.id
         teacher_course_form.name.data = TeacherService.get_full_name(teacher)
         teacher_course_forms.append(teacher_course_form)
+    if course_form.submit.data and course_form.file.data:
+        CourseService.load_from_file(course_form.file.data)
+    if course_form.validate_on_submit():
+        pass
     return render_template('admin/add_course.html',
                            title='Добавление курса',
                            form_course=course_form,

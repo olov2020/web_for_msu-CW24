@@ -12,3 +12,6 @@ alembic~=1.13.1
 email_validator
 flask-security-too
 boto3
+pandas
+xlrd
+openpyxl

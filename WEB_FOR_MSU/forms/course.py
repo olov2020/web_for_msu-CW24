@@ -10,7 +10,7 @@ class CourseForm(FlaskForm):
     file = FileField("Файл с курсом. Доступные форматы: '.xls'. *",
                      validators=[FileAllowed(['xls'], message="Некорректный формат файла")])
     name = StringField("Название курса: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    auditory = StringField("Аудитория: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    auditory = StringField("Аудитория: *")
     course_review_number = StringField("№ рассмотрения курса:")
     direction = StringField("Направление: *", validators=[DataRequired("Поле обязательно для заполнения")])
     emsh_grades = SelectField('Классы ЭМШ: *',
@@ -55,12 +55,11 @@ class CourseForm(FlaskForm):
                                           ('cвыше 30 человек', 'cвыше 30 человек')],
                                       validators=[DataRequired("Поле обязательно для заполнения")])
 
-
-selection = StringField("Отбор: *", validators=[DataRequired("Поле обязательно для заполнения")])
-assessment = StringField("Оценка: *", validators=[DataRequired("Поле обязательно для заполнения")])
-platform_format = StringField(
-    "Формат курса: онлайн/оффлайн/гибрид. В случае онлайн, какие платформы используются? *",
-    validators=[DataRequired("Поле обязательно для заполнения")])
-additional_info = StringField("Дополнительная информация о курсе: *",
-                              validators=[DataRequired("Поле обязательно для заполнения")])
-submit = SubmitField("Создать курс")
+    selection = StringField("Отбор: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    assessment = StringField("Оценка: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    platform_format = StringField(
+        "Формат курса: онлайн/оффлайн/гибрид. В случае онлайн, какие платформы используются? *",
+        validators=[DataRequired("Поле обязательно для заполнения")])
+    additional_info = StringField("Дополнительная информация о курсе: *",
+                                  validators=[DataRequired("Поле обязательно для заполнения")])
+    submit = SubmitField("Создать курс")

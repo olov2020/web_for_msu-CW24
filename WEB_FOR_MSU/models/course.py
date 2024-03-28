@@ -10,6 +10,7 @@ class Course(db.Model):
     course_review_number = db.Column(db.String)
     direction = db.Column(db.String(), nullable=False)
     emsh_grades = db.Column(db.String(), nullable=False)
+    crediting = db.Column(db.String())
     distribution = db.Column(db.String())
     intern_work = db.Column(db.String())
     lesson_time = db.Column(db.String())
@@ -29,8 +30,8 @@ class Course(db.Model):
     teachers = db.relationship('TeacherCourse', back_populates='course')
     formulas = db.relationship('Formula', backref='course')
 
-    def __init__(self, name, auditory, formula, course_review_number, direction, emsh_grades, distribution, intern_work,
-                 lesson_time,
+    def __init__(self, name, auditory, formula, course_review_number, direction, emsh_grades, crediting, distribution,
+                 intern_work, lesson_time,
                  additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format,
                  target_audience, short_description, number_of_listeners, selection, assessment, platform_format,
                  additional_info):
@@ -40,6 +41,7 @@ class Course(db.Model):
         self.course_review_number = course_review_number
         self.direction = direction
         self.emsh_grades = emsh_grades
+        self.crediting = crediting
         self.distribution = distribution
         self.intern_work = intern_work
         self.lesson_time = lesson_time
