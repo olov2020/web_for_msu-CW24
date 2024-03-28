@@ -11,6 +11,7 @@ class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join('static', 'photos', 'people_photo')
     SECURITY_MSG_UNAUTHENTICATED = ("Авторизуйтесь для доступа к этой странице", "error")
+    WTF_CSRF_ENABLED = True
 
     # ##### настройка Flask-Mail #####
     # MAIL_SERVER = 'smtp.googlemail.com'

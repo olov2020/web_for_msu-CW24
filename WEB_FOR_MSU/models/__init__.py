@@ -8,3 +8,4 @@ from .schedule import Schedule
 from .pupil_course import PupilCourse
 from .mark import Mark
 from .user_role import user_role
+from .formula import Formula
