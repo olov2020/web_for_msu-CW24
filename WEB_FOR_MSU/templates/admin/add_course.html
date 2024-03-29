@@ -1,4 +1,17 @@
 <form method="post" enctype="multipart/form-data">
-    {{form_course.file}}
-    {{form_course.submit}}
+    {{ form_file.hidden_tag() }}
+    {{form_file.file}}
+    {{form_file.load_submit}}
+</form>
+<form method="post">
+    {{ form_course.hidden_tag() }}
+    {% for field in form_course if field.id != 'schedules'%}
+    {{field}}
+    {% endfor %}
+    {% for schedule in form_course.schedules %}
+        {% for schedule_field in schedule%}
+            {{ schedule_field }}
+        {% endfor %}
+    {% endfor %}
+
 </form>

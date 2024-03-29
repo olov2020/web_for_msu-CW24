@@ -1,24 +1,40 @@
 from flask_wtf import FlaskForm
 from wtforms import Form, ValidationError
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from wtforms.fields.form import FormField
+from wtforms.fields.list import FieldList
 from wtforms.fields.simple import TelField, EmailField
 from wtforms.validators import DataRequired, Email, Length, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
+from WEB_FOR_MSU.forms.schedule import ScheduleForm
+
 
 class CourseForm(FlaskForm):
-    file = FileField("Файл с курсом. Доступные форматы: '.xls'. *",
-                     validators=[FileAllowed(['xls'], message="Некорректный формат файла")])
     name = StringField("Название курса: *", validators=[DataRequired("Поле обязательно для заполнения")])
     auditory = StringField("Аудитория: *")
     course_review_number = StringField("№ рассмотрения курса:")
     direction = StringField("Направление: *", validators=[DataRequired("Поле обязательно для заполнения")])
     emsh_grades = SelectField('Классы ЭМШ: *',
                               choices=[(choice, choice) for choice in
-                                       ['8-10', '8-11', '9', '9-10', '9-11', '10', '10-11', '11']],
+                                       ['8-10', '8-11', '9', '9 - 10', '9 - 11', '10', '10 - 11', '11']],
                               validators=[DataRequired("Поле обязательно для заполнения")])
+    crediting = SelectField('Зачётный: *',
+                            choices=[(choice, choice) for choice in [
+                                'зачётный для все классов',
+                                'зачётный только для 8-и классников',
+                                'зачётный только для 9-ти классников',
+                                'зачётный только для 10-ти классников',
+                                'зачётный только для 11-ти классников',
+                                'зачётный только для 8-9-ти классников',
+                                'зачётный только для 8-10-ти классников',
+                                'зачётный только для 9-10-ти классников',
+                                'зачётный только для 9-11-ти классников',
+                                'зачётный только для 10-11-ти классников',
+                                'факультативный для всех']],
+                            validators=[DataRequired("Поле обязательно для заполнения")])
     distribution = StringField("Распределение: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    intern_work = StringField("Работа со стажерами: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    intern_work = StringField("Работа со стажерами: *")
     lesson_time = SelectField('Время проведения: *',
                               choices=[(choice, choice) for choice in [
                                   'Понедельник 17:20 - 18:40',
@@ -63,3 +79,4 @@ class CourseForm(FlaskForm):
     additional_info = StringField("Дополнительная информация о курсе: *",
                                   validators=[DataRequired("Поле обязательно для заполнения")])
     submit = SubmitField("Создать курс")
+    schedules = FieldList(FormField(ScheduleForm))

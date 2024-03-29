@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from openpyxl.reader.excel import load_workbook
 
 from WEB_FOR_MSU import db
+from WEB_FOR_MSU.forms.schedule import ScheduleForm
 from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
 from WEB_FOR_MSU.output_models import LessonSchedule
 from WEB_FOR_MSU.functions import get_next_monday
@@ -107,7 +108,7 @@ class CourseService:
         return result
 
     @staticmethod
-    def load_from_file(file, course_form, teacher_forms, schedule_forms):
+    def load_from_file(file, course_form, teacher_forms):
         data = pd.read_excel(file)
         name = data.keys()[1]
         data = data.values
@@ -118,7 +119,7 @@ class CourseService:
         for i in range(140):
             print(i, end='\t')
             print(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], sep=';\t\t\t')
-        auditory = data[1][1]
+        auditory = None
         course_review_number = data[23][3]
         direction = data[24][3]
         emsh_grades = data[25][3]
@@ -138,55 +139,57 @@ class CourseService:
         assessment = data[41][3]
         platform_format = data[42][3]
         additional_info = data[43][3]
-        course = Course(
-            name=name,
-            auditory=auditory,
-            course_review_number=course_review_number,
-            direction=direction,
-            emsh_grades=emsh_grades,
-            crediting=crediting,
-            distribution=distribution,
-            intern_work=intern_work,
-            lesson_time=lesson_time,
-            additional_info_for_auditory=additional_info_for_auditory,
-            course_purpose=course_purpose,
-            course_objectives=course_objectives,
-            course_features=course_features,
-            course_format=course_format,
-            target_audience=target_audience,
-            short_description=short_description,
-            number_of_listeners=number_of_listeners,
-            selection=selection,
-            assessment=assessment,
-            platform_format=platform_format,
-            additional_info=additional_info
-        )
-        db.session.add(course)
-        db.session.commit()
+
+        course_form.name.data = name
+        course_form.auditory.data = auditory
+        course_form.course_review_number.data = course_review_number
+        course_form.direction.data = direction
+        course_form.emsh_grades.data = emsh_grades
+        course_form.crediting.data = crediting
+        course_form.distribution.data = distribution
+        course_form.intern_work.data = intern_work
+        course_form.lesson_time.data = lesson_time
+        course_form.additional_info_for_auditory.data = additional_info_for_auditory
+        course_form.course_purpose.data = course_purpose
+        course_form.course_objectives.data = course_objectives
+        course_form.course_features.data = course_features
+        course_form.course_format.data = course_format
+        course_form.target_audience.data = target_audience
+        course_form.short_description.data = short_description
+        course_form.number_of_listeners.data = number_of_listeners
+        course_form.selection.data = selection
+        course_form.assessment.data = assessment
+        course_form.platform_format.data = platform_format
+        course_form.additional_info.data = additional_info
+
         for i in range(48, 87):
             if data[i][0] is None:
                 continue
-            schedule = Schedule(
-                course_id=course.id,
-                lesson_number=data[i][0],
-                date=data[i][1],
-                theme=data[i][2],
-                plan=data[i][3],
-                additional_info=data[i][4]
-            )
-            db.session.add(schedule)
-        db.session.commit()
+            lesson_number = data[i][0],
+            date = data[i][1],
+            theme = data[i][2],
+            plan = data[i][3],
+            additional_info = data[i][4]
+            schedule_form = ScheduleForm()
+            schedule_form.lesson_number.data = lesson_number
+            schedule_form.date.data = date[0].date()
+            schedule_form.theme.data = theme
+            schedule_form.plan.data = plan
+            schedule_form.additional_info.data = additional_info
+            course_form.schedules.append_entry(schedule_form)
         for i in range(3, 14, 5):
             if data[i][3] is None:
                 continue
             teacher = Teacher.query.filter_by(email=data[i + 4][3]).first()
             if teacher is None:
                 continue
-            course.teachers.append(TeacherCourse(
-                teacher_id=teacher.id,
-                course_id=course.id,
-                year=data[48][1].year))
-        db.session.commit()
+
+            for teacher_form in teacher_forms:
+                if teacher_form.id.data == teacher.id:
+                    teacher_form.name.label = f'{teacher.name} {teacher.surname} {teacher.patronymic}'
+                    teacher_form.name.data = True
+                    break
+
         other = data[18][3]
         if other is not None:
             other = other.split(';')
@@ -196,7 +199,61 @@ class CourseService:
                 teacher = Teacher.query.filter_by(email=email).first()
                 if teacher is None:
                     continue
-                course.teachers.append(TeacherCourse(
-                    teacher_id=teacher.id,
-                    course_id=course.id,
-                    year=data[48][1].year))
+                for teacher_form in teacher_forms:
+                    if teacher_form.id.data == teacher.id:
+                        teacher_form.name.label = name
+                        teacher_form.name.data = True
+                        break
+
+    @staticmethod
+    def load_from_forms(course_form, teacher_forms):
+        course = Course(
+            name=course_form.name.data,
+            auditory=course_form.auditory.data,
+            course_review_number=course_form.course_review_number.data,
+            direction=course_form.direction.data,
+            emsh_grades=course_form.emsh_grades.data,
+            crediting=course_form.crediting.data,
+            distribution=course_form.distribution.data,
+            intern_work=course_form.intern_work.data,
+            lesson_time=course_form.lesson_time.data,
+            additional_info_for_auditory=course_form.additional_info_for_auditory.data,
+            course_purpose=course_form.course_purpose.data,
+            course_objectives=course_form.course_objectives.data,
+            course_features=course_form.course_features.data,
+            course_format=course_form.course_format.data,
+            target_audience=course_form.target_audience.data,
+            short_description=course_form.short_description.data,
+            number_of_listeners=course_form.number_of_listeners.data,
+            selection=course_form.selection.data,
+            assessment=course_form.assessment.data,
+            platform_format=course_form.platform_format.data,
+            additional_info=course_form.additional_info.data
+        )
+        db.session.add(course)
+        db.session.commit()
+        year = datetime.now().year
+        for schedule_form in course_form.schedules:
+            schedule = Schedule(
+                course_id=course.id,
+                lesson_number=schedule_form.lesson_number.data,
+                date=schedule_form.date.data,
+                theme=schedule_form.theme.data,
+                plan=schedule_form.plan.data,
+                additional_info=schedule_form.additional_info.data,
+            )
+            if schedule.lesson_number == 1:
+                year = schedule.date.year
+            db.session.add(schedule)
+        db.session.commit()
+        for teacher_form in teacher_forms:
+            if teacher_form.name.data is False:
+                continue
+            teacher = Teacher.query.get(teacher_form.id.data)
+            if teacher is None:
+                continue
+            course.teachers.append(TeacherCourse(
+                teacher_id=teacher.id,
+                course_id=course.id,
+                year=year))
+        db.session.commit()
