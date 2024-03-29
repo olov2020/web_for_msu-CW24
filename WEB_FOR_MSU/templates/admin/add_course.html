@@ -6,12 +6,12 @@
 <form method="post">
     {{ form_course.hidden_tag() }}
     {% for field in form_course if field.id != 'schedules'%}
-    {{field}}
+    {{ field }}
     {% endfor %}
     {% for schedule in form_course.schedules %}
-        {% for schedule_field in schedule%}
-            {{ schedule_field }}
-        {% endfor %}
+    {% for field in schedule.form %}
+        {{ field.label }} {{ field() }} <br>
+    {% endfor %}
     {% endfor %}
 
 </form>

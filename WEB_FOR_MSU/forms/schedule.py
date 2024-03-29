@@ -12,4 +12,4 @@ class ScheduleForm(FlaskForm):
     date = DateField("Дата: *", validators=[DataRequired("Поле обязательно для заполнения")])
     theme = StringField("Тема: *", validators=[DataRequired("Поле обязательно для заполнения")])
     plan = StringField("План: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    additional_info = StringField("Дополнительная информация: *")
+    additional_info = StringField("Дополнительная информация:")

@@ -165,17 +165,17 @@ class CourseService:
         for i in range(48, 87):
             if data[i][0] is None:
                 continue
-            lesson_number = data[i][0],
-            date = data[i][1],
-            theme = data[i][2],
-            plan = data[i][3],
+            lesson_number = data[i][0]
+            date = data[i][1]
+            theme = data[i][2]
+            plan = data[i][3]
             additional_info = data[i][4]
             schedule_form = ScheduleForm()
-            schedule_form.lesson_number.data = lesson_number
-            schedule_form.date.data = date[0].date()
-            schedule_form.theme.data = theme
-            schedule_form.plan.data = plan
-            schedule_form.additional_info.data = additional_info
+            schedule_form.lesson_number = int(lesson_number)
+            schedule_form.date = date.date()
+            schedule_form.theme = theme
+            schedule_form.plan = plan
+            schedule_form.additional_info = additional_info
             course_form.schedules.append_entry(schedule_form)
         for i in range(3, 14, 5):
             if data[i][3] is None:

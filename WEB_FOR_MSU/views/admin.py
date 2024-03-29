@@ -40,7 +40,8 @@ def add_course():
     if course_form.submit.data and course_form.validate():
         d = request.form
         print(request.form)
-        flag = all(form.validate() for form in teacher_course_forms) and all(form.validate() for form in course_form.schedules)
+        flag = (all(form.validate() for form in teacher_course_forms) and
+                all(form.form.validate() for form in course_form.schedules))
         if flag:
             CourseService.load_from_forms(course_form, teacher_course_forms)
     return render_template('admin/add_course.html',
