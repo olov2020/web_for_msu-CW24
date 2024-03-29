@@ -5,13 +5,29 @@
 </form>
 <form method="post">
     {{ form_course.hidden_tag() }}
-    {% for field in form_course if field.id != 'schedules'%}
+    {% for field in form_course if field.id not in ['schedules', 'teachers', 'formulas']%}
     {{ field }}
     {% endfor %}
+    <br>
+    {% for teacher in form_course.teachers %}
+    {% for field in teacher.form %}
+        {{ field() }} {{field.label}}
+    {% endfor %}
+    <br>
+    {% endfor %}
+    <br>
+    {% for formula in form_course.formulas %}
+    {% for field in formula.form %}
+        {{ field.label }} {{ field() }}
+    {% endfor %}
+    <br>
+    {% endfor %}
+    <br>
     {% for schedule in form_course.schedules %}
     {% for field in schedule.form %}
-        {{ field.label }} {{ field() }} <br>
+        {{ field.label }} {{ field() }}
     {% endfor %}
+    <br>
     {% endfor %}
 
 </form>

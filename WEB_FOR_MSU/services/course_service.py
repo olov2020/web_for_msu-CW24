@@ -3,11 +3,15 @@ from datetime import datetime, timedelta
 from openpyxl.reader.excel import load_workbook
 
 from WEB_FOR_MSU import db
+from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
+from WEB_FOR_MSU.forms.formula import FormulaForm
 from WEB_FOR_MSU.forms.schedule import ScheduleForm
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
 from WEB_FOR_MSU.output_models import LessonSchedule
 from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
+
+from WEB_FOR_MSU.services import TeacherService
 
 
 class CourseService:
@@ -108,7 +112,7 @@ class CourseService:
         return result
 
     @staticmethod
-    def load_from_file(file, course_form, teacher_forms):
+    def load_from_file(file, course_form):
         data = pd.read_excel(file)
         name = data.keys()[1]
         data = data.values
@@ -116,9 +120,6 @@ class CourseService:
             for j in range(len(data[i])):
                 if str(data[i][j]) == 'nan':
                     data[i][j] = None
-        for i in range(140):
-            print(i, end='\t')
-            print(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], sep=';\t\t\t')
         auditory = None
         course_review_number = data[23][3]
         direction = data[24][3]
@@ -177,6 +178,40 @@ class CourseService:
             schedule_form.plan = plan
             schedule_form.additional_info = additional_info
             course_form.schedules.append_entry(schedule_form)
+        ind = 0
+        flag = False
+        while ind < len(data):
+            if flag:
+                break
+            for j in range(len(data[ind])):
+                if data[ind][j] == 'Формула':
+                    flag = True
+                    break
+            ind += 1
+        ind += 2
+
+        while ind < len(data) and flag:
+            if data[ind][1] is None:
+                break
+            name = data[ind][1]
+            coefficient = data[ind][3].replace(',', '.')
+            try:
+                coefficient = float(coefficient)
+            except ValueError:
+                continue
+            formula_form = FormulaForm()
+            formula_form.formula_name = name
+            formula_form.coefficient = coefficient
+            course_form.formulas.append_entry(formula_form)
+            ind += 1
+        teachers = Teacher.query.all()
+        for teacher in teachers:
+            teacher_course_form = TeacherCourseForm()
+            teacher_course_form.id = teacher.id
+            # teacher_course_form.name.label = TeacherService.get_full_name(teacher)
+            course_form.teachers.append_entry(teacher_course_form)
+            course_form.teachers[-1].form.name.label = TeacherService.get_full_name(teacher)
+            course_form.teachers[-1].form.name.data = False
         for i in range(3, 14, 5):
             if data[i][3] is None:
                 continue
@@ -184,10 +219,10 @@ class CourseService:
             if teacher is None:
                 continue
 
-            for teacher_form in teacher_forms:
-                if teacher_form.id.data == teacher.id:
-                    teacher_form.name.label = f'{teacher.name} {teacher.surname} {teacher.patronymic}'
-                    teacher_form.name.data = True
+            for teacher_form in course_form.teachers:
+                if teacher_form.form.id.data == teacher.id:
+                    teacher_form.form.name.label = TeacherService.get_full_name(teacher)
+                    teacher_form.form.name.data = True
                     break
 
         other = data[18][3]
@@ -199,14 +234,14 @@ class CourseService:
                 teacher = Teacher.query.filter_by(email=email).first()
                 if teacher is None:
                     continue
-                for teacher_form in teacher_forms:
-                    if teacher_form.id.data == teacher.id:
-                        teacher_form.name.label = name
-                        teacher_form.name.data = True
+                for teacher_form in course_form.teachers:
+                    if teacher_form.form.id.data == teacher.id:
+                        teacher_form.form.name.label = TeacherService.get_full_name(teacher)
+                        teacher_form.form.name.data = True
                         break
 
     @staticmethod
-    def load_from_forms(course_form, teacher_forms):
+    def load_from_forms(course_form):
         course = Course(
             name=course_form.name.data,
             auditory=course_form.auditory.data,
@@ -246,10 +281,20 @@ class CourseService:
                 year = schedule.date.year
             db.session.add(schedule)
         db.session.commit()
-        for teacher_form in teacher_forms:
-            if teacher_form.name.data is False:
+
+        for formula_form in course_form.formulas:
+            formula = Formula(
+                course_id=course.id,
+                name=formula_form.formula_name.data,
+                coefficient=formula_form.coefficient.data
+            )
+            db.session.add(formula)
+        db.session.commit()
+        for teacher_form in course_form.teachers:
+            teacher = Teacher.query.get(teacher_form.form.id.data)
+            teacher_form.form.name.label = TeacherService.get_full_name(teacher)
+            if teacher_form.form.name.data is False:
                 continue
-            teacher = Teacher.query.get(teacher_form.id.data)
             if teacher is None:
                 continue
             course.teachers.append(TeacherCourse(

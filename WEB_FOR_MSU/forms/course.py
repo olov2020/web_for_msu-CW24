@@ -7,6 +7,8 @@ from wtforms.fields.simple import TelField, EmailField
 from wtforms.validators import DataRequired, Email, Length, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
+from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
+from WEB_FOR_MSU.forms.formula import FormulaForm
 from WEB_FOR_MSU.forms.schedule import ScheduleForm
 
 
@@ -80,3 +82,5 @@ class CourseForm(FlaskForm):
                                   validators=[DataRequired("Поле обязательно для заполнения")])
     submit = SubmitField("Создать курс")
     schedules = FieldList(FormField(ScheduleForm))
+    formulas = FieldList(FormField(FormulaForm))
+    teachers = FieldList(FormField(TeacherCourseForm))
