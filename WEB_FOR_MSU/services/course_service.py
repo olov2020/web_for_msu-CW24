@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from openpyxl.reader.excel import load_workbook
 
 from WEB_FOR_MSU import db
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
 from WEB_FOR_MSU.output_models import LessonSchedule
 from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
@@ -107,14 +107,18 @@ class CourseService:
         return result
 
     @staticmethod
-    def load_from_file(file):
+    def load_from_file(file, course_form, teacher_forms, schedule_forms):
         data = pd.read_excel(file)
         name = data.keys()[1]
         data = data.values
-        auditory = data[1][1]
+        for i in range(len(data)):
+            for j in range(len(data[i])):
+                if str(data[i][j]) == 'nan':
+                    data[i][j] = None
         for i in range(140):
             print(i, end='\t')
-            print(data[i][1], data[i][3], sep=';\t\t\t')
+            print(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], sep=';\t\t\t')
+        auditory = data[1][1]
         course_review_number = data[23][3]
         direction = data[24][3]
         emsh_grades = data[25][3]
@@ -157,3 +161,42 @@ class CourseService:
             platform_format=platform_format,
             additional_info=additional_info
         )
+        db.session.add(course)
+        db.session.commit()
+        for i in range(48, 87):
+            if data[i][0] is None:
+                continue
+            schedule = Schedule(
+                course_id=course.id,
+                lesson_number=data[i][0],
+                date=data[i][1],
+                theme=data[i][2],
+                plan=data[i][3],
+                additional_info=data[i][4]
+            )
+            db.session.add(schedule)
+        db.session.commit()
+        for i in range(3, 14, 5):
+            if data[i][3] is None:
+                continue
+            teacher = Teacher.query.filter_by(email=data[i + 4][3]).first()
+            if teacher is None:
+                continue
+            course.teachers.append(TeacherCourse(
+                teacher_id=teacher.id,
+                course_id=course.id,
+                year=data[48][1].year))
+        db.session.commit()
+        other = data[18][3]
+        if other is not None:
+            other = other.split(';')
+            for person in other:
+                person = person.split(',')
+                email = person[-1]
+                teacher = Teacher.query.filter_by(email=email).first()
+                if teacher is None:
+                    continue
+                course.teachers.append(TeacherCourse(
+                    teacher_id=teacher.id,
+                    course_id=course.id,
+                    year=data[48][1].year))

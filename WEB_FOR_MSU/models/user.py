@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     created_on = db.Column(db.DateTime(), default=None)
     updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     roles = db.relationship('Role', secondary=user_role, backref='users')
-    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False, default=str(uuid.uuid4))
+    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
 
     active = True
 
@@ -31,6 +31,7 @@ class User(db.Model, UserMixin):
         self.password = generate_password_hash(password)
         self.image = image
         self.created_on = datetime.utcnow()
+        self.fs_uniquifier = str(uuid.uuid4())
 
     def set_password(self, password):
         if self.password == generate_password_hash(password):

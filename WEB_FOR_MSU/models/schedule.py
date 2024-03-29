@@ -12,3 +12,11 @@ class Schedule(db.Model):
     plan = db.Column(db.String())
     additional_info = db.Column(db.String())
     pupils = db.relationship('Mark', back_populates='schedule')
+
+    def __init__(self, course_id, lesson_number, date, theme, plan, additional_info):
+        self.course_id = course_id
+        self.lesson_number = lesson_number
+        self.date = date
+        self.theme = theme
+        self.plan = plan
+        self.additional_info = additional_info

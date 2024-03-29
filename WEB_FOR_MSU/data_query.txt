@@ -22,10 +22,7 @@ VALUES (1, 1, 'Дмитрий', 'Мухин', 'Владимирович', '2004-
 INSERT INTO public.teacher (id, user_id, name, surname, patronymic, second_surname, nickname, birth_date, date_of_death, phone, telegram, vk, school, school_date_start, school_date_end, university, university_date_start, university_date_end, workplace, passport_number, passport_series, passport_date, passport_issued_by, registration_address, was_pupil) VALUES (1, 2, 'Владимир', 'Виноградов', 'Андреевич', null, 'frontender', '2004-09-06', null, '+79161234567', null, null, 'Лицей ВШЭ', '2019-09-01', '2022-06-30', 'ВШЭ', '2022-09-01', null, 'ВШЭ БПИ228', '123456', '1234', '2024-03-15', 'Москва', 'Москва', true);
 
 
-INSERT INTO public.course (id, name, auditory, formula, course_review_number, direction, emsh_grades, distribution, intern_work, lesson_time, additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format, target_audience, short_description, number_of_listeners, selection, assessment, platform_format, additional_info) VALUES (1, 'Приручение python''а', '101', e'Приблизительное распределение веса различных элементов контроля:
-                - Летучки - 20%
-                - Проекты - 30%
-                - Экзамен - 50%', 'в первый раз', 'Третий путь', '9-11', 'Владимир отвечает за весь курс', null, 'Вторник 17:20 - 18:40', e'Необходима компьютерная аудитория
+INSERT INTO public.course (id, name, auditory, course_review_number, direction, emsh_grades, crediting, distribution, intern_work, lesson_time, additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format, target_audience, short_description, number_of_listeners, selection, assessment, platform_format, additional_info) VALUES (1, 'Приручение python''а', '101', 'в первый раз', 'Третий путь', '9-11', 'зачетный для всех', 'Владимир отвечает за весь курс', null, 'Вторник 17:20 - 18:40', e'Необходима компьютерная аудитория
                 ', e'Целью курса является обучение школьников базовым навыкам программирования на примере языка программирования python
                 ', e'"К задачам курса можно отнести:
                 - Изучение python

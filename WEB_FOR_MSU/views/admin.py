@@ -23,13 +23,19 @@ def add_course():
     course_form = CourseForm()
     teachers = Teacher.query.all()
     teacher_course_forms = []
+    schedule_forms = []
     for teacher in teachers:
         teacher_course_form = TeacherCourseForm()
         teacher_course_form.id.data = teacher.id
         teacher_course_form.name.data = TeacherService.get_full_name(teacher)
         teacher_course_forms.append(teacher_course_form)
     if course_form.submit.data and course_form.file.data:
-        CourseService.load_from_file(course_form.file.data)
+        try:
+            CourseService.load_from_file(course_form.file.data, course_form, teacher_course_forms, schedule_forms)
+
+        except Exception as e:
+            flash('Неправильный формат файла')
+            return redirect(url_for('admin.add_course'))
     if course_form.validate_on_submit():
         pass
     return render_template('admin/add_course.html',
