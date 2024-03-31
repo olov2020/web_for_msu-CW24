@@ -20,10 +20,10 @@ class CourseService:
         course = Course(
             name=form.name.data,
             auditory=form.auditory.data,
-            formula=form.formula.data,
             course_review_number=form.course_review_number.data,
             direction=form.direction.data,
             emsh_grades=form.emsh_grades.data,
+            crediting=form.crediting.data,
             distribution=form.distribution.data,
             intern_work=form.intern_work.data,
             lesson_time=form.lesson_time.data,
