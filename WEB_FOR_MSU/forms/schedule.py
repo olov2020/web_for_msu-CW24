@@ -9,6 +9,6 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 class ScheduleForm(Form):
     lesson_number = IntegerField("Номер занятия: *", validators=[DataRequired("Поле обязательно для заполнения")])
     date = DateField("Дата: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    theme = StringField("Тема: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    plan = StringField("План: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    theme = StringField("Тема: *")
+    plan = StringField("План: *")
     additional_info = StringField("Дополнительная информация:")
