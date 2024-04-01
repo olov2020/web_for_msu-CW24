@@ -8,6 +8,7 @@ from flask_security import auth_required, roles_required
 from WEB_FOR_MSU.models import *
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
+from WEB_FOR_MSU.output_models import *
 from WEB_FOR_MSU.functions import get_next_monday
 # from app.utils import send_mail
 
@@ -27,17 +28,13 @@ def add_course():
             CourseService.load_from_file(file_form.file.data, course_form)
 
         except Exception as e:
-            flash('Неправильный формат файла')
+            flash('Неправильный формат файла', 'error')
             return redirect(url_for('admin.add_course'))
     if course_form.submit.data and course_form.validate():
         CourseService.load_from_forms(course_form)
-    image_service = ImageService()
-    image = image_service.get_user_image()
-    user = {'name': current_user.get_name(),
-            'surname': current_user.get_surname(),
-            'status': current_user.get_role_name(),
-            'photo': image,
-            }
+        flash('Курс добавлен', 'success')
+
+    user = UserInfo.get_user_info()
     return render_template('admin/add_course.html',
                            title='Добавление курса',
                            form_file=file_form,

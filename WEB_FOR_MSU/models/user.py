@@ -170,3 +170,9 @@ class User(db.Model, UserMixin):
             if role.name == 'teacher':
                 return False
         return flag
+
+    def is_admin(self):
+        for role in self.roles:
+            if role.name == 'admin':
+                return True
+        return False

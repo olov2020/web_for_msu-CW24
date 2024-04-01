@@ -9,6 +9,7 @@ from WEB_FOR_MSU.models import *
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
 from WEB_FOR_MSU.functions import get_next_monday
+from WEB_FOR_MSU.output_models import *
 # from app.utils import send_mail
 
 from flask import Blueprint
@@ -20,13 +21,7 @@ main = Blueprint('home', __name__)
 @main.route('/home')
 def home():
     if current_user.is_authenticated:
-        image_service = ImageService()
-        image = image_service.get_user_image()
-        user = {'name': current_user.get_name(),
-                'surname': current_user.get_surname(),
-                'status': current_user.get_role_name(),
-                'photo': image,
-                }
+        user = UserInfo.get_user_info()
     else:
         user = None
     return render_template('home/home.html',
@@ -80,7 +75,7 @@ def registration(registration_type):
 
     return render_template('home/registration.html',
                            title='Registration',
-                           user={},
+                           user=None,
                            authenticated=current_user.is_authenticated,
                            form_registration=registration_form)
 
@@ -103,7 +98,7 @@ def login():
             return redirect(request.args.get("next") or url_for('.home'))
         return redirect(url_for('.login'))
     return render_template('home/login.html', title='Login',
-                           user={}, form_login=login_form)
+                           user=None, form_login=login_form)
 
 
 @main.route('/account', methods=['GET', 'POST'])
@@ -149,18 +144,7 @@ def account():
                 if current_user.set_phone(account_form.phone.data):
                     flash('Телефон успешно изменен', 'success')
 
-    image = image_service.get_user_image()
-    user = {'name': current_user.get_name(),
-            'surname': current_user.get_surname(),
-            'status': current_user.get_role_name(),
-            'patronymic': current_user.get_patronymic(),
-            'photo': image,
-            'email': current_user.email,
-            'password': '',
-            'new_password': '',
-            'phone': current_user.get_phone(),
-            'school': current_user.get_school(),
-            }
+    user = UserInfo.get_user_info()
     return render_template('home/account.html',
                            title='Account',
                            user=user,
@@ -172,13 +156,7 @@ def account():
 @auth_required()
 def marks(course_id):
     if current_user.is_authenticated:
-        image_service = ImageService()
-        image = image_service.get_user_image()
-        user = {'name': current_user.get_name(),
-                'surname': current_user.get_surname(),
-                'status': current_user.get_role_name(),
-                'photo': image,
-                }
+        user = UserInfo.get_user_info()
     else:
         user = None
     return render_template('home/marks.html',
@@ -193,13 +171,7 @@ def schedule():
     date_start = datetime.now().date()
     lessons_in_week = CourseService.get_lessons_in_week(date_start, current_user.id)
     lessons_in_two_weeks = CourseService.get_lessons_in_week(get_next_monday(date_start), current_user.id)
-    image_service = ImageService()
-    image = image_service.get_user_image()
-    user = {'name': current_user.get_name(),
-            'surname': current_user.get_surname(),
-            'status': current_user.get_role_name(),
-            'photo': image,
-            }
+    user = UserInfo.get_user_info()
     return render_template('home/schedule.html',
                            title='Schedule',
                            authenticated=current_user.is_authenticated,
