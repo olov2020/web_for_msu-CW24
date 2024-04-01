@@ -2,6 +2,7 @@ from WEB_FOR_MSU import db
 
 
 class Mark(db.Model):
+    __tablename__ = 'mark'
     id = db.Column(db.Integer, primary_key=True)
     pupil_id = db.Column(db.Integer, db.ForeignKey('pupil.id'), nullable=False)
     schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.id'), nullable=False)
