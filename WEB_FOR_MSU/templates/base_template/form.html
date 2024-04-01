@@ -4,9 +4,9 @@
 <script src="../../static/js/jquery/jquery.maskedinput.min.js"></script>
 <script src='/static/js/base_template/validate.js'></script>
 
-<div class='form_container_text'>
+<div class='form_container_field'>
     {% if field.type == 'FileField' %}
-    <div class='form_container_file'>
+    <div class='form_container_file start'>
         {{ field.label(class='form_text') }}
         <div>
             {% if field.errors %}
@@ -19,31 +19,35 @@
     {% endif %}
 
     {% if field.type == 'StringField' or field.type == 'PasswordField' %}
-    {{ field.label(class='form_text') }}
-    <div>
-        {% if field.errors %}
+    <div class='field'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {% if field.errors %}
 
-        {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
-        {% else %}
+            {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
+            {% else %}
 
-        {% if user[field.id] %}
-        {{ field(class='form_input', size=32, placeholder='Введите данные', value=user[field.id]) }}
-        {% else %}
-        {{ field(class='form_input', size=32, placeholder='Введите данные') }}
-        {% endif %}
-        {% endif %}
+            {% if user[field.id] %}
+            {{ field(class='form_input', size=32, placeholder='Введите данные', value=user[field.id]) }}
+            {% else %}
+            {{ field(class='form_input', size=32, placeholder='Введите данные') }}
+            {% endif %}
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 
     {% if field.type == 'SelectField' %}
-    {{ field.label(class='form_text') }}
-    <div>
-        {{ field(class='form_input') }}
+    <div class='field'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {{ field(class='form_input') }}
+        </div>
     </div>
     {% endif %}
 
     {% if field.type == 'BooleanField' %}
-    <div class='form_container_checkbox'>
+    <div class='form_container_checkbox field'>
         {{ field.label(class='form_text') }}
         {{ field(class='form_checkbox') }}
     </div>
@@ -56,58 +60,66 @@
     {% endif %}
 
     {% if field.type == 'DateField' %}
-    {{ field.label(class='form_text') }}
-    <div>
-        {% if field.errors %}
-        {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
-        {% else %}
-        {{ field(class='form_input', size=32) }}
-        {% endif %}
+    <div class='field'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {% if field.errors %}
+            {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
+            {% else %}
+            {{ field(class='form_input', size=32) }}
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 
     {% if field.type == 'TelField' %}
-    {{ field.label(class='form_text') }}
-    <div>
-        {% if field.errors %}
-        {{ field(class='form_input form_input_error phone', size=32, placeholder=field.errors[0], value='') }}
-        {% else %}
+    <div class='field'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {% if field.errors %}
+            {{ field(class='form_input form_input_error phone', size=32, placeholder=field.errors[0], value='') }}
+            {% else %}
 
-        {% if user[field.id] %}
-        {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99', value=user[field.id]) }}
-        {% else %}
-        {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
+            {% if user[field.id] %}
+            {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99', value=user[field.id]) }}
+            {% else %}
+            {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
 
-        {% endif %}
-        {% endif %}
+            {% endif %}
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 
     {% if field.type == 'EmailField' %}
-    {{ field.label(class='form_text') }}
-    <div>
-        {% if field.errors %}
-        {{ field(class='form_input form_input_error email', size=32, placeholder=field.errors[0], value='') }}
-        {% else %}
+    <div class='field'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {% if field.errors %}
+            {{ field(class='form_input form_input_error email', size=32, placeholder=field.errors[0], value='') }}
+            {% else %}
 
-        {% if user[field.id] %}
-        {{ field(class='form_input email', placeholder='example@mail.ru', value=user[field.id]) }}
-        {% else %}
-        {{ field(class='form_input email', placeholder='example@mail.ru') }}
+            {% if user[field.id] %}
+            {{ field(class='form_input email', placeholder='example@mail.ru', value=user[field.id]) }}
+            {% else %}
+            {{ field(class='form_input email', placeholder='example@mail.ru') }}
 
-        {% endif %}
-        {% endif %}
+            {% endif %}
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 
     {% if field.type == 'IntegerField' %}
-    {{ field.label(class='form_text') }}
-    <div>
-        {% if field.errors %}
-        {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
-        {% else %}
-        {{ field(class='form_input', placeholder='2024') }}
-        {% endif %}
+    <div class='field'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {% if field.errors %}
+            {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
+            {% else %}
+            {{ field(class='form_input', placeholder='2024') }}
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 </div>

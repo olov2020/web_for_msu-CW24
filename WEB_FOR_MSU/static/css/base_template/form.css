@@ -21,13 +21,21 @@
     transform: scale(1.05);
 }
 
-/* for field inside form */
-.form_container_text {
+/* for field container form */
+.form_container_field {
     display: flex;
-    justify-content: start;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
 
     margin-bottom: 10px;
+}
+
+/* for field inside form */
+.field {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
 }
 
 /* for input form fields */
