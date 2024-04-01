@@ -17,6 +17,8 @@
 {% block main %}
 
 <div class='registration'>
+    {% include '/base_template/flash.html' %}
+
     <form action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form_registration.hidden_tag() }}
 

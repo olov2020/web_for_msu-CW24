@@ -13,6 +13,8 @@
 
 {% block main %}
 <div class='new_course'>
+    {% include '/base_template/flash.html' %}
+
     <form method="post" enctype="multipart/form-data">
         {{ form_file.hidden_tag() }}
         {{form_file.file}}
