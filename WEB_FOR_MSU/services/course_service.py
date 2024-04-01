@@ -15,7 +15,7 @@ from WEB_FOR_MSU.services import TeacherService
 
 
 class CourseService:
-    @staticmethod  # TODO: check form fields
+    @staticmethod
     def add_course(form):
         course = Course(
             name=form.name.data,

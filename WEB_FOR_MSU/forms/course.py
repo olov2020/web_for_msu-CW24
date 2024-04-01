@@ -55,7 +55,7 @@ class CourseForm(FlaskForm):
                                   'Четверг (2 пары) 17:20 - 20:15',
                                   'Пятница (2 пары) 17:20 - 20:15']],
                               validators=[DataRequired("Поле обязательно для заполнения")])
-    additional_info_for_auditory = StringField("Дополнительная о времени и требования к аудтории: *",
+    additional_info_for_auditory = StringField("Дополнительная информация о времени и требования к аудтории: *",
                                                validators=[DataRequired("Поле обязательно для заполнения")])
     course_purpose = StringField("Цель курса: *", validators=[DataRequired("Поле обязательно для заполнения")])
     course_objectives = StringField("Задачи курса: *", validators=[DataRequired("Поле обязательно для заполнения")])
