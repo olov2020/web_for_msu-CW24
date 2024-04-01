@@ -31,7 +31,15 @@ def add_course():
             return redirect(url_for('admin.add_course'))
     if course_form.submit.data and course_form.validate():
         CourseService.load_from_forms(course_form)
+    image_service = ImageService()
+    image = image_service.get_user_image()
+    user = {'name': current_user.get_name(),
+            'surname': current_user.get_surname(),
+            'status': current_user.get_role_name(),
+            'photo': image,
+            }
     return render_template('admin/add_course.html',
                            title='Добавление курса',
                            form_file=file_form,
+                           user=user,
                            form_course=course_form)
