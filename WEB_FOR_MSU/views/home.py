@@ -41,7 +41,7 @@ def registration(registration_type):
         return redirect(url_for('.login'))
     if current_user.is_authenticated:
         return redirect(url_for('.home'))
-    registration_form = RegistrationForm
+    registration_form = RegistrationForm()
     if registration_type == 'pupil':
         registration_form = RegistrationForm()
     elif registration_type == 'teacher':
