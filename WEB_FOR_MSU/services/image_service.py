@@ -82,7 +82,7 @@ class ImageService:
         s3_client.delete_object(Bucket=bucket, Key=object_name)
 
     @staticmethod
-    def generate_unique_imagename(original_filename):
+    def generate_unique_imagename():
         unique_filename = str(uuid.uuid4())
         return unique_filename + ".jpeg"
 
@@ -103,7 +103,7 @@ class ImageService:
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
         ImageService.reduce_image_size(path, path)
-        image_name = ImageService.generate_unique_imagename(image.filename)
+        image_name = ImageService.generate_unique_imagename()
         ImageService.upload_to_yandex_s3(path, "images", image_name)
         if current_user.image != "default.png":
             ImageService.delete_from_yandex_s3("images", current_user.image)
@@ -117,7 +117,7 @@ class ImageService:
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
         ImageService.reduce_image_size(path, path)
-        image_name = ImageService.generate_unique_imagename(image.filename)
+        image_name = ImageService.generate_unique_imagename()
         ImageService.upload_to_yandex_s3(path, "images", image_name)
         os.remove(path)
         return image_name
