@@ -41,3 +41,7 @@ class PupilService:
         )
         db.session.add(pupil)
         db.session.commit()
+
+    @staticmethod
+    def get_full_name(pupil):
+        return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic
