@@ -28,7 +28,6 @@ class TeacherService:
             was_pupil=form.was_pupil.data)
         db.session.add(teacher)
         db.session.commit()
-        return teacher
 
     @staticmethod
     def get_full_name(teacher):
