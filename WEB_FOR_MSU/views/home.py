@@ -106,7 +106,6 @@ def login():
 def account():
     logout_form = LogoutForm()
     account_form = AccountForm()
-    image_service = ImageService()
     if logout_form.submit.data and logout_form.is_submitted():
         logout_user()
         return redirect(url_for('.home'))
@@ -123,7 +122,7 @@ def account():
                 if current_user.set_email(account_form.email.data):
                     flash('Почта успешно изменена', 'success')
             if account_form.image.data:
-                image_service.change_user_image(account_form.image.data)
+                ImageService.change_user_image(account_form.image.data)
                 flash('Фото успешно изменено', 'success')
             if account_form.new_password.data:
                 if current_user.set_password(account_form.new_password.data):

@@ -20,11 +20,10 @@ class UserInfo:
 
     @staticmethod
     def get_user_info():
-        image_service = ImageService()
         return UserInfo(current_user.get_name(),
                         current_user.get_surname(),
                         current_user.get_role_name(),
-                        image_service.get_user_image(),
+                        ImageService.get_user_image(),
                         current_user.get_patronymic(),
                         current_user.email,
                         '',

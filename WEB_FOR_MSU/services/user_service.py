@@ -9,9 +9,8 @@ class UserService:
     @staticmethod
     def add_user(email, password, roles, form, user_exists=False):
         image = form.image.data
-        image_service = ImageService()
         if image:
-            image = image_service.save_user_image(image)
+            image = ImageService.save_user_image(image)
         else:
             image = 'default.png'
         if not user_exists:
@@ -27,6 +26,6 @@ class UserService:
         if user.is_teacher():
             TeacherService.add_teacher(user_id=user.id, form=form)
         if user.is_pupil():
-            agreement = image_service.save_user_agreement(form.agreement.data)
+            agreement = ImageService.save_user_agreement(form.agreement.data)
             PupilService.add_pupil(user_id=user.id, form=form, agreement=agreement)
         return user
