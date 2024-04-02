@@ -33,6 +33,8 @@
 
 /* for field inside form */
 .field {
+    width: 300px;
+    
     display: flex;
     justify-content: start;
     flex-direction: column;
