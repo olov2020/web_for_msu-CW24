@@ -241,7 +241,7 @@ class CourseService:
                         break
 
     @staticmethod
-    def load_from_forms(course_form):
+    def load_from_form(course_form):
         course = Course(
             name=course_form.name.data,
             auditory=course_form.auditory.data,

@@ -31,7 +31,7 @@ def add_course():
             flash('Неправильный формат файла', 'error')
             return redirect(url_for('admin.add_course'))
     if course_form.submit.data and course_form.validate():
-        CourseService.load_from_forms(course_form)
+        CourseService.load_from_form(course_form)
         flash('Курс добавлен', 'success')
 
     user = UserInfo.get_user_info()
