@@ -24,10 +24,8 @@
         <div class='course_fields'>
             {{ form_course.hidden_tag() }}
             {% for field in form_course if field.id not in ['schedules', 'teachers', 'formulas']%}
-            <div class='field'>
-                {{ field.label }}
-                {{ field }}
-            </div>
+            {% include '/base_template/form.html' %}
+            
             {% endfor %}
             <br>
             {% for teacher in form_course.teachers %}
