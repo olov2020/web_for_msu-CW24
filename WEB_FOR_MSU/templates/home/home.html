@@ -8,94 +8,11 @@
 
 {% block account %}
 
-{% if authenticated == False %}
-<a href='/login'>
-    <div class='header_account_button'>
-        <p>Войти</p>
-    </div>
-</a>
-{% else %}
-<a href='/account'>
-    <div class="personal_account_info">
-        <div class="personal_account_name">
-            <p>{{user.name}}</p>
-        </div>
-
-        <div class="personal_account_surname">
-            <p>{{user.surname}}</p>
-        </div>
-
-        <div class="personal_account_status">
-            <p>{{user.status}}</p>
-        </div>
-    </div>
-</a>
-
-<a href='account'>
-    <image src='{{ user.photo }}' class='personal_account_photo'></image>
-</a>
-{% endif %}
+{% include '/base_template/checkAccount.html' %}
 {% endblock %}
 
 {% block main %}
-<div class='home'>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-    <p>HelloHelloHelloHelloHelloHelloHelloHello</p>
-</div>
+<h1>Это домашняя страница экономико-математической школы</h1>
+<p>Здесь учатся ребята с 8 по 11 класс. Преподавателями являются все желающие студенты и преподаватели различных школ. Чтобы стать преподавателем достаточно желание и написать свой курс, который бы можно отнести к 1 из 3 направлений - математика, экономика или третий путь (все остальное). Занятия могут поводиться как очно, так и онлайн или в гибридном режиме. Проект, который мы выполняем он представляет из себя полноценный сайт, поэтому будет продолжен после курсовой работы. В связи с этим большинство ссылок из шапки профиля ведут на существующий сайт в данный момент.</p>
+
 {% endblock %}

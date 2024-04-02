@@ -16,10 +16,6 @@ class PupilService:
             telegram=form.tg.data,
             vk=form.vk.data,
             phone=form.phone.data,
-            passport_number=form.passport_number.data,
-            passport_series=form.passport_series.data,
-            passport_date=form.passport_date.data,
-            passport_issued_by=form.passport_issued_by.data,
             registration_address=form.registration_address.data,
             parent1_name=form.parent1_name.data,
             parent1_surname=form.parent1_surname.data,
@@ -45,3 +41,7 @@ class PupilService:
         )
         db.session.add(pupil)
         db.session.commit()
+
+    @staticmethod
+    def get_full_name(pupil):
+        return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic

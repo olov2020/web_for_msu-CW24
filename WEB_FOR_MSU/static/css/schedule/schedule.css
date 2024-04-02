@@ -1,0 +1,44 @@
+.week {
+    font-size: 20px;
+}
+
+.schedule {
+    display: flex;
+    align-items: top;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.lesson {
+    width: 500px;
+    height: 40px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.lesson_name {
+    align-items: center;
+}
+
+.date {
+    padding: 5px;
+    
+    border: 1px solid #fcccde;
+}
+
+.True {
+    background-color: #460FDB;
+    color: white;
+}
+
+.False {
+    background-color: #D2C2FF;
+    color: black;
+}
+
+.calendar {
+    width: 500px;
+}
