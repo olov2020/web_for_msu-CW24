@@ -302,3 +302,12 @@ class CourseService:
                 course_id=course.id,
                 year=year))
         db.session.commit()
+        pupils = Pupil.query.all()
+        for pupil in pupils:
+            pupil_course = PupilCourse(
+                pupil_id=pupil.id,
+                course_id=course.id,
+                year=year
+            )
+            db.session.add(pupil_course)
+        db.session.commit()
