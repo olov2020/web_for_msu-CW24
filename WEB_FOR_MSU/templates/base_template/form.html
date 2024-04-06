@@ -122,4 +122,10 @@
         </div>
     </div>
     {% endif %}
+
+    {% if field.type == 'FieldList' %}
+    {% for inner_field in field %}
+    {{ inner_filed }}
+    {% endfor %}
+    {% endif %}
 </div>

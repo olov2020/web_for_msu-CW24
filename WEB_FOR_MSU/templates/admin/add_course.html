@@ -23,28 +23,28 @@
     <form method="post">
         <div class='course_fields'>
             {{ form_course.hidden_tag() }}
-            {% for field in form_course if field.id not in ['schedules', 'teachers', 'formulas']%}
+            {% for field in form_course if field.id not in ['schedules', 'teachers', 'formulas'] %}
             {% include '/base_template/form.html' %}
-            
+
             {% endfor %}
             <br>
             {% for teacher in form_course.teachers %}
             {% for field in teacher.form %}
-            {{ field() }} {{field.label}}
+            {{ field.label }} {{ field() }}
             {% endfor %}
             <br>
             {% endfor %}
             <br>
             {% for formula in form_course.formulas %}
             {% for field in formula.form %}
-            {{ field.label }} {{ field() }}
+            {% include '/base_template/form.html' %}
             {% endfor %}
             <br>
             {% endfor %}
             <br>
             {% for schedule in form_course.schedules %}
             {% for field in schedule.form %}
-            {{ field.label }} {{ field() }}
+            {% include '/base_template/form.html' %}
             {% endfor %}
             <br>
             {% endfor %}
