@@ -24,7 +24,7 @@ def create_app(config):
     # migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    from .views.home import main as main_blueprint
+    from .views.home import main as main_blueprintT
     from .views.admin import admin as admin_blueprint
     from WEB_FOR_MSU.models import User, Role
 
