@@ -14,10 +14,20 @@
     overflow: auto;
 }
 
-.field {
+.block {
     margin: 10px 0px;
     display: flex;
 }
+
+
+.field {
+    width: 100px;
+    
+    display: flex;
+    justify-items: start;
+    align-items: start;
+}
+
 
 .submit {
     width: 300px;
