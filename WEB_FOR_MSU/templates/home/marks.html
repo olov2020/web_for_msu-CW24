@@ -3,6 +3,8 @@
 {% block head %}
 
 <title>{{title}}</title>
+<link href="../../static/css/marks/marks.css" rel="stylesheet">
+<script src="../../static/js/marks/marks.js"></script>
 {% endblock %}
 
 {% block account %}
@@ -11,5 +13,41 @@
 {% endblock %}
 
 {% block main %}
+
+<div class='marks'>
+    <div class='table'>
+        <div class='block'>
+            {% for date in form.dates %}
+            <div class='field date'>
+                {{ date }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class='block'>
+            {% for mark_type in form.mark_types %}
+            <div class='field mark_type'>
+                {{ mark_type }}
+            </div>
+            {% endfor %}
+        </div>
+
+        {% for pupil in form.pupils %}
+        <div class='block'>
+            {{ pupil.name }}
+
+            {% for mark in pupil.marks %}
+            <div class='field mark'>
+                {{ mark }}
+            </div>
+            {% endfor %}
+
+            {{pupil.result}}
+        </div>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class='submit') }}
+</div>
 
 {% endblock %}

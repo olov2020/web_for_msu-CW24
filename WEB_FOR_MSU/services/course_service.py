@@ -6,7 +6,7 @@ from WEB_FOR_MSU import db
 from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
 from WEB_FOR_MSU.forms.formula import FormulaForm
 from WEB_FOR_MSU.forms.schedule import ScheduleForm
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, Mark
 from WEB_FOR_MSU.output_models import LessonSchedule
 from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
@@ -317,3 +317,10 @@ class CourseService:
             )
             db.session.add(pupil_course)
         db.session.commit()
+
+    @staticmethod
+    def get_lessons(course_id):
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        return sorted(course.lessons, key=lambda x: x.lesson_number)

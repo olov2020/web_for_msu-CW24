@@ -7,3 +7,5 @@ from .course import CourseForm
 from .teacher_course import TeacherCourseForm
 from .schedule import ScheduleForm
 from .course_file import CourseFileForm
+from .marks import MarksForm
+from .pupil_marks import PupilMarksForm

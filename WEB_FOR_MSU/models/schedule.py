@@ -12,6 +12,8 @@ class Schedule(db.Model):
     plan = db.Column(db.String())
     additional_info = db.Column(db.String())
     pupils = db.relationship('Mark', back_populates='schedule')
+    formula_id = db.Column(db.Integer, db.ForeignKey('formula.id'))
+    formulas = db.relationship('Formula', backref='schedules')
 
     def __init__(self, course_id, lesson_number, date, theme, plan, additional_info):
         self.course_id = course_id

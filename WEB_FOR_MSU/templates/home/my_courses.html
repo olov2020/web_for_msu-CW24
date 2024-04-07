@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>{{title}}</title>
+<link href="../../static/css/my_courses/my_courses.css" rel="stylesheet">
+{% endblock %}
+
+{% block account %}
+
+{% include '/base_template/check_account.html' %}
+{% endblock %}
+
+{% block main %}
+
+<div class='marks'>
+    {% for course in courses %}
+    <div class='course'>
+        <a href='/marks/{{ course.id }}'>
+            {{ course.name }}
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
