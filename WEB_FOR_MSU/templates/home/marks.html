@@ -1,26 +1,24 @@
-{% extends "base.html" %}
-
-{% block head %}
-
-<title>{{title}}</title>
-<link href="../../static/css/marks/marks.css" rel="stylesheet">
-<script src="../../static/js/marks/marks.js"></script>
-{% endblock %}
-
-{% block account %}
-
-{% include '/base_template/check_account.html' %}
-{% endblock %}
-
-{% block main %}
-
-<div class='marks'>
-    {% for course in courses %}
-    <div class='course'>
-        <a href='/marks{{ course.id }}'>
-            {{ course.name }}
-        </a>
-    </div>
-    {% endfor %}
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for date in form.dates %}
+{{date}}
+{% endfor %}
+<br>
+{% for mark_type in form.mark_types %}
+{{mark_type}}
+{% endfor %}
+<br>
+{% for pupil in form.pupils %}
+{{pupil.name}}
+{% for mark in pupil.marks %}
+{{mark}}
+<br>
+{% endfor %}
+{% endfor %}
+</body>
+</html>

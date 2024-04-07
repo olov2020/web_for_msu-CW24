@@ -6,7 +6,7 @@ from WEB_FOR_MSU import db
 from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
 from WEB_FOR_MSU.forms.formula import FormulaForm
 from WEB_FOR_MSU.forms.schedule import ScheduleForm
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, Mark
 from WEB_FOR_MSU.output_models import LessonSchedule
 from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
@@ -317,3 +317,32 @@ class CourseService:
             )
             db.session.add(pupil_course)
         db.session.commit()
+
+    @staticmethod
+    def get_lessons(course_id):
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        return course.lessons
+
+    @staticmethod
+    def get_pupil_mark_by_lesson(pupil_id, lesson_id):
+        assoc = Mark.query.filter_by(schedule_id=lesson_id, pupil_id=pupil_id).first()
+        return assoc.mark if assoc else ""
+
+    @staticmethod
+    def calculate_result(pupil_marks, mark_types, formulas):
+        result = 0
+        types = {}
+        for mark_type in mark_types:
+            if mark_type not in types:
+                types[mark_type] = 1
+            else:
+                types[mark_type] += 1
+        for i in range(len(pupil_marks)):
+            if mark_types[i] == 'Отсутствие':
+                continue
+            if pupil_marks[i].isdigit():
+                formula = filter(lambda x: x.name == mark_types[i], formulas)[0]
+                result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
+        return result
