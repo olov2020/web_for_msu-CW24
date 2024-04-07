@@ -222,11 +222,10 @@ def schedule():
 def my_courses():
     user = UserInfo.get_user_info()
     if current_user.is_pupil():
-        courses = PupilService.get_pupil_courses(current_user.id)
-        courses = [Courses(course.id, course.name) for course in courses]
+        assocs = PupilService.get_pupil_courses(current_user.id)
     else:
-        courses = TeacherService.get_teacher_courses(current_user.id)
-        courses = [Courses(course.id, course.name) for course in courses]
+        assocs = TeacherService.get_teacher_courses(current_user.id)
+    courses = [Courses(assoc.course.id, assoc.course.name) for assoc in assocs]
     return render_template('home/my_courses.html',
                            title='My courses',
                            authenticated=current_user.is_authenticated,
