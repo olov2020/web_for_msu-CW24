@@ -95,6 +95,13 @@
                                 <p>Списки зачетных курсов</p>
                             </div>
                         </a>
+                        {% if user.admin == 1 %}
+                        <a href='/admin/add_course'>
+                            <div class="hidden_menu_text">
+                                <p>Добавить новый курс</p>
+                            </div>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
 

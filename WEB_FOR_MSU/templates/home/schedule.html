@@ -9,19 +9,20 @@
 
 {% block account %}
 
-{% include '/base_template/checkAccount.html' %}
+{% include '/base_template/check_account.html' %}
 {% endblock %}
 
 {% block main %}
 
 <div class='schedule'>
     <div class='schedule_weeks'>
-        <div>
+        <div class='week_container'>
             <div class='week'>
                 <p>Текущая неделя</p>
             </div>
 
             <div>
+                {% if lessons_in_week %}
                 {% for lesson in lessons_in_week %}
                 <div class='lesson'>
                     <div class='date'>
@@ -30,23 +31,35 @@
                     <div>
                         {{ lesson.lesson_time }}
                     </div>
+                    {% if lesson.auditory %}
                     <div>
                         {{ lesson.auditory }}
                     </div>
+                    {% else %} 
+                    <div>
+                        <p>Нет аудитории</p>
+                    </div>
+                    {% endif %}
                     <div class='lesson_name {{ lesson.course_type }}'>
                         {{ lesson.course_name }}
                     </div>
                 </div>
                 {% endfor %}
+                {% else %}
+                <div class='nolesson'>
+                    <p>На этой неделе уроков нет</p>
+                </div>
+                {% endif %}
             </div>
         </div>
 
-        <div>
-            <div>
+        <div class='week_container'>
+            <div class='week'>
                 <p>Следующая неделя</p>
             </div>
 
             <div>
+                {% if lessons_in_two_weeks %}
                 {% for lesson in lessons_in_two_weeks %}
                 <div class='lesson'>
                     <div class='date'>
@@ -55,20 +68,28 @@
                     <div>
                         {{ lesson.lesson_time }}
                     </div>
+                    {% if lesson.auditory %}
                     <div>
                         {{ lesson.auditory }}
                     </div>
+                    {% else %} 
+                    <div>
+                        <p>Нет аудитории</p>
+                    </div>
+                    {% endif %}
                     <div class='lesson_name {{ lesson.course_type }}'>
                         {{ lesson.course_name }}
                     </div>
                 </div>
                 {% endfor %}
+                {% else %}
+                <div class='nolesson'>
+                    <p>На этой неделе уроков нет</p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    <div class='calendar'>
-
-    </div>
 </div>
 {% endblock %}
