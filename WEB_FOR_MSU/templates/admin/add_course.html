@@ -37,7 +37,7 @@
             <br>
             {% for formula in form_course.formulas %}
             {% for field in formula.form %}
-            {% include '/base_template/form.html' %}
+            {{ field.label }} {{ field() }}
             {% endfor %}
             <br>
             {% endfor %}

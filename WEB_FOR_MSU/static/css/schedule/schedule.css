@@ -1,16 +1,39 @@
-.week {
-    font-size: 20px;
+.schedule {
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
 }
 
-.schedule {
+.schedule_weeks {
+    width: 500px;
+    
     display: flex;
-    align-items: top;
-    justify-content: space-around;
-    width: 100%;
+    justify-content: center;
+    flex-direction: column;
 }
+
+
+.week_container {
+    
+}
+
+.week {
+    width: auto;
+    
+    display: flex;
+    justify-content: center;
+    
+    padding: 5px;
+    margin: 10px 0px;
+    
+    font-size: 20px;
+    border-bottom: 1px solid #9F1A59;
+    border-top: 1px solid #9F1A59;
+}
+
 
 .lesson {
-    width: 500px;
     height: 40px;
     
     display: flex;
