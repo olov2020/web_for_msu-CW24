@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
                                          Length(min=8, message="Не менее 8 символов в пароле")])
     phone = TelField("Телефон: *", validators=[DataRequired("Поле обязательно для заполнения")])
     grade = SelectField('Класс: *',
-                        choices=[(i, str(i)) for i in range(8, 12)] + [('graduated', 'Закончил школу')],
+                        choices=[(i, str(i)) for i in range(8, 12)],
                         validators=[DataRequired("Поле обязательно для заполнения")])
     school = StringField("Школа: *", validators=[DataRequired("Поле обязательно для заполнения")])
     registration_address = StringField("Адрес регистрации: *",
