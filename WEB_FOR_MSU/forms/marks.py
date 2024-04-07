@@ -17,3 +17,4 @@ class MarksForm(FlaskForm):
     pupils = FieldList(FormField(PupilMarksForm))
     visits = FieldList(IntegerField())
     average = FieldList(FloatField())
+    submit = SubmitField("Подтвердить")

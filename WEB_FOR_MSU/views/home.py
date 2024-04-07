@@ -156,13 +156,15 @@ def account():
 def marks(course_id):
     if current_user.is_pupil():
         return redirect(url_for('.home'))
+    marks_form = MarksForm()
+    if marks_form.submit.data:
+        pass
     user = UserInfo.get_user_info()
     course = Course.query.get(course_id)
     if not course:
         flash('Такого курса не существует', 'error')
         return redirect(url_for('.my_courses'))
     formulas = course.formulas
-    marks_form = MarksForm()
     lessons = CourseService.get_lessons(course_id)
     if not lessons:
         flash('Уроков пока нет', 'error')
@@ -182,11 +184,11 @@ def marks(course_id):
         pupil_marks_form.name.data = PupilService.get_full_name(pupil)
         pupil_course_marks = []
         for lesson in lessons:
-            mark = CourseService.get_pupil_mark_by_lesson(pupil.id, lesson.id)
+            mark = MarkService.get_pupil_mark_by_lesson(pupil.id, lesson.id)
             pupil_course_marks.append(mark)
             pupil_marks_form.marks.append_entry()
             pupil_marks_form.marks[-1].data = mark
-        pupil_marks_form.result = CourseService.calculate_result(pupil_course_marks, marks_form.mark_types.data, formulas)
+        pupil_marks_form.result = MarkService.calculate_result(pupil_course_marks, marks_form.mark_types.data, formulas)
         marks_form.pupils.append_entry()
         marks_form.pupils[-1].form = pupil_marks_form
 
