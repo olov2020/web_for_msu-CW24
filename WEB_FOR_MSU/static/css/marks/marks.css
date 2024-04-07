@@ -1,3 +1,39 @@
-.course {
+.marks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.table {
+    width: 1000px;
     
+    display: flex;
+    flex-direction: column;
+    
+    overflow: auto;
+}
+
+.field {
+    margin: 10px 0px;
+    display: flex;
+}
+
+.submit {
+    width: 300px;
+    height: 40px;
+    margin-top: 40px;
+
+    background-color: #9F1A59;
+    border: 0px;
+    border-radius: 16px;
+
+    color: white;
+    font-size: 20px;
+
+    transition: all .1s ease-out;
+}
+
+.submit:hover {
+    transform: scale(1.05);
 }

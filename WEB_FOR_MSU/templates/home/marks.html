@@ -1,27 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for date in form.dates %}
-{{date}}
-{% endfor %}
-<br>
-{% for mark_type in form.mark_types %}
-{{mark_type}}
-{% endfor %}
-<br>
-{% for pupil in form.pupils %}
-{{pupil.name}}
-{% for mark in pupil.marks %}
-{{mark}}
-<br>
-{% endfor %}
-{{pupil.result}}
-<br>
-{% endfor %}
-{{ form.submit }}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>{{title}}</title>
+<link href="../../static/css/marks/marks.css" rel="stylesheet">
+<script src="../../static/js/marks/marks.js"></script>
+{% endblock %}
+
+{% block account %}
+
+{% include '/base_template/check_account.html' %}
+{% endblock %}
+
+{% block main %}
+
+<div class='marks'>
+    <div class='table'>
+        <div class='field'>
+            {% for date in form.dates %}
+            {{date}}
+            {% endfor %}
+        </div>
+
+        <div class='field'>
+            {% for mark_type in form.mark_types %}
+            {{mark_type}}
+            {% endfor %}
+        </div>
+
+        {% for pupil in form.pupils %}
+        <div class='field'>
+            {{pupil.name}}
+
+            {% for mark in pupil.marks %}
+            {{mark}}
+            {% endfor %}
+
+            {{pupil.result}}
+        </div>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class='submit') }}
+</div>
+
+{% endblock %}

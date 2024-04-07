@@ -3,8 +3,7 @@
 {% block head %}
 
 <title>{{title}}</title>
-<link href="../../static/css/marks/marks.css" rel="stylesheet">
-<script src="../../static/js/marks/marks.js"></script>
+<link href="../../static/css/my_courses/my_courses.css" rel="stylesheet">
 {% endblock %}
 
 {% block account %}
@@ -17,7 +16,7 @@
 <div class='marks'>
     {% for course in courses %}
     <div class='course'>
-        <a href='/marks{{ course.id }}'>
+        <a href='/marks/{{ course.id }}'>
             {{ course.name }}
         </a>
     </div>
