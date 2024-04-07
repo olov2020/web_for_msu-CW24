@@ -7,19 +7,25 @@ from WEB_FOR_MSU.services.teacher_service import TeacherService
 
 class UserService:
     @staticmethod
-    def add_user(email, password, role_id, form):
+    def add_user(email, password, roles, form, user_exists=False):
         image = form.image.data
-        image_service = ImageService()
         if image:
-            image = image_service.save_user_image(image)
+            image = ImageService.save_user_image(image)
         else:
             image = 'default.png'
-        user = User(email=email, password=password, image=image, role_id=role_id)
-        db.session.add(user)
-        db.session.commit()
-        if user.role == 'pupil':
-            agreement = image_service.save_user_agreement(form.agreement.data)
-            PupilService.add_pupil(user_id=user.id, form=form, agreement=agreement)
-        if user.role == 'teacher':
+        if not user_exists:
+            user = User(email=email, password=password, image=image)
+            user.roles = roles
+            db.session.add(user)
+            db.session.commit()
+        else:
+            user = User.query.filter_by(email=email).first()
+            user.image = image
+            user.roles = roles
+            db.session.commit()
+        if user.is_teacher():
             TeacherService.add_teacher(user_id=user.id, form=form)
+        if user.is_pupil():
+            agreement = ImageService.save_user_agreement(form.agreement.data)
+            PupilService.add_pupil(user_id=user.id, form=form, agreement=agreement)
         return user

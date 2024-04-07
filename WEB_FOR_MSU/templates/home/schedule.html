@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>{{title}}</title>
+<link href="../../static/css/schedule/schedule.css" rel="stylesheet">
+<script src="../../static/js/schedule/schedule.js"></script>
+{% endblock %}
+
+{% block account %}
+
+{% include '/base_template/check_account.html' %}
+{% endblock %}
+
+{% block main %}
+
+<div class='schedule'>
+    <div class='schedule_weeks'>
+        <div class='week_container'>
+            <div class='week'>
+                <p>Текущая неделя</p>
+            </div>
+
+            {% if lessons_in_week %}
+            {% for lesson in lessons_in_week %}
+            <div class='lesson'>
+                <div class='field'>
+                    {{ lesson.date }}
+                </div>
+                <div class='field'>
+                    {{ lesson.lesson_time }}
+                </div>
+                {% if lesson.auditory %}
+                <div class='field'>
+                    {{ lesson.auditory }}
+                </div>
+                {% else %}
+                <div class='field noauditory'>
+                    <p>Нет аудитории</p>
+                </div>
+                {% endif %}
+                <div class='{{ lesson.course_type }}'>
+                    {{ lesson.course_name }}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class='nolesson'>
+                <p>На этой неделе нет уроков</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class='week_container'>
+            <div class='week'>
+                <p>Следующая неделя</p>
+            </div>
+
+            {% if lessons_in_two_weeks %}
+            {% for lesson in lessons_in_two_weeks %}
+            <div class='lesson'>
+                <div class='field'>
+                    {{ lesson.date }}
+                </div>
+                <div class='field'>
+                    {{ lesson.lesson_time }}
+                </div>
+                {% if lesson.auditory %}
+                <div class='field'>
+                    {{ lesson.auditory }}
+                </div>
+                {% else %}
+                <div class='field noauditory'>
+                    <p>Нет аудитории</p>
+                </div>
+                {% endif %}
+                <div class='{{ lesson.course_type }}'>
+                    {{ lesson.course_name }}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class='nolesson'>
+                <p>На этой неделе нет уроков</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

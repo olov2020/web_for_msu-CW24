@@ -79,5 +79,4 @@ function showHiddenMenu() {
         hidden_menu_community.style.visibility = "hidden";
         hidden_menu.style.display = "none";
     });
-
-};
+}

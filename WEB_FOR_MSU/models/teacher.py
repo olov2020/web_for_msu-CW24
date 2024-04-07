@@ -24,10 +24,10 @@ class Teacher(db.Model):
     university_date_start = db.Column(db.Integer)
     university_date_end = db.Column(db.Integer)
     workplace = db.Column(db.String())
-    passport_number = db.Column(db.String(), nullable=False)
-    passport_series = db.Column(db.String(), nullable=False)
-    passport_date = db.Column(db.Date(), nullable=False)
-    passport_issued_by = db.Column(db.String(), nullable=False)
+    passport_number = db.Column(db.String())
+    passport_series = db.Column(db.String())
+    passport_date = db.Column(db.Date())
+    passport_issued_by = db.Column(db.String())
     registration_address = db.Column(db.String(), nullable=False)
     was_pupil = db.Column(db.Boolean, default=False)
     courses = db.relationship('TeacherCourse', back_populates='teacher')
@@ -36,7 +36,7 @@ class Teacher(db.Model):
 
     def __init__(self, user_id, email, name, surname, patronymic, second_surname, nickname, birth_date, phone, telegram,
                  vk, school, school_date_start, school_date_end, university, university_date_start, university_date_end,
-                 workplace, passport_number, passport_series, passport_date, passport_issued_by, registration_address,
+                 workplace, registration_address,
                  was_pupil):
         self.user_id = user_id
         self.email = email
@@ -56,10 +56,10 @@ class Teacher(db.Model):
         self.university_date_start = university_date_start
         self.university_date_end = university_date_end
         self.workplace = workplace
-        self.passport_number = passport_number
-        self.passport_series = passport_series
-        self.passport_date = passport_date
-        self.passport_issued_by = passport_issued_by
+        self.passport_number = None
+        self.passport_series = None
+        self.passport_date = None
+        self.passport_issued_by = None
         self.registration_address = registration_address
         self.was_pupil = was_pupil
 
