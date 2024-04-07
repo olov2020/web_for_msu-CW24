@@ -14,8 +14,8 @@ from WEB_FOR_MSU.forms.schedule import ScheduleForm
 
 class CourseForm(FlaskForm):
     name = StringField("Название курса: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    auditory = StringField("Аудитория: *")
-    course_review_number = SelectField("№ рассмотрения курса:",
+    auditory = StringField("Аудитория:")
+    course_review_number = SelectField("№ рассмотрения курса: *",
                                        choices=[(choice, choice) for choice in
                                                 ['в первый раз', 'во второй раз', 'в третий раз', 'в четвёртый раз',
                                                  'в пятый раз']])
