@@ -161,6 +161,7 @@ def marks(course_id):
     if marks_form.submit.data:
         MarkService.save_from_form(course_id, marks_form)
         flash('Оценки успешно сохранены', 'success')
+        return redirect(url_for('.marks', course_id=course_id))
     user = UserInfo.get_user_info()
     course = Course.query.get(course_id)
     if not course:
@@ -182,7 +183,8 @@ def marks(course_id):
         marks_form.mark_types[-1].choices = choices
         marks_form.dates[-1].data = lesson.date
     for pupil in CourseService.get_pupils(course_id):
-        pupil_marks_form = PupilMarksForm()
+        marks_form.pupils.append_entry()
+        pupil_marks_form = marks_form.pupils[-1].form
         pupil_marks_form.id.data = pupil.id
         pupil_marks_form.name.data = PupilService.get_full_name(pupil)
         pupil_course_marks = []
@@ -191,9 +193,7 @@ def marks(course_id):
             pupil_course_marks.append(mark)
             pupil_marks_form.marks.append_entry()
             pupil_marks_form.marks[-1].data = mark
-        pupil_marks_form.result = MarkService.calculate_result(pupil_course_marks, marks_form.mark_types.data, formulas)
-        marks_form.pupils.append_entry()
-        marks_form.pupils[-1].form = pupil_marks_form
+        pupil_marks_form.result.data = MarkService.calculate_result(pupil_course_marks, marks_form.mark_types.data, formulas)
 
     return render_template('home/marks.html',
                            title='Marks',

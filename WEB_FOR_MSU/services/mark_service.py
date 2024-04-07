@@ -33,13 +33,13 @@ class MarkService:
                 lesson.formulas = Formula.query.filter_by(course_id=course_id, name=marks_form.mark_types[i].data).first()
         for i in range(len(marks_form.pupils)):
             for j in range(len(marks_form.dates)):
-                mark = marks_form.pupils[i].marks[j].data
+                mark = marks_form.pupils[i].form.marks[j].data
                 if mark:
                     lesson = Schedule.query.filter_by(course_id=course_id, date=marks_form.dates[j].data).first()
-                    prev_mark = Mark.query.filter_by(schedule_id=lesson.id, pupil_id=marks_form.pupils[i].id.data).first()
+                    prev_mark = Mark.query.filter_by(schedule_id=lesson.id, pupil_id=marks_form.pupils[i].form.id.data).first()
                     if prev_mark:
                         prev_mark.mark = mark
                     else:
-                        new_mark = Mark(lesson.id, marks_form.pupils[i].id.data, mark)
+                        new_mark = Mark(lesson.id, marks_form.pupils[i].form.id.data, mark, None)
                         db.session.add(new_mark)
         db.session.commit()

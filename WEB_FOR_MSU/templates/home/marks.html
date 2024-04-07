@@ -19,6 +19,7 @@
     <form method="post">
         <div class='table'>
             <div class='block'>
+                {{ form.hidden_tag() }}
                 {% for date in form.dates %}
                 <div class='field date'>
                     {{ date }}
@@ -36,9 +37,10 @@
 
             {% for pupil in form.pupils %}
             <div class='block'>
-                {{ pupil.name }}
+                {{ pupil.form.id}}
+                {{ pupil.form.name }}
 
-                {% for mark in pupil.marks %}
+                {% for mark in pupil.form.marks %}
                 <div class='field mark'>
                     {{ mark }}
                 </div>

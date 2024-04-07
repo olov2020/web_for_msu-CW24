@@ -13,7 +13,7 @@ from WEB_FOR_MSU.forms.pupil_marks import PupilMarksForm
 
 class MarksForm(FlaskForm):
     dates = FieldList(StringField())
-    mark_types = FieldList(SelectField())
+    mark_types = FieldList(SelectField(choices=[('Отсутствие', 'Отсутствие')]))
     pupils = FieldList(FormField(PupilMarksForm))
     visits = FieldList(IntegerField())
     average = FieldList(FloatField())
