@@ -304,10 +304,16 @@ class CourseService:
         db.session.commit()
         pupils = Pupil.query.all()
         for pupil in pupils:
+            grade = pupil.school_grade
+            if str(grade) in course.crediting or course.crediting == 'зачётный для всех классов':
+                crediting = True
+            else:
+                crediting = False
             pupil_course = PupilCourse(
                 pupil_id=pupil.id,
                 course_id=course.id,
-                year=year
+                year=year,
+                crediting=crediting
             )
             db.session.add(pupil_course)
         db.session.commit()
