@@ -24,12 +24,11 @@ class TeacherService:
             university_date_start=None,
             university_date_end=form.university_finished.data,
             workplace=form.workplace.data,
-            passport_number=form.passport_number.data,
-            passport_series=form.passport_series.data,
-            passport_date=form.passport_date.data,
-            passport_issued_by=form.passport_issued_by.data,
             registration_address=form.registration_address.data,
             was_pupil=form.was_pupil.data)
         db.session.add(teacher)
         db.session.commit()
-        return teacher
+
+    @staticmethod
+    def get_full_name(teacher):
+        return teacher.surname + ' ' + teacher.name + ' ' + teacher.patronymic

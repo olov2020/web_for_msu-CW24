@@ -5,22 +5,20 @@
 <title>{{title}}</title>
 <link href="../../static/css/registration/registration.css" rel="stylesheet">
 <script src="../../static/js/registration/registration.js"></script>
-<script src='/static/js/base/templates.js'></script>
 
 {% endblock %}
 
 {% block account %}
-<a href='/login'>
-    <div class='header_account_button'>
-        <p>Войти</p>
-    </div>
-</a>
+
+{% include '/base_template/check_account.html' %}
 {% endblock %}
 
 
 {% block main %}
 
 <div class='registration'>
+    {% include '/base_template/flash.html' %}
+
     <form action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form_registration.hidden_tag() }}
 

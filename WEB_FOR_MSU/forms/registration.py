@@ -24,11 +24,6 @@ class RegistrationForm(FlaskForm):
                         choices=[(i, str(i)) for i in range(8, 12)] + [('graduated', 'Закончил школу')],
                         validators=[DataRequired("Поле обязательно для заполнения")])
     school = StringField("Школа: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    passport_series = StringField("Серия паспорта: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    passport_number = StringField("Номер паспорта: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    passport_date = DateField("Дата выдачи паспорта: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    passport_issued_by = StringField("Кем выдан паспорт: *",
-                                     validators=[DataRequired("Поле обязательно для заполнения")])
     registration_address = StringField("Адрес регистрации: *",
                                        validators=[DataRequired("Поле обязательно для заполнения")])
     tg = StringField("Telegram: ")

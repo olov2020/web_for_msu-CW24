@@ -1,0 +1,67 @@
+.schedule {
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+}
+
+.schedule_weeks {
+    width: 500px;
+    
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.week_container {
+    
+}
+
+.week {
+    width: auto;
+    
+    display: flex;
+    justify-content: center;
+    
+    padding: 5px;
+    margin: 10px 0px;
+    
+    font-size: 20px;
+    border-bottom: 1px solid #9F1A59;
+    border-top: 1px solid #9F1A59;
+}
+
+
+.lesson {
+    height: 40px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.lesson_name {
+    align-items: center;
+}
+
+.date {
+    padding: 5px;
+    
+    border: 1px solid #fcccde;
+}
+
+.True {
+    background-color: #460FDB;
+    color: white;
+}
+
+.False {
+    background-color: #D2C2FF;
+    color: black;
+}
+
+.calendar {
+    width: 500px;
+}

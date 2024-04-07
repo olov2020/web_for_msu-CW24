@@ -9,11 +9,9 @@
     <link href="../static/css/base/header/hidden_menu.css" rel="stylesheet">
     <link href="../static/css/base/main.css" rel="stylesheet">
     <link href="../static/css/base/footer.css" rel="stylesheet">
-    <link href="../static/css/base/template.css" rel="stylesheet">
+
     <script src="../static/js/base/progress_bar.js"></script>
     <script src="../static/js/base/hidden_menu.js"></script>
-    <script src="/static/js/jquery/jquery-3.7.1.min.js"></script>
-    <script src="/static/js/jquery/jquery.maskedinput.min.js"></script>
     {% block head %}{% endblock %}
 </head>
 
@@ -48,9 +46,11 @@
 
         <div class='header_table'>
             <div class="header_buttons">
-                <div class="header_button news">
-                    <p>Новости</p>
-                </div>
+                <a href='https://emsch.ru/'>
+                    <div class="header_button news">
+                        <p>Новости</p>
+                    </div>
+                </a>
                 <div class="header_button courses">
                     <p>Курсы</p>
                 </div>
@@ -70,61 +70,98 @@
 
                 <div class="hidden_menu_block hidden_menu_courses">
                     <div class="hidden_menu_body">
-                        <div class="hidden_menu_text">
-                            <p>Расписание</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Мои курсы</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Все курсы</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Ведомость</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Списки зачетных курсов</p>
-                        </div>
+                        <a href='/schedule'>
+                            <div class="hidden_menu_text">
+                                <p>Расписание</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/spetskursy-2023-2024/'>
+                            <div class="hidden_menu_text">
+                                <p>Мои курсы</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/spetskursy-2023-2024/'>
+                            <div class="hidden_menu_text">
+                                <p>Все курсы</p>
+                            </div>
+                        </a>
+                        <a href='/marks'>
+                            <div class="hidden_menu_text">
+                                <p>Ведомость</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/zachjotnye-kursy-2023-2024/'>
+                            <div class="hidden_menu_text">
+                                <p>Списки зачетных курсов</p>
+                            </div>
+                        </a>
+                        {% if user.admin == 1 %}
+                        <a href='/admin/add_course'>
+                            <div class="hidden_menu_text">
+                                <p>Добавить новый курс</p>
+                            </div>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="hidden_menu_block hidden_menu_events">
                     <div class="hidden_menu_body">
-                        <div class="hidden_menu_text">
-                            <p>Конкурс Научных Работ</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Открытый Чемпионат</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Выездная Школа</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Летняя Школа</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Летний Лагерь</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Вступительные испытания</p>
-                        </div>
+                        <a href='https://emsch.ru/zhizn/knr/'>
+                            <div class="hidden_menu_text">
+                                <p>Конкурс Научных Работ</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/otkrytyj-chempionat-po-ekonomike-sredi-shkol/'>
+                            <div class="hidden_menu_text">
+                                <p>Открытый Чемпионат</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/zhizn/vyezdnaya-shkola/'>
+                            <div class="hidden_menu_text">
+                                <p>Выездная Школа</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/zhizn/letnyaya-shkola/'>
+                            <div class="hidden_menu_text">
+                                <p>Летняя Школа</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/letnij-lager-ef-mgu/letniy-lager/'>
+                            <div class="hidden_menu_text">
+                                <p>Летний Лагерь</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/about/kak-postupit/'>
+                            <div class="hidden_menu_text">
+                                <p>Вступительные испытания</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
 
                 <div class="hidden_menu_block hidden_menu_community">
                     <div class="hidden_menu_body">
-                        <div class="hidden_menu_text">
-                            <p>Об ЭМШ</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Люди</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Список учащихся</p>
-                        </div>
-                        <div class="hidden_menu_text">
-                            <p>Архив событий</p>
-                        </div>
+                        <a href='https://emsch.ru/learning/my-emsch/'>
+                            <div class="hidden_menu_text">
+                                <p>Об ЭМШ</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/archive/prepodavateli/'>
+                            <div class="hidden_menu_text">
+                                <p>Преподаватели и дирекция</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/learning/spiski-perevedyonnyh-v-2023-2024-uchebnyj-god/'>
+                            <div class="hidden_menu_text">
+                                <p>Список учащихся</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/archive/'>
+                            <div class="hidden_menu_text">
+                                <p>Архив событий</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
