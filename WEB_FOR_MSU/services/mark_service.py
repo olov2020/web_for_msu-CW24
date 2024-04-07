@@ -1,4 +1,5 @@
-from WEB_FOR_MSU.models import Mark
+from WEB_FOR_MSU import db
+from WEB_FOR_MSU.models import Mark, Course, Schedule, Formula
 
 
 class MarkService:
@@ -25,5 +26,20 @@ class MarkService:
         return result
 
     @staticmethod
-    def save_from_form(marks_form):
-        pass
+    def save_from_form(course_id, marks_form):
+        for i in range(len(marks_form.dates)):
+            if marks_form.mark_types[i] != 'Отсутствие':
+                lesson = Schedule.query.filter_by(course_id=course_id, date=marks_form.dates[i]).first()
+                lesson.formulas = Formula.query.filter_by(course_id=course_id, name=marks_form.mark_types[i]).first()
+        for i in range(len(marks_form.pupils)):
+            for j in range(len(marks_form.dates)):
+                mark = marks_form.pupils[i].marks[j]
+                if mark:
+                    lesson = Schedule.query.filter_by(course_id=course_id, date=marks_form.dates[j]).first()
+                    prev_mark = Mark.query.filter_by(schedule_id=lesson.id, pupil_id=marks_form.pupils[i].id).first()
+                    if prev_mark:
+                        prev_mark.mark = mark
+                    else:
+                        new_mark = Mark(lesson.id, marks_form.pupils[i].id, mark)
+                        db.session.add(new_mark)
+        db.session.commit()

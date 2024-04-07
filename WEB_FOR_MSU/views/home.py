@@ -6,6 +6,7 @@ from flask_security import auth_required, roles_required
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
+from WEB_FOR_MSU.output_models.courses import Courses
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
 from WEB_FOR_MSU.functions import get_next_monday
@@ -158,7 +159,8 @@ def marks(course_id):
         return redirect(url_for('.home'))
     marks_form = MarksForm()
     if marks_form.submit.data:
-        pass
+        MarkService.save_from_form(course_id, marks_form)
+        flash('Оценки успешно сохранены', 'success')
     user = UserInfo.get_user_info()
     course = Course.query.get(course_id)
     if not course:
@@ -213,3 +215,20 @@ def schedule():
                            lessons_in_week=lessons_in_week,
                            lessons_in_two_weeks=lessons_in_two_weeks,
                            user=user, )
+
+
+@main.route('/my_courses', methods=['GET', 'POST'])
+@auth_required()
+def my_courses():
+    user = UserInfo.get_user_info()
+    if current_user.is_pupil():
+        courses = PupilService.get_pupil_courses(current_user.id)
+        courses = [Courses(course.id, course.name) for course in courses]
+    else:
+        courses = TeacherService.get_teacher_courses(current_user.id)
+        courses = [Courses(course.id, course.name) for course in courses]
+    return render_template('home/my_courses.html',
+                           title='My courses',
+                           authenticated=current_user.is_authenticated,
+                           user=user,
+                           courses=courses, )

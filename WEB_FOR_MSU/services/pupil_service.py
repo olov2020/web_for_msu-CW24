@@ -45,3 +45,8 @@ class PupilService:
     @staticmethod
     def get_full_name(pupil):
         return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic
+
+    @staticmethod
+    def get_pupil_courses(user_id):
+        pupil = Pupil.query.filter_by(user_id=user_id).first()
+        return pupil.courses
