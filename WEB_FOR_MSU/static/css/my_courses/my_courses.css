@@ -17,9 +17,12 @@
     border-bottom: 2px solid #fcccde;
 }
 
+
 .course {
     margin: 10px;
-    
+}
+
+.course_text {
     font-size: 18px;
     color: #9F1A59;
 }

@@ -19,11 +19,11 @@
     </div>
 
     {% for course in courses %}
-    <a href='/marks/{{ course.id }}'>
-        <div class='course'>
-            {{ course.name }}
-        </div>
-    </a>
+    <div class='course'>
+        <a href='/marks/{{ course.id }}'>
+            <p class='course_text'>{{ course.name }}</p>
+        </a>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
