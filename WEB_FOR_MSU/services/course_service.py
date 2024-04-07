@@ -323,6 +323,4 @@ class CourseService:
         course = Course.query.get(course_id)
         if not course:
             return []
-        return course.lessons
-
-
+        return sorted(course.lessons, key=lambda x: x.lesson_number)

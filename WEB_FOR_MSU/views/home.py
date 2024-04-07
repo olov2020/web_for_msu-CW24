@@ -165,6 +165,9 @@ def marks(course_id):
         flash('Такого курса не существует', 'error')
         return redirect(url_for('.my_courses'))
     formulas = course.formulas
+    choices = [
+                  (formula.name, formula.name) for formula in formulas
+              ] + [('Отсутствие', 'Отсутствие')]
     lessons = CourseService.get_lessons(course_id)
     if not lessons:
         flash('Уроков пока нет', 'error')
@@ -172,11 +175,9 @@ def marks(course_id):
     for lesson in lessons:
         marks_form.mark_types.append_entry()
         marks_form.dates.append_entry()
-        formula_name = lesson.formulas[0].name if lesson.formulas else 'Отсутствие'
+        formula_name = lesson.formulas.name if lesson.formulas else 'Отсутствие'
         marks_form.mark_types[-1].data = formula_name
-        marks_form.mark_types[-1].choices = [
-            (formula.name, formula.name) for formula in formulas
-        ] + [('Отсутствие', 'Отсутствие')]
+        marks_form.mark_types[-1].choices = choices
         marks_form.dates[-1].data = lesson.date
     for pupil in CourseService.get_pupils(course_id):
         pupil_marks_form = PupilMarksForm()
@@ -196,7 +197,7 @@ def marks(course_id):
                            title='Marks',
                            authenticated=current_user.is_authenticated,
                            user=user,
-                           form=marks_form,)
+                           form=marks_form, )
 
 
 @main.route('/schedule', methods=['GET', 'POST'])

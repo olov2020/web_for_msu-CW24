@@ -20,6 +20,10 @@ class MarkService:
             if mark_types[i] == 'Отсутствие':
                 continue
             if pupil_marks[i].isdigit():
-                formula = filter(lambda x: x.name == mark_types[i], formulas)[0]
+                formula = list(filter(lambda x: x.name == mark_types[i], formulas))[0]
                 result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
         return result
+
+    @staticmethod
+    def save_from_form(marks_form):
+        pass
