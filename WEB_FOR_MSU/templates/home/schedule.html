@@ -21,36 +21,34 @@
                 <p>Текущая неделя</p>
             </div>
 
-            <div>
-                {% if lessons_in_week %}
-                {% for lesson in lessons_in_week %}
-                <div class='lesson'>
-                    <div class='date'>
-                        {{ lesson.date }}
-                    </div>
-                    <div>
-                        {{ lesson.lesson_time }}
-                    </div>
-                    {% if lesson.auditory %}
-                    <div>
-                        {{ lesson.auditory }}
-                    </div>
-                    {% else %} 
-                    <div>
-                        <p>Нет аудитории</p>
-                    </div>
-                    {% endif %}
-                    <div class='lesson_name {{ lesson.course_type }}'>
-                        {{ lesson.course_name }}
-                    </div>
+            {% if lessons_in_week %}
+            {% for lesson in lessons_in_week %}
+            <div class='lesson'>
+                <div class='field'>
+                    {{ lesson.date }}
                 </div>
-                {% endfor %}
+                <div class='field'>
+                    {{ lesson.lesson_time }}
+                </div>
+                {% if lesson.auditory %}
+                <div class='field'>
+                    {{ lesson.auditory }}
+                </div>
                 {% else %}
-                <div class='nolesson'>
-                    <p>На этой неделе уроков нет</p>
+                <div class='field noauditory'>
+                    <p>Нет аудитории</p>
                 </div>
                 {% endif %}
+                <div class='{{ lesson.course_type }}'>
+                    {{ lesson.course_name }}
+                </div>
             </div>
+            {% endfor %}
+            {% else %}
+            <div class='nolesson'>
+                <p>На этой неделе нет уроков</p>
+            </div>
+            {% endif %}
         </div>
 
         <div class='week_container'>
@@ -58,36 +56,34 @@
                 <p>Следующая неделя</p>
             </div>
 
-            <div>
-                {% if lessons_in_two_weeks %}
-                {% for lesson in lessons_in_two_weeks %}
-                <div class='lesson'>
-                    <div class='date'>
-                        {{ lesson.date }}
-                    </div>
-                    <div>
-                        {{ lesson.lesson_time }}
-                    </div>
-                    {% if lesson.auditory %}
-                    <div>
-                        {{ lesson.auditory }}
-                    </div>
-                    {% else %} 
-                    <div>
-                        <p>Нет аудитории</p>
-                    </div>
-                    {% endif %}
-                    <div class='lesson_name {{ lesson.course_type }}'>
-                        {{ lesson.course_name }}
-                    </div>
+            {% if lessons_in_two_weeks %}
+            {% for lesson in lessons_in_two_weeks %}
+            <div class='lesson'>
+                <div class='field'>
+                    {{ lesson.date }}
                 </div>
-                {% endfor %}
+                <div class='field'>
+                    {{ lesson.lesson_time }}
+                </div>
+                {% if lesson.auditory %}
+                <div class='field'>
+                    {{ lesson.auditory }}
+                </div>
                 {% else %}
-                <div class='nolesson'>
-                    <p>На этой неделе уроков нет</p>
+                <div class='field noauditory'>
+                    <p>Нет аудитории</p>
                 </div>
                 {% endif %}
+                <div class='{{ lesson.course_type }}'>
+                    {{ lesson.course_name }}
+                </div>
             </div>
+            {% endfor %}
+            {% else %}
+            <div class='nolesson'>
+                <p>На этой неделе нет уроков</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 
