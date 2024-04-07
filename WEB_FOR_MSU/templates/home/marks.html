@@ -15,8 +15,12 @@
 {% block main %}
 
 <div class='marks'>
-    <table>
-        
-    </table>
+    {% for course in courses %}
+    <div class='course'>
+        <a href='/marks{{ course.id }}'>
+            {{ course.name }}
+        </a>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
