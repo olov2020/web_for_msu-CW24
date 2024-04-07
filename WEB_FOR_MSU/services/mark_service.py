@@ -28,18 +28,18 @@ class MarkService:
     @staticmethod
     def save_from_form(course_id, marks_form):
         for i in range(len(marks_form.dates)):
-            if marks_form.mark_types[i] != 'Отсутствие':
-                lesson = Schedule.query.filter_by(course_id=course_id, date=marks_form.dates[i]).first()
-                lesson.formulas = Formula.query.filter_by(course_id=course_id, name=marks_form.mark_types[i]).first()
+            if marks_form.mark_types[i].data != 'Отсутствие':
+                lesson = Schedule.query.filter_by(course_id=course_id, date=marks_form.dates[i].data).first()
+                lesson.formulas = Formula.query.filter_by(course_id=course_id, name=marks_form.mark_types[i].data).first()
         for i in range(len(marks_form.pupils)):
             for j in range(len(marks_form.dates)):
-                mark = marks_form.pupils[i].marks[j]
+                mark = marks_form.pupils[i].marks[j].data
                 if mark:
-                    lesson = Schedule.query.filter_by(course_id=course_id, date=marks_form.dates[j]).first()
-                    prev_mark = Mark.query.filter_by(schedule_id=lesson.id, pupil_id=marks_form.pupils[i].id).first()
+                    lesson = Schedule.query.filter_by(course_id=course_id, date=marks_form.dates[j].data).first()
+                    prev_mark = Mark.query.filter_by(schedule_id=lesson.id, pupil_id=marks_form.pupils[i].id.data).first()
                     if prev_mark:
                         prev_mark.mark = mark
                     else:
-                        new_mark = Mark(lesson.id, marks_form.pupils[i].id, mark)
+                        new_mark = Mark(lesson.id, marks_form.pupils[i].id.data, mark)
                         db.session.add(new_mark)
         db.session.commit()
