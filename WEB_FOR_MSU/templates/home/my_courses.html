@@ -13,13 +13,17 @@
 
 {% block main %}
 
-<div class='marks'>
-    {% for course in courses %}
-    <div class='course'>
-        <a href='/marks/{{ course.id }}'>
-            {{ course.name }}
-        </a>
+<div class='my_courses'>
+    <div class='title'>
+        <p>Мои курсы</p>
     </div>
+
+    {% for course in courses %}
+    <a href='/marks/{{ course.id }}'>
+        <div class='course'>
+            {{ course.name }}
+        </div>
+    </a>
     {% endfor %}
 </div>
 {% endblock %}
