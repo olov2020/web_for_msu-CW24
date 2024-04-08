@@ -15,13 +15,8 @@
 }
 
 
-.title {
-    font-size: 24px;
-}
-
-
 .week_container {
-    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .week {
@@ -35,7 +30,6 @@
 
     font-size: 20px;
     border-bottom: 1px solid #9F1A59;
-    border-top: 1px solid #9F1A59;
 }
 
 
@@ -57,15 +51,37 @@
     align-items: center;
     flex-direction: row;
 
-    border: 1px solid #fcccde;
-    border-radius: 16px;
+    border-bottom: 1px solid #fcccde;
+    
+    transition: all .2s ease-in-out;
 }
 
+.lesson:before > .noauditory {
+    color: red;
+}
+
+.lesson:hover > .noauditory {
+    color: black;
+}
+
+.lesson:before {
+    background-color: white;
+    color: black;
+}
+
+.lesson:hover,
+.lesson:focus {
+    box-shadow: inset 0 -3.25em 0 0 #E094AD;
+    color: white;
+}
+
+.lesson:hover:before {
+  top: 0;
+  height: 100%;
+}
+
+
 .field {
-    width: 200px;
-    
-    display: flex;
-    justify-content: center;
 }
 
 .noauditory {
@@ -73,11 +89,13 @@
 }
 
 .True {
+    padding: 5px;
     background-color: #460FDB;
     color: white;
 }
 
 .False {
+    padding: 5px;
     background-color: #D2C2FF;
     color: black;
 }

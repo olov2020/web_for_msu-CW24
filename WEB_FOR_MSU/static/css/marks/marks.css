@@ -7,10 +7,10 @@
 
 .table {
     width: 1000px;
-    
+
     display: flex;
     flex-direction: column;
-    
+
     overflow: auto;
 }
 
@@ -22,7 +22,7 @@
 
 .field {
     width: 100px;
-    
+
     display: flex;
     justify-items: start;
     align-items: start;
