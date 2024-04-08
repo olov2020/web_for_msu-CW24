@@ -82,10 +82,6 @@
 
 
 .field {
-    width: 200px;
-    
-    display: flex;
-    justify-content: center;
 }
 
 .noauditory {
@@ -93,11 +89,13 @@
 }
 
 .True {
+    padding: 5px;
     background-color: #460FDB;
     color: white;
 }
 
 .False {
+    padding: 5px;
     background-color: #D2C2FF;
     color: black;
 }

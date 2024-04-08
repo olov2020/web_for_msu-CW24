@@ -66,7 +66,11 @@
             {% if field.errors %}
             {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
+            {% if title == 'Добавление курса' %}
+            {{ field(class='form_input', size=32, disabled=True) }}
+            {% else %}
             {{ field(class='form_input', size=32) }}
+            {% endif %}
             {% endif %}
         </div>
     </div>
@@ -117,7 +121,24 @@
             {% if field.errors %}
             {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
+            {% if title == 'Добавление курса' %}
+            {{ field(class='form_input', size=32, disabled=True) }}
+            {% else %}
             {{ field(class='form_input', placeholder='2024') }}
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if field.type == 'FloatField' %}
+    <div class='field'>
+        {{ field.label(class='form_text') }}
+        <div>
+            {% if field.errors %}
+            {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
+            {% else %}
+            {{ field(class='form_input') }}
             {% endif %}
         </div>
     </div>
