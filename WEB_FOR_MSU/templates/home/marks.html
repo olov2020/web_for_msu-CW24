@@ -50,7 +50,14 @@
             </div>
             {% endfor %}
         </div>
-
+        {% for visit in form.visits %}
+            {{ visit }}
+        {% endfor %}
+        <br>
+        {% for average in form.average %}
+            {{ average }}
+        {% endfor %}
+        <br>
         {{ form.submit(class='submit') }}
     </form>
 </div>
