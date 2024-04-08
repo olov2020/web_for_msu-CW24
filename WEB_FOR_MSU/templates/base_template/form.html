@@ -1,7 +1,7 @@
-<link href="../../static/css/base_template/form.css" rel="stylesheet">
+<link href="/static/css/base_template/form.css" rel="stylesheet">
 
-<script src="../../static/js/jquery/jquery-3.7.1.min.js"></script>
-<script src="../../static/js/jquery/jquery.maskedinput.min.js"></script>
+<script src="/static/js/jquery/jquery-3.7.1.min.js"></script>
+<script src="/static/js/jquery/jquery.maskedinput.min.js"></script>
 <script src='/static/js/base_template/validate.js'></script>
 
 <div class='form_container_field'>
@@ -66,11 +66,7 @@
             {% if field.errors %}
             {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
-            {% if title == 'Add course' %}
-            {{ field(class='form_input', size=32, disabled=True) }}
-            {% else %}
             {{ field(class='form_input', size=32) }}
-            {% endif %}
             {% endif %}
         </div>
     </div>
@@ -121,11 +117,7 @@
             {% if field.errors %}
             {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
-            {% if title == 'Add course' %}
-            {{ field(class='form_input', size=32, disabled=True) }}
-            {% else %}
             {{ field(class='form_input', placeholder='2024') }}
-            {% endif %}
             {% endif %}
         </div>
     </div>
