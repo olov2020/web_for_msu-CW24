@@ -32,7 +32,7 @@ def my_courses():
                            courses=courses, )
 
 
-@teacher.route('/marks/<int:course_id>', methods=['GET', 'POST'])
+@teacher.route('/teacher/marks/<int:course_id>', methods=['GET', 'POST'])
 @auth_required()
 @roles_required('teacher')
 def marks(course_id):

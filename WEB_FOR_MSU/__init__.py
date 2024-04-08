@@ -33,6 +33,7 @@ def create_app(config):
     app.register_blueprint(main_blueprint)
     app.register_blueprint(admin_blueprint)
     app.register_blueprint(pupil_blueprint)
+    app.register_blueprint(teacher_blueprint)
     user_datastore = SQLAlchemySessionUserDatastore(db.session, User, Role)
     security.init_app(app, user_datastore)
 
