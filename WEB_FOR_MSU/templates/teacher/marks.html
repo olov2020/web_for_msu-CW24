@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>{{title}}</title>
+<link href="../../static/css/marks/marks.css" rel="stylesheet">
+<script src="../../static/js/marks/marks.js"></script>
+{% endblock %}
+
+{% block account %}
+
+{% include '/base_template/check_account.html' %}
+{% endblock %}
+
+{% block main %}
+
+<div class='marks'>
+    <div class='title'>
+        <p>Ведомость курса</p>
+    </div>
+
+    {% include '/base_template/flash.html' %}
+
+    <form method="post">
+        <div class='table'>
+            <div class='block'>
+                {{ form.hidden_tag() }}
+                {% for date in form.dates %}
+                <div class='field date'>
+                    {{ date }}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class='block'>
+                {% for mark_type in form.mark_types %}
+                <div class='field mark_type'>
+                    {{ mark_type }}
+                </div>
+                {% endfor %}
+            </div>
+
+            {% for pupil in form.pupils %}
+            <div class='block'>
+                {{ pupil.form.id}}
+                {{ pupil.form.name }}
+
+                {% for mark in pupil.form.marks %}
+                <div class='field mark'>
+                    {{ mark }}
+                </div>
+                {% endfor %}
+
+                {{pupil.result}}
+            </div>
+            {% endfor %}
+        </div>
+        {% for visit in form.visits %}
+        {{ visit }}
+        {% endfor %}
+        <br>
+        {% for average in form.average %}
+        {{ average }}
+        {% endfor %}
+        <br>
+        {{ form.submit(class='submit') }}
+    </form>
+</div>
+
+{% endblock %}

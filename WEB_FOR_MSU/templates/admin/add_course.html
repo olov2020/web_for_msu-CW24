@@ -32,26 +32,29 @@
             {% endfor %}
 
 
+            {% if form_course.teachers %}
             <div class='sep' style='width: 300px'>
                 {% for teacher in form_course.teachers %}
-                {% for field in teacher.form %}
-                {{ field.label }}
-                {{ field }}
-                {% endfor %}
+                {{ teacher.form.id }}
+                {{ teacher.form.name.label }}
+                {{ teacher.form.name }}
                 {% endfor %}
             </div>
+            {% endif %}
 
 
+            {% if form_course.formulas %}
             <div class='sep'>
-               <div class='mark'>
-                   <p>Формула оценки</p>
-               </div>
+                <div class='mark'>
+                    <p>Формула оценки</p>
+                </div>
                 {% for formula in form_course.formulas %}
                 {% for field in formula.form %}
                 {% include '/base_template/form.html' %}
                 {% endfor %}
                 {% endfor %}
             </div>
+            {% endif %}
 
 
             {% for schedule in form_course.schedules %}

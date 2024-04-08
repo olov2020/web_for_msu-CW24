@@ -66,7 +66,7 @@
             {% if field.errors %}
             {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
-            {% if title == 'Добавление курса' %}
+            {% if title == 'Add course' %}
             {{ field(class='form_input', size=32, disabled=True) }}
             {% else %}
             {{ field(class='form_input', size=32) }}
@@ -121,7 +121,7 @@
             {% if field.errors %}
             {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
-            {% if title == 'Добавление курса' %}
+            {% if title == 'Add course' %}
             {{ field(class='form_input', size=32, disabled=True) }}
             {% else %}
             {{ field(class='form_input', placeholder='2024') }}
