@@ -34,6 +34,9 @@
 
             {% if form_course.teachers %}
             <div class='sep' style='width: 300px'>
+                <div class='small_title'>
+                    <p>Преподаватели</p>
+                </div>
                 {% for teacher in form_course.teachers %}
                 {{ teacher.form.id }}
                 {{ teacher.form.name.label }}
@@ -45,7 +48,7 @@
 
             {% if form_course.formulas %}
             <div class='sep'>
-                <div class='mark'>
+                <div class='small_title'>
                     <p>Формула оценки</p>
                 </div>
                 {% for formula in form_course.formulas %}
