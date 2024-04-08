@@ -15,6 +15,9 @@
 {% block main %}
 
 <div class='marks'>
+    <div class='title'>
+        <p>Ведомость курса</p>
+    </div>
     {% include '/base_template/flash.html' %}
     <form method="post">
         <div class='table'>
@@ -51,11 +54,11 @@
             {% endfor %}
         </div>
         {% for visit in form.visits %}
-            {{ visit }}
+        {{ visit }}
         {% endfor %}
         <br>
         {% for average in form.average %}
-            {{ average }}
+        {{ average }}
         {% endfor %}
         <br>
         {{ form.submit(class='submit') }}
