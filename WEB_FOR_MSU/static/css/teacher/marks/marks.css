@@ -44,3 +44,7 @@ table {
     border: 1px solid #9F1A59;
     border-radius: 16px;
 }
+
+.small_small_title {
+    font-size: 18px;
+}

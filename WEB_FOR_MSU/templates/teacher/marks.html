@@ -25,7 +25,7 @@
         <table>
             <tr>
                 <td>
-                    <p>
+                    <p class='small_small_title'>
                         Даты занятий
                     </p>
                 </td>
@@ -36,7 +36,7 @@
 
             <tr>
                 <td>
-                    <p>
+                    <p class='small_small_title'>
                         Тип оценки
                     </p>
                 </td>
@@ -49,7 +49,7 @@
                 {% for pupil in form.pupils %}
                 <td>
                     {{ pupil.form.id}}
-                    {{ pupil.form.name }}
+                    {{ pupil.form.name(class='small_small_title') }}
                 </td>
 
                 {% for mark in pupil.form.marks %}
@@ -62,7 +62,7 @@
 
             <tr>
                 <td>
-                    <p>Посещаемость</p>
+                    <p class='small_small_title'>Посещаемость</p>
                 </td>
                 {% for visit in form.visits %}
                 <td>
@@ -73,7 +73,7 @@
 
             <tr>
                 <td>
-                    <p>
+                    <p class='small_small_title'>
                         Средняя оценка за занятие
                     </p>
                 </td>
