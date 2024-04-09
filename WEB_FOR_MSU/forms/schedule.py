@@ -7,7 +7,8 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
 class ScheduleForm(Form):
-    lesson_number = IntegerField("Номер занятия: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    lesson_number = IntegerField("Номер занятия: *", validators=[DataRequired("Поле обязательно для заполнения")],
+                                 render_kw={'readonly': True})
     date = DateField("Дата: *", validators=[DataRequired("Поле обязательно для заполнения")])
     theme = StringField("Тема: *")
     plan = StringField("План: *")
