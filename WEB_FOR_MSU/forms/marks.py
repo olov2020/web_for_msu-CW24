@@ -15,6 +15,6 @@ class MarksForm(FlaskForm):
     dates = FieldList(StringField(render_kw={'readonly': True}))
     mark_types = FieldList(SelectField(choices=[('Отсутствие', 'Отсутствие')]))
     pupils = FieldList(FormField(PupilMarksForm))
-    visits = FieldList(IntegerField(render_kw={'readonly': True}))
+    visits = FieldList(StringField(render_kw={'readonly': True}))
     average = FieldList(FloatField(render_kw={'readonly': True}))
     submit = SubmitField("Подтвердить")

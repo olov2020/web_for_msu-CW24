@@ -85,7 +85,7 @@ def marks(course_id):
                                                                     formulas)
     for i in range(len(lessons)):
         marks_form.visits.append_entry()
-        marks_form.visits[-1].data = visit_count[i]
+        marks_form.visits[-1].data = str(visit_count[i])
         marks_form.average.append_entry()
         marks_form.average[-1].data = float(mark_sum[i]) / float(mark_count[i]) if mark_count[i] != 0 else 0
     return render_template('teacher/marks.html',
