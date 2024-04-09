@@ -36,7 +36,7 @@ def add_course():
 
     user = UserInfo.get_user_info()
     return render_template('admin/add_course.html',
-                           title='Добавление курса',
+                           title='Add course',
                            form_file=file_form,
                            user=user,
                            form_course=course_form)

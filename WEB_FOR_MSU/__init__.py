@@ -26,10 +26,14 @@ def create_app(config):
 
     from .views.home import main as main_blueprint
     from .views.admin import admin as admin_blueprint
+    from .views.pupil import pupil as pupil_blueprint
+    from .views.teacher import teacher as teacher_blueprint
     from WEB_FOR_MSU.models import User, Role
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(admin_blueprint)
+    app.register_blueprint(pupil_blueprint)
+    app.register_blueprint(teacher_blueprint)
     user_datastore = SQLAlchemySessionUserDatastore(db.session, User, Role)
     security.init_app(app, user_datastore)
 

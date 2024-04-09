@@ -2,10 +2,11 @@ from datetime import datetime, timedelta
 
 from flask import request, render_template, current_app, redirect, url_for, flash
 from flask_login import login_required, login_user, current_user, logout_user
-from flask_security import auth_required
+from flask_security import auth_required, roles_required
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
+from WEB_FOR_MSU.output_models.courses import Courses
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
 from WEB_FOR_MSU.functions import get_next_monday
@@ -151,17 +152,12 @@ def account():
                            form_account=account_form)
 
 
-@main.route('/marks<int:course_id>', methods=['GET', 'POST'])
+@main.route('/marks/<int:course_id>', methods=['GET', 'POST'])
 @auth_required()
 def marks(course_id):
-    if current_user.is_authenticated:
-        user = UserInfo.get_user_info()
-    else:
-        user = None
-    return render_template('home/marks.html',
-                           title='Marks',
-                           authenticated=current_user.is_authenticated,
-                           user=user, )
+    if current_user.is_pupil():
+        return redirect(url_for('pupil.marks', course_id=course_id))
+    return redirect(url_for('teacher.marks', course_id=course_id))
 
 
 @main.route('/schedule', methods=['GET', 'POST'])
@@ -177,12 +173,11 @@ def schedule():
                            lessons_in_week=lessons_in_week,
                            lessons_in_two_weeks=lessons_in_two_weeks,
                            user=user, )
-# @app.route('/schedule')
-# def schedule():
-#     return render_template('schedule.html')
-#
-#
-# @app.route('/my_courses')
-# def my_courses():
-#     return render_template('my_courses.html')
-#
+
+
+@main.route('/my_courses')
+@auth_required()
+def my_courses():
+    if current_user.is_pupil():
+        return redirect(url_for('pupil.my_courses'))
+    return redirect(url_for('teacher.my_courses'))

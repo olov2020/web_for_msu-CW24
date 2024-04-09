@@ -6,7 +6,7 @@ from WEB_FOR_MSU import db
 from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
 from WEB_FOR_MSU.forms.formula import FormulaForm
 from WEB_FOR_MSU.forms.schedule import ScheduleForm
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, Mark
 from WEB_FOR_MSU.output_models import LessonSchedule
 from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
@@ -302,3 +302,25 @@ class CourseService:
                 course_id=course.id,
                 year=year))
         db.session.commit()
+        pupils = Pupil.query.all()
+        for pupil in pupils:
+            grade = pupil.school_grade
+            if str(grade) in course.crediting or course.crediting == 'зачётный для всех классов':
+                crediting = True
+            else:
+                crediting = False
+            pupil_course = PupilCourse(
+                pupil_id=pupil.id,
+                course_id=course.id,
+                year=year,
+                crediting=crediting
+            )
+            db.session.add(pupil_course)
+        db.session.commit()
+
+    @staticmethod
+    def get_lessons(course_id):
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        return sorted(course.lessons, key=lambda x: x.lesson_number)

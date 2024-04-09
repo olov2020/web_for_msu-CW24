@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8" lang='ru'>
     <title>{{title}}</title>
-    <link rel="icon" type="image/x-icon" href="../static/photos/msu_logo.png">
-    <link href="../static/css/base/header/header.css" rel="stylesheet">
-    <link href="../static/css/base/header/hidden_menu.css" rel="stylesheet">
-    <link href="../static/css/base/main.css" rel="stylesheet">
-    <link href="../static/css/base/footer.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/static/photos/msu_logo.png">
+    <link href="/static/css/base/header/header.css" rel="stylesheet">
+    <link href="/static/css/base/header/hidden_menu.css" rel="stylesheet">
+    <link href="/static/css/base/main.css" rel="stylesheet">
+    <link href="/static/css/base/footer.css" rel="stylesheet">
+    <link href="/static/css/base_template/template.css" rel="stylesheet">
 
-    <script src="../static/js/base/progress_bar.js"></script>
-    <script src="../static/js/base/hidden_menu.js"></script>
+    <script src="/static/js/base/progress_bar.js"></script>
+    <script src="/static/js/base/hidden_menu.js"></script>
     {% block head %}{% endblock %}
 </head>
 
@@ -75,7 +76,7 @@
                                 <p>Расписание</p>
                             </div>
                         </a>
-                        <a href='https://emsch.ru/spetskursy-2023-2024/'>
+                        <a href='/my_courses'>
                             <div class="hidden_menu_text">
                                 <p>Мои курсы</p>
                             </div>
@@ -85,29 +86,38 @@
                                 <p>Все курсы</p>
                             </div>
                         </a>
-                        <a href='/marks'>
-                            <div class="hidden_menu_text">
-                                <p>Ведомость</p>
-                            </div>
-                        </a>
+                        <!--
                         <a href='https://emsch.ru/zachjotnye-kursy-2023-2024/'>
                             <div class="hidden_menu_text">
                                 <p>Списки зачетных курсов</p>
                             </div>
                         </a>
+-->
+                        {% if user.admin == 1 %}
+                        <a href='/admin/add_course'>
+                            <div class="hidden_menu_text">
+                                <p>Добавить новый курс</p>
+                            </div>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="hidden_menu_block hidden_menu_events">
                     <div class="hidden_menu_body">
-                        <a href='https://emsch.ru/zhizn/knr/'>
+                        <a href='https://emsch.ru/about/kak-postupit/'>
                             <div class="hidden_menu_text">
-                                <p>Конкурс Научных Работ</p>
+                                <p>Вступительные испытания</p>
                             </div>
                         </a>
                         <a href='https://emsch.ru/otkrytyj-chempionat-po-ekonomike-sredi-shkol/'>
                             <div class="hidden_menu_text">
                                 <p>Открытый Чемпионат</p>
+                            </div>
+                        </a>
+                        <a href='https://emsch.ru/zhizn/knr/'>
+                            <div class="hidden_menu_text">
+                                <p>Конкурс Научных Работ</p>
                             </div>
                         </a>
                         <a href='https://emsch.ru/zhizn/vyezdnaya-shkola/'>
@@ -123,11 +133,6 @@
                         <a href='https://emsch.ru/letnij-lager-ef-mgu/letniy-lager/'>
                             <div class="hidden_menu_text">
                                 <p>Летний Лагерь</p>
-                            </div>
-                        </a>
-                        <a href='https://emsch.ru/about/kak-postupit/'>
-                            <div class="hidden_menu_text">
-                                <p>Вступительные испытания</p>
                             </div>
                         </a>
                     </div>

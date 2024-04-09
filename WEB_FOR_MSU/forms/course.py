@@ -14,16 +14,23 @@ from WEB_FOR_MSU.forms.schedule import ScheduleForm
 
 class CourseForm(FlaskForm):
     name = StringField("Название курса: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    auditory = StringField("Аудитория: *")
-    course_review_number = StringField("№ рассмотрения курса:")
-    direction = StringField("Направление: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    auditory = StringField("Аудитория:")
+    course_review_number = SelectField("№ рассмотрения курса: *",
+                                       choices=[(choice, choice) for choice in
+                                                ['в первый раз', 'во второй раз', 'в третий раз', 'в четвёртый раз',
+                                                 'в пятый раз']])
+    direction = SelectField("Направление: *",
+                            choices=[(choice, choice) for choice in
+                                     ['Математика', 'Экономика', 'Третий Путь']],
+                            validators=[
+                                DataRequired("Поле обязательно для заполнения")])
     emsh_grades = SelectField('Классы ЭМШ: *',
                               choices=[(choice, choice) for choice in
                                        ['8-10', '8-11', '9', '9 - 10', '9 - 11', '10', '10 - 11', '11']],
                               validators=[DataRequired("Поле обязательно для заполнения")])
     crediting = SelectField('Зачётный: *',
                             choices=[(choice, choice) for choice in [
-                                'зачётный для все классов',
+                                'зачётный для всех классов',
                                 'зачётный только для 8-и классников',
                                 'зачётный только для 9-ти классников',
                                 'зачётный только для 10-ти классников',
@@ -36,7 +43,7 @@ class CourseForm(FlaskForm):
                                 'факультативный для всех']],
                             validators=[DataRequired("Поле обязательно для заполнения")])
     distribution = StringField("Распределение: *", validators=[DataRequired("Поле обязательно для заполнения")])
-    intern_work = StringField("Работа со стажерами: *")
+    intern_work = StringField("Работа со стажерами:")
     lesson_time = SelectField('Время проведения: *',
                               choices=[(choice, choice) for choice in [
                                   'Понедельник 17:20 - 18:40',

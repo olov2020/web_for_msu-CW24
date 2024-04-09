@@ -91,9 +91,10 @@
 
 /* for empty file fields */
 .form_file_button_error {
+    width: 300px;
+    
     color: red;
     border: 1px solid red;
     padding: 10px;
-    width: 300px;
     border-radius: 16px;
 }

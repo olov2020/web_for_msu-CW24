@@ -10,3 +10,9 @@ class Mark(db.Model):
     schedule = db.relationship('Schedule', back_populates='pupils')
     mark = db.Column(db.String(), nullable=False)
     comment = db.Column(db.String())
+
+    def __init__(self, schedule_id, pupil_id, mark, comment):
+        self.schedule_id = schedule_id
+        self.pupil_id = pupil_id
+        self.mark = mark
+        self.comment = comment
