@@ -58,10 +58,16 @@ table {
 }
 
 .pupil {
-    margin: 20px 0px;
+    margin: 5px 0px;
 
     border: none;
 
     font-size: 18px;
-    font-style: initial;
+    font-style: normal;
+    font-family: serif;
+}
+
+.error {
+    border-color: red;
+    background-color: white;
 }

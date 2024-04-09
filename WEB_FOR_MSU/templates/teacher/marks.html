@@ -4,6 +4,7 @@
 
 <title>{{title}}</title>
 <link href="/static/css/teacher/marks/marks.css" rel="stylesheet">
+<script src="/static/js/teacher/marks/check_mark.js"></script>
 {% endblock %}
 
 {% block account %}
@@ -45,8 +46,8 @@
                 {% endfor %}
             </tr>
 
+            {% for pupil in form.pupils %}
             <tr>
-                {% for pupil in form.pupils %}
                 <td>
                     {{ pupil.form.id}}
                     {{ pupil.form.name(class='small_small_title pupil') }}
@@ -54,11 +55,11 @@
 
                 {% for mark in pupil.form.marks %}
                 <td>
-                    {{ mark(class='field') }}
+                    {{ mark(class='field mark') }}
                 </td>
                 {% endfor %}
-                {% endfor %}
             </tr>
+            {% endfor %}
 
             <tr>
                 <td>
