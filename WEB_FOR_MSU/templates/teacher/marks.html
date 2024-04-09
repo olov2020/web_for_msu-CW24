@@ -21,47 +21,70 @@
     {% include '/base_template/flash.html' %}
 
     <form method="post">
-        <div class='table'>
-            <div class='block'>
-                {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }}
+        <table>
+            <tr>
+                <td>
+                    <p>
+                        Даты занятий
+                    </p>
+                </td>
                 {% for date in form.dates %}
-                <div class='field date'>
-                    {{ date }}
-                </div>
+                <td>{{ date(class='field') }}</td>
                 {% endfor %}
-            </div>
+            </tr>
 
-            <div class='block'>
+            <tr>
+                <td>
+                    <p>
+                        Тип оценки
+                    </p>
+                </td>
                 {% for mark_type in form.mark_types %}
-                <div class='field mark_type'>
-                    {{ mark_type }}
-                </div>
+                <td>{{ mark_type(class='field') }}</td>
                 {% endfor %}
-            </div>
+            </tr>
 
-            {% for pupil in form.pupils %}
-            <div class='block'>
-                {{ pupil.form.id}}
-                {{ pupil.form.name }}
+            <tr>
+                {% for pupil in form.pupils %}
+                <td>
+                    {{ pupil.form.id}}
+                    {{ pupil.form.name }}
+                </td>
 
                 {% for mark in pupil.form.marks %}
-                <div class='field mark'>
-                    {{ mark }}
-                </div>
+                <td>
+                    {{ mark(class='field') }}
+                </td>
                 {% endfor %}
+                {% endfor %}
+            </tr>
 
-                {{pupil.result}}
-            </div>
-            {% endfor %}
-        </div>
-        {% for visit in form.visits %}
-        {{ visit }}
-        {% endfor %}
-        <br>
-        {% for average in form.average %}
-        {{ average }}
-        {% endfor %}
-        <br>
+            <tr>
+                <td>
+                    <p>Посещаемость</p>
+                </td>
+                {% for visit in form.visits %}
+                <td>
+                    {{ visit(class='field') }}
+                </td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <td>
+                    <p>
+                        Средняя оценка за занятие
+                    </p>
+                </td>
+                {% for average in form.average %}
+                <td>
+                    {{ average(class='field') }}
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+
         {{ form.submit(class='submit') }}
     </form>
 </div>

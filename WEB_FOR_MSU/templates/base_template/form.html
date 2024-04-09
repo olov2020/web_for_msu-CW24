@@ -23,13 +23,13 @@
         {{ field.label(class='form_text') }}
         <div>
             {% if field.errors %}
-
             {{ field(class='form_input form_input_error', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
 
-            {% if user[field.id] and title == 'Account' %}
+            {% if title == 'Account' %}
             {{ field(class='form_input', size=32, placeholder='Введите данные', value=user[field.id]) }}
             {% else %}
+
             {{ field(class='form_input', size=32, placeholder='Введите данные') }}
             {% endif %}
             {% endif %}
@@ -80,7 +80,7 @@
             {{ field(class='form_input form_input_error phone', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
 
-            {% if user[field.id] and title == 'Account' %}
+            {% if title == 'Account' %}
             {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99', value=user[field.id]) }}
             {% else %}
             {{ field(class='form_input phone', placeholder='+7 (999) 999-99-99') }}
@@ -99,7 +99,7 @@
             {{ field(class='form_input form_input_error email', size=32, placeholder=field.errors[0], value='') }}
             {% else %}
 
-            {% if user[field.id] and title == 'Account' %}
+            {% if title == 'Account' %}
             {{ field(class='form_input email', placeholder='example@mail.ru', value=user[field.id]) }}
             {% else %}
             {{ field(class='form_input email', placeholder='example@mail.ru') }}
