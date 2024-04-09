@@ -30,7 +30,7 @@
                     </p>
                 </td>
                 {% for date in form.dates %}
-                <td>{{ date(class='field') }}</td>
+                <td>{{ date(class='field disabled') }}</td>
                 {% endfor %}
             </tr>
 
@@ -66,7 +66,7 @@
                 </td>
                 {% for visit in form.visits %}
                 <td>
-                    {{ visit(class='field') }}
+                    {{ visit(class='field disabled') }}
                 </td>
                 {% endfor %}
             </tr>
@@ -79,7 +79,7 @@
                 </td>
                 {% for average in form.average %}
                 <td>
-                    {{ average(class='field') }}
+                    {{ average(class='field disabled') }}
                 </td>
                 {% endfor %}
             </tr>

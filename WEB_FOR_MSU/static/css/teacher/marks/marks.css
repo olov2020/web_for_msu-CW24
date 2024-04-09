@@ -36,13 +36,21 @@ table {
 
 .field {
     width: 160px;
-    
+
     padding: 5px;
     margin-left: 5px;
-    
+
     background-color: #fcccde;
     border: 1px solid #9F1A59;
     border-radius: 16px;
+}
+
+.disabled {
+    display: flex;
+    text-align: center;
+
+    background-color: white;
+    border: none;
 }
 
 .small_small_title {
@@ -51,9 +59,9 @@ table {
 
 .pupil {
     margin: 20px 0px;
-    
+
     border: none;
-    
+
     font-size: 18px;
     font-style: initial;
 }
