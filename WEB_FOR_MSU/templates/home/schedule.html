@@ -3,8 +3,8 @@
 {% block head %}
 
 <title>{{title}}</title>
-<link href="../../static/css/schedule/schedule.css" rel="stylesheet">
-<script src="../../static/js/schedule/schedule.js"></script>
+<link href="/static/css/schedule/schedule.css" rel="stylesheet">
+<script src="/static/js/schedule/schedule.js"></script>
 {% endblock %}
 
 {% block account %}
@@ -16,6 +16,10 @@
 
 <div class='schedule'>
     <div class='schedule_weeks'>
+        <div class='title'>
+            <p>Расписание</p>
+        </div>
+
         <div class='week_container'>
             <div class='week'>
                 <p>Текущая неделя</p>

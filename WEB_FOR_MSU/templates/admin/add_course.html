@@ -3,7 +3,7 @@
 {% block head %}
 
 <title>{{title}}</title>
-<link href="../../static/css/admin/add_course.css" rel="stylesheet">
+<link href="/static/css/admin/add_course/add_course.css" rel="stylesheet">
 {% endblock %}
 
 {% block account %}
@@ -13,6 +13,10 @@
 
 {% block main %}
 <div class='new_course'>
+    <div class='title'>
+        <p>Добавление курса</p>
+    </div>
+
     {% include '/base_template/flash.html' %}
 
     <form method="post" enctype="multipart/form-data">
@@ -28,26 +32,32 @@
             {% endfor %}
 
 
+            {% if form_course.teachers %}
             <div class='sep' style='width: 300px'>
+                <div class='small_title'>
+                    <p>Преподаватели</p>
+                </div>
                 {% for teacher in form_course.teachers %}
-                {% for field in teacher.form %}
-                {{ field.label }}
-                {{ field }}
-                {% endfor %}
+                {{ teacher.form.id }}
+                {{ teacher.form.name.label }}
+                {{ teacher.form.name }}
                 {% endfor %}
             </div>
+            {% endif %}
 
 
+            {% if form_course.formulas %}
             <div class='sep'>
-               <div class='mark'>
-                   <p>Формула оценки</p>
-               </div>
+                <div class='small_title'>
+                    <p>Формула оценки</p>
+                </div>
                 {% for formula in form_course.formulas %}
                 {% for field in formula.form %}
                 {% include '/base_template/form.html' %}
                 {% endfor %}
                 {% endfor %}
             </div>
+            {% endif %}
 
 
             {% for schedule in form_course.schedules %}

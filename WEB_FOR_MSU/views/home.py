@@ -6,6 +6,7 @@ from flask_security import auth_required, roles_required
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
+from WEB_FOR_MSU.output_models.courses import Courses
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
 from WEB_FOR_MSU.functions import get_next_monday
@@ -155,49 +156,8 @@ def account():
 @auth_required()
 def marks(course_id):
     if current_user.is_pupil():
-        return redirect(url_for('.home'))
-    marks_form = MarksForm()
-    if marks_form.submit.data:
-        pass
-    user = UserInfo.get_user_info()
-    course = Course.query.get(course_id)
-    if not course:
-        flash('Такого курса не существует', 'error')
-        return redirect(url_for('.my_courses'))
-    formulas = course.formulas
-    choices = [
-                  (formula.name, formula.name) for formula in formulas
-              ] + [('Отсутствие', 'Отсутствие')]
-    lessons = CourseService.get_lessons(course_id)
-    if not lessons:
-        flash('Уроков пока нет', 'error')
-        return redirect(url_for('.my_courses'))
-    for lesson in lessons:
-        marks_form.mark_types.append_entry()
-        marks_form.dates.append_entry()
-        formula_name = lesson.formulas.name if lesson.formulas else 'Отсутствие'
-        marks_form.mark_types[-1].data = formula_name
-        marks_form.mark_types[-1].choices = choices
-        marks_form.dates[-1].data = lesson.date
-    for pupil in CourseService.get_pupils(course_id):
-        pupil_marks_form = PupilMarksForm()
-        pupil_marks_form.id.data = pupil.id
-        pupil_marks_form.name.data = PupilService.get_full_name(pupil)
-        pupil_course_marks = []
-        for lesson in lessons:
-            mark = MarkService.get_pupil_mark_by_lesson(pupil.id, lesson.id)
-            pupil_course_marks.append(mark)
-            pupil_marks_form.marks.append_entry()
-            pupil_marks_form.marks[-1].data = mark
-        pupil_marks_form.result = MarkService.calculate_result(pupil_course_marks, marks_form.mark_types.data, formulas)
-        marks_form.pupils.append_entry()
-        marks_form.pupils[-1].form = pupil_marks_form
-
-    return render_template('home/marks.html',
-                           title='Marks',
-                           authenticated=current_user.is_authenticated,
-                           user=user,
-                           form=marks_form, )
+        return redirect(url_for('pupil.marks', course_id=course_id))
+    return redirect(url_for('teacher.marks', course_id=course_id))
 
 
 @main.route('/schedule', methods=['GET', 'POST'])
@@ -213,3 +173,11 @@ def schedule():
                            lessons_in_week=lessons_in_week,
                            lessons_in_two_weeks=lessons_in_two_weeks,
                            user=user, )
+
+
+@main.route('/my_courses')
+@auth_required()
+def my_courses():
+    if current_user.is_pupil():
+        return redirect(url_for('pupil.my_courses'))
+    return redirect(url_for('teacher.my_courses'))

@@ -9,6 +9,6 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 class PupilMarksForm(Form):
     id = HiddenField("ID")
-    name = StringField()
+    name = StringField(render_kw={'readonly': True})
     marks = FieldList(StringField())
-    result = FloatField()
+    result = FloatField(render_kw={'readonly': True})
