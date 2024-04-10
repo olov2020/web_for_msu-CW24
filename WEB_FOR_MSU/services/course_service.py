@@ -230,7 +230,7 @@ class CourseService:
             other = other.split(';')
             for person in other:
                 person = person.split(',')
-                email = person[-1]
+                email = person[-1].strip()
                 teacher = Teacher.query.filter_by(email=email).first()
                 if teacher is None:
                     continue
