@@ -97,8 +97,10 @@ class MarkService:
                 if mark.upper() not in ["H", "Н"]:
                     visit_count[i] += 1
 
-            pupil_marks_form.result.data = MarkService.calculate_result(pupil_course_marks, marks_form.mark_types.data,
-                                                                        formulas)
+            pupil_marks_form.result.data = round(
+                MarkService.calculate_result(pupil_course_marks,
+                                             marks_form.mark_types.data,
+                                             formulas), 2)
 
         for i in range(len(lessons)):
             marks_form.visits.append_entry()
