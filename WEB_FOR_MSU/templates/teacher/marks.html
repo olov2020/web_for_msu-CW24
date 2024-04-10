@@ -31,11 +31,11 @@
                     </p>
                 </td>
                 {% for date in form.dates %}
-                <td>{{ date(class='field disabled') }}</td>
+                <td>{{ date(class='field disabled small_small_title') }}</td>
                 {% endfor %}
 
                 <td>
-                    <p class='small_small_title field'>
+                    <p class='small_small_title' style='text-align: center'>
                         Итог
                     </p>
                 </td>
@@ -66,7 +66,7 @@
                 {% endfor %}
 
                 <td>
-                    {{ pupil.form.result(class='field disabled') }}
+                    {{ pupil.form.result(class='field disabled result') }}
                 </td>
             </tr>
             {% endfor %}
