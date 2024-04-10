@@ -33,6 +33,12 @@
                 {% for date in form.dates %}
                 <td>{{ date(class='field disabled') }}</td>
                 {% endfor %}
+
+                <td>
+                    <p class='small_small_title'>
+                        Итог
+                    </p>
+                </td>
             </tr>
 
             <tr>
@@ -58,6 +64,10 @@
                     {{ mark(class='field mark') }}
                 </td>
                 {% endfor %}
+
+                <td>
+                    {{ pupil.form.result(class='field disabled') }}
+                </td>
             </tr>
             {% endfor %}
 
