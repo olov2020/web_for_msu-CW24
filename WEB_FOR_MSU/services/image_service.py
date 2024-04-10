@@ -134,6 +134,4 @@ class ImageService:
     @staticmethod
     def get_user_image():
         image_name = current_user.image
-        if not ImageService.check_file_exists_yandex_s3("images", image_name):
-            image_name = "default.png"
         return ImageService.get_from_yandex_s3("images", image_name)
