@@ -213,7 +213,7 @@ class CourseService:
             course_form.teachers[-1].form.name.label = TeacherService.get_full_name(teacher)
             course_form.teachers[-1].form.name.data = False
         for i in range(3, 14, 5):
-            if data[i][3] is None:
+            if data[i + 4][3] is None:
                 continue
             teacher = Teacher.query.filter_by(email=data[i + 4][3]).first()
             if teacher is None:

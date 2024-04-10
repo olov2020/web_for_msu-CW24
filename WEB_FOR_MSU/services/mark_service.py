@@ -11,9 +11,28 @@ from WEB_FOR_MSU.services import CourseService, PupilService
 
 class MarkService:
     @staticmethod
-    def get_pupil_mark_by_lesson(pupil_id, lesson_id):
-        assoc = Mark.query.filter_by(schedule_id=lesson_id, pupil_id=pupil_id).first()
-        return assoc.mark if assoc else ""
+    def get_pupil_marks(course_id, lessons, pupils):
+        marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
+        marks_grouped = {}
+        for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
+            marks_grouped[key] = list(group)
+        for pupil in pupils:
+            if pupil.id not in marks_grouped:
+                marks_grouped[pupil.id] = []
+        for key, group in marks_grouped.items():
+            pupil_marks = group
+            pupil_marks_res = []
+            for lesson in lessons:
+                flag = False
+                for mark in pupil_marks:
+                    if mark.schedule_id == lesson.id:
+                        pupil_marks_res.append(mark.mark)
+                        flag = True
+                        break
+                if not flag:
+                    pupil_marks_res.append('')
+            marks_grouped[key] = pupil_marks_res
+        return marks_grouped
 
     @staticmethod
     def calculate_result(pupil_marks, mark_types, formulas):
@@ -28,7 +47,7 @@ class MarkService:
             if mark_types[i] == 'Отсутствие':
                 continue
             if pupil_marks[i].isdigit():
-                formula = list(filter(lambda x: x.name == mark_types[i], formulas))[0]
+                formula = next(filter(lambda x: x.name == mark_types[i], formulas))
                 result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
         return result
 
@@ -38,14 +57,18 @@ class MarkService:
         if not course:
             flash('Такого курса не существует', 'error')
             return redirect(url_for('.my_courses'))
+
         formulas = course.formulas
-        choices = [
-                      (formula.name, formula.name) for formula in formulas
-                  ] + [('Отсутствие', 'Отсутствие')]
+        choices = [(formula.name, formula.name) for formula in formulas] + [('Отсутствие', 'Отсутствие')]
         lessons = CourseService.get_lessons(course_id)
         if not lessons:
             flash('Уроков пока нет', 'error')
             return redirect(url_for('.my_courses'))
+
+        # Fetch all pupils and their marks at once
+        pupils = CourseService.get_pupils(course_id)
+        pupil_marks = MarkService.get_pupil_marks(course_id, lessons, pupils)
+
         for lesson in lessons:
             marks_form.mark_types.append_entry()
             marks_form.dates.append_entry()
@@ -53,28 +76,30 @@ class MarkService:
             marks_form.mark_types[-1].data = formula_name
             marks_form.mark_types[-1].choices = choices
             marks_form.dates[-1].data = lesson.date
+
         mark_sum = [0] * len(lessons)
         mark_count = [0] * len(lessons)
         visit_count = [0] * len(lessons)
-        for pupil in CourseService.get_pupils(course_id):
+
+        for pupil in pupils:
             marks_form.pupils.append_entry()
             pupil_marks_form = marks_form.pupils[-1].form
             pupil_marks_form.id.data = pupil.id
             pupil_marks_form.name.data = PupilService.get_full_name(pupil)
-            pupil_course_marks = []
-            for i in range(len(lessons)):
-                lesson = lessons[i]
-                mark = MarkService.get_pupil_mark_by_lesson(pupil.id, lesson.id)
-                pupil_course_marks.append(mark)
+            pupil_course_marks = pupil_marks.get(pupil.id, [])
+
+            for i, mark in enumerate(pupil_course_marks):
                 pupil_marks_form.marks.append_entry()
                 pupil_marks_form.marks[-1].data = mark
                 if mark.isdigit():
                     mark_sum[i] += int(mark)
                     mark_count[i] += 1
-                if mark.upper() != "Н":
+                if mark.upper() not in ["H", "Н"]:
                     visit_count[i] += 1
+
             pupil_marks_form.result.data = MarkService.calculate_result(pupil_course_marks, marks_form.mark_types.data,
                                                                         formulas)
+
         for i in range(len(lessons)):
             marks_form.visits.append_entry()
             marks_form.visits[-1].data = str(visit_count[i])
@@ -91,7 +116,7 @@ class MarkService:
             if marks_form.mark_types[i].data != 'Отсутствие':
                 lesson = lessons[i]
                 lesson.formulas = formulas[marks_form.mark_types[i].data]
-        marks = Mark.query.order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
+        marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
         marks_grouped = {}
         for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
             marks_grouped[str(key)] = {mark.schedule_id: mark for mark in group}
@@ -106,6 +131,6 @@ class MarkService:
                     else:
                         db.session.delete(prev_mark)
                 elif mark:
-                    new_marks.append(Mark(lesson.id, marks_form.pupils[i].form.id.data, mark, None))
+                    new_marks.append(Mark(lesson.id, marks_form.pupils[i].form.id.data, mark, None, course_id))
         db.session.bulk_save_objects(new_marks)
         db.session.commit()
