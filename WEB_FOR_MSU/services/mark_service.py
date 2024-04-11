@@ -6,12 +6,13 @@ from sqlalchemy import asc
 
 from WEB_FOR_MSU import db
 from WEB_FOR_MSU.models import Mark, Course, Schedule, Formula
+from WEB_FOR_MSU.output_models.pupil_marks import PupilMarks
 from WEB_FOR_MSU.services import CourseService, PupilService
 
 
 class MarkService:
     @staticmethod
-    def get_pupil_marks(course_id, lessons, pupils):
+    def get_pupils_marks(course_id, lessons, pupils):
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
         marks_grouped = {}
         for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
@@ -20,18 +21,7 @@ class MarkService:
             if pupil.id not in marks_grouped:
                 marks_grouped[pupil.id] = []
         for key, group in marks_grouped.items():
-            pupil_marks = group
-            pupil_marks_res = []
-            for lesson in lessons:
-                flag = False
-                for mark in pupil_marks:
-                    if mark.schedule_id == lesson.id:
-                        pupil_marks_res.append(mark.mark)
-                        flag = True
-                        break
-                if not flag:
-                    pupil_marks_res.append('')
-            marks_grouped[key] = pupil_marks_res
+            marks_grouped[key] = MarkService.extend_pupil_marks(group, lessons)
         return marks_grouped
 
     @staticmethod
@@ -67,7 +57,7 @@ class MarkService:
 
         # Fetch all pupils and their marks at once
         pupils = CourseService.get_pupils(course_id)
-        pupil_marks = MarkService.get_pupil_marks(course_id, lessons, pupils)
+        pupil_marks = MarkService.get_pupils_marks(course_id, lessons, pupils)
 
         for lesson in lessons:
             marks_form.mark_types.append_entry()
@@ -136,3 +126,43 @@ class MarkService:
                     new_marks.append(Mark(lesson.id, marks_form.pupils[i].form.id.data, mark, None, course_id))
         db.session.bulk_save_objects(new_marks)
         db.session.commit()
+
+    @staticmethod
+    def get_pupil_marks(course_id, pupil_id, lessons):
+        marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
+                 .order_by(Mark.schedule_id).all())
+        return MarkService.extend_pupil_marks(marks, lessons)
+
+    @staticmethod
+    def extend_pupil_marks(marks, lessons):
+        pupil_marks = marks
+        pupil_marks_res = []
+        for lesson in lessons:
+            flag = False
+            for mark in pupil_marks:
+                if mark.schedule_id == lesson.id:
+                    pupil_marks_res.append(mark.mark)
+                    flag = True
+                    break
+            if not flag:
+                pupil_marks_res.append('')
+        return pupil_marks_res
+
+    @staticmethod
+    def get_pupil_marks_model(course_id, pupil_id):
+        course = Course.query.get(course_id)
+        if not course:
+            flash('Такого курса не существует', 'error')
+            return redirect(url_for('.my_courses'))
+        lessons = CourseService.get_lessons(course_id)
+        if not lessons:
+            flash('Уроков пока нет', 'error')
+            return redirect(url_for('.my_courses'))
+        course_name = course.name
+        formulas = course.formulas
+        mark_types = [lesson.formulas.name if lesson.formulas else 'Отсутствие' for lesson in lessons]
+        dates = [lesson.date for lesson in lessons]
+        marks = MarkService.get_pupil_marks(course_id, pupil_id, lessons)
+        skips = sum([mark.upper() in ["H", "Н"] for mark in marks])
+        result = MarkService.calculate_result(marks, mark_types, formulas)
+        return PupilMarks(course_name, dates, mark_types, marks, skips, result)

@@ -32,3 +32,18 @@ def my_courses():
                            authenticated=current_user.is_authenticated,
                            user=user,
                            courses=courses, )
+
+
+@pupil.route('/pupil/marks/<int:course_id>', methods=['GET', 'POST'])
+@auth_required()
+def marks(course_id):
+    if current_user.is_teacher():
+        return redirect(url_for('teacher.marks', course_id=course_id))
+    user = UserInfo.get_user_info()
+    pupil_id = PupilService.get_pupil_id(current_user.id)
+    pupil_marks = MarkService.get_pupil_marks_model(course_id, pupil_id)
+    return render_template('pupil/marks.html',
+                           title='Marks',
+                           authenticated=current_user.is_authenticated,
+                           user=user,
+                           pupil_marks=pupil_marks, )
