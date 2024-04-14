@@ -344,19 +344,21 @@ class CourseService:
                           course.crediting,
                           course.direction,
                           CourseService.get_course_teachers(course),
-                          course.auditory)
+                          course.auditory,
+                          course.lesson_time)
 
     @staticmethod
     def get_course_info_teacher(course):
         pupils_number = len(CourseService.get_pupils(course.id))
         return CourseInfoTeacher(course.id,
-                          course.name,
-                          course.emsh_grades,
-                          course.crediting,
-                          course.direction,
-                          CourseService.get_course_teachers(course),
-                          course.auditory,
-                          pupils_number)
+                                 course.name,
+                                 course.emsh_grades,
+                                 course.crediting,
+                                 course.direction,
+                                 CourseService.get_course_teachers(course),
+                                 course.auditory,
+                                 course.lesson_time,
+                                 pupils_number)
 
     @staticmethod
     def get_pupil_courses(user_id):
