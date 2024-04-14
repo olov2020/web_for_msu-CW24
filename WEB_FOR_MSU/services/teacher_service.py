@@ -36,4 +36,6 @@ class TeacherService:
     @staticmethod
     def get_teacher_courses(user_id):
         teacher = Teacher.query.filter_by(user_id=user_id).first()
+        if not teacher:
+            return []
         return teacher.courses

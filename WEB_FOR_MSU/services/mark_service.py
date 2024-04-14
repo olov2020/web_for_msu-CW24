@@ -42,10 +42,14 @@ class MarkService:
         return result
 
     @staticmethod
-    def create_form(marks_form, course_id):
+    def create_form(marks_form, course_id, current_user_id):
         course = Course.query.get(course_id)
         if not course:
             flash('Такого курса не существует', 'error')
+            return redirect(url_for('.my_courses'))
+
+        if current_user_id not in [assoc.teacher.user_id for assoc in course.teachers]:
+            flash('Вы не являетесь преподавателем этого курса', 'error')
             return redirect(url_for('.my_courses'))
 
         formulas = course.formulas

@@ -42,7 +42,7 @@ def marks(course_id):
         flash('Оценки успешно сохранены', 'success')
         return redirect(url_for('.marks', course_id=course_id))
     user = UserInfo.get_user_info()
-    MarkService.create_form(marks_form, course_id)
+    MarkService.create_form(marks_form, course_id, current_user.id)
     return render_template('teacher/marks.html',
                            title='Marks',
                            authenticated=current_user.is_authenticated,
