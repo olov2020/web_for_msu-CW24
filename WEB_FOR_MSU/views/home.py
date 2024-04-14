@@ -185,7 +185,10 @@ def my_courses():
 @main.route('/all_courses')
 def all_courses():
     courses = CourseService.get_all_courses()
-    user = UserInfo.get_user_info()
+    if current_user.is_authenticated:
+        user = UserInfo.get_user_info()
+    else:
+        user = None
     return render_template('home/all_courses.html',
                            title='All courses',
                            authenticated=current_user.is_authenticated,
