@@ -6,7 +6,6 @@ from flask_security import auth_required, roles_required
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
-from WEB_FOR_MSU.output_models.courses import Courses
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
 from WEB_FOR_MSU.output_models import *
@@ -23,8 +22,7 @@ teacher = Blueprint('teacher', __name__)
 @roles_required('teacher')
 def my_courses():
     user = UserInfo.get_user_info()
-    assocs = TeacherService.get_teacher_courses(current_user.id)
-    courses = [Courses(assoc.course.id, assoc.course.name) for assoc in assocs]
+    courses = CourseService.get_teacher_courses(current_user.id)
     return render_template('teacher/my_courses.html',
                            title='My courses',
                            authenticated=current_user.is_authenticated,

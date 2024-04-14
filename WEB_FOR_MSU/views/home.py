@@ -6,7 +6,6 @@ from flask_security import auth_required, roles_required
 
 # from WEB_FOR_MSU.models.user import User
 from WEB_FOR_MSU.models import *
-from WEB_FOR_MSU.output_models.courses import Courses
 from WEB_FOR_MSU.services import *
 from WEB_FOR_MSU.forms import *
 from WEB_FOR_MSU.functions import get_next_monday
@@ -181,3 +180,14 @@ def my_courses():
     if current_user.is_pupil():
         return redirect(url_for('pupil.my_courses'))
     return redirect(url_for('teacher.my_courses'))
+
+
+@main.route('/all_courses')
+def all_courses():
+    courses = CourseService.get_all_courses()
+    user = UserInfo.get_user_info()
+    return render_template('home/all_courses.html',
+                           title='All courses',
+                           authenticated=current_user.is_authenticated,
+                           courses=courses,
+                           user=user, )

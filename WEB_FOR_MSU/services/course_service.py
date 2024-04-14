@@ -11,6 +11,9 @@ from WEB_FOR_MSU.output_models import LessonSchedule
 from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
 
+from WEB_FOR_MSU.output_models.course_info import CourseInfo
+
+from WEB_FOR_MSU.output_models.course_info_teacher import CourseInfoTeacher
 from WEB_FOR_MSU.services import TeacherService
 
 
@@ -60,7 +63,8 @@ class CourseService:
 
     @staticmethod
     def get_all_courses():
-        return Course.query.all()
+        courses = Course.query.all()
+        return [CourseService.get_course_info(course) for course in courses]
 
     @staticmethod
     def add_pupil_to_course(course_id, pupil_id, year):
@@ -324,3 +328,46 @@ class CourseService:
         if not course:
             return []
         return sorted(course.lessons, key=lambda x: x.lesson_number)
+
+    @staticmethod
+    def get_course_teachers(course):
+        if not course:
+            return []
+        return [TeacherService.get_full_name(assoc.teacher) for assoc in
+                course.teachers]
+
+    @staticmethod
+    def get_course_info(course):
+        return CourseInfo(course.id,
+                          course.name,
+                          course.emsh_grades,
+                          course.crediting,
+                          course.direction,
+                          CourseService.get_course_teachers(course),
+                          course.auditory)
+
+    @staticmethod
+    def get_course_info_teacher(course):
+        pupils_number = len(CourseService.get_pupils(course.id))
+        return CourseInfoTeacher(course.id,
+                          course.name,
+                          course.emsh_grades,
+                          course.crediting,
+                          course.direction,
+                          CourseService.get_course_teachers(course),
+                          course.auditory,
+                          pupils_number)
+
+    @staticmethod
+    def get_pupil_courses(user_id):
+        pupil = Pupil.query.filter_by(user_id=user_id).first()
+        if not pupil:
+            return []
+        return [CourseService.get_course_info(assoc.course) for assoc in pupil.courses]
+
+    @staticmethod
+    def get_teacher_courses(user_id):
+        teacher = Teacher.query.filter_by(user_id=user_id).first()
+        if not teacher:
+            return []
+        return [CourseService.get_course_info_teacher(assoc.course) for assoc in teacher.courses]

@@ -47,13 +47,6 @@ class PupilService:
         return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic
 
     @staticmethod
-    def get_pupil_courses(user_id):
-        pupil = Pupil.query.filter_by(user_id=user_id).first()
-        if not pupil:
-            return []
-        return pupil.courses
-
-    @staticmethod
     def get_pupil_id(user_id):
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
