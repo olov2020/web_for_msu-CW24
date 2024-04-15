@@ -45,4 +45,5 @@ def marks(course_id):
                            title='Marks',
                            authenticated=current_user.is_authenticated,
                            user=user,
-                           form=marks_form, )
+                           form=marks_form,
+                           course_name=Course.query.get(course_id).name)
