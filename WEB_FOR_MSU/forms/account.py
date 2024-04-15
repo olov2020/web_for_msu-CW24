@@ -1,9 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, ValidationError
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, SubmitField, PasswordField
 from wtforms.fields.simple import EmailField, TelField
-from wtforms.validators import DataRequired, Email, Length, Optional
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms.validators import Email, Length, Optional
 
 
 class AccountForm(FlaskForm):

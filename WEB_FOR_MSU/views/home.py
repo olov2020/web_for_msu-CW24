@@ -1,18 +1,17 @@
-from datetime import datetime, timedelta
-
-from flask import request, render_template, current_app, redirect, url_for, flash
-from flask_login import login_required, login_user, current_user, logout_user
-from flask_security import auth_required, roles_required
-
-# from WEB_FOR_MSU.models.user import User
-from WEB_FOR_MSU.models import *
-from WEB_FOR_MSU.services import *
-from WEB_FOR_MSU.forms import *
-from WEB_FOR_MSU.functions import get_next_monday
-from WEB_FOR_MSU.output_models import *
-# from app.utils import send_mail
+from datetime import datetime
 
 from flask import Blueprint
+from flask import request, render_template, redirect, url_for, flash
+from flask_login import login_user, current_user, logout_user
+from flask_security import auth_required
+
+from WEB_FOR_MSU.forms import *
+from WEB_FOR_MSU.functions import get_next_monday
+from WEB_FOR_MSU.models import *
+from WEB_FOR_MSU.output_models import *
+from WEB_FOR_MSU.services import *
+
+# from app.utils import send_mail
 
 main = Blueprint('home', __name__)
 

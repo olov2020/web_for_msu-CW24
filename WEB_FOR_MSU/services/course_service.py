@@ -1,20 +1,17 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from openpyxl.reader.excel import load_workbook
-
-from WEB_FOR_MSU import db
-from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
-from WEB_FOR_MSU.forms.formula import FormulaForm
-from WEB_FOR_MSU.forms.schedule import ScheduleForm
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, Mark
-from WEB_FOR_MSU.output_models import LessonSchedule
-from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
 
+from WEB_FOR_MSU import db
+from WEB_FOR_MSU.forms.formula import FormulaForm
+from WEB_FOR_MSU.forms.schedule import ScheduleForm
+from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
+from WEB_FOR_MSU.functions import get_next_monday
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from WEB_FOR_MSU.output_models import LessonSchedule, CourseInfoPupil
 from WEB_FOR_MSU.output_models.course_info import CourseInfo
-
 from WEB_FOR_MSU.output_models.course_info_teacher import CourseInfoTeacher
-from WEB_FOR_MSU.services import TeacherService
+from WEB_FOR_MSU.services.teacher_service import TeacherService
 
 
 class CourseService:
@@ -348,6 +345,19 @@ class CourseService:
                           course.lesson_time)
 
     @staticmethod
+    def get_course_info_pupil(course, pupil):
+        pupil_course = PupilCourse.query.filter_by(pupil_id=pupil.id, course_id=course.id).first()
+        return CourseInfoPupil(course.id,
+                               course.name,
+                               course.emsh_grades,
+                               course.crediting,
+                               course.direction,
+                               CourseService.get_course_teachers(course),
+                               course.auditory,
+                               course.lesson_time,
+                               pupil_course.current_mark)
+
+    @staticmethod
     def get_course_info_teacher(course):
         pupils_number = len(CourseService.get_pupils(course.id))
         return CourseInfoTeacher(course.id,
@@ -365,7 +375,7 @@ class CourseService:
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
             return []
-        return [CourseService.get_course_info(assoc.course) for assoc in pupil.courses]
+        return [CourseService.get_course_info_pupil(assoc.course, pupil) for assoc in pupil.courses]
 
     @staticmethod
     def get_teacher_courses(user_id):

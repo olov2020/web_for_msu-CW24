@@ -1,5 +1,5 @@
 from WEB_FOR_MSU import db
-from WEB_FOR_MSU.models import User, Pupil, Teacher
+from WEB_FOR_MSU.models import Teacher
 
 
 class TeacherService:

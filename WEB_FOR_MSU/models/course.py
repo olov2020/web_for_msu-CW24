@@ -3,7 +3,6 @@ from WEB_FOR_MSU import db
 
 class Course(db.Model):
     __tablename__ = 'course'
-    # TODO add relations for interns, change formula
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
     auditory = db.Column(db.String())

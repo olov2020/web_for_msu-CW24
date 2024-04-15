@@ -1,4 +1,5 @@
 import os
+
 from WEB_FOR_MSU import create_app, db
 from WEB_FOR_MSU.create_roles import create_roles
 

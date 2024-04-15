@@ -5,9 +5,10 @@ from flask import flash, redirect, url_for
 from sqlalchemy import asc
 
 from WEB_FOR_MSU import db
-from WEB_FOR_MSU.models import Mark, Course, Schedule, Formula
+from WEB_FOR_MSU.models import Mark, Course, Schedule, Formula, PupilCourse
 from WEB_FOR_MSU.output_models.pupil_marks import PupilMarks
-from WEB_FOR_MSU.services import CourseService, PupilService
+from WEB_FOR_MSU.services.course_service import CourseService
+from WEB_FOR_MSU.services.pupil_service import PupilService
 
 
 class MarkService:
@@ -128,6 +129,14 @@ class MarkService:
                         db.session.delete(prev_mark)
                 elif mark:
                     new_marks.append(Mark(lesson.id, marks_form.pupils[i].form.id.data, mark, None, course_id))
+            pupil_marks = marks_form.pupils[i].marks.data
+            mark_types = marks_form.mark_types.data
+            current_mark = MarkService.calculate_result(pupil_marks, mark_types, formula_vals)
+            pupil_course = PupilCourse.query.filter_by(pupil_id=marks_form.pupils[i].form.id.data,
+                                                       course_id=course_id).first()
+            if pupil_course:
+                pupil_course.current_mark = round(current_mark, 2)
+
         db.session.bulk_save_objects(new_marks)
         db.session.commit()
 
