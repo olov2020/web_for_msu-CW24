@@ -13,20 +13,29 @@
 
 {% block main %}
 
-<div class='marks'>
+<div>
     <div class='title'>
         <p>Ведомость курса "{{ pupil_marks.course_name }}"</p>
     </div>
 
-    {% for mark in pupil_marks.marks %}
-    {{ mark }}
-    {% endfor %}
-    {% for mark_type in pupil_marks.mark_types %}
-    {{ mark_type }}
-    {% endfor %}
-    
-    {{ skips }}
-    {{ result }}
+    <div class='marks'>
+        <div class='container'>
+            {% for mark in pupil_marks.marks %}
+            <div class='field'>
+                {{ mark }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class='container'>
+            {% for mark_type in pupil_marks.mark_types %}
+            <div class='field'>
+                {{ mark_type }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
 </div>
 
 {% endblock %}
