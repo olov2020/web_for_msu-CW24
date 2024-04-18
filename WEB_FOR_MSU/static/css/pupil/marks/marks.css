@@ -1,13 +1,6 @@
-.marks {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    flex-direction: column;
-}
-
 .marks_container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
 }
