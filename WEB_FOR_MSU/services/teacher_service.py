@@ -1,5 +1,5 @@
 from WEB_FOR_MSU import db
-from WEB_FOR_MSU.models import User, Pupil, Teacher
+from WEB_FOR_MSU.models import Teacher
 
 
 class TeacherService:
@@ -33,7 +33,3 @@ class TeacherService:
     def get_full_name(teacher):
         return teacher.surname + ' ' + teacher.name + ' ' + teacher.patronymic
 
-    @staticmethod
-    def get_teacher_courses(user_id):
-        teacher = Teacher.query.filter_by(user_id=user_id).first()
-        return teacher.courses

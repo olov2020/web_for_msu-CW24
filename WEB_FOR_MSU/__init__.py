@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_login import LoginManager
+from flask_security import Security, SQLAlchemySessionUserDatastore
 # from flask_migrate import Migrate
 # from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
-from flask_security import Security, SQLAlchemySessionUserDatastore
 
 db = SQLAlchemy()
 # mail = Mail()

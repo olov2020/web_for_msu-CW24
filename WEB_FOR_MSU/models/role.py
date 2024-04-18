@@ -1,5 +1,6 @@
-from WEB_FOR_MSU import db
 from flask_security import RoleMixin
+
+from WEB_FOR_MSU import db
 
 
 class Role(db.Model, RoleMixin):

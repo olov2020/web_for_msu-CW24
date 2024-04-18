@@ -37,11 +37,15 @@
                 <div class='small_title'>
                     <p>Преподаватели</p>
                 </div>
-                {% for teacher in form_course.teachers %}
-                {{ teacher.form.id }}
-                {{ teacher.form.name.label }}
-                {{ teacher.form.name }}
-                {% endfor %}
+                <div class='teachers'>
+                    {% for teacher in form_course.teachers %}
+                    <div class='teacher'>
+                        {{ teacher.form.id }}
+                        {{ teacher.form.name }}
+                        {{ teacher.form.name.label }}
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
             {% endif %}
 

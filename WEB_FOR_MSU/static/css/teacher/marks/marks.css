@@ -35,7 +35,7 @@ table {
 
 
 .field {
-    width: 160px;
+    width: 120px;
 
     padding: 5px;
     margin-left: 5px;
@@ -55,6 +55,8 @@ table {
 
 .small_small_title {
     font-size: 18px;
+    font-style: normal;
+    font-family: serif;
 }
 
 .pupil {
@@ -70,4 +72,9 @@ table {
 .error {
     border-color: red;
     background-color: white;
+}
+
+.result {
+    background-color: #E094AD;
+    color: white;
 }

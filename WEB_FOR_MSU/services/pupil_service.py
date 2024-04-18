@@ -1,5 +1,5 @@
 from WEB_FOR_MSU import db
-from WEB_FOR_MSU.models import User, Pupil, Teacher
+from WEB_FOR_MSU.models import Pupil
 
 
 class PupilService:
@@ -47,6 +47,8 @@ class PupilService:
         return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic
 
     @staticmethod
-    def get_pupil_courses(user_id):
+    def get_pupil_id(user_id):
         pupil = Pupil.query.filter_by(user_id=user_id).first()
-        return pupil.courses
+        if not pupil:
+            return None
+        return pupil.id
