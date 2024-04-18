@@ -1,5 +1,5 @@
 from WEB_FOR_MSU import db
-from WEB_FOR_MSU.models import User, Pupil, Teacher
+from WEB_FOR_MSU.models import User
 from WEB_FOR_MSU.services.image_service import ImageService
 from WEB_FOR_MSU.services.pupil_service import PupilService
 from WEB_FOR_MSU.services.teacher_service import TeacherService

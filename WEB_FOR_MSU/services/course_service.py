@@ -1,17 +1,17 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from openpyxl.reader.excel import load_workbook
-
-from WEB_FOR_MSU import db
-from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
-from WEB_FOR_MSU.forms.formula import FormulaForm
-from WEB_FOR_MSU.forms.schedule import ScheduleForm
-from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, Mark
-from WEB_FOR_MSU.output_models import LessonSchedule
-from WEB_FOR_MSU.functions import get_next_monday
 import pandas as pd
 
-from WEB_FOR_MSU.services import TeacherService
+from WEB_FOR_MSU import db
+from WEB_FOR_MSU.forms.formula import FormulaForm
+from WEB_FOR_MSU.forms.schedule import ScheduleForm
+from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
+from WEB_FOR_MSU.functions import get_next_monday
+from WEB_FOR_MSU.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from WEB_FOR_MSU.output_models import LessonSchedule, CourseInfoPupil
+from WEB_FOR_MSU.output_models.course_info import CourseInfo
+from WEB_FOR_MSU.output_models.course_info_teacher import CourseInfoTeacher
+from WEB_FOR_MSU.services.teacher_service import TeacherService
 
 
 class CourseService:
@@ -60,7 +60,8 @@ class CourseService:
 
     @staticmethod
     def get_all_courses():
-        return Course.query.all()
+        courses = Course.query.all()
+        return [CourseService.get_course_info(course) for course in courses]
 
     @staticmethod
     def add_pupil_to_course(course_id, pupil_id, year):
@@ -213,7 +214,7 @@ class CourseService:
             course_form.teachers[-1].form.name.label = TeacherService.get_full_name(teacher)
             course_form.teachers[-1].form.name.data = False
         for i in range(3, 14, 5):
-            if data[i][3] is None:
+            if data[i + 4][3] is None:
                 continue
             teacher = Teacher.query.filter_by(email=data[i + 4][3]).first()
             if teacher is None:
@@ -230,7 +231,7 @@ class CourseService:
             other = other.split(';')
             for person in other:
                 person = person.split(',')
-                email = person[-1]
+                email = person[-1].strip()
                 teacher = Teacher.query.filter_by(email=email).first()
                 if teacher is None:
                     continue
@@ -324,3 +325,61 @@ class CourseService:
         if not course:
             return []
         return sorted(course.lessons, key=lambda x: x.lesson_number)
+
+    @staticmethod
+    def get_course_teachers(course):
+        if not course:
+            return []
+        return [TeacherService.get_full_name(assoc.teacher) for assoc in
+                course.teachers]
+
+    @staticmethod
+    def get_course_info(course):
+        return CourseInfo(course.id,
+                          course.name,
+                          course.emsh_grades,
+                          course.crediting,
+                          course.direction,
+                          CourseService.get_course_teachers(course),
+                          course.auditory,
+                          course.lesson_time)
+
+    @staticmethod
+    def get_course_info_pupil(course, pupil):
+        pupil_course = PupilCourse.query.filter_by(pupil_id=pupil.id, course_id=course.id).first()
+        return CourseInfoPupil(course.id,
+                               course.name,
+                               course.emsh_grades,
+                               course.crediting,
+                               course.direction,
+                               CourseService.get_course_teachers(course),
+                               course.auditory,
+                               course.lesson_time,
+                               pupil_course.current_mark)
+
+    @staticmethod
+    def get_course_info_teacher(course):
+        pupils_number = len(CourseService.get_pupils(course.id))
+        return CourseInfoTeacher(course.id,
+                                 course.name,
+                                 course.emsh_grades,
+                                 course.crediting,
+                                 course.direction,
+                                 CourseService.get_course_teachers(course),
+                                 course.auditory,
+                                 course.lesson_time,
+                                 pupils_number)
+
+    @staticmethod
+    def get_pupil_courses(user_id):
+        pupil = Pupil.query.filter_by(user_id=user_id).first()
+        if not pupil:
+            return []
+        return [CourseService.get_course_info_pupil(assoc.course, pupil) for assoc in pupil.courses]
+
+    @staticmethod
+    def get_teacher_courses(user_id):
+        teacher = Teacher.query.filter_by(user_id=user_id).first()
+        if not teacher:
+            return []
+        return [CourseService.get_course_info_teacher(assoc.course) for assoc in teacher.courses]

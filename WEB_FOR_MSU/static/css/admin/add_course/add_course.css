@@ -21,3 +21,14 @@ form {
     margin-top: 40px;
     border-top: 1px dashed #9F1A59;
 }
+
+.teachers {
+    display: flex;
+    justify-content: start;
+    text-align: start;
+    flex-direction: column;
+}
+
+.teacher {
+    padding: 5px;
+}

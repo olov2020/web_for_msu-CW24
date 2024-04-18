@@ -1,15 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, ValidationError
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.fields.form import FormField
 from wtforms.fields.list import FieldList
-from wtforms.fields.simple import TelField, EmailField
-from wtforms.validators import DataRequired, Email, Length, Optional
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms.validators import DataRequired
 
-from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
 from WEB_FOR_MSU.forms.formula import FormulaForm
 from WEB_FOR_MSU.forms.schedule import ScheduleForm
+from WEB_FOR_MSU.forms.teacher_course import TeacherCourseForm
 
 
 class CourseForm(FlaskForm):

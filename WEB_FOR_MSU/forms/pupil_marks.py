@@ -1,10 +1,8 @@
-from flask_wtf import FlaskForm, Form
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from flask_wtf import Form
+from wtforms import StringField
 from wtforms.fields.list import FieldList
 from wtforms.fields.numeric import FloatField
-from wtforms.fields.simple import TelField, EmailField, HiddenField
-from wtforms.validators import DataRequired, Email, Length, Optional
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms.fields.simple import HiddenField
 
 
 class PupilMarksForm(Form):

@@ -1,9 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, ValidationError
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, SelectField, DateField
 from wtforms.fields.simple import TelField, EmailField
 from wtforms.validators import DataRequired, Email, Length, Optional
-from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
 class RegistrationForm(FlaskForm):
@@ -30,7 +29,8 @@ class RegistrationForm(FlaskForm):
     vk = StringField("VK: ")
     parent1_surname = StringField("Фамилия родителя / опекуна: *",
                                   validators=[DataRequired("Поле обязательно для заполнения")])
-    parent1_name = StringField("Имя родителя / опекуна: *", validators=[DataRequired("Поле обязательно для заполнения")])
+    parent1_name = StringField("Имя родителя / опекуна: *",
+                               validators=[DataRequired("Поле обязательно для заполнения")])
     parent1_patronymic = StringField("Отчество родителя / опекуна: ")
     parent1_phone = TelField("Телефон родителя / опекуна: *",
                              validators=[DataRequired("Поле обязательно для заполнения")])
