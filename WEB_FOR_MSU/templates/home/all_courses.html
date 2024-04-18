@@ -13,16 +13,23 @@
 
 {% block main %}
 
-<div class='all_courses'>
+<div>
     <div class='title'>
         <p>Все курсы</p>
     </div>
 
     {% for course in courses %}
     <div class='course'>
-        <a href='/marks/{{ course.id }}'>
-            <p class='course_text'>{{ course.name }}</p>
-        </a>
+        <p>{{ course.name }}</p>
+        <p>{{ course.grades }}</p>
+        <p>{{ course.crediting }}</p>
+        <p>{{ course.direction }}</p>
+        {% if course.auditory %}
+        <p>{{ course.auditory }}</p>
+        {% else %}
+        <p class='noauditory'>Нет аудитории</p>
+        {% endif %}
+        <p>{{ course.lesson_time }}</p>
     </div>
     {% endfor %}
 </div>

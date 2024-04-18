@@ -15,12 +15,18 @@
 
 <div class='marks'>
     <div class='title'>
-        <p>Ведомость курса</p>
+        <p>Ведомость курса "{{ pupil_marks.course_name }}"</p>
     </div>
 
-    {% for mark in pupil_marks %}
-    {{ mark.name }}
+    {% for mark in pupil_marks.marks %}
+    {{ mark }}
     {% endfor %}
+    {% for mark_type in pupil_marks.mark_types %}
+    {{ mark_type }}
+    {% endfor %}
+    
+    {{ skips }}
+    {{ result }}
 </div>
 
 {% endblock %}
