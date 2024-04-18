@@ -13,12 +13,12 @@
 
 {% block main %}
 
-<div>
+<div class='marks'>
     <div class='title'>
         <p>Ведомость курса "{{ pupil_marks.course_name }}"</p>
     </div>
-
-    <div class='marks'>
+    
+    <div class='marks_container'>
         <div class='container'>
             {% for mark in pupil_marks.marks %}
             <div class='field'>
@@ -34,7 +34,7 @@
             </div>
             {% endfor %}
         </div>
-        
+
         <div class='container'>
             {% for date in pupil_marks.dates %}
             <div class='field'>
@@ -42,6 +42,16 @@
             </div>
             {% endfor %}
         </div>
+    </div>
+
+    <div class='field' style='margin-top: 30px;'>
+        <p>Количество пропусков</p>
+        {{ pupil_marks.skips }}
+    </div>
+    
+    <div class='field'>
+        <p>Средняя оценка</p>
+        {{ pupil_marks.result }}
     </div>
 
 </div>
