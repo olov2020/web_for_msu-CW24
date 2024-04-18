@@ -141,10 +141,10 @@ class MarkService:
         db.session.commit()
 
     @staticmethod
-    def get_pupil_marks(course_id, pupil_id, lessons):
+    def get_pupil_marks(course_id, pupil_id):
         marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
                  .order_by(Mark.schedule_id).all())
-        return MarkService.extend_pupil_marks(marks, lessons)
+        return marks
 
     @staticmethod
     def extend_pupil_marks(marks, lessons):
@@ -173,9 +173,11 @@ class MarkService:
             return redirect(url_for('.my_courses'))
         course_name = course.name
         formulas = course.formulas
-        mark_types = [lesson.formulas.name if lesson.formulas else 'Отсутствие' for lesson in lessons]
+        marks = MarkService.get_pupil_marks(course_id, pupil_id)
+        lessons = [mark.schedule for mark in marks]
         dates = [lesson.date for lesson in lessons]
-        marks = MarkService.get_pupil_marks(course_id, pupil_id, lessons)
+        mark_types = [lesson.formulas.name if lesson.formulas else 'Отсутствие' for lesson in lessons]
+        marks = [mark.mark for mark in marks]
         skips = sum([mark.upper() in ["H", "Н"] for mark in marks])
         result = MarkService.calculate_result(marks, mark_types, formulas)
         return PupilMarks(course_name, dates, mark_types, marks, skips, result)
