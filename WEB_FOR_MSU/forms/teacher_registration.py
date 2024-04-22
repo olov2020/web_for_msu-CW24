@@ -18,7 +18,7 @@ class TeacherRegistrationForm(FlaskForm):
     patronymic = StringField("Отчество: ")
     birth_date = DateField("Дата рождения: *", validators=[DataRequired("Поле обязательно для заполнения")])
     email = EmailField("Email: *", validators=[DataRequired("Поле обязательно для заполнения"),
-                                              Email(message="Почта введена некорректно")])
+                                               Email(message="Почта введена некорректно")])
     password = PasswordField("Пароль: *",
                              validators=[DataRequired("Поле обязательно для заполнения"),
                                          Length(min=8, message="Не менее 8 символов в пароле")])

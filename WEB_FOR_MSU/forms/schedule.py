@@ -1,9 +1,7 @@
-from flask_wtf import FlaskForm, Form
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, SelectField, DateField
+from flask_wtf import Form
+from wtforms import StringField, DateField
 from wtforms.fields.numeric import IntegerField
-from wtforms.fields.simple import TelField, EmailField, HiddenField
-from wtforms.validators import DataRequired, Email, Length, Optional
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms.validators import DataRequired
 
 
 class ScheduleForm(Form):
