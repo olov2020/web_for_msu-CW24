@@ -571,7 +571,7 @@ content = "logged-in env-production page-responsive" >
 content = "https://api.github.com/_private/browser/stats" >
 
     <
-    meta name = "browser-errors-url"
+    meta name = "browser-showMessage-url"
 content = "https://api.github.com/_private/browser/errors" >
 
     <

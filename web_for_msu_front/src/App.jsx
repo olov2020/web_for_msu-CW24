@@ -2,6 +2,7 @@ import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./routing/AppRouter.jsx";
 import {useEffect, useState} from "react";
 import Loading from "./pages/loading/Loading.jsx";
+import Header from "./generic/header/Header.jsx";
 
 const App = () => {
 
@@ -24,6 +25,8 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Header/>
+
       <AppRouter/>
     </BrowserRouter>
   )

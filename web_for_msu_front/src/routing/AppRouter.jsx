@@ -4,11 +4,11 @@ import {authRoutes, publicRoutes} from "./routes.jsx";
 import {NOT_FOUND_ROUTE} from "./consts.js";
 
 const AppRouter = () => {
-  const isAuth = useSelector(state => state.user.isAuth)
+  const authStatus = useSelector(state => state.user.authStatus);
 
   return (
     <Routes>
-      {isAuth && authRoutes.map(({path, Element}) => {
+      {authStatus !== 'none' && authRoutes.map(({path, Element}) => {
         return <Route key={path} path={path} element={Element}/>
       })}
 
@@ -17,7 +17,6 @@ const AppRouter = () => {
       })}
 
       <Route path="*" element={<Navigate to={NOT_FOUND_ROUTE}/>}/>
-
     </Routes>
   )
 };
