@@ -1,0 +1,16 @@
+.submit {
+    width: 100%;
+    padding: .5rem;
+
+    color: white;
+    background-color: #9F1A59;
+    border: none;
+    border-radius: .2rem;
+
+    transition: all .1s;
+
+    &:hover {
+        color: #9F1A59;
+        background-color: #F7B7CE;
+    }
+}

@@ -1,10 +1,13 @@
 .header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     width: 100%;
     height: 20%;
+
+    z-index: 100;
 }
 
 
@@ -89,6 +92,10 @@
         border-radius: 1rem;
         transform: scale(1.1);
     }
+
+    /*&:hover + :not(.dropdownList__item:hover) {
+        background-color: #b1959d;
+    }*/
 }
 
 

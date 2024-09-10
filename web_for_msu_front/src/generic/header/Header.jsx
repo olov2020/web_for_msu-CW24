@@ -52,11 +52,11 @@ const Header = () => {
         </Link>
 
         <div className={style.contacts}>
-          <h3>email</h3>
-          <h3>|</h3>
-          <h3>vk</h3>
-          <h3>|</h3>
-          <h3>tg</h3>
+          <p>email</p>
+          <p>|</p>
+          <p>vk</p>
+          <p>|</p>
+          <p>tg</p>
         </div>
       </div>
 

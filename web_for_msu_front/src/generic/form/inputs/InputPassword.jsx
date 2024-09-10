@@ -1,9 +1,13 @@
 import styleInput from "./input.module.css";
+import styleInputPassword from './inputPassword.module.css'
 import {useState} from "react";
+import {FiEye} from "react-icons/fi";
 
 const InputPassword = () => {
   const [isValid, setIsValid] = useState(false);
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
   const errors = {
     notLongEnough: 'Длина пароля должна быть минимум 8 символов',
     notUpperCase: 'Пароль должен содержать хотя бы один заглавный символ',
@@ -17,10 +21,11 @@ const InputPassword = () => {
   const handleInputChange = ((e) => {
     e.preventDefault();
     setPassword(e.target.value);
-    const error = validateInput(password);
+    const error = validateInput(e.target.value);
 
     if (error) {
       setIsValid(false);
+      setError(error)
       console.log(error);
     }
   })
@@ -46,7 +51,7 @@ const InputPassword = () => {
       return errors.notNumber;
     }
 
-    // 5. Special character check: At least one special character
+    /*// 5. Special character check: At least one special character
     if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
       return errors.notSpecial;
     }
@@ -54,7 +59,7 @@ const InputPassword = () => {
     // 6. No consecutive characters (e.g., "aaa" or "123")
     if (/([a-zA-Z0-9])\1{2,}/.test(password)) {
       return errors.notConsecutive;
-    }
+    }*/
 
     // 7. No common patterns (e.g., "password", "12345678")
     // You can add more common patterns to this array
@@ -72,23 +77,29 @@ const InputPassword = () => {
     }
 
     // All checks passed!
+    setIsValid(true);
+    setError('')
     return '';
   }
 
   return (
-    <label>
+    <label className={styleInput.label}>
+      {error}
       <input
-        type='password'
+        type={showPassword ? 'text' : 'password'}
         name='password'
         placeholder='Пароль'
         value={password}
         className={
-          isValid ?
+          `${isValid ?
             `${styleInput.valid}` :
-            `${styleInput.invalid}`
+            `${styleInput.invalid}`}
+          ${styleInput.input}`
         }
         onChange={handleInputChange}
       />
+
+      <FiEye className={styleInputPassword.showPassword} onClick={() => setShowPassword(!showPassword)}/>
     </label>
   );
 };

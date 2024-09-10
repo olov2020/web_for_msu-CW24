@@ -1,7 +1,41 @@
+.label {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    color: #8f1313;
+
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.input {
+    padding: .7rem;
+    font-size: 1rem;
+    border: .2rem solid black;
+    border-radius: .5rem;
+
+    &:focus {
+        border: .2rem solid black;
+        color: black;
+    }
+
+    /*&:focus {
+        border: .2rem solid #F7B7CE;
+        color: white;
+        background-color: #F7B7CE;
+    }*/
+}
+
 .valid {
-    border: 1px solid #205c20;
+    border: .2rem solid #205c20;
+    background-color: #e2ffe2;
 }
 
 .invalid {
-    border: 1px solid #8f1313;
+    border: .2rem solid #8f1313;
+    background-color: #ffd1d1;
 }
