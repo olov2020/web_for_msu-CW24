@@ -3,7 +3,6 @@ from flask import render_template, redirect, url_for, flash
 from flask_security import auth_required, roles_required
 
 from web_for_msu_back.output_models import *
-# from web_for_msu_back.models.user import User
 from web_for_msu_back.services import *
 
 # from app.utils import send_mail

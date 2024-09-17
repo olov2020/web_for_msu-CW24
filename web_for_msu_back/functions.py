@@ -46,7 +46,7 @@ def load_current_user():
 
 
 # Кастомный декоратор для загрузки пользователя в g (аналог Flask-Login current_user)
-def user_loader(fn):
+def auth_required(fn):
     @wraps(fn)
     @jwt_required()
     def wrapper(*args, **kwargs):
@@ -55,5 +55,5 @@ def user_loader(fn):
         if g.current_user is None:
             return jsonify({"msg": "Пользователь не найден"}), 404
         return fn(*args, **kwargs)
-
     return wrapper
+

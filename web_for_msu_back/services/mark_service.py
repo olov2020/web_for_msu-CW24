@@ -27,6 +27,7 @@ class MarkService:
 
     @staticmethod
     def calculate_result(pupil_marks, mark_types, formulas):
+        # TODO change form to json
         result = 0
         types = {}
         for mark_type in mark_types:
@@ -44,6 +45,7 @@ class MarkService:
 
     @staticmethod
     def create_form(marks_form, course_id, current_user_id):
+        # TODO change form to json
         course = Course.query.get(course_id)
         if not course:
             flash('Такого курса не существует', 'error')
@@ -104,6 +106,7 @@ class MarkService:
             marks_form.average[-1].data = float(mark_sum[i]) / float(mark_count[i]) if mark_count[i] != 0 else 0
 
     @staticmethod
+    # TODO change form to json
     def save_from_form(course_id, marks_form):
         lessons = Schedule.query.filter_by(course_id=course_id).order_by(Schedule.date).all()
         formula_vals = Formula.query.filter_by(course_id=course_id).all()
@@ -148,6 +151,7 @@ class MarkService:
 
     @staticmethod
     def extend_pupil_marks(marks, lessons):
+        # TODO change form to json
         pupil_marks = marks
         pupil_marks_res = []
         for lesson in lessons:
@@ -163,6 +167,7 @@ class MarkService:
 
     @staticmethod
     def get_pupil_marks_model(course_id, pupil_id):
+        # TODO change model to dto
         course = Course.query.get(course_id)
         if not course:
             flash('Такого курса не существует', 'error')

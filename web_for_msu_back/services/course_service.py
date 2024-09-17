@@ -14,6 +14,7 @@ from web_for_msu_back.services.teacher_service import TeacherService
 class CourseService:
     @staticmethod
     def add_course(form):
+        # TODO change form to json
         course = Course(
             name=form.name.data,
             auditory=form.auditory.data,
@@ -111,6 +112,7 @@ class CourseService:
 
     @staticmethod
     def load_from_file(file, course_form):
+        # TODO change form to json
         data = pd.read_excel(file)
         name = data.keys()[1]
         data = data.values
@@ -240,6 +242,7 @@ class CourseService:
 
     @staticmethod
     def load_from_form(course_form):
+        # TODO change form to json
         course = Course(
             name=course_form.name.data,
             auditory=course_form.auditory.data,

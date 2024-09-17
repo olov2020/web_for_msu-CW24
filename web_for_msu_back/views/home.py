@@ -1,12 +1,12 @@
 from datetime import datetime
 
 from flask import Blueprint, jsonify, g
-from flask import request, render_template, redirect, url_for, flash
+from flask import request, url_for, flash
 from flask_jwt_extended import create_access_token
-from flask_login import login_user, current_user, logout_user
-from flask_security import auth_required
+from marshmallow import ValidationError
 
-from web_for_msu_back.functions import get_next_monday, user_loader
+from web_for_msu_back.dto.login import LoginDTO
+from web_for_msu_back.functions import get_next_monday, auth_required
 from web_for_msu_back.models import *
 from web_for_msu_back.output_models import *
 from web_for_msu_back.services import *
@@ -101,20 +101,25 @@ def login():
 
 
 @main.route('/login', methods=['POST'])
-@user_loader
 def login():
-    if g.current_user is not None:
-        return redirect(url_for('.home'))
-    # TODO check if it works
+    data = request.get_json()
 
-    email = request.json.get('email')
-    password = request.json.get('password')
+    schema = LoginDTO()
+    try:
+        validated_data = schema.load(data)
+    except ValidationError as err:
+        return jsonify({"errors": err.messages}), 400
+
+    email = validated_data.get('email')
+    password = validated_data.get('password')
 
     # Проверка пользователя и его пароля
     user = UserService.get_user_by_email(email)
     if user and user['password'] == password:
         # Создание JWT токена с ролями пользователя
-        access_token = create_access_token(identity={'id': user.id, 'email': email, 'roles': user['roles']})
+        access_token = create_access_token(
+            identity={'id': user.id, 'name': user.name, 'surname': user.surname, 'email': email, 'image': user.image,
+                      'roles': user['roles']})
         return jsonify(access_token=access_token)
 
     return jsonify({"msg": "Неверные данные"}), 401

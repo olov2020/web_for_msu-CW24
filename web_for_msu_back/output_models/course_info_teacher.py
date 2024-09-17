@@ -1,4 +1,4 @@
-from WEB_FOR_MSU.output_models.course_info import CourseInfo
+from web_for_msu_back.output_models.course_info import CourseInfo
 
 
 class CourseInfoTeacher(CourseInfo):

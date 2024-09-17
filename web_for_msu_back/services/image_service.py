@@ -6,7 +6,8 @@ import boto3
 from PIL import Image
 from dotenv import load_dotenv
 from flask import current_app
-from flask_login import current_user
+
+from web_for_msu_back.services import UserService
 
 
 class ImageService:
@@ -98,13 +99,14 @@ class ImageService:
         image.convert("RGB").save(output_path, "JPEG", quality=quality)
 
     @staticmethod
-    def change_user_image(image):
+    def change_user_image(image, user_id):
         filename = "temp.jpeg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
         ImageService.reduce_image_size(path, path)
         image_name = ImageService.generate_unique_imagename()
         ImageService.upload_to_yandex_s3(path, "images", image_name)
+        current_user = UserService.get_user_by_id(user_id)
         if current_user.image != "default.png":
             ImageService.delete_from_yandex_s3("images", current_user.image)
         current_user.image = image_name
@@ -132,6 +134,7 @@ class ImageService:
         return filename
 
     @staticmethod
-    def get_user_image():
+    def get_user_image(user_id):
+        current_user = UserService.get_user_by_id(user_id)
         image_name = current_user.image
         return ImageService.get_from_yandex_s3("images", image_name)

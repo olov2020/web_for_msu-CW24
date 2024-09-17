@@ -8,6 +8,7 @@ from web_for_msu_back.services.teacher_service import TeacherService
 class UserService:
     @staticmethod
     def add_user(email, password, roles, form, user_exists=False):
+        # TODO change form to json
         image = form.image.data
         if image:
             image = ImageService.save_user_image(image)
