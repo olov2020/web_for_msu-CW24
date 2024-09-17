@@ -6,3 +6,8 @@
 
     width: 100%;
 }
+
+.links {
+    display: flex;
+    gap: 0 1rem;
+}

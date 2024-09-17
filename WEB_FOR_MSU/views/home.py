@@ -73,7 +73,7 @@ def registration(registration_type):
         return redirect(url_for('.home'))
 
     return render_template('home/registration.html',
-                           title='Registration',
+                           title='RegistrationPupil',
                            user=None,
                            authenticated=current_user.is_authenticated,
                            form_registration=registration_form)
