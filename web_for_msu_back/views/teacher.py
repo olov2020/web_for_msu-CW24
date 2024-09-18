@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user
 from flask_security import auth_required, roles_required
@@ -10,6 +10,11 @@ from web_for_msu_back.services import *
 
 teacher = Blueprint('teacher', __name__)
 
+
+@teacher.route('/teacher/add', methods=['POST'])
+def add_teacher():
+    response, code = TeacherService.add_teacher(request)
+    return response, code
 
 @teacher.route('/teacher/my_courses', methods=['GET', 'POST'])
 @auth_required()

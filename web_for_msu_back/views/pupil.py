@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask import render_template, redirect, url_for
 from flask_login import current_user
 from flask_security import auth_required, roles_required
@@ -8,6 +8,11 @@ from web_for_msu_back.services import *
 
 pupil = Blueprint('pupil', __name__)
 
+
+@pupil.route('/pupil/add', methods=['POST'])
+def add_pupil():
+    response, code = PupilService.add_pupil(request)
+    return response, code
 
 @pupil.route('/pupil/my_courses', methods=['GET', 'POST'])
 @auth_required()

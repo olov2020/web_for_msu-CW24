@@ -1,46 +1,28 @@
+from marshmallow import ValidationError
+
 from web_for_msu_back import db
+from web_for_msu_back.dto.pupil import PupilDTO
 from web_for_msu_back.models import Pupil
+from web_for_msu_back.services import UserService, ImageService
 
 
 class PupilService:
     @staticmethod
-    def add_pupil(user_id, form, agreement):
-        pupil = Pupil(
-            user_id=user_id,
-            email=form.email.data,
-            name=form.name.data,
-            surname=form.surname.data,
-            patronymic=form.patronymic.data,
-            birth_date=form.birth_date.data,
-            nickname="Школьник",
-            telegram=form.tg.data,
-            vk=form.vk.data,
-            phone=form.phone.data,
-            registration_address=form.registration_address.data,
-            parent1_name=form.parent1_name.data,
-            parent1_surname=form.parent1_surname.data,
-            parent1_patronymic=form.parent1_patronymic.data,
-            parent1_phone=form.parent1_phone.data,
-            parent1_email=form.parent1_email.data,
-            parent2_name=form.parent2_name.data,
-            parent2_surname=form.parent2_surname.data,
-            parent2_patronymic=form.parent2_patronymic.data,
-            parent2_phone=form.parent2_phone.data,
-            parent2_email=form.parent2_email.data,
-            school=form.school.data,
-            school_grade=form.grade.data,
-            enroll_way="Вступительные",
-            agreement=agreement,
-            organization_fee=None,
-            present_FA=None,
-            security_key_card=None,
-            graduating=form.grade.data == '11',
-            achievements=None,
-            mailing=form.mailing.data,
-            how_know=form.how_know.data
-        )
+    def add_pupil(request):
+        result, code = UserService.add_pupil(request)
+        if code != 201:
+            return result, code
+        pupil_dto = PupilDTO()
+        try:
+            pupil: Pupil = pupil_dto.load(request.form)
+        except ValidationError as e:
+            return e.messages, 400
+        pupil.user_id = result['user_id']
+        pupil.agreement = ImageService.save_user_agreement(request.files['agreement'])
+        pupil.graduating = pupil.school_grade == 11
         db.session.add(pupil)
         db.session.commit()
+        return {'Ученик успешно добавлен'}, 201
 
     @staticmethod
     def get_full_name(pupil):
@@ -52,3 +34,7 @@ class PupilService:
         if not pupil:
             return None
         return pupil.id
+
+    @staticmethod
+    def get_pupil_by_email(email):
+        return Pupil.query.filter_by(email=email).first()

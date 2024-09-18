@@ -1,4 +1,3 @@
-import uuid
 from datetime import datetime
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -24,7 +23,6 @@ class User(db.Model):
         self.password = generate_password_hash(password)
         self.image = image
         self.created_on = datetime.utcnow()
-        self.fs_uniquifier = str(uuid.uuid4())
 
     def set_password(self, password):
         if self.password == generate_password_hash(password):

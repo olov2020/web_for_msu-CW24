@@ -1,8 +1,30 @@
+import flask
+from marshmallow import ValidationError
+
 from web_for_msu_back import db
+from web_for_msu_back.dto.teacher import TeacherDTO
 from web_for_msu_back.models import Teacher
+from web_for_msu_back.services import UserService
 
 
 class TeacherService:
+
+    @staticmethod
+    def add_teacher(request: flask.Request):
+        result, code = UserService.add_teacher(request)
+        if code != 201:
+            return result, code
+        teacher_dto = TeacherDTO()
+        try:
+            teacher = teacher_dto.load(request.form)
+        except ValidationError as e:
+            return e.messages, 400
+        teacher.user_id = result['user_id']
+        db.session.add(teacher)
+        db.session.commit()
+        return {'Преподаватель успешно добавлен'}, 201
+
+
     @staticmethod
     def add_teacher(user_id, form):
         teacher = Teacher(
@@ -32,4 +54,8 @@ class TeacherService:
     @staticmethod
     def get_full_name(teacher):
         return teacher.surname + ' ' + teacher.name + ' ' + teacher.patronymic
+
+    @staticmethod
+    def get_teacher_by_email(email):
+        return Teacher.query.filter_by(email=email).first()
 
