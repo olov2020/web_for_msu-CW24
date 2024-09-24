@@ -1,0 +1,17 @@
+.photo {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.input {
+    &::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+
+    &::before {
+        content: "Выберете фото профиля";
+        -webkit-user-select: none;
+    }
+}

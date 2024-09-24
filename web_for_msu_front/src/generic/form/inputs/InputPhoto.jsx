@@ -1,5 +1,7 @@
 import styleInput from "./input.module.css";
-import {useRef, useState} from "react";
+import stylePhotoInput from './inputPhoto.module.css'
+import {useEffect, useRef, useState} from "react";
+import defaultUserImage from '../../../../public/registration/default_user.svg'
 
 const InputPhoto = () => {
 
@@ -11,6 +13,12 @@ const InputPhoto = () => {
     empty: 'Данное поле не может быть пустым',
   }
 
+  useEffect(() => {
+    if (uploadedImage.current) {
+      uploadedImage.current.src = defaultUserImage;
+    }
+  }, []);
+
   const handleInputChange = ((e) => {
     e.preventDefault();
     const [file] = e.target.files;
@@ -18,8 +26,11 @@ const InputPhoto = () => {
 
     if (error) {
       setIsValid(false);
-      setError(error);
-      console.log(error);
+
+      const { current } = uploadedImage;
+      current.src = defaultUserImage;
+
+      return;
     }
 
     const reader = new FileReader();
@@ -35,6 +46,7 @@ const InputPhoto = () => {
     if (!value) {
       return errors.empty;
     }
+
     setIsValid(true);
     setError('');
     return '';
@@ -47,11 +59,13 @@ const InputPhoto = () => {
         type='file'
         name='file'
         multiple='false'
+        accept="image/png, image/gif, image/jpeg, image/jpg"
         className={
           `${isValid ?
             `${styleInput.valid}` :
             `${styleInput.invalid}`}
-          ${styleInput.input}`
+          ${styleInput.input}
+          ${stylePhotoInput.input}`
         }
         onChange={handleInputChange}
       />
@@ -59,10 +73,7 @@ const InputPhoto = () => {
       <img
         onClick={() => imageUploader.current.click()}
         ref={uploadedImage}
-        style={{
-          width: "10rem",
-          height: "10rem",
-        }}
+        className={stylePhotoInput.photo}
       />
     </label>
   );

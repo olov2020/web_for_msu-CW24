@@ -4,6 +4,9 @@ import InputPassword from "./inputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {userLogin, userRegistration} from "../../api/userApi.js";
 import InputPhoto from "./inputs/InputPhoto.jsx";
+import InputName from "./inputs/InputName.jsx";
+import InputDate from "./inputs/InputDate.jsx";
+import InputPhone from "./inputs/InputPhone.jsx";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], buttonText, type}) => {
@@ -14,6 +17,7 @@ const Form = ({inputs = [], buttonText, type}) => {
         userLogin();
       case 'registration':
         userRegistration();
+        <input/>
     }
   }
 
@@ -25,6 +29,16 @@ const Form = ({inputs = [], buttonText, type}) => {
         return <InputPassword/>
       case 'photo':
         return <InputPhoto/>
+      case 'name':
+        return <InputName nameText='name' nameType='Имя'/>
+      case 'surname':
+        return <InputName nameText='surname' nameType='Фамилия'/>
+      case 'lastname':
+        return <InputName nameText='lastname' nameType='Отчество'/>
+      case 'birthDate':
+        return <InputDate nameText='birthDate' nameType='День рождения'/>
+      case 'phone':
+        return <InputPhone/>
       default:
         return <input/>
     }

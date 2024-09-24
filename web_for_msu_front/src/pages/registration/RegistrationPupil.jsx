@@ -9,7 +9,7 @@ const RegistrationPupil = () => {
     <div className={style.registration}>
       <h1>Регистрация Ученика</h1>
 
-      <Form inputs={['photo', 'email', 'password']} buttonText='Зарегистрироваться' type='login'/>
+      <Form inputs={['photo', 'name', 'surname', 'lastname', 'birthDate', 'email', 'password', 'phone']} buttonText='Зарегистрироваться' type='login'/>
 
       <div className={loginStyle.links}>
         <Link to={REGISTRATION_TEACHER_ROUTE}>
