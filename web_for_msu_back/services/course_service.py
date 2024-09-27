@@ -3,9 +3,11 @@ from datetime import datetime
 import pandas as pd
 
 from web_for_msu_back import db
+from web_for_msu_back.dto.course_info import CourseInfoDTO
+from web_for_msu_back.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.functions import get_next_monday
 from web_for_msu_back.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
-from web_for_msu_back.output_models import LessonSchedule, CourseInfoPupil
+from web_for_msu_back.output_models import LessonSchedule
 from web_for_msu_back.output_models.course_info import CourseInfo
 from web_for_msu_back.output_models.course_info_teacher import CourseInfoTeacher
 from web_for_msu_back.services.teacher_service import TeacherService
@@ -345,17 +347,20 @@ class CourseService:
                           course.lesson_time)
 
     @staticmethod
-    def get_course_info_pupil(course, pupil):
-        pupil_course = PupilCourse.query.filter_by(pupil_id=pupil.id, course_id=course.id).first()
-        return CourseInfoPupil(course.id,
-                               course.name,
-                               course.emsh_grades,
-                               course.crediting,
-                               course.direction,
-                               CourseService.get_course_teachers(course),
-                               course.auditory,
-                               course.lesson_time,
-                               pupil_course.current_mark)
+    def get_course_info_pupil(pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
+        data = {
+            "id": course.id,
+            "name": course.name,
+            "grades"
+            "crediting": course.crediting,
+            "direction": course.direction,
+            "teachers": course.teachers,
+            "auditory": course.auditory,
+            "lesson_time": course.lesson_time,
+            "current_mark": pupil_course.current_mark
+        }
+
+        return CourseInfoPupilDTO().load(data)
 
     @staticmethod
     def get_course_info_teacher(course):
@@ -371,11 +376,11 @@ class CourseService:
                                  pupils_number)
 
     @staticmethod
-    def get_pupil_courses(user_id):
+    def get_pupil_courses(user_id: int) -> (list[CourseInfoDTO], int):
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
-            return []
-        return [CourseService.get_course_info_pupil(assoc.course, pupil) for assoc in pupil.courses]
+            return [], 403
+        return [CourseService.get_course_info_pupil(assoc, assoc.course) for assoc in pupil.courses], 200
 
     @staticmethod
     def get_teacher_courses(user_id):

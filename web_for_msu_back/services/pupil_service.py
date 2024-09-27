@@ -1,3 +1,4 @@
+import flask
 from marshmallow import ValidationError
 
 from web_for_msu_back import db
@@ -8,7 +9,7 @@ from web_for_msu_back.services import UserService, ImageService
 
 class PupilService:
     @staticmethod
-    def add_pupil(request):
+    def add_pupil(request: flask.Request) -> (dict, int):
         result, code = UserService.add_pupil(request)
         if code != 201:
             return result, code
@@ -25,16 +26,16 @@ class PupilService:
         return {'Ученик успешно добавлен'}, 201
 
     @staticmethod
-    def get_full_name(pupil):
+    def get_full_name(pupil: Pupil) -> str:
         return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic
 
     @staticmethod
-    def get_pupil_id(user_id):
+    def get_pupil_id(user_id: int):
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
             return None
         return pupil.id
 
     @staticmethod
-    def get_pupil_by_email(email):
+    def get_pupil_by_email(email: str) -> Pupil:
         return Pupil.query.filter_by(email=email).first()

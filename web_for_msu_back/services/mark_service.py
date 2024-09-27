@@ -5,6 +5,7 @@ from flask import flash, redirect, url_for
 from sqlalchemy import asc
 
 from web_for_msu_back import db
+from web_for_msu_back.dto.pupil_marks import PupilMarksDTO
 from web_for_msu_back.models import Mark, Course, Schedule, Formula, PupilCourse
 from web_for_msu_back.output_models.pupil_marks import PupilMarks
 from web_for_msu_back.services.course_service import CourseService
@@ -26,8 +27,7 @@ class MarkService:
         return marks_grouped
 
     @staticmethod
-    def calculate_result(pupil_marks, mark_types, formulas):
-        # TODO change form to json
+    def calculate_result(pupil_marks: list[str], mark_types: list[str], formulas: list[Formula]) -> float:
         result = 0
         types = {}
         for mark_type in mark_types:
@@ -144,7 +144,7 @@ class MarkService:
         db.session.commit()
 
     @staticmethod
-    def get_pupil_marks(course_id, pupil_id):
+    def get_pupil_marks(course_id: int, pupil_id: int) -> list[Mark]:
         marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
                  .order_by(Mark.schedule_id).all())
         return marks
@@ -166,16 +166,13 @@ class MarkService:
         return pupil_marks_res
 
     @staticmethod
-    def get_pupil_marks_model(course_id, pupil_id):
-        # TODO change model to dto
+    def get_pupil_marks_model(course_id: int, pupil_id: int) -> (PupilMarksDTO, int):
         course = Course.query.get(course_id)
         if not course:
-            flash('Такого курса не существует', 'error')
-            return redirect(url_for('.my_courses'))
+            return {'error': 'Такого курса не существует'}, 404
         lessons = CourseService.get_lessons(course_id)
         if not lessons:
-            flash('Уроков пока нет', 'error')
-            return redirect(url_for('.my_courses'))
+            return {'error': 'Уроков пока нет'}, 404
         course_name = course.name
         formulas = course.formulas
         marks = MarkService.get_pupil_marks(course_id, pupil_id)
@@ -185,4 +182,12 @@ class MarkService:
         marks = [mark.mark for mark in marks]
         skips = sum([mark.upper() in ["H", "Н"] for mark in marks])
         result = MarkService.calculate_result(marks, mark_types, formulas)
-        return PupilMarks(course_name, dates, mark_types, marks, skips, result)
+        data = {
+            'course_name': course_name,
+            'dates': dates,
+            'mark_types': mark_types,
+            'marks': marks,
+            'skips': skips,
+            'result': result
+        }
+        return PupilMarksDTO().load(data), 200
