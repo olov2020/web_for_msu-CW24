@@ -16,88 +16,11 @@ from web_for_msu_back.services import *
 main = Blueprint('home', __name__)
 
 
-@main.route('/')
-@main.route('/home')
-def home():
-    if current_user.is_authenticated:
-        user = UserInfo.get_user_info()
-    else:
-        user = None
-    return render_template('home/home.html',
-                           title='Home',
-                           user=user,
-                           authenticated=current_user.is_authenticated)
-
-
-@main.route('/registration/<registration_type>', methods=['GET', 'POST'])
-def registration(registration_type):
-    if registration_type not in ['pupil', 'teacher']:
-        return redirect(url_for('.login'))
-    if current_user.is_authenticated:
-        return redirect(url_for('.home'))
-    registration_form = RegistrationForm()
-    if registration_type == 'pupil':
-        registration_form = RegistrationForm()
-    elif registration_type == 'teacher':
-        registration_form = TeacherRegistrationForm()
-    roles = []
-    user_exists = False
-    if registration_form.validate_on_submit():
-        if User.query.filter_by(email=registration_form.email.data).first() is not None:
-            if registration_type == 'pupil':
-                flash('Пользователь с такой почтой уже существует', 'error')
-                return redirect(url_for('.registration', registration_type=registration_type))
-            elif registration_type == 'teacher':
-                teacher = Teacher.query.filter_by(email=registration_form.email.data).first()
-                if teacher is not None:
-                    flash('Преподаватель с такой почтой уже существует', 'error')
-                    return redirect(url_for('.registration', registration_type=registration_type))
-                pupil = Pupil.query.filter_by(email=registration_form.email.data).first()
-                if pupil.name == registration_form.name.data and pupil.surname == registration_form.surname.data:
-                    roles = [Role.query.filter_by(name='pupil').first()]
-                    user_exists = True
-                    registration_form.was_pupil.data = True
-                else:
-                    flash('Пользователь с такой почтой уже существует', 'error')
-                    return redirect(url_for('.registration', registration_type=registration_type))
-
-        role = Role.query.filter_by(name=registration_type).first()
-        roles.append(role)
-        user = UserService.add_user(email=registration_form.email.data,
-                                    password=registration_form.password.data,
-                                    roles=roles,
-                                    form=registration_form,
-                                    user_exists=user_exists)
-
-        login_user(user, force=True)
-        return redirect(url_for('.home'))
-
-    return render_template('home/registration.html',
-                           title='Registration',
-                           user=None,
-                           authenticated=current_user.is_authenticated,
-                           form_registration=registration_form)
-
-
-@main.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('.home'))
-    login_form = LoginForm()
-    if login_form.validate_on_submit():
-        email = login_form.email.data
-        password = login_form.password.data
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            flash("Нет пользователя с такой почтой", 'error')
-        elif not user.check_password(password):
-            flash("Неверный пароль", 'error')
-        else:
-            login_user(user, remember=login_form.remember.data, force=True)
-            return redirect(request.args.get("next") or url_for('.home'))
-        return redirect(url_for('.login'))
-    return render_template('home/login.html', title='Login',
-                           user=None, form_login=login_form)
+@main.route('/user_info', methods=['GET'])
+@auth_required
+def get_user_info():
+    response, code = UserService.get_user_info(g.current_user.id)
+    return response, code
 
 
 @main.route('/login', methods=['POST'])
@@ -175,35 +98,15 @@ def account():
                            form_account=account_form)
 
 
-@main.route('/marks/<int:course_id>', methods=['GET', 'POST'])
-@auth_required()
-def marks(course_id):
-    if current_user.is_pupil():
-        return redirect(url_for('pupil.marks', course_id=course_id))
-    return redirect(url_for('teacher.marks', course_id=course_id))
-
-
 @main.route('/schedule', methods=['GET', 'POST'])
-@auth_required()
+@auth_required
 def schedule():
     date_start = datetime.now().date()
-    lessons_in_week = CourseService.get_lessons_in_week(date_start, current_user.id)
-    lessons_in_two_weeks = CourseService.get_lessons_in_week(get_next_monday(date_start), current_user.id)
-    user = UserInfo.get_user_info()
-    return render_template('home/schedule.html',
-                           title='Schedule',
-                           authenticated=current_user.is_authenticated,
-                           lessons_in_week=lessons_in_week,
-                           lessons_in_two_weeks=lessons_in_two_weeks,
-                           user=user, )
-
-
-@main.route('/my_courses')
-@auth_required()
-def my_courses():
-    if current_user.is_pupil():
-        return redirect(url_for('pupil.my_courses'))
-    return redirect(url_for('teacher.my_courses'))
+    lessons_in_week, code1 = CourseService.get_lessons_in_week(date_start, g.current_user.id)
+    lessons_in_two_weeks, code2 = CourseService.get_lessons_in_week(get_next_monday(date_start), g.current_user.id)
+    if code1 != 200 or code2 != 200:
+        return (lessons_in_week, code1) if code1 != 200 else (lessons_in_two_weeks, code2)
+    return {'lessons_in_week': lessons_in_week, 'lessons_in_two_weeks': lessons_in_two_weeks}, 200
 
 
 @main.route('/all_courses')

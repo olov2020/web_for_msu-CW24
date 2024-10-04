@@ -5,11 +5,12 @@ import pandas as pd
 from web_for_msu_back import db
 from web_for_msu_back.dto.course_info import CourseInfoDTO
 from web_for_msu_back.dto.course_info_pupil import CourseInfoPupilDTO
+from web_for_msu_back.dto.course_info_teacher import CourseInfoTeacherDTO
+from web_for_msu_back.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.functions import get_next_monday
 from web_for_msu_back.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
 from web_for_msu_back.output_models import LessonSchedule
 from web_for_msu_back.output_models.course_info import CourseInfo
-from web_for_msu_back.output_models.course_info_teacher import CourseInfoTeacher
 from web_for_msu_back.services.teacher_service import TeacherService
 
 
@@ -86,7 +87,7 @@ class CourseService:
         return True
 
     @staticmethod
-    def get_lessons_in_week(date_start, user_id):
+    def get_lessons_in_week(date_start: datetime.date, user_id: int) -> (list[LessonScheduleDTO], int):
         user = User.query.get(user_id)
         if not user:
             return []
@@ -103,14 +104,17 @@ class CourseService:
             for lesson in lessons:
                 if date_start <= lesson.date < get_next_monday(date_start):
                     course_type = str(assoc.crediting) if user.is_pupil() else 'none'
-                    result.append(LessonSchedule(
-                        course_name=course.name,
-                        course_type=course_type,
-                        auditory=course.auditory,
-                        date=lesson.date.strftime('%d.%m'),
-                        lesson_time=course.lesson_time
-                    ))
-        return result
+                    data = {
+                        "course_name": course.name,
+                        "course_type": course_type,
+                        "auditory": course.auditory,
+                        "date": lesson.date.strftime('%d.%m'),
+                        "lesson_time": course.lesson_time
+                    }
+                    result.append(LessonScheduleDTO().load(data))
+        if not result:
+            return {"error": "Занятий нет"}, 404
+        return result, 200
 
     @staticmethod
     def load_from_file(file, course_form):
@@ -359,21 +363,23 @@ class CourseService:
             "lesson_time": course.lesson_time,
             "current_mark": pupil_course.current_mark
         }
-
         return CourseInfoPupilDTO().load(data)
 
     @staticmethod
-    def get_course_info_teacher(course):
+    def get_course_info_teacher(course: Course) -> CourseInfoTeacherDTO:
         pupils_number = len(CourseService.get_pupils(course.id))
-        return CourseInfoTeacher(course.id,
-                                 course.name,
-                                 course.emsh_grades,
-                                 course.crediting,
-                                 course.direction,
-                                 CourseService.get_course_teachers(course),
-                                 course.auditory,
-                                 course.lesson_time,
-                                 pupils_number)
+        data = {
+            "id": course.id,
+            "name": course.name,
+            "grades"
+            "crediting": course.crediting,
+            "direction": course.direction,
+            "teachers": course.teachers,
+            "auditory": course.auditory,
+            "lesson_time": course.lesson_time,
+            "pupils_number": pupils_number
+        }
+        return CourseInfoTeacherDTO().load(data)
 
     @staticmethod
     def get_pupil_courses(user_id: int) -> (list[CourseInfoDTO], int):
@@ -383,7 +389,7 @@ class CourseService:
         return [CourseService.get_course_info_pupil(assoc, assoc.course) for assoc in pupil.courses], 200
 
     @staticmethod
-    def get_teacher_courses(user_id):
+    def get_teacher_courses(user_id: int) -> (list[CourseInfoDTO], int):
         teacher = Teacher.query.filter_by(user_id=user_id).first()
         if not teacher:
             return []
