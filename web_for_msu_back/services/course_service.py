@@ -46,21 +46,21 @@ class CourseService:
         return course
 
     @staticmethod
-    def get_pupils(course_id):
+    def get_pupils(course_id: int) -> list[Pupil]:
         course = Course.query.get(course_id)
         if not course:
             return []
         return [assoc.pupil for assoc in course.pupils]
 
     @staticmethod
-    def get_teachers(course_id):
+    def get_teachers(course_id: int) -> list[Teacher]:
         course = Course.query.get(course_id)
         if not course:
             return []
         return [assoc.teacher for assoc in course.teachers]
 
     @staticmethod
-    def get_all_courses():
+    def get_all_courses() -> list[CourseInfoDTO]:
         courses = Course.query.all()
         return [CourseService.get_course_info(course) for course in courses]
 
@@ -340,15 +340,18 @@ class CourseService:
                 course.teachers]
 
     @staticmethod
-    def get_course_info(course):
-        return CourseInfo(course.id,
-                          course.name,
-                          course.emsh_grades,
-                          course.crediting,
-                          course.direction,
-                          CourseService.get_course_teachers(course),
-                          course.auditory,
-                          course.lesson_time)
+    def get_course_info(course: Course) -> CourseInfoDTO:
+        data = {
+            "id": course.id,
+            "name": course.name,
+            "grades"
+            "crediting": course.crediting,
+            "direction": course.direction,
+            "teachers": course.teachers,
+            "auditory": course.auditory,
+            "lesson_time": course.lesson_time
+        }
+        return CourseInfoDTO().load(data)
 
     @staticmethod
     def get_course_info_pupil(pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:

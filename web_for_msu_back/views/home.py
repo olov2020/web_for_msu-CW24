@@ -51,6 +51,7 @@ def login():
 @main.route('/account', methods=['GET', 'POST'])
 @auth_required()
 def account():
+    # TODO: разделить логику редактирования профиля для ученика и учителя
     logout_form = LogoutForm()
     account_form = AccountForm()
     if logout_form.submit.data and logout_form.is_submitted():
@@ -112,12 +113,4 @@ def schedule():
 @main.route('/all_courses')
 def all_courses():
     courses = CourseService.get_all_courses()
-    if current_user.is_authenticated:
-        user = UserInfo.get_user_info()
-    else:
-        user = None
-    return render_template('home/all_courses.html',
-                           title='All courses',
-                           authenticated=current_user.is_authenticated,
-                           courses=courses,
-                           user=user, )
+    return jsonify(courses), 200
