@@ -33,7 +33,9 @@ class Course(db.Model):
                  intern_work, lesson_time,
                  additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format,
                  target_audience, short_description, number_of_listeners, selection, assessment, platform_format,
-                 additional_info):
+                 additional_info, id=None):
+        if id is not None:
+            self.id = id
         self.name = name
         self.auditory = auditory
         self.course_review_number = course_review_number

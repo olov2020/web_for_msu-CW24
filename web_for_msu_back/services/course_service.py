@@ -1,8 +1,11 @@
 from datetime import datetime
 
+import flask
 import pandas as pd
+from marshmallow import ValidationError
 
 from web_for_msu_back import db
+from web_for_msu_back.dto.course import CourseDTO
 from web_for_msu_back.dto.course_info import CourseInfoDTO
 from web_for_msu_back.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.dto.course_info_teacher import CourseInfoTeacherDTO
@@ -16,34 +19,14 @@ from web_for_msu_back.services.teacher_service import TeacherService
 
 class CourseService:
     @staticmethod
-    def add_course(form):
-        # TODO change form to json
-        course = Course(
-            name=form.name.data,
-            auditory=form.auditory.data,
-            course_review_number=form.course_review_number.data,
-            direction=form.direction.data,
-            emsh_grades=form.emsh_grades.data,
-            crediting=form.crediting.data,
-            distribution=form.distribution.data,
-            intern_work=form.intern_work.data,
-            lesson_time=form.lesson_time.data,
-            additional_info_for_auditory=form.additional_info_for_auditory.data,
-            course_purpose=form.course_purpose.data,
-            course_objectives=form.course_objectives.data,
-            course_features=form.course_features.data,
-            course_format=form.course_format.data,
-            target_audience=form.target_audience.data,
-            short_description=form.short_description.data,
-            number_of_listeners=form.number_of_listeners.data,
-            selection=form.selection.data,
-            assessment=form.assessment.data,
-            platform_format=form.platform_format.data,
-            additional_info=form.additional_info.data
-        )
+    def add_course(request: flask.Request):
+        try:
+            course = CourseDTO().load(request.form)
+        except ValidationError as e:
+            return e.messages, 400
         db.session.add(course)
         db.session.commit()
-        return course
+        return {'Курс успешно добавлен'}, 201
 
     @staticmethod
     def get_pupils(course_id: int) -> list[Pupil]:
@@ -117,9 +100,12 @@ class CourseService:
         return result, 200
 
     @staticmethod
-    def load_from_file(file, course_form):
-        # TODO change form to json
-        data = pd.read_excel(file)
+    def load_from_file(request: flask.Request) -> (dict, int):
+        file = request.files['file']
+        try:
+            data = pd.read_excel(file)
+        except Exception as e:
+            return {"error": "Неправильный формат файла"}, 400
         name = data.keys()[1]
         data = data.values
         for i in range(len(data)):
@@ -147,28 +133,31 @@ class CourseService:
         platform_format = data[42][3]
         additional_info = data[43][3]
 
-        course_form.name.data = name
-        course_form.auditory.data = auditory
-        course_form.course_review_number.data = course_review_number
-        course_form.direction.data = direction
-        course_form.emsh_grades.data = emsh_grades
-        course_form.crediting.data = crediting
-        course_form.distribution.data = distribution
-        course_form.intern_work.data = intern_work
-        course_form.lesson_time.data = lesson_time
-        course_form.additional_info_for_auditory.data = additional_info_for_auditory
-        course_form.course_purpose.data = course_purpose
-        course_form.course_objectives.data = course_objectives
-        course_form.course_features.data = course_features
-        course_form.course_format.data = course_format
-        course_form.target_audience.data = target_audience
-        course_form.short_description.data = short_description
-        course_form.number_of_listeners.data = number_of_listeners
-        course_form.selection.data = selection
-        course_form.assessment.data = assessment
-        course_form.platform_format.data = platform_format
-        course_form.additional_info.data = additional_info
+        course_data = {
+            "name": name,
+            "auditory": auditory,
+            "course_review_number": course_review_number,
+            "direction": direction,
+            "emsh_grades": emsh_grades,
+            "crediting": crediting,
+            "distribution": distribution,
+            "intern_work": intern_work,
+            "lesson_time": lesson_time,
+            "additional_info_for_auditory": additional_info_for_auditory,
+            "course_purpose": course_purpose,
+            "course_objectives": course_objectives,
+            "course_features": course_features,
+            "course_format": course_format,
+            "target_audience": target_audience,
+            "short_description": short_description,
+            "number_of_listeners": number_of_listeners,
+            "selection": selection,
+            "assessment": assessment,
+            "platform_format": platform_format,
+            "additional_info": additional_info
+        }
 
+        schedules = []
         for i in range(48, 87):
             if data[i][0] is None:
                 continue
@@ -177,13 +166,16 @@ class CourseService:
             theme = data[i][2]
             plan = data[i][3]
             additional_info = data[i][4]
-            schedule_form = ScheduleForm()
-            schedule_form.lesson_number = int(lesson_number)
-            schedule_form.date = date.date()
-            schedule_form.theme = theme
-            schedule_form.plan = plan
-            schedule_form.additional_info = additional_info
-            course_form.schedules.append_entry(schedule_form)
+            schedule_data = {
+                "lesson_number": lesson_number,
+                "date": date.date(),
+                "theme": theme,
+                "plan": plan,
+                "additional_info": additional_info
+            }
+            schedules.append(schedule_data)
+        course_data["schedules"] = schedules
+
         ind = 0
         flag = False
         while ind < len(data):
@@ -195,7 +187,7 @@ class CourseService:
                     break
             ind += 1
         ind += 2
-
+        formulas = []
         while ind < len(data) and flag:
             if data[ind][1] is None:
                 break
@@ -205,19 +197,23 @@ class CourseService:
                 coefficient = float(coefficient)
             except ValueError:
                 continue
-            formula_form = FormulaForm()
-            formula_form.formula_name = name
-            formula_form.coefficient = coefficient
-            course_form.formulas.append_entry(formula_form)
+            formula_data = {
+                "formula_name": name,
+                "coefficient": coefficient
+            }
+            formulas.append(formula_data)
             ind += 1
+        course_data["formulas"] = formulas
+
         teachers = Teacher.query.all()
+        teachers_course = []
         for teacher in teachers:
-            teacher_course_form = TeacherCourseForm()
-            teacher_course_form.id = teacher.id
-            # teacher_course_form.name.label = TeacherService.get_full_name(teacher)
-            course_form.teachers.append_entry(teacher_course_form)
-            course_form.teachers[-1].form.name.label = TeacherService.get_full_name(teacher)
-            course_form.teachers[-1].form.name.data = False
+            teacher_data = {
+                "id": teacher.id,
+                "name": TeacherService.get_full_name(teacher),
+                "leads": False
+            }
+            teachers_course.append(teacher_data)
         for i in range(3, 14, 5):
             if data[i + 4][3] is None:
                 continue
@@ -225,10 +221,9 @@ class CourseService:
             if teacher is None:
                 continue
 
-            for teacher_form in course_form.teachers:
-                if teacher_form.form.id.data == teacher.id:
-                    teacher_form.form.name.label = TeacherService.get_full_name(teacher)
-                    teacher_form.form.name.data = True
+            for j in range(len(teachers_course)):
+                if teachers_course[j]["id"] == teacher.id:
+                    teachers_course[i]["leads"] = True
                     break
 
         other = data[18][3]
@@ -240,74 +235,25 @@ class CourseService:
                 teacher = Teacher.query.filter_by(email=email).first()
                 if teacher is None:
                     continue
-                for teacher_form in course_form.teachers:
-                    if teacher_form.form.id.data == teacher.id:
-                        teacher_form.form.name.label = TeacherService.get_full_name(teacher)
-                        teacher_form.form.name.data = True
+                for j in range(len(teachers_course)):
+                    if teachers_course[j]["id"] == teacher.id:
+                        teachers_course[j]["leads"] = True
                         break
+        course_data["teachers"] = teachers_course
+
+        try:
+            course_dto = CourseDTO.from_dict(course_data)
+        except ValidationError as e:
+            return e.messages, 400
+        return course_dto, 200
 
     @staticmethod
-    def load_from_form(course_form):
-        # TODO change form to json
-        course = Course(
-            name=course_form.name.data,
-            auditory=course_form.auditory.data,
-            course_review_number=course_form.course_review_number.data,
-            direction=course_form.direction.data,
-            emsh_grades=course_form.emsh_grades.data,
-            crediting=course_form.crediting.data,
-            distribution=course_form.distribution.data,
-            intern_work=course_form.intern_work.data,
-            lesson_time=course_form.lesson_time.data,
-            additional_info_for_auditory=course_form.additional_info_for_auditory.data,
-            course_purpose=course_form.course_purpose.data,
-            course_objectives=course_form.course_objectives.data,
-            course_features=course_form.course_features.data,
-            course_format=course_form.course_format.data,
-            target_audience=course_form.target_audience.data,
-            short_description=course_form.short_description.data,
-            number_of_listeners=course_form.number_of_listeners.data,
-            selection=course_form.selection.data,
-            assessment=course_form.assessment.data,
-            platform_format=course_form.platform_format.data,
-            additional_info=course_form.additional_info.data
-        )
+    def create_course(request: flask.Request) -> (dict, int):
+        try:
+            course, year = CourseDTO().load(request.form)
+        except ValidationError as e:
+            return e.messages, 400
         db.session.add(course)
-        db.session.commit()
-        year = datetime.now().year
-        for schedule_form in course_form.schedules:
-            schedule = Schedule(
-                course_id=course.id,
-                lesson_number=schedule_form.lesson_number.data,
-                date=schedule_form.date.data,
-                theme=schedule_form.theme.data,
-                plan=schedule_form.plan.data,
-                additional_info=schedule_form.additional_info.data,
-            )
-            if schedule.lesson_number == 1:
-                year = schedule.date.year
-            db.session.add(schedule)
-        db.session.commit()
-
-        for formula_form in course_form.formulas:
-            formula = Formula(
-                course_id=course.id,
-                name=formula_form.formula_name.data,
-                coefficient=formula_form.coefficient.data
-            )
-            db.session.add(formula)
-        db.session.commit()
-        for teacher_form in course_form.teachers:
-            teacher = Teacher.query.get(teacher_form.form.id.data)
-            teacher_form.form.name.label = TeacherService.get_full_name(teacher)
-            if teacher_form.form.name.data is False:
-                continue
-            if teacher is None:
-                continue
-            course.teachers.append(TeacherCourse(
-                teacher_id=teacher.id,
-                course_id=course.id,
-                year=year))
         db.session.commit()
         pupils = Pupil.query.all()
         for pupil in pupils:
@@ -324,6 +270,7 @@ class CourseService:
             )
             db.session.add(pupil_course)
         db.session.commit()
+        return {'Курс успешно добавлен'}, 201
 
     @staticmethod
     def get_lessons(course_id):
