@@ -273,7 +273,7 @@ class CourseService:
         return {'Курс успешно добавлен'}, 201
 
     @staticmethod
-    def get_lessons(course_id):
+    def get_lessons(course_id: int) -> list[Schedule]:
         course = Course.query.get(course_id)
         if not course:
             return []

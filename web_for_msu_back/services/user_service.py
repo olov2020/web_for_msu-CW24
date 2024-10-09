@@ -39,7 +39,6 @@ class UserService:
     @staticmethod
     def add_user(email: str, password: str, roles: list[Role], user_image: FileStorage = None,
                  user_exists: bool = False) -> User:
-        # TODO change form to json
         if user_image:
             image = ImageService.save_user_image(user_image)
         else:

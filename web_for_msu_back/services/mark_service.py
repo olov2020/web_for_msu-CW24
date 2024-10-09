@@ -1,12 +1,15 @@
 import itertools
 from operator import attrgetter
 
+import flask
 from flask import flash, redirect, url_for
+from marshmallow import ValidationError
 from sqlalchemy import asc
 
 from web_for_msu_back import db
+from web_for_msu_back.dto.marks import MarksDTO
 from web_for_msu_back.dto.pupil_marks import PupilMarksDTO
-from web_for_msu_back.models import Mark, Course, Schedule, Formula, PupilCourse
+from web_for_msu_back.models import Mark, Course, Schedule, Formula, PupilCourse, Pupil
 from web_for_msu_back.output_models.pupil_marks import PupilMarks
 from web_for_msu_back.services.course_service import CourseService
 from web_for_msu_back.services.pupil_service import PupilService
@@ -14,7 +17,7 @@ from web_for_msu_back.services.pupil_service import PupilService
 
 class MarkService:
     @staticmethod
-    def get_pupils_marks(course_id, lessons, pupils):
+    def get_pupils_marks(course_id: int, lessons: list[Schedule], pupils: list[Pupil]) -> dict[str, list[str]]:
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
         marks_grouped = {}
         for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
@@ -44,104 +47,118 @@ class MarkService:
         return result
 
     @staticmethod
-    def create_form(marks_form, course_id, current_user_id):
-        # TODO change form to json
+    def get_journal(course_id: int, current_user_id: int) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
-            flash('Такого курса не существует', 'error')
-            return redirect(url_for('.my_courses'))
+            return {'error': 'Такого курса не существует'}, 404
 
         if current_user_id not in [assoc.teacher.user_id for assoc in course.teachers]:
-            flash('Вы не являетесь преподавателем этого курса', 'error')
-            return redirect(url_for('.my_courses'))
+            return {'error': 'У вас нет доступа к этому курсу'}, 403
 
         formulas = course.formulas
-        choices = [(formula.name, formula.name) for formula in formulas] + [('Отсутствие', 'Отсутствие')]
+        choices = [formula.name for formula in formulas] + [('Отсутствие', 'Отсутствие')]
         lessons = CourseService.get_lessons(course_id)
         if not lessons:
-            flash('Уроков пока нет', 'error')
-            return redirect(url_for('.my_courses'))
+            return {'error': 'Уроков пока нет'}, 404
 
         # Fetch all pupils and their marks at once
         pupils = CourseService.get_pupils(course_id)
         pupil_marks = MarkService.get_pupils_marks(course_id, lessons, pupils)
-
+        mark_type_choices = choices
+        mark_types = []
+        dates = []
         for lesson in lessons:
-            marks_form.mark_types.append_entry()
-            marks_form.dates.append_entry()
             formula_name = lesson.formulas.name if lesson.formulas else 'Отсутствие'
-            marks_form.mark_types[-1].data = formula_name
-            marks_form.mark_types[-1].choices = choices
-            marks_form.dates[-1].data = lesson.date
+            mark_types.append(formula_name)
+            dates.append(lesson.date)
 
         mark_sum = [0] * len(lessons)
         mark_count = [0] * len(lessons)
         visit_count = [0] * len(lessons)
-
+        teacher_pupil_marks = []
         for pupil in pupils:
-            marks_form.pupils.append_entry()
-            pupil_marks_form = marks_form.pupils[-1].form
-            pupil_marks_form.id.data = pupil.id
-            pupil_marks_form.name.data = PupilService.get_full_name(pupil)
             pupil_course_marks = pupil_marks.get(pupil.id, [])
 
             for i, mark in enumerate(pupil_course_marks):
-                pupil_marks_form.marks.append_entry()
-                pupil_marks_form.marks[-1].data = mark
                 if mark.isdigit():
                     mark_sum[i] += int(mark)
                     mark_count[i] += 1
                 if mark.upper() not in ["H", "Н"]:
                     visit_count[i] += 1
+            teacher_pupil_marks.append({
+                'id': pupil.id,
+                'name': PupilService.get_full_name(pupil),
+                'marks': pupil_course_marks,
+                'result': round(MarkService.calculate_result(pupil_course_marks, mark_types, formulas), 2)
+            })
 
-            pupil_marks_form.result.data = round(
-                MarkService.calculate_result(pupil_course_marks,
-                                             marks_form.mark_types.data,
-                                             formulas), 2)
-
+        visits = []
+        averages = []
         for i in range(len(lessons)):
-            marks_form.visits.append_entry()
-            marks_form.visits[-1].data = str(visit_count[i])
-            marks_form.average.append_entry()
-            marks_form.average[-1].data = float(mark_sum[i]) / float(mark_count[i]) if mark_count[i] != 0 else 0
+            visits.append(str(visit_count[i]))
+            averages.append(float(mark_sum[i]) / float(mark_count[i]) if mark_count[i] != 0 else 0)
+        marks_data = {
+            'dates': dates,
+            'mark_types': mark_types,
+            'mark_type_choices': mark_type_choices,
+            'pupils': teacher_pupil_marks,
+            'visits': visits,
+            'average': averages
+        }
+        try:
+            marks_dto = MarksDTO().load(marks_data)
+        except ValidationError as e:
+            return e.messages, 400
+        return marks_dto, 200
 
     @staticmethod
-    # TODO change form to json
-    def save_from_form(course_id, marks_form):
+    def update_journal(course_id: int, current_user_id: int, request: flask.Request) -> (dict, int):
+        course = Course.query.get(course_id)
+        if not course:
+            return {'error': 'Такого курса не существует'}, 404
+
+        if current_user_id not in [assoc.teacher.user_id for assoc in course.teachers]:
+            return {'error': 'У вас нет доступа к этому курсу'}, 403
+
+        try:
+            marks_dto = MarksDTO().load(request.json)
+        except ValidationError as e:
+            return e.messages, 400
         lessons = Schedule.query.filter_by(course_id=course_id).order_by(Schedule.date).all()
         formula_vals = Formula.query.filter_by(course_id=course_id).all()
         formulas = {formula.name: formula for formula in formula_vals}
         new_marks = []
-        for i in range(len(marks_form.dates)):
-            if marks_form.mark_types[i].data != 'Отсутствие':
+        for i in range(len(marks_dto.dates)):
+            if marks_dto.mark_types[i] != 'Отсутствие':
                 lesson = lessons[i]
-                lesson.formulas = formulas[marks_form.mark_types[i].data]
+                lesson.formulas = formulas[marks_dto.mark_types[i]]
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
         marks_grouped = {}
         for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
             marks_grouped[str(key)] = {mark.schedule_id: mark for mark in group}
-        for i in range(len(marks_form.pupils)):
-            for j in range(len(marks_form.dates)):
-                mark = marks_form.pupils[i].form.marks[j].data
+        for i in range(len(marks_dto.pupils)):
+            for j in range(len(marks_dto.dates)):
+                mark = marks_dto.pupils[i].marks[j]
                 lesson = lessons[j]
-                prev_mark = marks_grouped.get(marks_form.pupils[i].form.id.data, {}).get(lesson.id)
+                prev_mark = marks_grouped.get(marks_dto.pupils[i].id, {}).get(lesson.id)
                 if prev_mark:
                     if mark:
                         prev_mark.mark = mark
                     else:
                         db.session.delete(prev_mark)
                 elif mark:
-                    new_marks.append(Mark(lesson.id, marks_form.pupils[i].form.id.data, mark, None, course_id))
-            pupil_marks = marks_form.pupils[i].marks.data
-            mark_types = marks_form.mark_types.data
+                    new_marks.append(Mark(lesson.id, marks_dto.pupils[i].id, mark, None, course_id))
+            pupil_marks = marks_dto.pupils[i].marks
+            mark_types = marks_dto.mark_types
             current_mark = MarkService.calculate_result(pupil_marks, mark_types, formula_vals)
-            pupil_course = PupilCourse.query.filter_by(pupil_id=marks_form.pupils[i].form.id.data,
+            pupil_course = PupilCourse.query.filter_by(pupil_id=marks_dto.pupils[i].id,
                                                        course_id=course_id).first()
             if pupil_course:
                 pupil_course.current_mark = round(current_mark, 2)
 
         db.session.bulk_save_objects(new_marks)
         db.session.commit()
+        return marks_dto, 200
 
     @staticmethod
     def get_pupil_marks(course_id: int, pupil_id: int) -> list[Mark]:
