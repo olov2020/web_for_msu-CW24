@@ -35,21 +35,3 @@ def get_journal(course_id):
 def update_journal(course_id):
     response, code = MarkService.update_journal(course_id, g.current_user.id, request.json)
     return response, code
-
-@teacher.route('/teacher/marks/<int:course_id>', methods=['GET', 'POST'])
-@auth_required()
-@roles_required('teacher')
-def marks(course_id):
-    marks_form = MarksForm()
-    if marks_form.submit.data:
-        MarkService.save_journal(course_id, marks_form)
-        flash('Оценки успешно сохранены', 'success')
-        return redirect(url_for('.marks', course_id=course_id))
-    user = UserInfo.get_user_info()
-    MarkService.get_journal(marks_form, course_id, current_user.id)
-    return render_template('teacher/marks.html',
-                           title='Marks',
-                           authenticated=current_user.is_authenticated,
-                           user=user,
-                           form=marks_form,
-                           course_name=Course.query.get(course_id).name)

@@ -4,8 +4,6 @@ from functools import wraps
 from flask import jsonify, g
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from web_for_msu_back.services import UserService
-
 
 def get_next_monday(date_start):
     days_until_monday = (7 - date_start.weekday()) % 7
@@ -40,6 +38,7 @@ def load_current_user():
     identity = get_jwt_identity()
     if identity:
         # Здесь можно загрузить данные пользователя из базы данных, если нужно
+        from web_for_msu_back.services import UserService
         user_id = identity.get('id')
         return UserService.get_user_by_id(user_id)
     return None

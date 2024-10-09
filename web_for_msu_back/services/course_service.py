@@ -12,8 +12,6 @@ from web_for_msu_back.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.functions import get_next_monday
 from web_for_msu_back.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
-from web_for_msu_back.output_models import LessonSchedule
-from web_for_msu_back.output_models.course_info import CourseInfo
 from web_for_msu_back.services.teacher_service import TeacherService
 
 

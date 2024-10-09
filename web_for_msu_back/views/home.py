@@ -1,14 +1,12 @@
 from datetime import datetime
 
 from flask import Blueprint, jsonify, g
-from flask import request, url_for, flash
+from flask import request
 from flask_jwt_extended import create_access_token
 from marshmallow import ValidationError
 
 from web_for_msu_back.dto.login import LoginDTO
 from web_for_msu_back.functions import get_next_monday, auth_required
-from web_for_msu_back.models import *
-from web_for_msu_back.output_models import *
 from web_for_msu_back.services import *
 
 # from app.utils import send_mail
@@ -48,55 +46,55 @@ def login():
     return jsonify({"msg": "Неверные данные"}), 401
 
 
-@main.route('/account', methods=['GET', 'POST'])
-@auth_required()
-def account():
+# @main.route('/account', methods=['GET', 'POST'])
+# @auth_required()
+# def account():
     # TODO: разделить логику редактирования профиля для ученика и учителя
-    logout_form = LogoutForm()
-    account_form = AccountForm()
-    if logout_form.submit.data and logout_form.is_submitted():
-        logout_user()
-        return redirect(url_for('.home'))
-    if account_form.submit_save.data and account_form.validate():
-        if not current_user.check_password(account_form.password.data):
-            flash('Неверный пароль', 'error')
-            return redirect(url_for('.account'))
-        else:
-            if account_form.email.data:
-                if account_form.email.data != current_user.email and User.query.filter_by(
-                        email=account_form.email.data).first() is not None:
-                    flash('Пользователь с такой почтой уже существует', 'error')
-                    return redirect(url_for('.account'))
-                if current_user.set_email(account_form.email.data):
-                    flash('Почта успешно изменена', 'success')
-            if account_form.image.data:
-                ImageService.change_user_image(account_form.image.data)
-                flash('Фото успешно изменено', 'success')
-            if account_form.new_password.data:
-                if current_user.set_password(account_form.new_password.data):
-                    flash('Пароль успешно изменен', 'success')
-            if account_form.name.data:
-                if current_user.set_name(account_form.name.data):
-                    flash('Имя успешно изменено', 'success')
-            if account_form.surname.data:
-                if current_user.set_surname(account_form.surname.data):
-                    flash('Фамилия успешно изменена', 'success')
-            if account_form.patronymic.data:
-                if current_user.set_patronymic(account_form.patronymic.data):
-                    flash('Отчество успешно изменено', 'success')
-            if account_form.school.data:
-                if current_user.set_school(account_form.school.data):
-                    flash('Школа успешно изменена', 'success')
-            if account_form.phone.data:
-                if current_user.set_phone(account_form.phone.data):
-                    flash('Телефон успешно изменен', 'success')
-
-    user = UserInfo.get_user_info()
-    return render_template('home/account.html',
-                           title='Account',
-                           user=user,
-                           form_logout=logout_form,
-                           form_account=account_form)
+    # logout_form = LogoutForm()
+    # account_form = AccountForm()
+    # if logout_form.submit.data and logout_form.is_submitted():
+    #     logout_user()
+    #     return redirect(url_for('.home'))
+    # if account_form.submit_save.data and account_form.validate():
+    #     if not current_user.check_password(account_form.password.data):
+    #         flash('Неверный пароль', 'error')
+    #         return redirect(url_for('.account'))
+    #     else:
+    #         if account_form.email.data:
+    #             if account_form.email.data != current_user.email and User.query.filter_by(
+    #                     email=account_form.email.data).first() is not None:
+    #                 flash('Пользователь с такой почтой уже существует', 'error')
+    #                 return redirect(url_for('.account'))
+    #             if current_user.set_email(account_form.email.data):
+    #                 flash('Почта успешно изменена', 'success')
+    #         if account_form.image.data:
+    #             ImageService.change_user_image(account_form.image.data)
+    #             flash('Фото успешно изменено', 'success')
+    #         if account_form.new_password.data:
+    #             if current_user.set_password(account_form.new_password.data):
+    #                 flash('Пароль успешно изменен', 'success')
+    #         if account_form.name.data:
+    #             if current_user.set_name(account_form.name.data):
+    #                 flash('Имя успешно изменено', 'success')
+    #         if account_form.surname.data:
+    #             if current_user.set_surname(account_form.surname.data):
+    #                 flash('Фамилия успешно изменена', 'success')
+    #         if account_form.patronymic.data:
+    #             if current_user.set_patronymic(account_form.patronymic.data):
+    #                 flash('Отчество успешно изменено', 'success')
+    #         if account_form.school.data:
+    #             if current_user.set_school(account_form.school.data):
+    #                 flash('Школа успешно изменена', 'success')
+    #         if account_form.phone.data:
+    #             if current_user.set_phone(account_form.phone.data):
+    #                 flash('Телефон успешно изменен', 'success')
+    #
+    # user = UserInfo.get_user_info()
+    # return render_template('home/account.html',
+    #                        title='Account',
+    #                        user=user,
+    #                        form_logout=logout_form,
+    #                        form_account=account_form)
 
 
 @main.route('/schedule', methods=['GET', 'POST'])
