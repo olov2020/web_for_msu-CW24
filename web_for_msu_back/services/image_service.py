@@ -11,8 +11,11 @@ from web_for_msu_back.services import UserService
 
 
 class ImageService:
-    @staticmethod
-    def upload_to_yandex_s3(file, bucket, object_name):
+
+    def __init__(self, user_service: UserService):
+        self.user_service = user_service
+
+    def upload_to_yandex_s3(self, file, bucket, object_name):
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
@@ -26,8 +29,7 @@ class ImageService:
 
         s3_client.upload_file(file, bucket, object_name)
 
-    @staticmethod
-    def download_from_yandex_s3(bucket, object_name, download_path):
+    def download_from_yandex_s3(self, bucket, object_name, download_path):
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
@@ -41,8 +43,7 @@ class ImageService:
 
         s3_client.download_file(bucket, object_name, download_path)
 
-    @staticmethod
-    def get_from_yandex_s3(bucket, object_name):
+    def get_from_yandex_s3(self, bucket, object_name):
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
@@ -51,8 +52,7 @@ class ImageService:
         url = f"https://storage.yandexcloud.net/{bucket}/{object_name}"
         return url
 
-    @staticmethod
-    def check_file_exists_yandex_s3(bucket, object_name):
+    def check_file_exists_yandex_s3(self, bucket, object_name):
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
@@ -69,8 +69,7 @@ class ImageService:
         except Exception as e:
             return False
 
-    @staticmethod
-    def delete_from_yandex_s3(bucket, object_name):
+    def delete_from_yandex_s3(self, bucket, object_name):
         load_dotenv()
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
@@ -82,59 +81,52 @@ class ImageService:
 
         s3_client.delete_object(Bucket=bucket, Key=object_name)
 
-    @staticmethod
-    def generate_unique_imagename():
+    def generate_unique_imagename(self):
         unique_filename = str(uuid.uuid4())
         return unique_filename + ".jpeg"
 
-    @staticmethod
-    def generate_unique_filename(original_filename):
+    def generate_unique_filename(self, original_filename):
         filename, file_extension = splitext(original_filename)
         unique_filename = str(uuid.uuid4())
         return unique_filename + file_extension
 
-    @staticmethod
-    def reduce_image_size(image_path, output_path, quality=20):
+    def reduce_image_size(self, image_path, output_path, quality=20):
         image = Image.open(image_path)
         image.convert("RGB").save(output_path, "JPEG", quality=quality)
 
-    @staticmethod
-    def change_user_image(image, user_id):
+    def change_user_image(self, image, user_id):
         filename = "temp.jpeg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
-        ImageService.reduce_image_size(path, path)
-        image_name = ImageService.generate_unique_imagename()
-        ImageService.upload_to_yandex_s3(path, "images", image_name)
-        current_user = UserService.get_user_by_id(user_id)
+        self.reduce_image_size(path, path)
+        image_name = self.generate_unique_imagename()
+        self.upload_to_yandex_s3(path, "images", image_name)
+        current_user = self.user_service.get_user_by_id(user_id)
         if current_user.image != "default.png":
-            ImageService.delete_from_yandex_s3("images", current_user.image)
+            self.delete_from_yandex_s3("images", current_user.image)
         current_user.image = image_name
         current_user.save()
         os.remove(path)
 
-    @staticmethod
-    def save_user_image(image):
+    def save_user_image(self, image):
         filename = "temp.jpeg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
-        ImageService.reduce_image_size(path, path)
-        image_name = ImageService.generate_unique_imagename()
-        ImageService.upload_to_yandex_s3(path, "images", image_name)
+        self.reduce_image_size(path, path)
+        image_name = self.generate_unique_imagename()
+        self.upload_to_yandex_s3(path, "images", image_name)
         os.remove(path)
         return image_name
 
-    @staticmethod
-    def save_user_agreement(agreement):
-        filename = ImageService.generate_unique_filename(agreement.filename)
+    def save_user_agreement(self, agreement):
+        filename = self.generate_unique_filename(agreement.filename)
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         agreement.save(path)
-        ImageService.upload_to_yandex_s3(path, "documents", filename)
+        self.upload_to_yandex_s3(path, "documents", filename)
         os.remove(path)
         return filename
 
-    @staticmethod
-    def get_user_image(user_id):
-        current_user = UserService.get_user_by_id(user_id)
+    def get_user_image(self, user_id):
+        current_user = self.user_service.get_user_by_id(user_id)
         image_name = current_user.image
-        return ImageService.get_from_yandex_s3("images", image_name)
+        return self.get_from_yandex_s3("images", image_name)

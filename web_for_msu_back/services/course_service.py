@@ -4,71 +4,67 @@ import flask
 import pandas as pd
 from marshmallow import ValidationError
 
-from web_for_msu_back import db
 from web_for_msu_back.dto.course import CourseDTO
 from web_for_msu_back.dto.course_info import CourseInfoDTO
 from web_for_msu_back.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.functions import get_next_monday
-from web_for_msu_back.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from web_for_msu_back.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
 from web_for_msu_back.services.teacher_service import TeacherService
 
 
 class CourseService:
-    @staticmethod
-    def add_course(request: flask.Request):
+    def __init__(self, db, teacher_service: TeacherService):
+        self.db = db
+        self.teacher_service = teacher_service
+
+    def add_course(self, request: flask.Request):
         try:
             course = CourseDTO().load(request.form)
         except ValidationError as e:
             return e.messages, 400
-        db.session.add(course)
-        db.session.commit()
+        self.db.session.add(course)
+        self.db.session.commit()
         return {'Курс успешно добавлен'}, 201
 
-    @staticmethod
-    def get_pupils(course_id: int) -> list[Pupil]:
+    def get_pupils(self, course_id: int) -> list[Pupil]:
         course = Course.query.get(course_id)
         if not course:
             return []
         return [assoc.pupil for assoc in course.pupils]
 
-    @staticmethod
-    def get_teachers(course_id: int) -> list[Teacher]:
+    def get_teachers(self, course_id: int) -> list[Teacher]:
         course = Course.query.get(course_id)
         if not course:
             return []
         return [assoc.teacher for assoc in course.teachers]
 
-    @staticmethod
-    def get_all_courses() -> list[CourseInfoDTO]:
+    def get_all_courses(self) -> list[CourseInfoDTO]:
         courses = Course.query.all()
-        return [CourseService.get_course_info(course) for course in courses]
+        return [self.get_course_info(course) for course in courses]
 
-    @staticmethod
-    def add_pupil_to_course(course_id, pupil_id, year):
+    def add_pupil_to_course(self, course_id, pupil_id, year):
         course = Course.query.get(course_id)
         pupil = Pupil.query.get(pupil_id)
         if not course or not pupil:
             return False
         pupil_course = PupilCourse(pupil_id=pupil_id, course_id=course_id, year=year)
-        db.session.add(pupil_course)
-        db.session.commit()
+        self.db.session.add(pupil_course)
+        self.db.session.commit()
         return True
 
-    @staticmethod
-    def add_teacher_to_course(course_id, teacher_id, year):
+    def add_teacher_to_course(self, course_id, teacher_id, year):
         course = Course.query.get(course_id)
         teacher = Teacher.query.get(teacher_id)
         if not course or not teacher:
             return False
         teacher_course = TeacherCourse(teacher_id=teacher_id, course_id=course_id, year=year)
-        db.session.add(teacher_course)
-        db.session.commit()
+        self.db.session.add(teacher_course)
+        self.db.session.commit()
         return True
 
-    @staticmethod
-    def get_lessons_in_week(date_start: datetime.date, user_id: int) -> (list[LessonScheduleDTO], int):
+    def get_lessons_in_week(self, date_start: datetime.date, user_id: int) -> (list[LessonScheduleDTO], int):
         user = User.query.get(user_id)
         if not user:
             return []
@@ -97,8 +93,7 @@ class CourseService:
             return {"error": "Занятий нет"}, 404
         return result, 200
 
-    @staticmethod
-    def load_from_file(request: flask.Request) -> (dict, int):
+    def load_from_file(self, request: flask.Request) -> (dict, int):
         file = request.files['file']
         try:
             data = pd.read_excel(file)
@@ -208,7 +203,7 @@ class CourseService:
         for teacher in teachers:
             teacher_data = {
                 "id": teacher.id,
-                "name": TeacherService.get_full_name(teacher),
+                "name": self.teacher_service.get_full_name(teacher),
                 "leads": False
             }
             teachers_course.append(teacher_data)
@@ -245,14 +240,13 @@ class CourseService:
             return e.messages, 400
         return course_dto, 200
 
-    @staticmethod
-    def create_course(request: flask.Request) -> (dict, int):
+    def create_course(self, request: flask.Request) -> (dict, int):
         try:
             course, year = CourseDTO().load(request.form)
         except ValidationError as e:
             return e.messages, 400
-        db.session.add(course)
-        db.session.commit()
+        self.db.session.add(course)
+        self.db.session.commit()
         pupils = Pupil.query.all()
         for pupil in pupils:
             grade = pupil.school_grade
@@ -266,26 +260,23 @@ class CourseService:
                 year=year,
                 crediting=crediting
             )
-            db.session.add(pupil_course)
-        db.session.commit()
+            self.db.session.add(pupil_course)
+        self.db.session.commit()
         return {'Курс успешно добавлен'}, 201
 
-    @staticmethod
-    def get_lessons(course_id: int) -> list[Schedule]:
+    def get_lessons(self, course_id: int) -> list[Schedule]:
         course = Course.query.get(course_id)
         if not course:
             return []
         return sorted(course.lessons, key=lambda x: x.lesson_number)
 
-    @staticmethod
-    def get_course_teachers(course):
+    def get_course_teachers(self, course):
         if not course:
             return []
-        return [TeacherService.get_full_name(assoc.teacher) for assoc in
+        return [self.teacher_service.get_full_name(assoc.teacher) for assoc in
                 course.teachers]
 
-    @staticmethod
-    def get_course_info(course: Course) -> CourseInfoDTO:
+    def get_course_info(self, course: Course) -> CourseInfoDTO:
         data = {
             "id": course.id,
             "name": course.name,
@@ -298,8 +289,7 @@ class CourseService:
         }
         return CourseInfoDTO().load(data)
 
-    @staticmethod
-    def get_course_info_pupil(pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
+    def get_course_info_pupil(self, pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
         data = {
             "id": course.id,
             "name": course.name,
@@ -313,9 +303,8 @@ class CourseService:
         }
         return CourseInfoPupilDTO().load(data)
 
-    @staticmethod
-    def get_course_info_teacher(course: Course) -> CourseInfoTeacherDTO:
-        pupils_number = len(CourseService.get_pupils(course.id))
+    def get_course_info_teacher(self, course: Course) -> CourseInfoTeacherDTO:
+        pupils_number = len(self.get_pupils(course.id))
         data = {
             "id": course.id,
             "name": course.name,
@@ -329,16 +318,14 @@ class CourseService:
         }
         return CourseInfoTeacherDTO().load(data)
 
-    @staticmethod
-    def get_pupil_courses(user_id: int) -> (list[CourseInfoDTO], int):
+    def get_pupil_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
             return [], 403
-        return [CourseService.get_course_info_pupil(assoc, assoc.course) for assoc in pupil.courses], 200
+        return [self.get_course_info_pupil(assoc, assoc.course) for assoc in pupil.courses], 200
 
-    @staticmethod
-    def get_teacher_courses(user_id: int) -> (list[CourseInfoDTO], int):
+    def get_teacher_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         teacher = Teacher.query.filter_by(user_id=user_id).first()
         if not teacher:
             return []
-        return [CourseService.get_course_info_teacher(assoc.course) for assoc in teacher.courses]
+        return [self.get_course_info_teacher(assoc.course) for assoc in teacher.courses]

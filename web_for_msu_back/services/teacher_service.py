@@ -1,16 +1,17 @@
 import flask
 from marshmallow import ValidationError
 
-from web_for_msu_back import db
 from web_for_msu_back.dto.teacher import TeacherDTO
 from web_for_msu_back.models import Teacher
 from web_for_msu_back.services import UserService
 
 
 class TeacherService:
+    def __init__(self, db, user_service: UserService):
+        self.db = db
+        self.user_service = user_service
 
-    @staticmethod
-    def add_teacher(request: flask.Request):
+    def add_teacher(self, request: flask.Request):
         result, code = UserService.add_teacher(request)
         if code != 201:
             return result, code
@@ -20,13 +21,11 @@ class TeacherService:
         except ValidationError as e:
             return e.messages, 400
         teacher.user_id = result['user_id']
-        db.session.add(teacher)
-        db.session.commit()
+        self.db.session.add(teacher)
+        self.db.session.commit()
         return {'Преподаватель успешно добавлен'}, 201
 
-
-    @staticmethod
-    def add_teacher(user_id, form):
+    def add_teacher(self, user_id, form):
         teacher = Teacher(
             user_id=user_id,
             email=form.email.data,
@@ -48,14 +47,11 @@ class TeacherService:
             workplace=form.workplace.data,
             registration_address=form.registration_address.data,
             was_pupil=form.was_pupil.data)
-        db.session.add(teacher)
-        db.session.commit()
+        self.db.session.add(teacher)
+        self.db.session.commit()
 
-    @staticmethod
-    def get_full_name(teacher):
+    def get_full_name(self, teacher):
         return teacher.surname + ' ' + teacher.name + ' ' + teacher.patronymic
 
-    @staticmethod
-    def get_teacher_by_email(email):
+    def get_teacher_by_email(self, email):
         return Teacher.query.filter_by(email=email).first()
-
