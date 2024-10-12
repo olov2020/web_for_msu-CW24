@@ -1,18 +1,24 @@
+from __future__ import annotations  # Поддержка строковых аннотаций
 import flask
 from marshmallow import ValidationError
+from typing import TYPE_CHECKING  # Условный импорт для проверки типов
 
 from web_for_msu_back.dto.pupil import PupilDTO
 from web_for_msu_back.models import Pupil
-from web_for_msu_back.services import UserService, ImageService
+
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import UserService, ImageService
 
 
 class PupilService:
-    def __init__(self, db, user_service: UserService):
+    def __init__(self, db, user_service: UserService, image_service: ImageService):
         self.db = db
         self.user_service = user_service
+        self.image_service = image_service
 
     def add_pupil(self, request: flask.Request) -> (dict, int):
-        result, code = UserService.add_pupil(request)
+        result, code = self.user_service.add_pupil(request)
         if code != 201:
             return result, code
         pupil_dto = PupilDTO()
@@ -21,7 +27,7 @@ class PupilService:
         except ValidationError as e:
             return e.messages, 400
         pupil.user_id = result['user_id']
-        pupil.agreement = ImageService.save_user_agreement(request.files['agreement'])
+        pupil.agreement = self.image_service.save_user_agreement(request.files['agreement'])
         pupil.graduating = pupil.school_grade == 11
         self.db.session.add(pupil)
         self.db.session.commit()

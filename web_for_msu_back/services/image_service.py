@@ -1,13 +1,18 @@
+from __future__ import annotations  # Поддержка строковых аннотаций
+
 import os
 import uuid
 from os.path import splitext
+from typing import TYPE_CHECKING
 
 import boto3
 from PIL import Image
 from dotenv import load_dotenv
 from flask import current_app
 
-from web_for_msu_back.services import UserService
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import UserService
 
 
 class ImageService:

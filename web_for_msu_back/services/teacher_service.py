@@ -1,9 +1,16 @@
+from __future__ import annotations  # Поддержка строковых аннотаций
+
+from typing import TYPE_CHECKING
+
 import flask
 from marshmallow import ValidationError
 
 from web_for_msu_back.dto.teacher import TeacherDTO
 from web_for_msu_back.models import Teacher
-from web_for_msu_back.services import UserService
+
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import UserService
 
 
 class TeacherService:

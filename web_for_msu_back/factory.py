@@ -7,11 +7,12 @@ def create_services() -> dict[str, object]:
     teacher_service = TeacherService(db, None)  # Временно передаём None
     course_service = CourseService(db, teacher_service)
     image_service = ImageService(None)
-    pupil_service = PupilService(db, None)
+    pupil_service = PupilService(db, None, None)
     user_service = UserService(db, teacher_service, pupil_service, image_service)
     teacher_service.user_service = user_service
     image_service.user_service = user_service
     pupil_service.user_service = user_service
+    pupil_service.image_service = image_service
     mark_service = MarkService(db, course_service, pupil_service)
     return {
         "user_service": user_service,

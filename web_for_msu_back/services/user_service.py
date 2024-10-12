@@ -1,11 +1,16 @@
+from __future__ import annotations  # Поддержка строковых аннотаций
+
+from typing import TYPE_CHECKING
+
 import flask
 from werkzeug.datastructures import FileStorage
 
 from web_for_msu_back.dto.user_info import UserInfoDTO
 from web_for_msu_back.models import User, Role
-from web_for_msu_back.services.image_service import ImageService
-from web_for_msu_back.services.pupil_service import PupilService
-from web_for_msu_back.services.teacher_service import TeacherService
+
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import ImageService, PupilService, TeacherService
 
 
 class UserService:
@@ -16,6 +21,7 @@ class UserService:
         self.image_service = image_service
 
     def add_pupil(self, request: flask.Request) -> (dict, int):
+        # TODO fix this. should firstly parse to dto
         if self.get_user_by_email(request.form['email']) is not None:
             return {'error': 'Пользователь с такой почтой уже существует'}, 400
         roles = [Role.query.filter_by(name='pupil').first()]

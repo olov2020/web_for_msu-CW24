@@ -1,5 +1,8 @@
+from __future__ import annotations  # Поддержка строковых аннотаций
+
 import itertools
 from operator import attrgetter
+from typing import TYPE_CHECKING
 
 import flask
 from marshmallow import ValidationError
@@ -8,8 +11,10 @@ from sqlalchemy import asc
 from web_for_msu_back.dto.marks import MarksDTO
 from web_for_msu_back.dto.pupil_marks import PupilMarksDTO
 from web_for_msu_back.models import Mark, Course, Schedule, Formula, PupilCourse, Pupil
-from web_for_msu_back.services.course_service import CourseService
-from web_for_msu_back.services.pupil_service import PupilService
+
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import CourseService, PupilService
 
 
 class MarkService:

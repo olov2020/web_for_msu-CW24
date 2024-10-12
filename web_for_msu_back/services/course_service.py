@@ -1,4 +1,7 @@
+from __future__ import annotations  # Откладывает разрешение аннотаций типов
+
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 import flask
 import pandas as pd
@@ -11,7 +14,10 @@ from web_for_msu_back.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.functions import get_next_monday
 from web_for_msu_back.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
-from web_for_msu_back.services.teacher_service import TeacherService
+
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import TeacherService
 
 
 class CourseService:
