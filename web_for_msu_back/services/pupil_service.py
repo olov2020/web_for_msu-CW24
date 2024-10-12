@@ -7,10 +7,9 @@ from web_for_msu_back.services import UserService, ImageService
 
 
 class PupilService:
-    def __init__(self, db, user_service: UserService, image_service: ImageService):
+    def __init__(self, db, user_service: UserService):
         self.db = db
         self.user_service = user_service
-        self.image_service = image_service
 
     def add_pupil(self, request: flask.Request) -> (dict, int):
         result, code = UserService.add_pupil(request)

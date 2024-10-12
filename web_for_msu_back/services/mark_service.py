@@ -17,7 +17,7 @@ class MarkService:
         self.db = db
         self.course_service = course_service
         self.pupil_service = pupil_service
-    
+
     def get_pupils_marks(self, course_id: int, lessons: list[Schedule], pupils: list[Pupil]) -> dict[str, list[str]]:
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
         marks_grouped = {}
@@ -30,7 +30,6 @@ class MarkService:
             marks_grouped[key] = self.extend_pupil_marks(group, lessons)
         return marks_grouped
 
-    
     def calculate_result(self, pupil_marks: list[str], mark_types: list[str], formulas: list[Formula]) -> float:
         result = 0
         types = {}
@@ -47,7 +46,6 @@ class MarkService:
                 result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
         return result
 
-    
     def get_journal(self, course_id: int, current_user_id: int) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
@@ -112,7 +110,6 @@ class MarkService:
             return e.messages, 400
         return marks_dto, 200
 
-    
     def update_journal(self, course_id: int, current_user_id: int, request: flask.Request) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
@@ -161,13 +158,11 @@ class MarkService:
         self.db.session.commit()
         return marks_dto, 200
 
-    
     def get_pupil_marks(self, course_id: int, pupil_id: int) -> list[Mark]:
         marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
                  .order_by(Mark.schedule_id).all())
         return marks
 
-    
     def extend_pupil_marks(self, marks, lessons):
         # TODO Add annotation
         pupil_marks = marks
@@ -183,7 +178,6 @@ class MarkService:
                 pupil_marks_res.append('')
         return pupil_marks_res
 
-    
     def get_pupil_marks_model(self, course_id: int, pupil_id: int) -> (PupilMarksDTO, int):
         course = Course.query.get(course_id)
         if not course:

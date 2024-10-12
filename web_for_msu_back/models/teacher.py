@@ -62,5 +62,3 @@ class Teacher(db.Model):
         self.passport_issued_by = None
         self.registration_address = registration_address
         self.was_pupil = was_pupil
-
-

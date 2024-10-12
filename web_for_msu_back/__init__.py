@@ -4,6 +4,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+
 # mail = Mail()
 # migrate = Migrate()
 
@@ -24,7 +26,7 @@ def create_app(config):
     from .views.teacher import teacher as teacher_blueprint
 
     app.register_blueprint(main_blueprint)
-    app.register_blueprint(admin_blueprint)
+    app.register_blueprint(admin_blueprint, url_prefix='/admin')
     app.register_blueprint(pupil_blueprint)
     app.register_blueprint(teacher_blueprint)
 

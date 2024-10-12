@@ -1,6 +1,3 @@
-from web_for_msu_back.services import ImageService
-
-
 class UserInfo:
     def __init__(self, name, surname, status, photo, patronymic=None, email=None, password=None, new_password=None,
                  phone=None, school=None, admin=False):

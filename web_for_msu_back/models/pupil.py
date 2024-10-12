@@ -88,4 +88,3 @@ class Pupil(db.Model):
         self.security_key_card = security_key_card
         self.graduating = graduating
         self.achievements = achievements
-

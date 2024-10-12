@@ -54,5 +54,12 @@ def auth_required(fn):
         if g.current_user is None:
             return jsonify({"msg": "Пользователь не найден"}), 404
         return fn(*args, **kwargs)
+
     return wrapper
 
+
+def get_services() -> dict:
+    from web_for_msu_back.factory import create_services
+    if 'services' not in g:
+        g.services = create_services()
+    return g.services

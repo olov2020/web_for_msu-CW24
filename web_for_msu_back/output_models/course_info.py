@@ -8,4 +8,3 @@ class CourseInfo:
         self.teachers = teachers
         self.auditory = auditory
         self.lesson_time = lesson_time
-
