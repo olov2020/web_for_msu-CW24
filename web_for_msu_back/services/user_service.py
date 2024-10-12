@@ -1,5 +1,6 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
+import json
 from typing import TYPE_CHECKING
 
 import flask
@@ -22,34 +23,36 @@ class UserService:
 
     def add_pupil(self, request: flask.Request) -> (dict, int):
         # TODO fix this. should firstly parse to dto
-        if self.get_user_by_email(request.form['email']) is not None:
+        data = json.loads(request.form.get('data'))
+        if self.get_user_by_email(data.get('email', None)) is not None:
             return {'error': 'Пользователь с такой почтой уже существует'}, 400
         roles = [Role.query.filter_by(name='pupil').first()]
-        user = self.add_user(email=request.form['email'], password=request.form['password'], roles=roles,
+        user = self.add_user(email=data['email'], password=data['password'], roles=roles,
                              user_image=request.files['image'])
         return {'user_id': user.id}, 201
 
     def add_teacher(self, request: flask.Request) -> (dict, int):
         roles = []
         user_exists = False
-        if self.get_user_by_email(request.form['email']) is not None:
-            if TeacherService.get_teacher_by_email(request.form['email']) is not None:
+        data = json.loads(request.form.get('data'))
+        if self.get_user_by_email(data['email']) is not None:
+            if self.teacher_service.get_teacher_by_email(data['email']) is not None:
                 return {'error': 'Преподаватель с такой почтой уже существует'}, 400
-            pupil = PupilService.get_pupil_by_email(request.form['email'])
-            if pupil.name == request.form['name'] and pupil.surname == request.form['surname']:
+            pupil = self.pupil_service.get_pupil_by_email(data['email'])
+            if pupil.name == data['name'] and pupil.surname == data['surname']:
                 roles = [Role.query.filter_by(name='pupil').first()]
                 user_exists = True
             else:
                 return {'error': 'Пользователь с такой почтой уже существует'}, 400
         roles.append(Role.query.filter_by(name='teacher').first())
-        user = self.add_user(email=request.form['email'], password=request.form['password'], roles=roles,
+        user = self.add_user(email=data['email'], password=data['password'], roles=roles,
                              user_image=request.files['image'], user_exists=user_exists)
         return {'user_id': user.id, 'user_exists': user_exists}, 201
 
     def add_user(self, email: str, password: str, roles: list[Role], user_image: FileStorage = None,
                  user_exists: bool = False) -> User:
         if user_image:
-            image = ImageService.save_user_image(user_image)
+            image = self.image_service.save_user_image(user_image)
         else:
             image = 'default.png'
         if not user_exists:
@@ -83,7 +86,7 @@ class UserService:
             'name': user.get_name(),
             'surname': user.get_surname(),
             'status': user.get_role_name(),
-            'photo': ImageService.get_user_image(user.image),
+            'photo': self.image_service.get_user_image(user.image),
             'patronymic': user.get_patronymic(),
             'email': user.email,
             'password': '',

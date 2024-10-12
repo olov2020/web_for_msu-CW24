@@ -1,6 +1,14 @@
+from __future__ import annotations  # Поддержка строковых аннотаций
+
+from typing import TYPE_CHECKING
+
 from flask import Blueprint, request, g, jsonify
 
 from web_for_msu_back.functions import auth_required, roles_required, get_services
+
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import PupilService
 
 pupil = Blueprint('pupil', __name__)
 
@@ -8,7 +16,7 @@ pupil = Blueprint('pupil', __name__)
 @pupil.route('/pupil/add', methods=['POST'])
 def add_pupil():
     services = get_services()
-    pupil_service = services["pupil_service"]
+    pupil_service: PupilService = services["pupil_service"]
     response, code = pupil_service.add_pupil(request)
     return jsonify(response), code
 

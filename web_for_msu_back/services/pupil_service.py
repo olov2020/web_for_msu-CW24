@@ -1,7 +1,10 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
+
+import json
+from typing import TYPE_CHECKING  # Условный импорт для проверки типов
+
 import flask
 from marshmallow import ValidationError
-from typing import TYPE_CHECKING  # Условный импорт для проверки типов
 
 from web_for_msu_back.dto.pupil import PupilDTO
 from web_for_msu_back.models import Pupil
@@ -21,9 +24,11 @@ class PupilService:
         result, code = self.user_service.add_pupil(request)
         if code != 201:
             return result, code
+        data = json.loads(request.form.get('data'))
+        data['user_id'] = result['user_id']
         pupil_dto = PupilDTO()
         try:
-            pupil: Pupil = pupil_dto.load(request.form)
+            pupil: Pupil = pupil_dto.load(data)
         except ValidationError as e:
             return e.messages, 400
         pupil.user_id = result['user_id']
@@ -31,7 +36,7 @@ class PupilService:
         pupil.graduating = pupil.school_grade == 11
         self.db.session.add(pupil)
         self.db.session.commit()
-        return {'Ученик успешно добавлен'}, 201
+        return {'success': 'Ученик успешно добавлен'}, 201
 
     def get_full_name(self, pupil: Pupil) -> str:
         return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic

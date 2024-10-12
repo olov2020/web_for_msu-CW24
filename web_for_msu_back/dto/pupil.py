@@ -5,8 +5,9 @@ from web_for_msu_back.models import Pupil
 
 class PupilDTO(Schema):
     id = fields.Int(dump_only=True)
-    user_id = fields.Int(required=True)
+    user_id = fields.Int()
     email = fields.Email(required=True, error_messages={"required": "Поле email обязательно."})
+    password = fields.Str(required=True, error_messages={"required": "Поле пароль обязательно."})
     name = fields.Str(required=True, error_messages={"required": "Поле имя обязательно."})
     surname = fields.Str(required=True, error_messages={"required": "Поле фамилия обязательно."})
     patronymic = fields.Str(allow_none=True)
@@ -46,4 +47,13 @@ class PupilDTO(Schema):
 
     @post_load
     def make_pupil(self, data, **kwargs):
+        data.setdefault('nickname', 'Школьник')
+        data.setdefault('enroll_way', 'Вступительные')  # Пример для других полей
+        data.setdefault('agreement', None)
+        data.setdefault('organization_fee', '')
+        data.setdefault('present_FA', '')
+        data.setdefault('security_key_card', '')
+        data.setdefault('graduating', False)
+        data.setdefault('achievements', '')
+        data.pop('password', None)
         return Pupil(**data)

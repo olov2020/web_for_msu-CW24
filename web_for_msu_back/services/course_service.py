@@ -27,7 +27,7 @@ class CourseService:
 
     def add_course(self, request: flask.Request):
         try:
-            course = CourseDTO().load(request.form)
+            course = CourseDTO().load(request.json)
         except ValidationError as e:
             return e.messages, 400
         self.db.session.add(course)
@@ -248,7 +248,7 @@ class CourseService:
 
     def create_course(self, request: flask.Request) -> (dict, int):
         try:
-            course, year = CourseDTO().load(request.form)
+            course, year = CourseDTO().load(request.json)
         except ValidationError as e:
             return e.messages, 400
         self.db.session.add(course)
