@@ -1,5 +1,6 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
+import json
 from typing import TYPE_CHECKING
 
 import flask
@@ -23,9 +24,11 @@ class TeacherService:
         result, code = self.user_service.add_teacher(request)
         if code != 201:
             return result, code
+        data = json.loads(request.form.get('data'))
+        data['user_id'] = result['user_id']
         teacher_dto = TeacherDTO()
         try:
-            teacher = teacher_dto.load(request.json)
+            teacher = teacher_dto.load(data)
         except ValidationError as e:
             return e.messages, 400
         teacher.user_id = result['user_id']
