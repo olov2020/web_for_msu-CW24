@@ -6,4 +6,4 @@ class ScheduleDTO(Schema):
     date = fields.Date(required=True)
     theme = fields.String()
     plan = fields.String()
-    additional_info = fields.String()
+    additional_info = fields.String(allow_none=True)

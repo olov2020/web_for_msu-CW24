@@ -167,7 +167,7 @@ class CourseService:
             additional_info = data[i][4]
             schedule_data = {
                 "lesson_number": lesson_number,
-                "date": date.date(),
+                "date": date.date().isoformat(),
                 "theme": theme,
                 "plan": plan,
                 "additional_info": additional_info
@@ -197,7 +197,7 @@ class CourseService:
             except ValueError:
                 continue
             formula_data = {
-                "formula_name": name,
+                "name": name,
                 "coefficient": coefficient
             }
             formulas.append(formula_data)
@@ -240,11 +240,10 @@ class CourseService:
                         break
         course_data["teachers"] = teachers_course
 
-        try:
-            course_dto = CourseDTO.from_dict(course_data)
-        except ValidationError as e:
-            return e.messages, 400
-        return course_dto, 200
+        errors = CourseDTO().validate(course_data)
+        if errors:
+            return errors, 400
+        return course_data, 200
 
     def create_course(self, request: flask.Request) -> (dict, int):
         try:
@@ -268,7 +267,7 @@ class CourseService:
             )
             self.db.session.add(pupil_course)
         self.db.session.commit()
-        return {'Курс успешно добавлен'}, 201
+        return {'msg': 'Курс успешно добавлен'}, 201
 
     def get_lessons(self, course_id: int) -> list[Schedule]:
         course = Course.query.get(course_id)

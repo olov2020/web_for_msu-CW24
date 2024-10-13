@@ -34,7 +34,7 @@ class TeacherService:
         teacher.user_id = result['user_id']
         self.db.session.add(teacher)
         self.db.session.commit()
-        return {'success': 'Преподаватель успешно добавлен'}, 201
+        return {'msg': 'Преподаватель успешно добавлен'}, 201
 
     def get_full_name(self, teacher):
         return teacher.surname + ' ' + teacher.name + ' ' + teacher.patronymic

@@ -1,8 +1,7 @@
 import flask
-from flask import Blueprint
-from flask_security import auth_required, roles_required
+from flask import Blueprint, jsonify
 
-from web_for_msu_back.functions import get_services
+from web_for_msu_back.functions import get_services, auth_required, roles_required
 
 # from app.utils import send_mail
 
@@ -16,7 +15,7 @@ def add_from_file():
     services = get_services()
     course_service = services["course_service"]
     response, code = course_service.load_from_file(flask.request)
-    return response, code
+    return jsonify(response), code
 
 
 @admin.route('/create_course', methods=['POST'], endpoint='admin_create_course')

@@ -36,7 +36,7 @@ class PupilService:
         pupil.graduating = pupil.school_grade == 11
         self.db.session.add(pupil)
         self.db.session.commit()
-        return {'success': 'Ученик успешно добавлен'}, 201
+        return {'msg': 'Ученик успешно добавлен'}, 201
 
     def get_full_name(self, pupil: Pupil) -> str:
         return pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic

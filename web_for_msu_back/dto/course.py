@@ -3,6 +3,7 @@ from datetime import datetime
 from marshmallow import Schema, fields, post_load
 from marshmallow.validate import Length, OneOf
 
+from web_for_msu_back import db
 from web_for_msu_back.dto.formula import FormulaDTO
 from web_for_msu_back.dto.schedule import ScheduleDTO
 from web_for_msu_back.dto.teacher_course import TeacherCourseDTO
@@ -12,7 +13,7 @@ from web_for_msu_back.models import Course, Schedule, Formula, TeacherCourse, Te
 class CourseDTO(Schema):
     id = fields.Integer()  # Идентификатор курса
     name = fields.String(required=True, validate=Length(min=1))  # Название курса
-    auditory = fields.String()
+    auditory = fields.String(allow_none=True)  # Аудитория (если есть)
     course_review_number = fields.String(required=True, validate=OneOf(
         ['в первый раз', 'во второй раз', 'в третий раз', 'в четвёртый раз', 'в пятый раз']))  # № рассмотрения курса
     direction = fields.String(required=True, validate=OneOf(['Математика', 'Экономика', 'Третий Путь']))  # Направление
@@ -25,7 +26,7 @@ class CourseDTO(Schema):
          'зачётный только для 9-10-ти классников', 'зачётный только для 9-11-ти классников',
          'зачётный только для 10-11-ти классников', 'факультативный для всех']))  # Система зачета
     distribution = fields.String(required=True, validate=Length(min=1))  # Распределение
-    intern_work = fields.String()  # Работа со стажёрами
+    intern_work = fields.String(allow_none=True)  # Работа со стажёрами
     lesson_time = fields.String(required=True, validate=OneOf(
         ['Понедельник 17:20 - 18:40', 'Понедельник 18:55 - 20:15', 'Вторник 17:20 - 18:40', 'Вторник 18:55 - 20:15',
          'Среда 17:20 - 18:40', 'Среда 18:55 - 20:15', 'Четверг 17:20 - 18:40', 'Четверг 18:55 - 20:15',
@@ -51,8 +52,7 @@ class CourseDTO(Schema):
 
     @post_load
     def make_course(self, data, **kwargs):
-        course = Course(
-            id=data["id"],  # В случае обновления
+        course = Course(  # В случае обновления
             name=data["name"],
             auditory=data.get("auditory"),
             course_review_number=data["course_review_number"],
@@ -76,11 +76,15 @@ class CourseDTO(Schema):
             additional_info=data["additional_info"],
         )
 
+        db.session.add(course)
+        db.session.commit()
+
         year = datetime.now().year
         # Добавляем связанные объекты расписания (schedules)
         if "schedules" in data:
             schedules = []
             for schedule_data in data["schedules"]:
+                schedule_data.setdefault("course_id", course.id)
                 schedule = Schedule(**schedule_data)
                 schedules.append(schedule)
                 if schedule.lesson_number == 1:
@@ -89,7 +93,11 @@ class CourseDTO(Schema):
 
         # Добавляем связанные объекты формул (formulas)
         if "formulas" in data:
-            course.formulas = [Formula(**formula_data) for formula_data in data["formulas"]]
+            # course.formulas = [Formula(**formula_data) for formula_data in data["formulas"]]
+            for formula_data in data["formulas"]:
+                formula_data.setdefault("course_id", course.id)
+                formula = Formula(**formula_data)
+                course.formulas.append(formula)
 
         # Добавляем связанных учителей (teachers)
         if "teachers" in data:
