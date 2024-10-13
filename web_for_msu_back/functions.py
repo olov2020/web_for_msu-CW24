@@ -38,9 +38,10 @@ def load_current_user():
     identity = get_jwt_identity()
     if identity:
         # Здесь можно загрузить данные пользователя из базы данных, если нужно
-        from web_for_msu_back.services import UserService
+        services = get_services()
+        user_service = services["user_service"]
         user_id = identity.get('id')
-        return UserService.get_user_by_id(user_id)
+        return user_service.get_user_by_id(user_id)
     return None
 
 

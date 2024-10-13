@@ -5,10 +5,7 @@ from typing import TYPE_CHECKING
 
 from flask import Blueprint, jsonify, g
 from flask import request
-from flask_jwt_extended import create_access_token
-from marshmallow import ValidationError
 
-from web_for_msu_back.dto.login import LoginDTO
 from web_for_msu_back.functions import get_next_monday, auth_required, get_services
 
 # from app.utils import send_mail
@@ -25,7 +22,7 @@ main = Blueprint('home', __name__)
 def get_user_info():
     services = get_services()
     user_service = services["user_service"]
-    response, code = user_service.get_user_info(g.current_user.id)
+    response, code = user_service.get_user_info()
     return response, code
 
 
@@ -33,32 +30,8 @@ def get_user_info():
 def login():
     services = get_services()
     user_service: UserService = services["user_service"]
-
-    data = request.get_json()
-
-    schema = LoginDTO()
-    try:
-        validated_data = schema.load(data)
-    except ValidationError as err:
-        return jsonify({"errors": err.messages}), 400
-
-    email = validated_data.get('email')
-    password = validated_data.get('password')
-
-    # Проверка пользователя и его пароля
-    user = user_service.get_user_by_email(email)
-    if user and user.check_password(password):
-        # Создание JWT токена с ролями пользователя
-        access_token = create_access_token(
-            identity={'id': user.id,
-                      'name': user.get_name(),
-                      'surname': user.get_surname(),
-                      'email': email,
-                      'image': user.image,
-                      'roles': user.get_roles()})
-        return jsonify(access_token=access_token)
-
-    return jsonify({"error": "Неверные данные"}), 401
+    response, code = user_service.login(request)
+    return response, code
 
 
 # @main.route('/account', methods=['GET', 'POST'])

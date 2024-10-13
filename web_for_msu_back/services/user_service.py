@@ -4,8 +4,11 @@ import json
 from typing import TYPE_CHECKING
 
 import flask
+from flask_jwt_extended import get_jwt_identity, create_access_token
+from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
 
+from web_for_msu_back.dto.login import LoginDTO
 from web_for_msu_back.dto.user_info import UserInfoDTO
 from web_for_msu_back.models import User, Role
 
@@ -72,27 +75,50 @@ class UserService:
         #     PupilService.add_pupil(user_id=user.id, form=form, agreement=agreement)
         return user
 
+    def login(self, request: flask.Request) -> (dict, int):
+        # TODO add refreshment for token
+        data = request.get_json()
+
+        schema = LoginDTO()
+        try:
+            validated_data = schema.load(data)
+        except ValidationError as err:
+            return {"errors": err.messages}, 400
+
+        email = validated_data.get('email')
+        password = validated_data.get('password')
+
+        # Проверка пользователя и его пароля
+        user = self.get_user_by_email(email)
+        if user and user.check_password(password):
+            # Создание JWT токена с ролями пользователя
+            access_token = create_access_token(
+                identity={'id': user.id,
+                          'name': user.get_name(),
+                          'patronymic': user.get_patronymic(),
+                          'surname': user.get_surname(),
+                          'email': email,
+                          'image': self.image_service.get_from_yandex_s3("images", user.image),
+                          'roles': user.get_roles()})
+            return {"access_token": access_token}, 200
+
+        return {"error": "Неверные данные"}, 401
+
     def get_user_by_id(self, user_id: int) -> User:
         return User.query.get(user_id)
 
     def get_user_by_email(self, email: str) -> User:
         return User.query.filter_by(email=email).first()
 
-    def get_user_info(self, user_id: int) -> (UserInfoDTO, int):
-        user = self.get_user_by_id(user_id)
-        if not user:
-            return {'error': 'Такого пользователя не существует'}, 404
+    def get_user_info(self) -> (UserInfoDTO, int):
+        identity = get_jwt_identity()
         data = {
-            'name': user.get_name(),
-            'surname': user.get_surname(),
-            'status': user.get_role_name(),
-            'photo': self.image_service.get_user_image(user.image),
-            'patronymic': user.get_patronymic(),
-            'email': user.email,
-            'password': '',
-            'new_password': '',
-            'phone': user.get_phone(),
-            'school': user.get_school(),
-            'admin': user.is_admin()
+            'name': identity.get('name'),
+            'surname': identity.get('surname'),
+            'status': identity.get('roles')[-1],
+            'photo': identity.get('image'),
+            'patronymic': identity.get('patronymic'),
+            'email': identity.get('email'),
+            'admin': 'admin' in identity.get('roles')
         }
         return UserInfoDTO().load(data), 200
