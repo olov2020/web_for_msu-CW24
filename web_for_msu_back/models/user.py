@@ -58,6 +58,9 @@ class User(db.Model):
         elif self.is_teacher():
             return self.teacher[0].patronymic
 
+    def get_roles(self):
+        return [role.name for role in self.roles]
+
     def get_role_name(self):
         if self.is_pupil():
             return 'Ученик'

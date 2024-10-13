@@ -8,6 +8,7 @@ load_dotenv()
 
 class BaseConfig:
     SECRET_KEY = os.getenv('SECRET_KEY') or 'A SECRET KEY'
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY') or 'A JWT SECRET KEY'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join('static', 'photos', 'people_photo')
     SECURITY_MSG_UNAUTHENTICATED = ("Авторизуйтесь для доступа к этой странице", "error")

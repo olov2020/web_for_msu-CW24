@@ -1,4 +1,7 @@
+from __future__ import annotations  # Поддержка строковых аннотаций
+
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from flask import Blueprint, jsonify, g
 from flask import request
@@ -9,6 +12,10 @@ from web_for_msu_back.dto.login import LoginDTO
 from web_for_msu_back.functions import get_next_monday, auth_required, get_services
 
 # from app.utils import send_mail
+
+if TYPE_CHECKING:
+    # Импортируем сервисы только для целей аннотации типов
+    from web_for_msu_back.services import UserService
 
 main = Blueprint('home', __name__)
 
@@ -25,7 +32,7 @@ def get_user_info():
 @main.route('/login', methods=['POST'])
 def login():
     services = get_services()
-    user_service = services["user_service"]
+    user_service: UserService = services["user_service"]
 
     data = request.get_json()
 
@@ -40,14 +47,18 @@ def login():
 
     # Проверка пользователя и его пароля
     user = user_service.get_user_by_email(email)
-    if user and user['password'] == password:
+    if user and user.check_password(password):
         # Создание JWT токена с ролями пользователя
         access_token = create_access_token(
-            identity={'id': user.id, 'name': user.name, 'surname': user.surname, 'email': email, 'image': user.image,
-                      'roles': user['roles']})
+            identity={'id': user.id,
+                      'name': user.get_name(),
+                      'surname': user.get_surname(),
+                      'email': email,
+                      'image': user.image,
+                      'roles': user.get_roles()})
         return jsonify(access_token=access_token)
 
-    return jsonify({"msg": "Неверные данные"}), 401
+    return jsonify({"error": "Неверные данные"}), 401
 
 
 # @main.route('/account', methods=['GET', 'POST'])
