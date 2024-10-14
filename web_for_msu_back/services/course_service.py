@@ -285,19 +285,20 @@ class CourseService:
         data = {
             "id": course.id,
             "name": course.name,
+            "emsh_grades": course.emsh_grades,
             "crediting": course.crediting,
             "direction": course.direction,
             "teachers": course.teachers,
             "auditory": course.auditory,
             "lesson_time": course.lesson_time
         }
-        return CourseInfoDTO().load(data, partial=("grades",))
+        return CourseInfoDTO().load(data)
 
     def get_course_info_pupil(self, pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
         data = {
             "id": course.id,
             "name": course.name,
-            "grades"
+            "emsh_grades": course.emsh_grades,
             "crediting": course.crediting,
             "direction": course.direction,
             "teachers": course.teachers,
@@ -312,7 +313,7 @@ class CourseService:
         data = {
             "id": course.id,
             "name": course.name,
-            "grades"
+            "emsh_grades": course.emsh_grades,
             "crediting": course.crediting,
             "direction": course.direction,
             "teachers": course.teachers,
@@ -331,5 +332,5 @@ class CourseService:
     def get_teacher_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         teacher = Teacher.query.filter_by(user_id=user_id).first()
         if not teacher:
-            return []
-        return [self.get_course_info_teacher(assoc.course) for assoc in teacher.courses]
+            return [], 403
+        return [self.get_course_info_teacher(assoc.course) for assoc in teacher.courses], 200
