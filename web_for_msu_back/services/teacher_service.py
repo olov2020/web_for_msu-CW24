@@ -20,7 +20,6 @@ class TeacherService:
         self.user_service = user_service
 
     def add_teacher(self, request: flask.Request):
-        # TODO fix this. Copy from add_pupil
         result, code = self.user_service.add_teacher(request)
         if code != 201:
             return result, code

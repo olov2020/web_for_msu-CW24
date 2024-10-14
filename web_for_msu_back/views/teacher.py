@@ -39,5 +39,5 @@ def get_journal(course_id):
 def update_journal(course_id):
     services = get_services()
     mark_service = services["mark_service"]
-    response, code = mark_service.update_journal(course_id, g.current_user.id, request.json)
+    response, code = mark_service.update_journal(course_id, g.current_user.id, request)
     return response, code

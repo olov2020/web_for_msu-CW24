@@ -15,6 +15,6 @@ class MarksDTO(Schema):
     @validates_schema
     def validate_mark_type(self, data, **kwargs):
         # Проверяем, что каждое значение mark_type входит в mark_type_choices
-        for idx, mark in enumerate(data['mark_type']):
+        for idx, mark in enumerate(data['mark_types']):
             if mark not in data['mark_type_choices']:
                 raise ValidationError(f'mark_type[{idx}] должно быть одним из значений mark_type_choices')

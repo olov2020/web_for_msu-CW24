@@ -222,7 +222,7 @@ class CourseService:
 
             for j in range(len(teachers_course)):
                 if teachers_course[j]["id"] == teacher.id:
-                    teachers_course[i]["leads"] = True
+                    teachers_course[j]["leads"] = True
                     break
 
         other = data[18][3]
