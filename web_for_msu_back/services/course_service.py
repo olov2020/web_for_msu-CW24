@@ -285,14 +285,13 @@ class CourseService:
         data = {
             "id": course.id,
             "name": course.name,
-            "grades"
             "crediting": course.crediting,
             "direction": course.direction,
             "teachers": course.teachers,
             "auditory": course.auditory,
             "lesson_time": course.lesson_time
         }
-        return CourseInfoDTO().load(data)
+        return CourseInfoDTO().load(data, partial=("grades",))
 
     def get_course_info_pupil(self, pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
         data = {

@@ -8,5 +8,5 @@ class CourseInfoDTO(Schema):
     crediting = fields.Str(required=True)
     direction = fields.Str(required=True)
     teachers = fields.List(fields.Str(), required=True)
-    auditory = fields.Str(required=True)
+    auditory = fields.Str(required=True, allow_none=True)
     lesson_time = fields.Str(required=True)
