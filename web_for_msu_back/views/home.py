@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from flask import Blueprint, jsonify, g
 from flask import request
+from flask_jwt_extended import jwt_required
 
 from web_for_msu_back.functions import get_next_monday, auth_required, get_services
 
@@ -31,6 +32,15 @@ def login():
     services = get_services()
     user_service: UserService = services["user_service"]
     response, code = user_service.login(request)
+    return response, code
+
+
+@main.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    services = get_services()
+    user_service: UserService = services["user_service"]
+    response, code = user_service.refresh()
     return response, code
 
 

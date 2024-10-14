@@ -73,13 +73,13 @@ class CourseService:
     def get_lessons_in_week(self, date_start: datetime.date, user_id: int) -> (list[LessonScheduleDTO], int):
         user = User.query.get(user_id)
         if not user:
-            return []
+            return {"error": "Пользователь не найден"}, 404
         if user.is_teacher():
             associations = user.teacher[0].courses
         else:
             associations = user.pupil[0].courses
         if not associations:
-            return []
+            return {"error": "У пользователя нет курсов"}, 404
         result = []
         for assoc in associations:
             course = assoc.course

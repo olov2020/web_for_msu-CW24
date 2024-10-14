@@ -82,14 +82,12 @@ class CourseDTO(Schema):
         year = datetime.now().year
         # Добавляем связанные объекты расписания (schedules)
         if "schedules" in data:
-            schedules = []
             for schedule_data in data["schedules"]:
                 schedule_data.setdefault("course_id", course.id)
                 schedule = Schedule(**schedule_data)
-                schedules.append(schedule)
+                course.lessons.append(schedule)
                 if schedule.lesson_number == 1:
                     year = schedule.date.year
-            course.schedules = schedules
 
         # Добавляем связанные объекты формул (formulas)
         if "formulas" in data:

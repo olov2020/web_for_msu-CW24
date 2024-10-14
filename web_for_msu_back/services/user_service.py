@@ -4,7 +4,7 @@ import json
 from typing import TYPE_CHECKING
 
 import flask
-from flask_jwt_extended import get_jwt_identity, create_access_token
+from flask_jwt_extended import get_jwt_identity, create_access_token, create_refresh_token
 from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
 
@@ -92,17 +92,23 @@ class UserService:
         user = self.get_user_by_email(email)
         if user and user.check_password(password):
             # Создание JWT токена с ролями пользователя
-            access_token = create_access_token(
-                identity={'id': user.id,
-                          'name': user.get_name(),
-                          'patronymic': user.get_patronymic(),
-                          'surname': user.get_surname(),
-                          'email': email,
-                          'image': self.image_service.get_from_yandex_s3("images", user.image),
-                          'roles': user.get_roles()})
-            return {"access_token": access_token}, 200
+            identity = {'id': user.id,
+                        'name': user.get_name(),
+                        'patronymic': user.get_patronymic(),
+                        'surname': user.get_surname(),
+                        'email': email,
+                        'image': self.image_service.get_from_yandex_s3("images", user.image),
+                        'roles': user.get_roles()}
+            access_token = create_access_token(identity=identity, fresh=True)
+            refresh_token = create_refresh_token(identity=identity)
+            return {"access_token": access_token, "refresh_token": refresh_token}, 200
 
         return {"error": "Неверные данные"}, 401
+
+    def refresh(self) -> (dict, int):
+        identity = get_jwt_identity()
+        access_token = create_access_token(identity=identity, fresh=False)
+        return {"access_token": access_token}, 200
 
     def get_user_by_id(self, user_id: int) -> User:
         return User.query.get(user_id)
