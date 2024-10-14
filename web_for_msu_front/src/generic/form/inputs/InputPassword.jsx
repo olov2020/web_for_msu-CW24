@@ -3,9 +3,9 @@ import styleInputPassword from './inputPassword.module.css'
 import {useState} from "react";
 import {FiEye} from "react-icons/fi";
 
-const InputPassword = () => {
-  const [isValid, setIsValid] = useState(false);
-  const [password, setPassword] = useState('');
+// eslint-disable-next-line react/prop-types
+const InputPassword = ({value, setValue}) => {
+  const [isValid, setIsValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const errors = {
@@ -20,7 +20,7 @@ const InputPassword = () => {
 
   const handleInputChange = ((e) => {
     e.preventDefault();
-    setPassword(e.target.value);
+    setValue(e.target.value);
     const error = validateInput(e.target.value);
 
     if (error) {
@@ -89,7 +89,7 @@ const InputPassword = () => {
         type={showPassword ? 'text' : 'password'}
         name='password'
         placeholder='Пароль'
-        value={password}
+        value={value}
         className={
           `${isValid ?
             `${styleInput.valid}` :

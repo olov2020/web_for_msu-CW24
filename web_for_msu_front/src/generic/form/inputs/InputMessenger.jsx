@@ -1,18 +1,15 @@
 import styleInput from "./input.module.css";
-import InputMask from 'react-input-mask';
 import {useState} from "react";
 
+
 // eslint-disable-next-line react/prop-types
-const InputPhone = ({name = '', placeholder = '', value, setValue}) => {
+const InputMessenger = ({name = '', placeholder = '', value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
-  const phoneMask = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
   const errors = {
-    empty: (name.includes('parent') ?
-      'Данное поле не может быть пустым. При отсутствии телефона начните вводить нули' :
-      'Данное поле не может быть пустым'),
-    errorLength: 'Введите номер телефона полностью',
+    empty: `Данное поле не может быть пустым. Поставьте прочерк (-) при отсутствии ${placeholder}`,
+    errorInvalid: `Ссылка должна начинаться с @`,
   }
 
   const handleInputChange = ((e) => {
@@ -28,20 +25,12 @@ const InputPhone = ({name = '', placeholder = '', value, setValue}) => {
   })
 
   const validateInput = (inputValue) => {
-    if (inputValue.includes('000')) {
-      setIsValid(true);
-      setError('');
-      return '';
-    }
-
     if (inputValue.length === 0) {
       return errors.empty;
     }
-
-    if (!phoneMask.test(inputValue)) {
-      return errors.errorLength;
+    if (inputValue[0] !== '@' && inputValue[0] !== '-') {
+      return errors.errorInvalid;
     }
-
     setIsValid(true);
     setError('');
     return '';
@@ -50,9 +39,8 @@ const InputPhone = ({name = '', placeholder = '', value, setValue}) => {
   return (
     <label className={styleInput.label}>
       {error}
-      <InputMask
-        mask="+7 (999) 999-99-99"
-        type='phone'
+      <input
+        type='text'
         name={name}
         placeholder={placeholder}
         value={value}
@@ -68,4 +56,4 @@ const InputPhone = ({name = '', placeholder = '', value, setValue}) => {
   );
 };
 
-export default InputPhone;
+export default InputMessenger;

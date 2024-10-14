@@ -1,18 +1,19 @@
-import styleInput from './input.module.css'
+import styleInput from "./input.module.css";
 import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
-const InputDate = ({name = '', placeholder='', value, setValue}) => {
+const InputCheckbox = ({name, placeholder, initialChecked = false, required = false, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
+  const [checked, setChecked] = useState(initialChecked);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
-    errorInvalid: `${name} может содержать только буквы и знак дефиса`,
   }
 
   const handleInputChange = ((e) => {
     e.preventDefault();
+    setChecked(e.target.value);
     setValue(e.target.value);
     const error = validateInput(e.target.value);
 
@@ -23,33 +24,40 @@ const InputDate = ({name = '', placeholder='', value, setValue}) => {
     }
   })
 
-  const validateInput = (inputValue) => {
-    if (inputValue.length === 0) {
+  const validateInput = (value) => {
+    if (!required) {
+      setIsValid(true);
+      setError('');
+      return '';
+    }
+
+    if (!value) {
       return errors.empty;
     }
+
     setIsValid(true);
     setError('');
     return '';
   }
 
   return (
-    <label className={styleInput.label}>
+    <label className={
+      `${isValid ?
+        `${styleInput.valid}` :
+        `${styleInput.invalid}`}
+                  ${styleInput.input}
+                  ${styleInput.label}`
+    }>
       {error}
       <input
-        type='date'
+        type='checkbox'
         name={name}
-        placeholder={placeholder}
-        value={value}
-        className={
-          `${isValid ?
-            `${styleInput.valid}` :
-            `${styleInput.invalid}`}
-          ${styleInput.input}`
-        }
+        value={checked}
         onChange={handleInputChange}
       />
+      <p>{placeholder}</p>
     </label>
   );
 };
 
-export default InputDate;
+export default InputCheckbox;

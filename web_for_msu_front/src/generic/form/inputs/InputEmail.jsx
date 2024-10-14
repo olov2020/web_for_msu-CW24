@@ -1,20 +1,22 @@
 import styleInput from './input.module.css'
 import {useState} from "react";
 
-const InputEmail = () => {
+// eslint-disable-next-line react/prop-types
+const InputEmail = ({name = '', placeholder = '', value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
-  const [email, setEmail] = useState('');
   const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [error, setError] = useState('');
   const errors = {
-    empty: 'Данное поле не может быть пустым',
+    empty: (name.includes('parent') ?
+      'Данное поле не может быть пустым. При отсутствии почты поставьте прочерк (-)' :
+      'Данное поле не может быть пустым'),
     error: 'Данное поле должно быть заполнено корректно',
   }
 
   const handleInputChange = ((e) => {
     e.preventDefault();
-    setEmail(e.target.value);
+    setValue(e.target.value);
     const error = validateInput(e.target.value);
 
     if (error) {
@@ -24,13 +26,21 @@ const InputEmail = () => {
     }
   })
 
-  const validateInput = (value) => {
-    if (value.length === 0) {
+  const validateInput = (inputValue) => {
+    if (inputValue === '-' && name.includes('parent')) {
+      setIsValid(true);
+      setError('');
+      return '';
+    }
+
+    if (inputValue.length === 0) {
       return errors.empty;
     }
-    if (!emailValidationRegex.test(email)) {
+
+    if (!emailValidationRegex.test(inputValue)) {
       return errors.error;
     }
+
     setIsValid(true);
     setError('');
     return '';
@@ -41,9 +51,9 @@ const InputEmail = () => {
       {error}
       <input
         type='text'
-        name='email'
-        placeholder='Почта'
-        value={email}
+        name={name}
+        placeholder={placeholder}
+        value={value}
         className={
           `${isValid ?
             `${styleInput.valid}` :

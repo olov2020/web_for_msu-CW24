@@ -1,14 +1,13 @@
-import styleInput from './input.module.css'
+import styleInput from "./input.module.css";
 import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
-const InputDate = ({name = '', placeholder='', value, setValue}) => {
+const InputDropdown = ({name, placeholder, values = [], value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
-    errorInvalid: `${name} может содержать только буквы и знак дефиса`,
   }
 
   const handleInputChange = ((e) => {
@@ -27,6 +26,7 @@ const InputDate = ({name = '', placeholder='', value, setValue}) => {
     if (inputValue.length === 0) {
       return errors.empty;
     }
+    
     setIsValid(true);
     setError('');
     return '';
@@ -35,21 +35,28 @@ const InputDate = ({name = '', placeholder='', value, setValue}) => {
   return (
     <label className={styleInput.label}>
       {error}
-      <input
-        type='date'
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        className={
-          `${isValid ?
-            `${styleInput.valid}` :
-            `${styleInput.invalid}`}
-          ${styleInput.input}`
-        }
-        onChange={handleInputChange}
+      <input list="dropdown-options"
+             className={
+               `${isValid ?
+                 `${styleInput.valid}` :
+                 `${styleInput.invalid}`}
+                  ${styleInput.input}`
+             }
+             type='text'
+             name={name}
+             placeholder={placeholder}
+             value={value}
+             onChange={handleInputChange}
       />
+      <datalist id="dropdown-options">
+        {values.map((el) => (
+          <option key={el} value={el}>
+            {el}
+          </option>
+        ))}
+      </datalist>
     </label>
   );
 };
 
-export default InputDate;
+export default InputDropdown;

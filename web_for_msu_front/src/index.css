@@ -45,12 +45,12 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: rgb(21, 146, 171);
+    background-color: #E094AD;
     border-radius: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgb(31, 125, 2);
+    background-color: #9F1A59;
     border-radius: 12px;
 }
 

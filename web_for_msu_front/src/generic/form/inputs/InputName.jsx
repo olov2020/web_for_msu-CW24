@@ -1,24 +1,24 @@
 import styleInput from "./input.module.css";
 import {useState} from "react";
 
-
 // eslint-disable-next-line react/prop-types
-const InputName = ({nameType = '', nameText = ''}) => {
+const InputName = ({name = '', placeholder = '', value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const nameValidationRegex = /^[a-zA-Zа-яА-ЯёЁ\-]+(?:\s+[a-zA-Zа-яА-ЯёЁ\-]+)*$/;
-  const [name, setName] = useState('');
   const [error, setError] = useState('');
   const errors = {
-    empty: (nameType === 'Отчество' ?
-    'Данное поле не может быть пустым. Если отчества нет, поставьте прочерк (-)':
-    'Данное поле не может быть пустым'),
-    errorInvalid: `${nameType} может содержать только буквы и знак дефиса`,
+    empty: (name.includes('lastname') ?
+      'Данное поле не может быть пустым. Если отчества нет, поставьте прочерк (-)' :
+      name.includes('parent') ?
+        'Данное поле не может быть пустым. При отсутствии родителя / опекуна поставьте прочерк (-)' :
+        'Данное поле не может быть пустым'),
+    errorInvalid: `${placeholder} может содержать только буквы и знак дефиса`,
   }
 
   const handleInputChange = ((e) => {
     e.preventDefault();
-    setName(e.target.value);
+    setValue(e.target.value);
     const error = validateInput(e.target.value);
 
     if (error) {
@@ -28,11 +28,11 @@ const InputName = ({nameType = '', nameText = ''}) => {
     }
   })
 
-  const validateInput = (value) => {
-    if (value.length === 0) {
+  const validateInput = (inputValue) => {
+    if (inputValue.length === 0) {
       return errors.empty;
     }
-    if (!nameValidationRegex.test(value)) {
+    if (!nameValidationRegex.test(inputValue)) {
       return errors.errorInvalid;
     }
     setIsValid(true);
@@ -45,9 +45,9 @@ const InputName = ({nameType = '', nameText = ''}) => {
       {error}
       <input
         type='text'
-        name={nameText}
-        placeholder={nameType}
-        value={name}
+        name={name}
+        placeholder={placeholder}
+        value={value}
         className={
           `${isValid ?
             `${styleInput.valid}` :
