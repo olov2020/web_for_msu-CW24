@@ -8,7 +8,7 @@ const authStatus = {
 const defaultState = {
     id: 0,
     email: "",
-    authStatus: authStatus['none'],
+    authStatus: authStatus.none,
 }
 
 const SET_AUTH = "SET_AUTH"

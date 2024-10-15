@@ -4,7 +4,7 @@ import {useState} from "react";
 import {FiEye} from "react-icons/fi";
 
 // eslint-disable-next-line react/prop-types
-const InputPassword = ({value, setValue}) => {
+const InputPassword = ({name, placeholder, value, setValue}) => {
   const [isValid, setIsValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -87,8 +87,8 @@ const InputPassword = ({value, setValue}) => {
       {error}
       <input
         type={showPassword ? 'text' : 'password'}
-        name='password'
-        placeholder='Пароль'
+        name={name}
+        placeholder={placeholder}
         value={value}
         className={
           `${isValid ?

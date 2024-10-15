@@ -10,7 +10,9 @@ const Login = () => {
     <div className={styleApp.pageSection}>
       <h1 className={styleApp.pageTitle}>Вход в личный аккаунт</h1>
 
-      <Form inputs={['email', 'password']} buttonText='Войти' type='login'/>
+      <div className={style.form}>
+        <Form inputs={['email', 'password']} buttonText='Войти' type='login'/>
+      </div>
 
       <div className={style.links}>
         <p>Зарегистрироваться</p>

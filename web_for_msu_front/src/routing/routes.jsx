@@ -1,4 +1,5 @@
 import {
+  ACCOUNT_ROUTE,
   HOME_ROUTE,
   LOGIN_ROUTE,
   NOT_FOUND_ROUTE,
@@ -10,6 +11,7 @@ import NotFound from "../pages/notFound/NotFound.jsx";
 import Login from "../pages/login/Login.jsx";
 import RegistrationPupil from "../pages/registration/RegistrationPupil.jsx";
 import RegistrationTeacher from "../pages/registration/RegistrationTeacher.jsx";
+import Account from "../pages/account/Account.jsx";
 
 export const publicRoutes = [
   {
@@ -31,6 +33,10 @@ export const publicRoutes = [
   {
     path: REGISTRATION_TEACHER_ROUTE,
     Element: <RegistrationTeacher/>,
+  },
+  {
+    path: ACCOUNT_ROUTE,
+    Element: <Account/>,
   },
 ]
 

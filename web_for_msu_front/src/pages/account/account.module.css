@@ -1,0 +1,21 @@
+.account {
+    display: flex;
+    justify-content: space-around;
+
+    width: 100%;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        width: 20%;
+    }
+}
+
+.userPhoto {
+    height: 20rem;
+    border-radius: 50%;
+    object-fit: contain;
+}

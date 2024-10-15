@@ -9,17 +9,19 @@ const RegistrationTeacher = () => {
     <div className={styleApp.pageSection}>
       <h1 className={styleApp.pageTitle}>Регистрация Преподавателя</h1>
 
-      <Form inputs={
-        ['photo', 'name', 'surname', 'lastname',
-          'birthDate', 'email', 'password', 'phone',
-          'school', 'school_end_date', 'university', 'university_end_date',
-          'work',
-          'registration_address',
-          'telegram', 'vk',
-          'was_pupil',
-        ]
-      }
-            buttonText='Зарегистрироваться' type='teacher_registration'/>
+      <div className={loginStyle.form}>
+        <Form inputs={
+          ['photo', 'name', 'surname', 'lastname',
+            'birthDate', 'email', 'password', 'phone',
+            'school', 'school_end_date', 'university', 'university_end_date',
+            'work',
+            'registration_address',
+            'telegram', 'vk',
+            'was_pupil',
+          ]
+        }
+              buttonText='Зарегистрироваться' type='teacher_registration'/>
+      </div>
 
       <div className={loginStyle.links}>
         <Link to={REGISTRATION_PUPIL_ROUTE}>

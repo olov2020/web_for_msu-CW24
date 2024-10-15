@@ -14,6 +14,28 @@ export const getUserInfoByUserId = async ({userId}) => {
   return data
 }
 
+export const userChangePhoto = async ({photo}) => {
+  const {data} = await $host.post('/account/photo', {photo}, {
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+
+  localStorage.setItem('token', data.accessToken)
+  return jwtDecode(data.accessToken)
+}
+
+export const userChangeData = async ({name, surname, lastname, email, phone, school}) => {
+  const {data} = await $host.post('/account/data', {name, surname, lastname, email, phone, school}, {
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+
+  localStorage.setItem('token', data.accessToken)
+  return jwtDecode(data.accessToken)
+}
+
 export const userLogin = async ({email, password}) => {
   const {data} = await $host.post('/signIn', {email, password}, {
     headers: {

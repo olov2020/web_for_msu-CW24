@@ -1,7 +1,7 @@
 import styleInput from "./input.module.css";
 import styleFileInput from './inputFile.module.css'
 import {useEffect, useRef, useState} from "react";
-import defaultUserImage from '../../../../public/registration/default_user.svg'
+import defaultUserImage from '../../../../public/generic/default_user.svg'
 
 // eslint-disable-next-line react/prop-types
 const InputPhoto = ({name = '', accept = '', multiple = false, text = '', setValue}) => {
