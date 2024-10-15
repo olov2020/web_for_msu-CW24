@@ -3,6 +3,7 @@ import AppRouter from "./routing/AppRouter.jsx";
 import {useEffect, useState} from "react";
 import Loading from "./pages/loading/Loading.jsx";
 import Header from "./generic/header/Header.jsx";
+import Footer from "./generic/footer/Footer.jsx";
 
 const App = () => {
 
@@ -10,7 +11,7 @@ const App = () => {
 
   useEffect(() => {
     // Simulate async operation (replace with your actual loading logic)
-    const loadingDelay = 1500; // 2 seconds
+    const loadingDelay = 1500; // 1.5 seconds
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
     }, loadingDelay);
@@ -28,6 +29,8 @@ const App = () => {
       <Header/>
 
       <AppRouter/>
+
+      <Footer/>
     </BrowserRouter>
   )
 }

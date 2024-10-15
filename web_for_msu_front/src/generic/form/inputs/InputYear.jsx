@@ -2,7 +2,7 @@ import styleInput from "./input.module.css";
 import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
-const InputNumber = ({name = '', placeholder = '', value, setValue}) => {
+const InputYear = ({name = '', placeholder = '', value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -28,10 +28,11 @@ const InputNumber = ({name = '', placeholder = '', value, setValue}) => {
       return errors.empty;
     }
 
-    const year = new Date().getFullYear();
+    // TODO check for year of end of school and university for pupil and teacher
+    /*const year = new Date().getFullYear();
     if (inputValue > year + 4 || inputValue < year) {
       return errors.notValid;
-    }
+    }*/
 
     setIsValid(true);
     setError('');
@@ -58,4 +59,4 @@ const InputNumber = ({name = '', placeholder = '', value, setValue}) => {
   );
 };
 
-export default InputNumber;
+export default InputYear;

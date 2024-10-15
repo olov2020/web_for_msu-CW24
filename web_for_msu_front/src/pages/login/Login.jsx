@@ -1,4 +1,5 @@
 import style from './login.module.css'
+import styleApp from '../../app.module.css'
 import Form from "../../generic/form/Form.jsx";
 import {Link} from "react-router-dom";
 import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../../routing/consts.js";
@@ -6,8 +7,8 @@ import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../../routin
 const Login = () => {
 
   return (
-    <div className={style.login}>
-      <h1>Вход в личный аккаунт</h1>
+    <div className={styleApp.pageSection}>
+      <h1 className={styleApp.pageTitle}>Вход в личный аккаунт</h1>
 
       <Form inputs={['email', 'password']} buttonText='Войти' type='login'/>
 

@@ -99,12 +99,7 @@ console.log(partialPaul);
 
 
 
-export type MyCapitalize<T extends string> =
-    0 extends keyof T ? // проверяем что в строке есть хотябы 1 буква
-        T extends `${T[0]}${infer Tail}` ? // если есть еще буквы капитализируем только первую
-            `${Uppercase<T[0]>}${Tail}`
-            : `${Uppercase<T>}` // иначе всю строку из одной буквы
-        : T
+export type MyCapitalize<T> = T extends `${infer F}${infer R}` ? `${Uppercase<F>}${R}` : T;
 
 type MyCapitalizeAbc = MyCapitalize<'as'>;
 const myCapitalizeAbc: MyCapitalizeAbc = 'As';
@@ -179,17 +174,12 @@ console.log('User params:', usersParam, usersParam1, usersParam2);
 
 
 
-type CamelCase<S extends string> = S extends `${infer Head}_${infer Tail}`
-    ? `${Lowercase<Head>}${Capitalize<CamelCase<Tail>>}`
-    : S;
+export type Camelize<S extends string> =
+    S extends `${infer P}_${infer T}` ? `${P}${Capitalize<Camelize<T>>}` : S;
 
-type Camelize<ObjType> = ObjType extends object
-    ? {
-        [Key in keyof ObjType as CamelCase<Extract<Key, string>>]: ObjType[Key] extends object
-            ? Camelize<ObjType[Key]>
-            : ObjType[Key];
-    }
-    : ObjType;
+type CamelizeObject<T> = T extends object
+    ? { [K in keyof T as Camelize<K & string>]: CamelizeObject<T[K]> }
+    : T;
 
 type SnakeCaseUser = {
     user_name: string,
@@ -219,7 +209,7 @@ const snake_case_paul: SnakeCaseUser = {
     }
 }
 
-type CamelizeUser = Camelize<SnakeCaseUser>;
+type CamelizeUser = CamelizeObject<SnakeCaseUser>;
 
 const camelizedPaulUser: CamelizeUser = {
     userName: "Pavel_зклщаernov",
@@ -243,13 +233,13 @@ console.log('Camelized object:', camelizedPaulUser);
 
 
 
-type DeepPick<T, Path extends string> =
-    Path extends `${infer Key}.${infer Rest}`
-        ? Key extends keyof T
-            ? { [K in Key]: DeepPick<T[K], Rest> }
+export type DeepPick<T, Path extends string> =
+    Path extends `${infer K}.${infer Rest}`
+        ? K extends keyof T
+            ? { [P in K]: DeepPick<T[K], Rest> }
             : never
         : Path extends keyof T
-            ? { [K in Path]: T[K] }
+            ? { [P in Path]: T[Path] }
             : never;
 
 type obj = {

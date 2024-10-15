@@ -1,6 +1,6 @@
 import {$host, $authHost} from './axiosApi.js'
 import {jwtDecode} from 'jwt-decode'
-import {REGISTRATION_PUPIL_ROUTE} from "../routing/consts.js";
+import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../routing/consts.js";
 
 export const getScheduleByUserId = async ({userId}) => {
   const {data} = await $authHost.get(`/home/schedule/${userId}`)
@@ -27,6 +27,17 @@ export const userLogin = async ({email, password}) => {
 
 export const pupilRegistration = async (formValues) => {
   const {data} = await $host.post(REGISTRATION_PUPIL_ROUTE, formValues, {
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+
+  localStorage.setItem('token', data.accessToken)
+  return jwtDecode(data.accessToken)
+}
+
+export const teacherRegistration = async (formValues) => {
+  const {data} = await $host.post(REGISTRATION_TEACHER_ROUTE, formValues, {
     headers: {
       'content-type': 'application/json'
     }

@@ -2,13 +2,13 @@ import style from './form.module.css'
 import InputEmail from "./inputs/InputEmail.jsx";
 import InputPassword from "./inputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
-import {pupilRegistration, userLogin} from "../../api/userApi.js";
+import {pupilRegistration, teacherRegistration, userLogin} from "../../api/userApi.js";
 import InputFile from "./inputs/InputFile.jsx";
 import InputName from "./inputs/InputName.jsx";
 import InputDate from "./inputs/InputDate.jsx";
 import InputPhone from "./inputs/InputPhone.jsx";
 import InputText from "./inputs/InputText.jsx";
-import InputNumber from "./inputs/InputNumber.jsx";
+import InputYear from "./inputs/InputYear.jsx";
 import InputMessenger from "./inputs/InputMessenger.jsx";
 import InputDropdown from "./inputs/InputDropdown.jsx";
 import InputCheckbox from "./inputs/InputCheckbox.jsx";
@@ -25,6 +25,8 @@ const Form = ({inputs = [], buttonText, type}) => {
       userLogin();
     } else if (type === 'pupil_registration') {
       pupilRegistration(Object.fromEntries(formValues));
+    } else if (type === 'teacher_registration') {
+      teacherRegistration(Object.fromEntries(formValues));
     } else {
       console.error('Invalid type:', type);
     }
@@ -92,8 +94,21 @@ const Form = ({inputs = [], buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [schoolEndDate, setSchoolEndDate] = useState('');
         formValues.schoolEndDate = schoolEndDate;
-        return <InputNumber name={input} placeholder='Год окончания школы' value={schoolEndDate}
-                            setValue={setSchoolEndDate}/>
+        return <InputYear name={input} placeholder='Год окончания школы' value={schoolEndDate}
+                          setValue={setSchoolEndDate}/>
+      }
+      case 'university': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [university, setUniversity] = useState('');
+        formValues.university = university;
+        return <InputText name={input} placeholder='Университет' value={university} setValue={setUniversity}/>
+      }
+      case 'university_end_date': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [universityEndDate, setUniversityEndDate] = useState('');
+        formValues.universityEndDate = universityEndDate;
+        return <InputYear name={input} placeholder='Год окончания университета' value={universityEndDate}
+                          setValue={setUniversityEndDate}/>
       }
       case 'registration_address': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -101,6 +116,12 @@ const Form = ({inputs = [], buttonText, type}) => {
         formValues.registrationAddress = registrationAddress;
         return <InputText name={input} placeholder='Адрес регистрации' value={registrationAddress}
                           setValue={setRegistrationAddress}/>
+      }
+      case 'work': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [work, setWork] = useState('');
+        formValues.work = work;
+        return <InputText name={input} placeholder='Место работы' value={work} setValue={setWork}/>
       }
       case 'telegram': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -206,9 +227,16 @@ const Form = ({inputs = [], buttonText, type}) => {
         return <InputCheckbox name={input} placeholder='Согласие на получение рассылки' initialChecked={true}
                               required={false} setValue={setMailing}/>
       }
+      case 'was_pupil': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [wasPupil, setWasPupil] = useState(true);
+        formValues.wasPupil = wasPupil
+        return <InputCheckbox name={input} placeholder='Был ли учеником ЭМШ' initialChecked={true}
+                              required={false} setValue={setWasPupil}/>
+      }
       default:
-        alert('Something went wrong!');
-        return <input/>
+        console.log('There is no such field in form')
+        return <input value={input}/>
     }
   }
 

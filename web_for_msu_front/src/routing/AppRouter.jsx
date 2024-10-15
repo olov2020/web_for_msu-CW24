@@ -1,10 +1,18 @@
 import {useSelector} from 'react-redux'
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {authRoutes, publicRoutes} from "./routes.jsx";
 import {NOT_FOUND_ROUTE} from "./consts.js";
+import {useEffect} from "react";
 
 const AppRouter = () => {
   const authStatus = useSelector(state => state.user.authStatus);
+
+  const { pathname } = useLocation();
+
+  // Automatically scrolls to top whenever pathname changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <Routes>
