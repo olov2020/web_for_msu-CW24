@@ -25,8 +25,19 @@ export const userChangePhoto = async ({photo}) => {
   return jwtDecode(data.accessToken)
 }
 
-export const userChangeData = async ({name, surname, lastname, email, phone, school}) => {
+export const pupilChangeData = async ({name, surname, lastname, email, phone, school}) => {
   const {data} = await $host.post('/account/data', {name, surname, lastname, email, phone, school}, {
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+
+  localStorage.setItem('token', data.accessToken)
+  return jwtDecode(data.accessToken)
+}
+
+export const teacherChangeData = async ({name, surname, lastname, email, phone, university, work}) => {
+  const {data} = await $host.post('/account/data', {name, surname, lastname, email, phone, university, work}, {
     headers: {
       'content-type': 'application/json'
     }

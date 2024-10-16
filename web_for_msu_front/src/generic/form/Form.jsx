@@ -2,7 +2,12 @@ import style from './form.module.css'
 import InputEmail from "./inputs/InputEmail.jsx";
 import InputPassword from "./inputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
-import {pupilRegistration, teacherRegistration, userChangeData, userChangePhoto, userLogin} from "../../api/userApi.js";
+import {
+  pupilChangeData,
+  pupilRegistration, teacherChangeData,
+  userChangePhoto,
+  userLogin
+} from "../../api/userApi.js";
 import InputFile from "./inputs/InputFile.jsx";
 import InputName from "./inputs/InputName.jsx";
 import InputDate from "./inputs/InputDate.jsx";
@@ -29,8 +34,10 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       pupilRegistration(formValues);
     } else if (type === 'userChangePhoto') {
       userChangePhoto(formValues.photo);
-    } else if (type === 'userChangeData') {
-      userChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
+    } else if (type === 'pupilChangeData') {
+      pupilChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
+    } else if (type === 'teacherChangeData') {
+      teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
     } else {
       console.error('Invalid type:', type);
     }

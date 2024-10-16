@@ -7,20 +7,20 @@ import Form from "../../generic/form/Form.jsx";
 const Account = () => {
 
   const user = useSelector(state => state.user);
-  // const userInfo = getUserInfoByUserId(user.id);
+  const userInfo = getUserInfoByUserId(user.id);
 
   // FOR TEST
-  const userInfo = {
+  /*const userInfo = {
     name: 'Vladimir',
     surname: 'Vinogradov',
     lastname: 'Andreevich',
     email: 'vavinogradov@edu.hse.ru',
     phone: '+79855800882',
     school: 'Лицей НИУ ВШЭ',
-  }
-
-  // TODO
-  // add check for equals
+    university: 'НИУ ВШЭ',
+    work: 'Сбер',
+    authStatus: 'teacher',
+  }*/
 
   return (
     <div className={style.account}>
@@ -32,9 +32,14 @@ const Account = () => {
       <div>
         <h1 className={styleApp.pageTitle}>Данные пользователя</h1>
 
-        <Form inputs={['name', 'surname', 'lastname', 'email', 'password', 'newPassword', 'phone', 'school']}
-              values={userInfo}
-              buttonText='Обновить данные' type='userChangeData'/>
+        {userInfo.authStatus === 'pupil' ?
+          <Form inputs={['name', 'surname', 'lastname', 'email', 'phone', 'school']}
+                values={userInfo}
+                buttonText='Обновить данные' type='pupilChangeData'/> :
+          <Form inputs={['name', 'surname', 'lastname', 'email', 'phone', 'university', 'work']}
+                values={userInfo}
+                buttonText='Обновить данные' type='teacherChangeData'/>
+        }
       </div>
 
       <div>
