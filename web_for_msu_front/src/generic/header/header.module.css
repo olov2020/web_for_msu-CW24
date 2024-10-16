@@ -29,7 +29,7 @@
 }
 
 .logo__img {
-    width: 80%;
+    width: 100%;
     height: auto;
     object-fit: contain;
 }
@@ -89,6 +89,7 @@
 
     padding: .5rem;
 
+    color: black;
     background-color: #F7B7CE;
     border-bottom: 1px solid #9F1A59;
 

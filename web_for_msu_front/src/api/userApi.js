@@ -2,8 +2,8 @@ import {$host, $authHost} from './axiosApi.js'
 import {jwtDecode} from 'jwt-decode'
 import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../routing/consts.js";
 
-export const getScheduleByUserId = async ({userId}) => {
-  const {data} = await $authHost.get(`/home/schedule/${userId}`)
+export const getScheduleByUserId = async ({userId, fromDate, toDate}) => {
+  const {data} = await $authHost.get(`/schedule/:${userId}/:${fromDate}/:${toDate}`)
 
   return data
 }

@@ -3,7 +3,13 @@ import logo from '../../../public/msu_logo.png'
 import Profile from "./profile/Profile.jsx";
 import {useState} from "react";
 import {Link} from "react-router-dom";
-import {HOME_ROUTE} from "../../routing/consts.js";
+import {
+  ADD_NEW_COURSE_ROUTE,
+  ALL_COURSES_ROUTE,
+  HOME_ROUTE,
+  MY_COURSES_ROUTE,
+  SCHEDULE_ROUTE
+} from "../../routing/consts.js";
 
 const Header = () => {
 
@@ -36,6 +42,18 @@ const Header = () => {
       'Список учащихся',
       'Архив событий',
     ],
+  ]
+
+  const menuItemsLinks = [
+    [],
+    [
+      SCHEDULE_ROUTE,
+      MY_COURSES_ROUTE,
+      ALL_COURSES_ROUTE,
+      ADD_NEW_COURSE_ROUTE,
+    ],
+    [],
+    []
   ]
 
   const [showMenu, setShowMenu] = useState(-1);
@@ -76,11 +94,11 @@ const Header = () => {
                  onMouseLeave={() => setShowMenu(-1)}
             >
               {menuItems[index].map((item, index2) => (
-                <div className={style.dropdownList__item}
+                <Link to={menuItemsLinks[index][index2]} className={style.dropdownList__item}
                      key={index2}
                 >
                   <h3>{item}</h3>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
