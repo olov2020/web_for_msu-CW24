@@ -22,16 +22,15 @@ def create_app(config):
     # mail.init_app(app)
     # migrate.init_app(app, db)
 
-    # from .views.home import main as main_blueprint
-    from .views.admin import admin as admin_blueprint
     from .views.pupil import pupil as pupil_blueprint
     from .views.teacher import teacher as teacher_blueprint
 
     from .views.home import HomeView
+    from .views.admin import AdminView
 
     HomeView.register(app)
-    # app.register_blueprint(main_blueprint)
-    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    AdminView.register(app)
+
     app.register_blueprint(pupil_blueprint)
     app.register_blueprint(teacher_blueprint)
 

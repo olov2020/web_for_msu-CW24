@@ -17,8 +17,8 @@ def get_next_monday(date_start):
 # Декоратор для проверки нескольких ролей
 def roles_required(*roles):
     def decorator(fn):
-        @wraps(fn)
         @jwt_required()
+        @wraps(fn)
         def wrapper(*args, **kwargs):
             # Получаем данные о текущем пользователе из JWT
             current_user = get_jwt_identity()
