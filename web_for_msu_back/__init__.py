@@ -22,16 +22,16 @@ def create_app(config):
     # mail.init_app(app)
     # migrate.init_app(app, db)
 
-    from .views.pupil import pupil as pupil_blueprint
     from .views.teacher import teacher as teacher_blueprint
 
     from .views.home import HomeView
     from .views.admin import AdminView
+    from .views.pupil import PupilView
 
     HomeView.register(app)
     AdminView.register(app)
+    PupilView.register(app)
 
-    app.register_blueprint(pupil_blueprint)
     app.register_blueprint(teacher_blueprint)
 
     return app

@@ -7,6 +7,6 @@ class CourseInfoDTO(Schema):
     emsh_grades = fields.String(required=True)
     crediting = fields.Str(required=True)
     direction = fields.Str(required=True)
-    teachers = fields.List(fields.Str(), required=True)
+    teachers = fields.List(fields.Str(), required=True, allow_none=True)
     auditory = fields.Str(required=True, allow_none=True)
     lesson_time = fields.Str(required=True)
