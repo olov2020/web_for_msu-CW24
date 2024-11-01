@@ -76,7 +76,6 @@ class UserService:
         return user
 
     def login(self, request: flask.Request) -> (dict, int):
-        # TODO add refreshment for token
         data = request.get_json()
 
         schema = LoginDTO()

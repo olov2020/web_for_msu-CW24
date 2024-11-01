@@ -15,3 +15,4 @@ openpyxl
 marshmallow~=3.22.0
 flask-jwt-extended
 SQLAlchemy~=2.0.27
+flask-classful
