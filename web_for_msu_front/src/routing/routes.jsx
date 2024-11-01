@@ -1,7 +1,7 @@
 import {
-  ACCOUNT_ROUTE,
+  ACCOUNT_ROUTE, ADD_NEW_COURSE_ROUTE, ALL_COURSES_ROUTE,
   HOME_ROUTE,
-  LOGIN_ROUTE,
+  LOGIN_ROUTE, MY_COURSES_ROUTE,
   NOT_FOUND_ROUTE,
   REGISTRATION_PUPIL_ROUTE,
   REGISTRATION_TEACHER_ROUTE, SCHEDULE_ROUTE
@@ -13,6 +13,9 @@ import RegistrationPupil from "../pages/registration/RegistrationPupil.jsx";
 import RegistrationTeacher from "../pages/registration/RegistrationTeacher.jsx";
 import Account from "../pages/account/Account.jsx";
 import Schedule from "../pages/schedule/Schedule.jsx";
+import MyCourses from "../pages/courses/myCourses/MyCourses.jsx";
+import AllCourses from "../pages/courses/allCourses/AllCourses.jsx";
+import AddNewCourse from "../pages/courses/addNewCourse/AddNewCourse.jsx";
 
 export const publicRoutes = [
   {
@@ -42,6 +45,18 @@ export const publicRoutes = [
   {
     path: SCHEDULE_ROUTE,
     Element: <Schedule/>,
+  },
+  {
+    path: MY_COURSES_ROUTE,
+    Element: <MyCourses/>,
+  },
+  {
+    path: ALL_COURSES_ROUTE,
+    Element: <AllCourses/>,
+  },
+  {
+    path: ADD_NEW_COURSE_ROUTE,
+    Element: <AddNewCourse/>,
   },
 ]
 

@@ -3,11 +3,22 @@ import styleApp from '../../app.module.css'
 import {useSelector} from "react-redux";
 import {getUserInfoByUserId} from "../../api/userApi.js";
 import Form from "../../generic/form/Form.jsx";
+import {useEffect, useState} from "react";
 
 const Account = () => {
 
   const user = useSelector(state => state.user);
-  const userInfo = getUserInfoByUserId(user.id);
+  const [userInfo, setUserInfo] = useState({});
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const info = await getUserInfoByUserId(user.id);
+      setUserInfo(info);
+      console.log(userInfo);
+    }
+
+    getUserInfo();
+  }, []);
 
   // FOR TEST
   /*const userInfo = {

@@ -41,7 +41,7 @@ button {
 }
 
 ::-webkit-scrollbar {
-    width: .5rem;
+    width: .4rem;
 }
 
 ::-webkit-scrollbar-track {

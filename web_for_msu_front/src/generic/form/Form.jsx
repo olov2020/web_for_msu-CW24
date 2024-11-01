@@ -3,6 +3,7 @@ import InputEmail from "./inputs/InputEmail.jsx";
 import InputPassword from "./inputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
+  addNewCourse,
   pupilChangeData,
   pupilRegistration, teacherChangeData,
   userChangePhoto,
@@ -38,6 +39,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       pupilChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
     } else if (type === 'teacherChangeData') {
       teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
+    } else if (type === 'addNewCourse') {
+      addNewCourse(formValues);
     } else {
       console.error('Invalid type:', type);
     }
@@ -46,7 +49,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   const showInput = (input) => {
     switch (input) {
       case 'email': {
-        console.log(values)
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [email, setEmail] = useState(values[input]);
         formValues.email = email;

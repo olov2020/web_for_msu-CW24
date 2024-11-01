@@ -1,4 +1,3 @@
-import style from './schedule.module.css'
 import styleApp from '../../app.module.css'
 import OneWeek from "./oneWeek/OneWeek.jsx";
 
