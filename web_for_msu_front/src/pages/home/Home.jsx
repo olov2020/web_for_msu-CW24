@@ -1,9 +1,24 @@
-import styleApp from '../../app.module.css'
+import style from './home.module.css'
+import Schedule from "../schedule/Schedule.jsx";
+import Achievements from "../../generic/achievements/Achievements.jsx";
+import News from "../news/News.jsx";
 
 const Home = () => {
   return (
-    <div className={styleApp.pageSection}>
-    </div>
+    <main className={style.home}>
+
+      <section className={style.schedule}>
+        <Schedule/>
+      </section>
+
+      <section className={style.news}>
+        <News/>
+      </section>
+
+      <section className={style.achievements}>
+        <Achievements/>
+      </section>
+    </main>
   );
 };
 

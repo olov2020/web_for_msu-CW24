@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Loading = () => {
+const Achievement = () => {
   return (
     <div>
-      Loading...
+
     </div>
   );
 };
 
-export default Loading;
+export default Achievement;

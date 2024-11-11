@@ -2388,7 +2388,7 @@ data - target = "custom-scopes.customScopesIdField" >
     div class = "form-group" >
     <
     label
-for = "custom_scope_name" > Name < /label> <
+for = "custom_scope_name" > InputCourseName < /label> <
     auto - check src = "/search/custom_scopes/check_name"
 required >
     <

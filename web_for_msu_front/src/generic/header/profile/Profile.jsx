@@ -9,7 +9,6 @@ const Profile = () => {
 
   const user = useSelector(state => state.user);
   const userInfo = getUserInfoByUserId(user.id);
-  console.log(user);
 
   return (
     (user.authStatus !== 'none') ?

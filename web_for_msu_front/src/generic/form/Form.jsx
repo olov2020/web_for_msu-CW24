@@ -1,24 +1,26 @@
 import style from './form.module.css'
-import InputEmail from "./inputs/InputEmail.jsx";
-import InputPassword from "./inputs/InputPassword.jsx";
+import InputEmail from "./userInputs/InputEmail.jsx";
+import InputPassword from "./userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
+  addNewCourse,
   pupilChangeData,
   pupilRegistration, teacherChangeData,
   userChangePhoto,
   userLogin
 } from "../../api/userApi.js";
-import InputFile from "./inputs/InputFile.jsx";
-import InputName from "./inputs/InputName.jsx";
-import InputDate from "./inputs/InputDate.jsx";
-import InputPhone from "./inputs/InputPhone.jsx";
-import InputText from "./inputs/InputText.jsx";
-import InputYear from "./inputs/InputYear.jsx";
-import InputMessenger from "./inputs/InputMessenger.jsx";
-import InputDropdown from "./inputs/InputDropdown.jsx";
-import InputCheckbox from "./inputs/InputCheckbox.jsx";
+import InputFile from "./userInputs/InputFile.jsx";
+import InputName from "./userInputs/InputName.jsx";
+import InputDate from "./userInputs/InputDate.jsx";
+import InputPhone from "./userInputs/InputPhone.jsx";
+import InputText from "./userInputs/InputText.jsx";
+import InputYear from "./userInputs/InputYear.jsx";
+import InputMessenger from "./userInputs/InputMessenger.jsx";
+import InputDropdown from "./userInputs/InputDropdown.jsx";
+import InputCheckbox from "./userInputs/InputCheckbox.jsx";
 import {useState} from "react";
-import InputPhoto from "./inputs/InputPhoto.jsx";
+import InputPhoto from "./userInputs/InputPhoto.jsx";
+import InputCourseName from "./courseInputs/InputCourseName.jsx";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type}) => {
@@ -38,6 +40,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       pupilChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
     } else if (type === 'teacherChangeData') {
       teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
+    } else if (type === 'addNewCourse') {
+      addNewCourse(formValues);
     } else {
       console.error('Invalid type:', type);
     }
@@ -46,7 +50,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   const showInput = (input) => {
     switch (input) {
       case 'email': {
-        console.log(values)
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [email, setEmail] = useState(values[input]);
         formValues.email = email;
@@ -251,6 +254,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         formValues.wasPupil = wasPupil
         return <InputCheckbox name={input} placeholder='Был ли учеником ЭМШ' initialChecked={true}
                               required={false} setValue={setWasPupil}/>
+      }
+      case 'courseName': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [courseName, setCourseName] = useState(values[input]);
+        formValues.courseName = courseName
+        return <InputCourseName name={input} placeholder='Название курса'
+                                required={true} setValue={setCourseName}/>
       }
       default:
         console.log('There is no such field in form')
