@@ -1,9 +1,9 @@
 import os
 
-from web_for_msu_back import create_app, db
-from web_for_msu_back.create_roles import create_roles
+from web_for_msu_back.app import create_app, db
+from web_for_msu_back.app.create_roles import create_roles
 
-app = create_app(os.getenv('FLASK_ENV') or 'web_for_msu_back.config.DevelopementConfig')
+app = create_app(os.getenv('FLASK_ENV') or 'web_for_msu_back.app.config.DevelopementConfig')
 with app.app_context():
     db.create_all()
     create_roles()
