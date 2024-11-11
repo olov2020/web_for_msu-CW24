@@ -3,7 +3,7 @@ import styleApp from '../../../app.module.css'
 import style from './addNewCourse.module.css'
 import {useEffect, useState} from "react";
 import {getCourseByFile} from "../../../api/userApi.js";
-import InputFile from "../../../generic/form/inputs/InputFile.jsx";
+import InputFile from "../../../generic/form/userInputs/InputFile.jsx";
 
 const AddNewCourse = () => {
 
@@ -29,7 +29,7 @@ const AddNewCourse = () => {
 
       <InputFile setValue={setFile} value={file} accept={'.xls, .xlsx, .csv'}/>
 
-      <Form inputs={[]} buttonText='Создать новый курс' type='addNewCourse'></Form>
+      <Form inputs={['courseName']} buttonText='Создать новый курс' type='addNewCourse'></Form>
     </section>
   );
 };

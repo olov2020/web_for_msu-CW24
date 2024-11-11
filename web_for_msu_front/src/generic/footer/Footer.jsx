@@ -3,7 +3,7 @@ import style from './footer.module.css'
 const Footer = () => {
 
   return (
-    <div className={style.footer}>
+    <footer className={style.footer}>
       <div>
         <h3>Адрес:</h3>
         <p>119991, Москва, Ленинские горы, III Гуманитарный корпус, д. 1, стр. 46, Экономический факультет, к.364.</p>
@@ -23,7 +23,7 @@ const Footer = () => {
       <div>
         <p>Copyright © 2024 ЭМШ. All Rights Reserved</p>
       </div>
-    </div>
+    </footer>
   );
 };
 

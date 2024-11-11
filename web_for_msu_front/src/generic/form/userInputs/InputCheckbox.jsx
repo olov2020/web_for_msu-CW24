@@ -1,5 +1,5 @@
-import styleInput from "./input.module.css";
 import {useState} from "react";
+import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
 const InputCheckbox = ({name, placeholder, initialChecked = false, required = false, setValue}) => {
@@ -41,22 +41,14 @@ const InputCheckbox = ({name, placeholder, initialChecked = false, required = fa
   }
 
   return (
-    <label className={
-      `${isValid ?
-        `${styleInput.valid}` :
-        `${styleInput.invalid}`}
-                  ${styleInput.input}
-                  ${styleInput.label}`
-    }>
-      {error}
-      <input
-        type='checkbox'
-        name={name}
-        value={checked}
-        onChange={handleInputChange}
-      />
-      <p>{placeholder}</p>
-    </label>
+    <Input type='checkbox'
+           name={name}
+           value={checked}
+           fieldName={placeholder}
+           onChange={handleInputChange}
+           error={error}
+           isValid={isValid}
+    />
   );
 };
 

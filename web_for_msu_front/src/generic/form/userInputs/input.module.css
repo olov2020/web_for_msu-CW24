@@ -8,8 +8,6 @@
 
     width: 100%;
 
-    color: #8f1313;
-
     font-size: 1rem;
     font-weight: 500;
 
@@ -21,15 +19,11 @@
 .input {
     padding: .7rem;
     font-size: 1.1rem;
-    border: .2rem solid black;
-    border-radius: .5rem;
 
-    background-color: #F7B7CE;
     color: black;
-
-    &:focus {
-        border: .2rem solid black;
-    }
+    background-color: #f4dae4;
+    border: none;
+    border-radius: .5rem;
 
     /*&:focus {
         border: .2rem solid #F7B7CE;
@@ -39,11 +33,13 @@
 }
 
 .valid {
-    border: .2rem solid #205c20;
-    background-color: #e2ffe2;
+    background-color: #d5fad5;
 }
 
 .invalid {
-    border: .2rem solid #8f1313;
     background-color: #ffd1d1;
+}
+
+.errorMessage {
+    color: #8f1313;
 }

@@ -1,7 +1,7 @@
 import {
   ACCOUNT_ROUTE, ADD_NEW_COURSE_ROUTE, ALL_COURSES_ROUTE,
   HOME_ROUTE,
-  LOGIN_ROUTE, MY_COURSES_ROUTE,
+  LOGIN_ROUTE, MY_COURSES_ROUTE, NEWS_ROUTE,
   NOT_FOUND_ROUTE,
   REGISTRATION_PUPIL_ROUTE,
   REGISTRATION_TEACHER_ROUTE, SCHEDULE_ROUTE
@@ -16,6 +16,7 @@ import Schedule from "../pages/schedule/Schedule.jsx";
 import MyCourses from "../pages/courses/myCourses/MyCourses.jsx";
 import AllCourses from "../pages/courses/allCourses/AllCourses.jsx";
 import AddNewCourse from "../pages/courses/addNewCourse/AddNewCourse.jsx";
+import News from "../pages/news/News.jsx";
 
 export const publicRoutes = [
   {
@@ -57,6 +58,10 @@ export const publicRoutes = [
   {
     path: ADD_NEW_COURSE_ROUTE,
     Element: <AddNewCourse/>,
+  },
+  {
+    path: NEWS_ROUTE,
+    Element: <News/>,
   },
 ]
 
