@@ -13,7 +13,7 @@ class BaseConfig:
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=30)  # Время жизни access-токена
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = os.path.join('static', 'photos', 'people_photo')
+    UPLOAD_FOLDER = os.path.join('app', 'static', 'photos', 'people_photo')
     SECURITY_MSG_UNAUTHENTICATED = ("Авторизуйтесь для доступа к этой странице", "error")
     SECURITY_MSG_UNAUTHORIZED = ("У вас нет прав доступа к этой странице", "error")
     WTF_CSRF_ENABLED = True
