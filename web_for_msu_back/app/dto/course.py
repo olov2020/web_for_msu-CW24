@@ -100,10 +100,10 @@ class CourseDTO(Schema):
         # Добавляем связанных учителей (teachers)
         if "teachers" in data:
             for teacher_data in data["teachers"]:
+                if teacher_data["leads"] is False:
+                    continue
                 teacher = Teacher.query.get(teacher_data["id"])
                 if teacher is None:
-                    continue
-                if teacher_data["leads"] is False:
                     continue
                 course.teachers.append(TeacherCourse(
                     teacher_id=teacher.id,

@@ -12,7 +12,7 @@ from web_for_msu_back.app.functions import get_next_monday, auth_required, get_s
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import UserService
+    from web_for_msu_back.app.services import UserService, CourseService
 
 
 class HomeView(FlaskView):
@@ -22,7 +22,7 @@ class HomeView(FlaskView):
     @auth_required
     def user_info(self):
         services = get_services()
-        user_service = services["user_service"]
+        user_service: UserService = services["user_service"]
         response, code = user_service.get_user_info()
         return response, code
 
@@ -95,7 +95,7 @@ class HomeView(FlaskView):
     @auth_required
     def schedule(self):
         services = get_services()
-        course_service = services["course_service"]
+        course_service: CourseService = services["course_service"]
         date_start = datetime.now().date()
         lessons_in_week, code1 = course_service.get_lessons_in_week(date_start, g.current_user.id)
         lessons_in_two_weeks, code2 = course_service.get_lessons_in_week(get_next_monday(date_start), g.current_user.id)
@@ -107,6 +107,6 @@ class HomeView(FlaskView):
     @method("GET")
     def all_courses(self):
         services = get_services()
-        course_service = services["course_service"]
+        course_service: CourseService = services["course_service"]
         courses = course_service.get_all_courses()
         return jsonify(courses), 200
