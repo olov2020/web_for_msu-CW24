@@ -8,9 +8,10 @@ from flask_jwt_extended import get_jwt_identity, create_access_token, create_ref
 from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
 
+from web_for_msu_back.app.dto.role import RoleDTO
 from web_for_msu_back.app.dto.login import LoginDTO
 from web_for_msu_back.app.dto.user_info import UserInfoDTO
-from web_for_msu_back.app.models import User, Role
+from web_for_msu_back.app.models import User, Role, Teacher, Pupil
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -25,7 +26,6 @@ class UserService:
         self.image_service = image_service
 
     def add_pupil(self, request: flask.Request) -> (dict, int):
-        # TODO fix this. should firstly parse to dto
         data = json.loads(request.form.get('data'))
         if self.get_user_by_email(data.get('email', None)) is not None:
             return {'error': 'Пользователь с такой почтой уже существует'}, 400
@@ -120,10 +120,42 @@ class UserService:
         data = {
             'name': identity.get('name'),
             'surname': identity.get('surname'),
-            'status': identity.get('roles')[-1],
+            'status': ", ".join(identity.get('roles')),
             'photo': identity.get('image'),
             'patronymic': identity.get('patronymic'),
             'email': identity.get('email'),
             'admin': 'admin' in identity.get('roles')
         }
         return UserInfoDTO().load(data), 200
+
+    def get_all_roles(self) -> (list[RoleDTO], int):
+        roles = Role.query.all()
+        return [RoleDTO().load({"name": role.name}) for role in roles], 200
+
+    def get_all_users_with_role(self, role: str) -> (list[UserInfoDTO], int):
+        match role:
+            case "teacher":
+                role_class = Teacher
+            case "pupil":
+                role_class = Pupil
+            case _:
+                role_class = Teacher
+
+        users = role_class.query.with_entities(
+            role_class.name,
+            role_class.surname,
+            role_class.patronymic,
+            User.image
+        ).join(User, role_class.user_id == User.id)
+
+        result = []
+        for user in users:
+            data = {
+                "name": user.name,
+                "surname": user.surname,
+                "patronymic": user.patronymic,
+                "photo": self.image_service.get_from_yandex_s3("images", user.image),
+                "status": role
+            }
+            result.append(UserInfoDTO().load(data))
+        return result, 200

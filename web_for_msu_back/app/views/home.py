@@ -110,3 +110,17 @@ class HomeView(FlaskView):
         course_service: CourseService = services["course_service"]
         courses = course_service.get_all_courses()
         return jsonify(courses), 200
+
+    @method("GET")
+    def all_roles(self):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        roles, code = user_service.get_all_roles()
+        return jsonify(roles), code
+
+    @method("GET")
+    def all_users_with_role(self, role: str):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        users, code = user_service.get_all_users_with_role(role)
+        return jsonify(users), code
