@@ -1,10 +1,10 @@
 import styleInput from "./input.module.css";
 import styleFileInput from './inputFile.module.css'
 import {useEffect, useRef, useState} from "react";
-import defaultUserImage from '../../../../public/generic/default_user.svg'
+import defaultUserImage from '../../../../../public/generic/default_user.svg'
 
 // eslint-disable-next-line react/prop-types
-const InputPhoto = ({name = '', accept = '', multiple = false, text = '', setValue}) => {
+const InputPhoto = ({name = '', fieldName, accept = '', required = false, setValue}) => {
 
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
@@ -57,14 +57,21 @@ const InputPhoto = ({name = '', accept = '', multiple = false, text = '', setVal
   }
 
   return (
+    // TODO change to Input
     <div className={styleFileInput.container}>
       <label className={`${styleFileInput.label} ${styleInput.label}`}>
-        {error}
+        <p style={{
+          alignSelf: 'flex-start',
+        }}>
+          {fieldName}
+        </p>
+
         <input
           type='file'
+          required={required}
           name={name}
           ref={imageUploader}
-          multiple={multiple}
+          multiple={false}
           accept={accept}
           className={
             `${isValid ?
@@ -76,7 +83,9 @@ const InputPhoto = ({name = '', accept = '', multiple = false, text = '', setVal
           onChange={handleInputChange}
         />
 
-        <p>{text}</p>
+        <p className={styleInput.errorMessage}>
+          {error}
+        </p>
       </label>
 
       <img

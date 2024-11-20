@@ -1,15 +1,19 @@
 import styleInput from "./input.module.css";
+import InputMask from 'react-input-mask';
 import {useState} from "react";
-
+import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputMessenger = ({name = '', placeholder = '', value, setValue}) => {
+const InputPhone = ({name = '', placeholder = '', fieldName, value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
+  const phoneMask = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
   const errors = {
-    empty: `Данное поле не может быть пустым. Поставьте прочерк (-) при отсутствии ${placeholder}`,
-    errorInvalid: `Ссылка должна начинаться с @`,
+    empty: (name.includes('parent') ?
+      'Данное поле не может быть пустым. При отсутствии телефона начните вводить нули' :
+      'Данное поле не может быть пустым'),
+    errorLength: 'Введите номер телефона полностью',
   }
 
   const handleInputChange = ((e) => {
@@ -25,12 +29,20 @@ const InputMessenger = ({name = '', placeholder = '', value, setValue}) => {
   })
 
   const validateInput = (inputValue) => {
+    if (inputValue.includes('000')) {
+      setIsValid(true);
+      setError('');
+      return '';
+    }
+
     if (inputValue.length === 0) {
       return errors.empty;
     }
-    if (inputValue[0] !== '@' && inputValue[0] !== '-') {
-      return errors.errorInvalid;
+
+    if (!phoneMask.test(inputValue)) {
+      return errors.errorLength;
     }
+
     setIsValid(true);
     setError('');
     return '';
@@ -38,9 +50,15 @@ const InputMessenger = ({name = '', placeholder = '', value, setValue}) => {
 
   return (
     <label className={styleInput.label}>
-      {error}
-      <input
-        type='text'
+      <p style={{
+        alignSelf: 'flex-start',
+      }}>
+        {fieldName}
+      </p>
+
+      <InputMask
+        mask="+7 (999) 999-99-99"
+        type='phone'
         name={name}
         placeholder={placeholder}
         value={value}
@@ -52,8 +70,12 @@ const InputMessenger = ({name = '', placeholder = '', value, setValue}) => {
         }
         onChange={handleInputChange}
       />
+
+      <p className={styleInput.errorMessage}>
+        {error}
+      </p>
     </label>
   );
 };
 
-export default InputMessenger;
+export default InputPhone;

@@ -2,13 +2,17 @@ import {useEffect, useRef, useState} from "react";
 import {List, Pagination} from "antd";
 import style from './news.module.css'
 import NewsCard from "./newsCard/NewsCard.jsx";
+import {getAllNews} from "../../api/newsApi.js";
 
 const News = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
   const listRef = useRef(null); // Reference to the list
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState([
+    {title: 'Title', photo: null, date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
+  ]);
+  /*const [news, setNews] = useState([]);*/
   const [displayedNews, setDisplayedNews] = useState(
     news.slice(0, itemsPerPage)
   );
@@ -36,8 +40,12 @@ const News = () => {
 
   useEffect(() => {
     const getNews = async () => {
-      const data = await getNews();
-      setNews(data);
+      try {
+        const data = await getAllNews();
+        setNews(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     getNews();
@@ -62,7 +70,8 @@ const News = () => {
               photo={item.photo}
               key={item.key}
               title={item.title}
-              text={item.text}
+              date={item.date}
+              description={item.description}
             />
           </List.Item>
         )}

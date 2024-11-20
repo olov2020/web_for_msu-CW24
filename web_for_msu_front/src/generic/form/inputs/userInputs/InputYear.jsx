@@ -1,8 +1,9 @@
 import styleInput from "./input.module.css";
 import {useState} from "react";
+import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputYear = ({name = '', placeholder = '', value, setValue}) => {
+const InputYear = ({name = '', placeholder = '', fieldName, value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -40,22 +41,15 @@ const InputYear = ({name = '', placeholder = '', value, setValue}) => {
   }
 
   return (
-    <label className={styleInput.label}>
-      {error}
-      <input
-        type='number'
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        className={
-          `${isValid ?
-            `${styleInput.valid}` :
-            `${styleInput.invalid}`}
-          ${styleInput.input}`
-        }
-        onChange={handleInputChange}
-      />
-    </label>
+    <Input type='number'
+           name={name}
+           value={value}
+           placeholder={placeholder}
+           fieldName={fieldName}
+           onChange={handleInputChange}
+           error={error}
+           isValid={isValid}
+    />
   );
 };
 

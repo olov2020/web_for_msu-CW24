@@ -1,11 +1,17 @@
+import {Link} from "react-router-dom";
+import style from '../news.module.css'
+
 // eslint-disable-next-line react/prop-types
-const NewsCard = ({photo, title, date, ...props}) => {
+const NewsCard = ({photo, title, date, description, ...props}) => {
+
   return (
-    <section {...props}>
-      <img src={photo} alt={title}/>
-      <h3>{title}</h3>
-      <p>{date}</p>
-    </section>
+    <Link to={`/news/${title}/${date}`} state={{ photo: photo, title: title, description: description, date: date }}>
+      <section {...props} className={style.newsCard}>
+        <h3>{title}</h3>
+        <img src={photo} alt={title}/>
+        <p>{date}</p>
+      </section>
+    </Link>
   );
 };
 

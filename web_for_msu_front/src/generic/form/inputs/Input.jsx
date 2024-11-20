@@ -1,18 +1,19 @@
 import styleInput from "./userInputs/input.module.css";
 
-const Input = ({...props}) => {
+// eslint-disable-next-line react/prop-types
+const Input = ({fieldName = '', placeholder = '', isValid = true, error = '', ...props}) => {
   return (
     <label className={styleInput.label}>
       <p style={{
         alignSelf: 'flex-start',
       }}>
-        {props.fieldName}
+        {fieldName}
       </p>
       
       <input {...props}
-             placeholder={props.fieldName}
+             placeholder={placeholder ? placeholder : ''}
              className={
-               `${props.isValid ?
+               `${isValid ?
                  `${styleInput.valid}` :
                  `${styleInput.invalid}`}
                   ${styleInput.input}`
@@ -20,7 +21,7 @@ const Input = ({...props}) => {
       />
 
       <p className={styleInput.errorMessage}>
-      {props.error}
+      {error}
       </p>
     </label>
   );

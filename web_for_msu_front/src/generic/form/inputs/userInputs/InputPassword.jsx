@@ -4,7 +4,7 @@ import {useState} from "react";
 import {FiEye} from "react-icons/fi";
 
 // eslint-disable-next-line react/prop-types
-const InputPassword = ({name, placeholder, value, setValue}) => {
+const InputPassword = ({name, placeholder, fieldName, value, setValue}) => {
   const [isValid, setIsValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -84,7 +84,12 @@ const InputPassword = ({name, placeholder, value, setValue}) => {
 
   return (
     <label className={styleInput.label}>
-      {error}
+      <p style={{
+        alignSelf: 'flex-start',
+      }}>
+        {fieldName}
+      </p>
+
       <input
         type={showPassword ? 'text' : 'password'}
         name={name}
@@ -100,6 +105,10 @@ const InputPassword = ({name, placeholder, value, setValue}) => {
       />
 
       <FiEye className={styleInputPassword.showPassword} onClick={() => setShowPassword(!showPassword)}/>
+
+      <p className={styleInput.errorMessage}>
+        {error}
+      </p>
     </label>
   );
 };

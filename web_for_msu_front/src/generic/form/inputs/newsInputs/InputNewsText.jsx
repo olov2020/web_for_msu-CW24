@@ -1,14 +1,13 @@
-import styleInput from './input.module.css'
+import Input from '../Input.jsx'
 import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
-const InputDate = ({name = '', placeholder='', value, setValue}) => {
+const InputNewsText = ({name, placeholder, fieldName, value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
-    errorInvalid: `${name} может содержать только буквы и знак дефиса`,
   }
 
   const handleInputChange = ((e) => {
@@ -33,23 +32,16 @@ const InputDate = ({name = '', placeholder='', value, setValue}) => {
   }
 
   return (
-    <label className={styleInput.label}>
-      {error}
-      <input
-        type='date'
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        className={
-          `${isValid ?
-            `${styleInput.valid}` :
-            `${styleInput.invalid}`}
-          ${styleInput.input}`
-        }
-        onChange={handleInputChange}
-      />
-    </label>
+    <Input
+      name={name}
+      placeholder={placeholder}
+      fieldName={fieldName}
+      value={value}
+      onChange={handleInputChange}
+      error={error}
+      isValid={isValid}
+    />
   );
 };
 
-export default InputDate;
+export default InputNewsText;

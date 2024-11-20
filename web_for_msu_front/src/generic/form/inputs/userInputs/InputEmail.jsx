@@ -1,9 +1,8 @@
-import styleInput from './input.module.css'
 import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputEmail = ({name = '', placeholder = '', value, setValue}) => {
+const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,7 +50,8 @@ const InputEmail = ({name = '', placeholder = '', value, setValue}) => {
     <Input type='email'
            name={name}
            value={value}
-           fieldName={placeholder}
+           placeholder={placeholder}
+           fieldName={fieldName}
            onChange={handleInputChange}
            error={error}
            isValid={isValid}

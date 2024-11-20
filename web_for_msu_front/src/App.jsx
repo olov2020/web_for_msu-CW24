@@ -30,6 +30,7 @@ const App = () => {
 
       <AppRouter/>
 
+      <div style={{marginTop: '5rem',}}></div>
       <Footer/>
     </BrowserRouter>
   )

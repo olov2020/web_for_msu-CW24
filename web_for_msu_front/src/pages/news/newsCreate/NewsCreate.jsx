@@ -1,10 +1,15 @@
+import Form from "../../../generic/form/Form.jsx";
 
 
 const NewsCreate = () => {
   return (
-    <div>
-
-    </div>
+    <section>
+      <Form
+            inputs={['newsPhoto', 'newsTitle', 'newsDescription']}
+            buttonText='Добавить новость'
+            type='newsAdd'
+      />
+    </section>
   );
 };
 

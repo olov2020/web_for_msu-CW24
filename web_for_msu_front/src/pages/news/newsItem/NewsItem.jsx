@@ -1,10 +1,15 @@
-// eslint-disable-next-line react/prop-types
-const NewsItem = ({title, photo, text, key, ...props}) => {
+import {useParams} from "react-router-dom";
+
+const NewsItem = () => {
+
+  const params = useParams();
+
   return (
-    <section {...props} key={key}>
-      <h1>{title}</h1>
-      <img src={photo} alt={title}/>
-      <p>{text}</p>
+    <section>
+      <h1>{params.title}</h1>
+      <img src={params.photo} alt={params.title}/>
+      <p>{params.description}</p>
+      <p>{params.date}</p>
     </section>
   );
 };

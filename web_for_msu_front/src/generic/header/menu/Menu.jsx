@@ -2,7 +2,7 @@ import style from "../header.module.css";
 import MenuItem from "./menuItem/MenuItem.jsx";
 import {
   ADD_NEW_COURSE_ROUTE,
-  ALL_COURSES_ROUTE,
+  ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ROUTE, NOT_FOUND_ROUTE,
   SCHEDULE_ROUTE
@@ -29,10 +29,13 @@ const Menu = () => {
           title: 'Расписание', link: SCHEDULE_ROUTE, id: 0,
         },
         {
-          title: 'Мои курсы', link: MY_COURSES_ROUTE, id: 1,
+          title: 'Ведомость', link: MARKS_ROUTE, id: 1,
         },
         {
-          title: 'Все курсы', link: ALL_COURSES_ROUTE, id: 2,
+          title: 'Мои Курсы', link: MY_COURSES_ROUTE, id: 2,
+        },
+        {
+          title: 'Все курсы', link: ALL_COURSES_ROUTE, id: 3,
         },
       ],
     },
@@ -72,16 +75,16 @@ const Menu = () => {
         {
           title: 'Список учащихся', link: NOT_FOUND_ROUTE, id: 2,
         },
-        {
-          title: 'Архив событий', link: NOT_FOUND_ROUTE, id: 3,
-        },
       ],
     },
   ]
 
-  if (user.authStatus === 'admin') {
+  if (user.authStatus === 'none') {
     menu[1].dropdown.push({
-      title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: 3,
+      title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: menu[1].length,
+    })
+    menu[0].dropdown.push({
+      title: 'Добавить новость', link: CREATE_NEWS_ROUTE, id: menu[0].length,
     })
   }
 

@@ -1,11 +1,13 @@
-import {useState} from "react";
+import styleInput from "./input.module.css";
+import styleFileInput from './inputFile.module.css'
+import {useRef, useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputCheckbox = ({name, placeholder, initialChecked = false, required = false, setValue}) => {
+const InputFile = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
 
+  const fileUploader = useRef(null);
   const [isValid, setIsValid] = useState(true);
-  const [checked, setChecked] = useState(initialChecked);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
@@ -13,24 +15,20 @@ const InputCheckbox = ({name, placeholder, initialChecked = false, required = fa
 
   const handleInputChange = ((e) => {
     e.preventDefault();
-    setChecked(e.target.value);
-    setValue(e.target.value);
-    const error = validateInput(e.target.value);
+    const file = e.target.files[0];
+    const error = validateInput(file);
 
     if (error) {
       setIsValid(false);
-      setError(error);
-      console.log(error);
+      setValue(null);
+
+      return;
     }
+
+    setValue(file);
   })
 
   const validateInput = (value) => {
-    if (!required) {
-      setIsValid(true);
-      setError('');
-      return '';
-    }
-
     if (!value) {
       return errors.empty;
     }
@@ -41,15 +39,18 @@ const InputCheckbox = ({name, placeholder, initialChecked = false, required = fa
   }
 
   return (
-    <Input type='checkbox'
+    <Input type='file'
            name={name}
-           value={checked}
-           fieldName={placeholder}
+           ref={fileUploader}
+           multiple={multiple}
+           accept={accept}
+           fieldName={fieldName}
            onChange={handleInputChange}
            error={error}
            isValid={isValid}
+           required={required}
     />
   );
 };
 
-export default InputCheckbox;
+export default InputFile;

@@ -2,7 +2,7 @@ import styleInput from "./input.module.css";
 import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
-const InputDropdown = ({name, placeholder, values = [], value, setValue}) => {
+const InputDropdown = ({name, placeholder, fieldName, values = [], value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -26,15 +26,23 @@ const InputDropdown = ({name, placeholder, values = [], value, setValue}) => {
     if (inputValue.length === 0) {
       return errors.empty;
     }
-    
+
     setIsValid(true);
     setError('');
     return '';
   }
 
   return (
+    /*TODO
+    переделать под стандартный Input
+    */
     <label className={styleInput.label}>
-      {error}
+      <p style={{
+        alignSelf: 'flex-start',
+      }}>
+        {fieldName}
+      </p>
+
       <input list="dropdown-options"
              className={
                `${isValid ?
@@ -55,6 +63,10 @@ const InputDropdown = ({name, placeholder, values = [], value, setValue}) => {
           </option>
         ))}
       </datalist>
+
+      <p className={styleInput.errorMessage}>
+        {error}
+      </p>
     </label>
   );
 };

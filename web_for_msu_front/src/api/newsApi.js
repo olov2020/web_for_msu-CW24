@@ -7,6 +7,21 @@ export const getAllNews = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(`getAllNews error: ${error}`);
+    console.log(error);
+  }
+}
+
+export const addNewsItem = async ({title, description, photo, date}) => {
+  const response = await $host.post('/news/create', {title, description, photo, date}, {
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+
+  try {
+    localStorage.setItem('token', response.data.accessToken);
+    return jwtDecode(response.data.accessToken);
+  } catch (error) {
+    console.log(error);
   }
 }
