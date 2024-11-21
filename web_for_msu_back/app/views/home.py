@@ -19,7 +19,7 @@ class HomeView(FlaskView):
     representations = {'application/json': output_json}
 
     @method("GET")
-    @auth_required
+    @jwt_required()
     def user_info(self):
         services = get_services()
         user_service: UserService = services["user_service"]

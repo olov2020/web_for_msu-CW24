@@ -26,6 +26,8 @@ class ImageService:
             bucket = os.getenv("IMAGES_BUCKET")
         elif bucket == "documents":
             bucket = os.getenv("DOCUMENTS_BUCKET")
+        elif bucket == "news":
+            bucket = os.getenv("NEWS_PHOTOS_BUCKET")
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',
@@ -128,6 +130,14 @@ class ImageService:
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         agreement.save(path)
         self.upload_to_yandex_s3(path, "documents", filename)
+        os.remove(path)
+        return filename
+
+    def save_news_photo(self, photo):
+        filename = self.generate_unique_filename(photo.filename)
+        path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        photo.save(path)
+        self.upload_to_yandex_s3(path, "news", filename)
         os.remove(path)
         return filename
 
