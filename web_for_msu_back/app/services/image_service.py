@@ -20,14 +20,18 @@ class ImageService:
     def __init__(self, user_service: UserService):
         self.user_service = user_service
 
-    def upload_to_yandex_s3(self, file, bucket, object_name):
-        load_dotenv()
+    def get_bucket(self, bucket):
         if bucket == "images":
             bucket = os.getenv("IMAGES_BUCKET")
         elif bucket == "documents":
             bucket = os.getenv("DOCUMENTS_BUCKET")
         elif bucket == "news":
             bucket = os.getenv("NEWS_PHOTOS_BUCKET")
+        return bucket
+
+    def upload_to_yandex_s3(self, file, bucket, object_name):
+        load_dotenv()
+        bucket = self.get_bucket(bucket)
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',
@@ -38,10 +42,7 @@ class ImageService:
 
     def download_from_yandex_s3(self, bucket, object_name, download_path):
         load_dotenv()
-        if bucket == "images":
-            bucket = os.getenv("IMAGES_BUCKET")
-        elif bucket == "documents":
-            bucket = os.getenv("DOCUMENTS_BUCKET")
+        bucket = self.get_bucket(bucket)
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',
@@ -52,19 +53,13 @@ class ImageService:
 
     def get_from_yandex_s3(self, bucket, object_name):
         load_dotenv()
-        if bucket == "images":
-            bucket = os.getenv("IMAGES_BUCKET")
-        elif bucket == "documents":
-            bucket = os.getenv("DOCUMENTS_BUCKET")
+        bucket = self.get_bucket(bucket)
         url = f"https://storage.yandexcloud.net/{bucket}/{object_name}"
         return url
 
     def check_file_exists_yandex_s3(self, bucket, object_name):
         load_dotenv()
-        if bucket == "images":
-            bucket = os.getenv("IMAGES_BUCKET")
-        elif bucket == "documents":
-            bucket = os.getenv("DOCUMENTS_BUCKET")
+        bucket = self.get_bucket(bucket)
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',

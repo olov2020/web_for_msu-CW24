@@ -28,8 +28,11 @@ class NewsService:
             return e.messages, 400
         self.db.session.add(news)
         self.db.session.commit()
-        return {'Новость успешно добавлена'}, 201
+        return {"msg": 'Новость успешно добавлена'}, 201
 
     def get_news(self) -> (list[NewsDTO], int):
-        news = NewsDTO().dump(News.query.all(), many=True)
+        news = News.query.all()
+        for n in news:
+            n.photo = self.image_service.get_from_yandex_s3("news", n.photo)
+        news = NewsDTO().dump(news, many=True)
         return news, 200
