@@ -309,6 +309,7 @@ class CourseService:
         return CourseInfoPupilDTO().load(data)
 
     def get_course_info_teacher(self, course: Course) -> CourseInfoTeacherDTO:
+        # TODO fix teachers
         pupils_number = len(self.get_pupils(course.id))
         data = {
             "id": course.id,
