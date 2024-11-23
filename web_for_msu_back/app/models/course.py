@@ -1,3 +1,6 @@
+from datetime import datetime
+from email.policy import default
+
 from web_for_msu_back.app import db
 
 
@@ -5,6 +8,7 @@ class CourseItem(db.Model):
     __tablename__ = 'course'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
+    year = db.Column(db.Integer, default=datetime.now().year)
     auditory = db.Column(db.String())
     course_review_number = db.Column(db.String)
     direction = db.Column(db.String(), nullable=False)
@@ -29,7 +33,7 @@ class CourseItem(db.Model):
     teachers = db.relationship('TeacherCourse', back_populates='course')
     formulas = db.relationship('Formula', backref='course')
 
-    def __init__(self, name, auditory, course_review_number, direction, emsh_grades, crediting, distribution,
+    def __init__(self, name, year, auditory, course_review_number, direction, emsh_grades, crediting, distribution,
                  intern_work, lesson_time,
                  additional_info_for_auditory, course_purpose, course_objectives, course_features, course_format,
                  target_audience, short_description, number_of_listeners, selection, assessment, platform_format,
@@ -37,6 +41,7 @@ class CourseItem(db.Model):
         if id is not None:
             self.id = id
         self.name = name
+        self.year = year
         self.auditory = auditory
         self.course_review_number = course_review_number
         self.direction = direction

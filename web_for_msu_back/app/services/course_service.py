@@ -13,7 +13,7 @@ from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
-from web_for_msu_back.app.models import User, Pupil, Teacher, CourseItem, PupilCourse, TeacherCourse, Schedule
+from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -35,23 +35,29 @@ class CourseService:
         return {'Курс успешно добавлен'}, 201
 
     def get_pupils(self, course_id: int) -> list[Pupil]:
-        course = CourseItem.query.get(course_id)
+        course = Course.query.get(course_id)
         if not course:
             return []
         return [assoc.pupil for assoc in course.pupils]
 
     def get_teachers(self, course_id: int) -> list[Teacher]:
-        course = CourseItem.query.get(course_id)
+        course = Course.query.get(course_id)
         if not course:
             return []
         return [assoc.teacher for assoc in course.teachers]
 
-    def get_all_courses(self) -> list[CourseInfoDTO]:
-        courses = CourseItem.query.all()
-        return [self.get_course_info(course) for course in courses]
+    def get_all_courses(self) -> (dict[int, list[CourseInfoDTO]], int):
+        courses = Course.query.all()
+        grouped_courses = {}
+        for course in courses:
+            year: int = course.year
+            if year not in grouped_courses:
+                grouped_courses[year] = []
+            grouped_courses[year].append(self.get_course_info(course))
+        return grouped_courses, 200
 
     def add_pupil_to_course(self, course_id, pupil_id, year):
-        course = CourseItem.query.get(course_id)
+        course = Course.query.get(course_id)
         pupil = Pupil.query.get(pupil_id)
         if not course or not pupil:
             return False
@@ -61,7 +67,7 @@ class CourseService:
         return True
 
     def add_teacher_to_course(self, course_id, teacher_id, year):
-        course = CourseItem.query.get(course_id)
+        course = Course.query.get(course_id)
         teacher = Teacher.query.get(teacher_id)
         if not course or not teacher:
             return False
@@ -268,7 +274,7 @@ class CourseService:
         return {'msg': 'Курс успешно добавлен'}, 201
 
     def get_lessons(self, course_id: int) -> list[Schedule]:
-        course = CourseItem.query.get(course_id)
+        course = Course.query.get(course_id)
         if not course:
             return []
         return sorted(course.lessons, key=lambda x: x.lesson_number)
@@ -279,7 +285,7 @@ class CourseService:
         return [self.teacher_service.get_full_name(assoc.teacher) for assoc in
                 course.teachers]
 
-    def get_course_info(self, course: CourseItem) -> CourseInfoDTO:
+    def get_course_info(self, course: Course) -> CourseInfoDTO:
         data = {
             "id": course.id,
             "name": course.name,
@@ -292,7 +298,7 @@ class CourseService:
         }
         return CourseInfoDTO().load(data)
 
-    def get_course_info_pupil(self, pupil_course: PupilCourse, course: CourseItem) -> CourseInfoPupilDTO:
+    def get_course_info_pupil(self, pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
         data = {
             "id": course.id,
             "name": course.name,
@@ -306,7 +312,7 @@ class CourseService:
         }
         return CourseInfoPupilDTO().load(data)
 
-    def get_course_info_teacher(self, course: CourseItem) -> CourseInfoTeacherDTO:
+    def get_course_info_teacher(self, course: Course) -> CourseInfoTeacherDTO:
         pupils_number = len(self.get_pupils(course.id))
         data = {
             "id": course.id,
