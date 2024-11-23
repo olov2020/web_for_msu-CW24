@@ -18,6 +18,7 @@ if TYPE_CHECKING:
 
 
 class MarkService:
+    # TODO Add "Баллы" as mark type
     def __init__(self, db, course_service: CourseService, pupil_service: PupilService):
         self.db = db
         self.course_service = course_service
@@ -44,7 +45,7 @@ class MarkService:
             else:
                 types[mark_type] += 1
         for i in range(len(pupil_marks)):
-            if mark_types[i] == 'Отсутствие':
+            if mark_types[i] == 'Присутствие':
                 continue
             if pupil_marks[i].isdigit():
                 formula = next(filter(lambda x: x.name == mark_types[i], formulas))
@@ -60,7 +61,7 @@ class MarkService:
             return {'error': 'У вас нет доступа к этому курсу'}, 403
 
         formulas = course.formulas
-        choices = [formula.name for formula in formulas] + ['Отсутствие']
+        choices = [formula.name for formula in formulas] + ['Присутствие']
         lessons = self.course_service.get_lessons(course_id)
         if not lessons:
             return {'error': 'Уроков пока нет'}, 404
@@ -72,7 +73,7 @@ class MarkService:
         mark_types = []
         dates = []
         for lesson in lessons:
-            formula_name = lesson.formulas.name if lesson.formulas else 'Отсутствие'
+            formula_name = lesson.formulas.name if lesson.formulas else 'Присутствие'
             mark_types.append(formula_name)
             dates.append(lesson.date.strftime('%d.%m.%Y'))
 
@@ -133,7 +134,7 @@ class MarkService:
         formulas = {formula.name: formula for formula in formula_vals}
         new_marks = []
         for i in range(len(marks_dto["dates"])):
-            if marks_dto["mark_types"][i] != 'Отсутствие':
+            if marks_dto["mark_types"][i] != 'Присутствие':
                 lesson = lessons[i]
                 lesson.formulas = formulas[marks_dto["mark_types"][i]]
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
@@ -196,7 +197,7 @@ class MarkService:
         marks = self.get_pupil_marks(course_id, pupil_id)
         lessons = [mark.schedule for mark in marks]
         dates = [lesson.date.strftime('%d.%m.%Y') for lesson in lessons]
-        mark_types = [lesson.formulas.name if lesson.formulas else 'Отсутствие' for lesson in lessons]
+        mark_types = [lesson.formulas.name if lesson.formulas else 'Присутствие' for lesson in lessons]
         marks = [mark.mark for mark in marks]
         skips = sum([mark.upper() in ["H", "Н"] for mark in marks])
         result = self.calculate_result(marks, mark_types, formulas)
