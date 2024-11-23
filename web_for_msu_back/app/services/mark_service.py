@@ -120,7 +120,6 @@ class MarkService:
         return marks_dto, 200
 
     def update_journal(self, course_id: int, current_user_id: int, request: flask.Request) -> (dict, int):
-        # TODO update averages and visits
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
@@ -135,20 +134,34 @@ class MarkService:
         lessons = Schedule.query.filter_by(course_id=course_id).order_by(Schedule.date).all()
         formula_vals = Formula.query.filter_by(course_id=course_id).all()
         formulas = {formula.name: formula for formula in formula_vals}
+
+        visit_count = [0] * len(lessons)
+        mark_sum = [0] * len(lessons)
+        mark_count = [0] * len(lessons)
         new_marks = []
+
         for i in range(len(marks_dto["dates"])):
             if marks_dto["mark_types"][i] != 'Присутствие':
                 lesson = lessons[i]
                 lesson.formulas = formulas[marks_dto["mark_types"][i]]
+
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
         marks_grouped = {}
         for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
-            marks_grouped[str(key)] = {mark.schedule_id: mark for mark in group}
+            marks_grouped[key] = {mark.schedule_id: mark for mark in group}
+
         for i in range(len(marks_dto["pupils"])):
             for j in range(len(marks_dto["dates"])):
                 mark = marks_dto["pupils"][i]["marks"][j]
                 lesson = lessons[j]
                 prev_mark = marks_grouped.get(marks_dto["pupils"][i]["id"], {}).get(lesson.id)
+
+                if mark.upper() not in ["H", "Н"]:
+                    visit_count[j] += 1
+                    if mark.isdigit():
+                        mark_sum[j] += int(mark)
+                        mark_count[j] += 1
+
                 if prev_mark:
                     if mark:
                         prev_mark.mark = mark
@@ -156,6 +169,9 @@ class MarkService:
                         self.db.session.delete(prev_mark)
                 elif mark:
                     new_marks.append(Mark(lesson.id, marks_dto["pupils"][i]["id"], mark, None, course_id))
+            marks_dto["pupils"][i]["result"] = round(
+                self.calculate_result(marks_dto["pupils"][i]["marks"], marks_dto["mark_types"], formula_vals), 2)
+
             pupil_marks = marks_dto["pupils"][i]["marks"]
             mark_types = marks_dto["mark_types"]
             current_mark = self.calculate_result(pupil_marks, mark_types, formula_vals)
@@ -163,6 +179,15 @@ class MarkService:
                                                        course_id=course_id).first()
             if pupil_course:
                 pupil_course.current_mark = round(current_mark, 2)
+
+        visits = []
+        averages = []
+        for i in range(len(lessons)):
+            visits.append(str(visit_count[i]))
+            averages.append(float(mark_sum[i]) / float(mark_count[i]) if mark_count[i] != 0 else 0)
+
+        marks_dto["visits"] = visits
+        marks_dto["averages"] = averages
 
         self.db.session.bulk_save_objects(new_marks)
         self.db.session.commit()
@@ -189,6 +214,7 @@ class MarkService:
         return pupil_marks_res
 
     def get_pupil_marks_model(self, course_id: int, pupil_id: int) -> (PupilMarksDTO, int):
+        # TODO fix finding lessons twice
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
