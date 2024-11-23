@@ -48,8 +48,11 @@ class MarkService:
             if mark_types[i] == 'Присутствие':
                 continue
             if pupil_marks[i].isdigit():
-                formula = next(filter(lambda x: x.name == mark_types[i], formulas))
-                result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
+                if mark_types[i] == 'Баллы':
+                    result += float(pupil_marks[i])
+                else:
+                    formula = next(filter(lambda x: x.name == mark_types[i], formulas))
+                    result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
         return result
 
     def get_journal(self, course_id: int, current_user_id: int) -> (dict, int):
