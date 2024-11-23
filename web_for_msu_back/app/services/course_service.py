@@ -288,7 +288,7 @@ class CourseService:
             "emsh_grades": course.emsh_grades,
             "crediting": course.crediting,
             "direction": course.direction,
-            "teachers": course.teachers,
+            "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
             "auditory": course.auditory,
             "lesson_time": course.lesson_time
         }
