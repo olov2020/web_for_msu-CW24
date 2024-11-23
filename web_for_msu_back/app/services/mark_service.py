@@ -18,7 +18,6 @@ if TYPE_CHECKING:
 
 
 class MarkService:
-    # TODO Add "Баллы" as mark type
     def __init__(self, db, course_service: CourseService, pupil_service: PupilService):
         self.db = db
         self.course_service = course_service
@@ -198,8 +197,7 @@ class MarkService:
                  .order_by(Mark.schedule_id).all())
         return marks
 
-    def extend_pupil_marks(self, marks, lessons):
-        # TODO Add annotation
+    def extend_pupil_marks(self, marks: list[Mark], lessons: list[Schedule]) -> list[str]:
         pupil_marks = marks
         pupil_marks_res = []
         for lesson in lessons:
