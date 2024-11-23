@@ -7,7 +7,7 @@ from web_for_msu_back.app import db
 from web_for_msu_back.app.dto.formula import FormulaDTO
 from web_for_msu_back.app.dto.schedule import ScheduleDTO
 from web_for_msu_back.app.dto.teacher_course import TeacherCourseDTO
-from web_for_msu_back.app.models import CourseItem, Schedule, Formula, TeacherCourse, Teacher
+from web_for_msu_back.app.models import Course, Schedule, Formula, TeacherCourse, Teacher
 
 
 class CourseDTO(Schema):
@@ -53,7 +53,7 @@ class CourseDTO(Schema):
 
     @post_load
     def make_course(self, data, **kwargs):
-        course = CourseItem(  # В случае обновления
+        course = Course(  # В случае обновления
             name=data["name"],
             year=datetime.now().year,
             auditory=data.get("auditory"),

@@ -7,7 +7,7 @@ class TeacherCourse(db.Model):
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     teacher = db.relationship('Teacher', back_populates='courses')
-    course = db.relationship('CourseItem', back_populates='teachers')
+    course = db.relationship('Course', back_populates='teachers')
     year = db.Column(db.Integer, nullable=False)
 
     def __init__(self, teacher_id, course_id, year):
