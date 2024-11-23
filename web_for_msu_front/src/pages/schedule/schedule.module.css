@@ -1,0 +1,15 @@
+.scheduleItem {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.creditTrue {
+    background-color: #9F1A59;
+    color: white;
+}
+
+.creditFalse {
+    background-color: #E094AD;
+    color: white;
+}

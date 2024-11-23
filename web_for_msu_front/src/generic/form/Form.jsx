@@ -3,8 +3,9 @@ import InputEmail from "./inputs/userInputs/InputEmail.jsx";
 import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
-  addNewCourse, pupilChangeData, pupilRegistration, teacherChangeData, userChangePhoto, userLogin
+  pupilChangeData, pupilRegistration, teacherChangeData, userChangePhoto, userLogin
 } from "../../api/userApi.js";
+import {addNewCourse} from '../../api/coursesApi.js'
 import InputFile from "./inputs/userInputs/InputFile.jsx";
 import InputName from "./inputs/userInputs/InputName.jsx";
 import InputDate from "./inputs/userInputs/InputDate.jsx";

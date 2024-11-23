@@ -3,12 +3,13 @@ const authStatus = {
     pupil: 'pupil',
     teacher: 'teacher',
     admin: 'admin',
+    newsmaker: 'newsmaker',
 }
 
 const defaultState = {
     id: 0,
     email: "",
-    authStatus: authStatus.none,
+    authStatus: authStatus.pupil,
 }
 
 const SET_AUTH = "SET_AUTH"

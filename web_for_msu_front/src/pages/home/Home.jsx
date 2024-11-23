@@ -1,7 +1,7 @@
 import style from './home.module.css'
 import Schedule from "../schedule/Schedule.jsx";
-import Achievements from "../../generic/achievements/Achievements.jsx";
 import News from "../news/News.jsx";
+import Courses from "../courses/Courses.jsx";
 
 const Home = () => {
   return (
@@ -15,8 +15,8 @@ const Home = () => {
         <News/>
       </section>
 
-      <section className={style.achievements}>
-        <Achievements/>
+      <section className={style.myCourses}>
+        <Courses/>
       </section>
     </main>
   );

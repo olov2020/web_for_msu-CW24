@@ -1,34 +1,44 @@
 import styleApp from '../../app.module.css'
 import OneWeek from "./oneWeek/OneWeek.jsx";
+import {useEffect, useState} from "react";
+import {getSchedule} from "../../api/coursesApi.js";
 
 const Schedule = () => {
 
-  const current = new Date();
-  const first = current.getDate() - current.getDay() + 1; // First day is the day of the month - the day of the week
-  const last = first + 6; // last day is the first day + 6
+  const [schedule, setSchedule] = useState({
+    lessons_in_week: [
+      {courseName: 'asd', date: 'asd', time: 'asd', auditory: 'asd', credit: true},
+      {courseName: '123', date: '4523', time: '123', auditory: 'a12313sd', credit: false},
+      {courseName: 'asd', date: 'asd', time: 'asd', auditory: 'asd', credit: true},
+      ],
+    lessons_in_two_weeks: [
+      {courseName: '123', date: '4523', time: '123', auditory: 'a12313sd', credit: false},
+      {courseName: 'asd', date: 'asd', time: 'asd', auditory: 'asd', credit: true},
+      {courseName: '123', date: '4523', time: '123', auditory: 'a12313sd', credit: false},
+      ]
+  });
 
-  const fromDateCurrentWeek = new Date(current);
-  const toDateCurrentWeek = new Date(current.setDate(last));
+  /*useEffect(() => {
+    const getScheduleData = async () => {
+      const data = await getSchedule();
+      setSchedule({data});
+    }
 
-  const fromDateNextWeek = new Date(current.setDate(last + 1));
-  const toDateNextWeek = new Date(current.setDate(last + 7));
+    getScheduleData();
+  }, []);*/
 
   return (
-    <div className={styleApp.pageTitle}>
+    <article className={styleApp.pageTitle}>
       <h1 className={styleApp.pageTitle}>Расписание</h1>
 
       <div>
-        <OneWeek header='Текущая неделя'
-                 fromDate={`${fromDateCurrentWeek.getDate()}.${fromDateCurrentWeek.getMonth() + 1}`}
-                 toDate={`${toDateCurrentWeek.getDate()}.${toDateCurrentWeek.getMonth() + 1}`}/>
+        <OneWeek header='Текущая неделя' data={schedule.lessons_in_week}/>
       </div>
 
       <div>
-        <OneWeek header='Следующая неделя'
-                 fromDate={`${fromDateNextWeek.getDate()}.${fromDateNextWeek.getMonth() + 1}`}
-                 toDate={`${toDateNextWeek.getDate()}.${toDateNextWeek.getMonth() + 1}`}/>
+        <OneWeek header='Следующая неделя' data={schedule.lessons_in_two_weeks}/>
       </div>
-    </div>
+    </article>
   );
 };
 

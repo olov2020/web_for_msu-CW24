@@ -7,7 +7,7 @@ class PupilCourse(db.Model):
     pupil_id = db.Column(db.Integer, db.ForeignKey('pupil.id'), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     pupil = db.relationship('Pupil', back_populates='courses')
-    course = db.relationship('Course', back_populates='pupils')
+    course = db.relationship('CourseItem', back_populates='pupils')
     year = db.Column(db.Integer, nullable=False)
     crediting = db.Column(db.Boolean, default=False)
     finished = db.Column(db.Boolean, default=False)

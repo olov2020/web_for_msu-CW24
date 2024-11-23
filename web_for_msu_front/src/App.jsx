@@ -7,7 +7,7 @@ import Footer from "./generic/footer/Footer.jsx";
 
 const App = () => {
 
-  const [isLoading, setIsLoading] = useState(true);
+  /*const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Simulate async operation (replace with your actual loading logic)
@@ -22,7 +22,7 @@ const App = () => {
 
   if (isLoading) {
     return <Loading/>
-  }
+  }*/
 
   return (
     <BrowserRouter>

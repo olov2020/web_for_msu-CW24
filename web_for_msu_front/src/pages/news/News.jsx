@@ -14,7 +14,7 @@ const News = () => {
   ]);
   /*const [news, setNews] = useState([]);*/
   const [displayedNews, setDisplayedNews] = useState(
-    news.slice(0, itemsPerPage)
+    news.slice(0, Math.min(itemsPerPage, news.length))
   );
 
   const handlePageChange = (newPage) => {

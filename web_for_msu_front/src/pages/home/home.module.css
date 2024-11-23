@@ -3,8 +3,8 @@
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
-        'schedule schedule'
-        'news achievements';
+        'schedule news'
+        'myCourses news';
 }
 
 .schedule {
@@ -15,6 +15,6 @@
     grid-area: news;
 }
 
-.achievements {
-    grid-area: achievements;
+.myCourses {
+    grid-area: myCourses;
 }

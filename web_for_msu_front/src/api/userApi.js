@@ -2,57 +2,6 @@ import {$host, $authHost} from './axiosApi.js'
 import {jwtDecode} from 'jwt-decode'
 import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../routing/consts.js";
 
-export const addCourseByFile = async ({file}) => {
-  const {data} = await $host.post(`/courses/add/${file}`, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
-
-  localStorage.setItem('token', data.accessToken)
-  return jwtDecode(data.accessToken)
-}
-
-export const getCourseByFile = async ({file}) => {
-  const {data} = await $authHost.get(`/courses/${file}`)
-
-  return data
-}
-
-export const addNewCourse = async (course) => {
-  const {data} = await $host.post(`/addNewCourse/${course}`, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
-
-  localStorage.setItem('token', data.accessToken)
-  return jwtDecode(data.accessToken)
-}
-
-export const getAllCourses = async () => {
-  const {data} = await $authHost.get(`/courses`)
-
-  return data
-}
-
-export const getCoursesByUserId = async ({userId}) => {
-  const {data} = await $authHost.get(`/courses/${userId}`)
-
-  return data
-}
-
-export const getScheduleByUserId = async ({userId, fromDate, toDate}) => {
-  const response = await $authHost.get(`/schedule/${userId}/${fromDate}/${toDate}`)
-
-  try {
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return {};
-  }
-}
-
 export const getUserInfoByUserId = async ({userId}) => {
   const {data} = await $authHost.get(`/home/${userId}`)
 

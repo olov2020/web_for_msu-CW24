@@ -16,7 +16,7 @@ const MenuItem = ({key, title, dropdown}) => {
       </div>
 
       {showMenu &&
-        <MenuDropdown onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)} items={dropdown}/>
+        <MenuDropdown onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)} items={dropdown} onClick={() => setShowMenu(false)}/>
       }
     </div>
   );

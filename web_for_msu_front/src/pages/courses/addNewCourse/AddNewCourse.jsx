@@ -1,7 +1,7 @@
 import Form from "../../../generic/form/Form.jsx";
 import styleApp from '../../../app.module.css'
 import {useEffect, useState} from "react";
-import {getCourseByFile} from "../../../api/userApi.js";
+import {getCourseByFile} from "../../../api/coursesApi.js";
 import InputFile from "../../../generic/form/inputs/userInputs/InputFile.jsx";
 
 const AddNewCourse = () => {

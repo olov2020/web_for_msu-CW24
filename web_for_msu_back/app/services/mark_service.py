@@ -10,7 +10,7 @@ from sqlalchemy import asc
 
 from web_for_msu_back.app.dto.marks import MarksDTO
 from web_for_msu_back.app.dto.pupil_marks import PupilMarksDTO
-from web_for_msu_back.app.models import Mark, Course, Schedule, Formula, PupilCourse, Pupil
+from web_for_msu_back.app.models import Mark, CourseItem, Schedule, Formula, PupilCourse, Pupil
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -52,7 +52,7 @@ class MarkService:
         return result
 
     def get_journal(self, course_id: int, current_user_id: int) -> (dict, int):
-        course = Course.query.get(course_id)
+        course = CourseItem.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
 
@@ -117,7 +117,7 @@ class MarkService:
 
     def update_journal(self, course_id: int, current_user_id: int, request: flask.Request) -> (dict, int):
         # TODO update averages and visits
-        course = Course.query.get(course_id)
+        course = CourseItem.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
 
@@ -185,7 +185,7 @@ class MarkService:
         return pupil_marks_res
 
     def get_pupil_marks_model(self, course_id: int, pupil_id: int) -> (PupilMarksDTO, int):
-        course = Course.query.get(course_id)
+        course = CourseItem.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
         lessons = self.course_service.get_lessons(course_id)

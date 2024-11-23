@@ -1,10 +1,12 @@
-import React from 'react';
+
 
 const Marks = () => {
-  return (
-    <div>
 
-    </div>
+
+  return (
+    <article>
+
+    </article>
   );
 };
 

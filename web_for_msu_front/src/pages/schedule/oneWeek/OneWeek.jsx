@@ -1,37 +1,26 @@
-import {getScheduleByUserId} from "../../../api/userApi.js";
-import {useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-
+import ScheduleItem from "./scheduleItem/ScheduleItem.jsx";
 
 // eslint-disable-next-line react/prop-types
-const OneWeek = ({header, fromDate, toDate}) => {
-
-  const user = useSelector(state => state.user);
-  const [schedule, setSchedule] = useState({});
-  const userId = user.id;
-
-  useEffect(() => {
-    const getSchedule = async () => {
-      const data = await getScheduleByUserId({userId, fromDate, toDate});
-      setSchedule({data});
-    }
-
-    getSchedule();
-  }, []);
+const OneWeek = ({header, data}) => {
 
   return (
-    <div>
+    <section>
       <h2>{header}</h2>
 
       <div>
-        schedule
-        {/*{schedule.map((item, index) => (
-          <div key={index}>
-            <p>{schedule[index]}</p>
-          </div>
-        ))}*/}
+        {/* eslint-disable-next-line react/prop-types */}
+        {data.map((item, index) => (
+          <ScheduleItem
+            key={index}
+            date={item.date}
+            time={item.time}
+            courseName={item.courseName}
+            auditory={item.auditory}
+            credit={item.credit}
+          />
+        ))}
       </div>
-    </div>
+    </section>
   );
 };
 

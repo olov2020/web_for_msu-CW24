@@ -2,7 +2,7 @@ import style from "../header.module.css";
 import MenuItem from "./menuItem/MenuItem.jsx";
 import {
   ADD_NEW_COURSE_ROUTE,
-  ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE,
+  ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ROUTE, NOT_FOUND_ROUTE,
   SCHEDULE_ROUTE
@@ -29,13 +29,10 @@ const Menu = () => {
           title: 'Расписание', link: SCHEDULE_ROUTE, id: 0,
         },
         {
-          title: 'Ведомость', link: MARKS_ROUTE, id: 1,
+          title: 'Мои Курсы', link: MY_COURSES_ROUTE, id: 1,
         },
         {
-          title: 'Мои Курсы', link: MY_COURSES_ROUTE, id: 2,
-        },
-        {
-          title: 'Все курсы', link: ALL_COURSES_ROUTE, id: 3,
+          title: 'Все курсы', link: ALL_COURSES_ROUTE, id: 2,
         },
       ],
     },
@@ -79,7 +76,7 @@ const Menu = () => {
     },
   ]
 
-  if (user.authStatus === 'none') {
+  if (user.authStatus.includes('admin')) {
     menu[1].dropdown.push({
       title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: menu[1].length,
     })

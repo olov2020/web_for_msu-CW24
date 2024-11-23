@@ -1,10 +1,18 @@
 import {
-  ACCOUNT_ROUTE, ADD_NEW_COURSE_ROUTE, ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE,
+  ACCOUNT_ROUTE,
+  ADD_NEW_COURSE_ROUTE,
+  ALL_COURSES_ROUTE,
+  COURSES_ITEM_ROUTE,
+  CREATE_NEWS_ROUTE,
   HOME_ROUTE,
-  LOGIN_ROUTE, MARKS_ROUTE, MY_COURSES_ROUTE, NEWS_ROUTE, NEWS_SHOW_ITEM_ROUTE,
+  LOGIN_ROUTE,
+  MY_COURSES_ROUTE,
+  NEWS_ITEM_ROUTE,
+  NEWS_ROUTE,
   NOT_FOUND_ROUTE,
   REGISTRATION_PUPIL_ROUTE,
-  REGISTRATION_TEACHER_ROUTE, SCHEDULE_ROUTE
+  REGISTRATION_TEACHER_ROUTE,
+  SCHEDULE_ROUTE
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -13,13 +21,12 @@ import RegistrationPupil from "../pages/registration/RegistrationPupil.jsx";
 import RegistrationTeacher from "../pages/registration/RegistrationTeacher.jsx";
 import Account from "../pages/account/Account.jsx";
 import Schedule from "../pages/schedule/Schedule.jsx";
-import MyCourses from "../pages/courses/myCourses/MyCourses.jsx";
-import AllCourses from "../pages/courses/allCourses/AllCourses.jsx";
+import Courses from "../pages/courses/Courses.jsx";
 import AddNewCourse from "../pages/courses/addNewCourse/AddNewCourse.jsx";
 import News from "../pages/news/News.jsx";
 import NewsCreate from "../pages/news/newsCreate/NewsCreate.jsx";
 import NewsItem from "../pages/news/newsItem/NewsItem.jsx";
-import Marks from "../pages/marks/Marks.jsx";
+import CourseItem from "../pages/courses/courseItem/CourseItem.jsx";
 
 export const publicRoutes = [
   {
@@ -52,11 +59,11 @@ export const publicRoutes = [
   },
   {
     path: MY_COURSES_ROUTE,
-    Element: <MyCourses/>,
+    Element: <Courses/>,
   },
   {
     path: ALL_COURSES_ROUTE,
-    Element: <AllCourses/>,
+    Element: <Courses/>,
   },
   {
     path: ADD_NEW_COURSE_ROUTE,
@@ -71,12 +78,12 @@ export const publicRoutes = [
     Element: <NewsCreate/>,
   },
   {
-    path: NEWS_SHOW_ITEM_ROUTE,
+    path: NEWS_ITEM_ROUTE,
     Element: <NewsItem/>,
   },
   {
-    path: MARKS_ROUTE,
-    Element: <Marks/>,
+    path: COURSES_ITEM_ROUTE,
+    Element: <CourseItem/>,
   },
 ]
 
