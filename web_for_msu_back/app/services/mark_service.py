@@ -214,13 +214,9 @@ class MarkService:
         return pupil_marks_res
 
     def get_pupil_marks_model(self, course_id: int, pupil_id: int) -> (PupilMarksDTO, int):
-        # TODO fix finding lessons twice
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
-        lessons = self.course_service.get_lessons(course_id)
-        if not lessons:
-            return {'error': 'Уроков пока нет'}, 404
         course_name = course.name
         formulas = course.formulas
         marks = self.get_pupil_marks(course_id, pupil_id)
