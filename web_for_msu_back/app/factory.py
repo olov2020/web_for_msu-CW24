@@ -1,6 +1,6 @@
 from web_for_msu_back.app import db
 from web_for_msu_back.app.services import PupilService, ImageService, UserService, TeacherService, MarkService, \
-    CourseService
+    CourseService, NewsService
 
 
 def create_services() -> dict[str, object]:
@@ -14,11 +14,13 @@ def create_services() -> dict[str, object]:
     pupil_service.user_service = user_service
     pupil_service.image_service = image_service
     mark_service = MarkService(db, course_service, pupil_service)
+    news_service = NewsService(db, image_service)
     return {
         "user_service": user_service,
         "teacher_service": teacher_service,
         "pupil_service": pupil_service,
         "image_service": image_service,
         "mark_service": mark_service,
-        "course_service": course_service
+        "course_service": course_service,
+        "news_service": news_service,
     }

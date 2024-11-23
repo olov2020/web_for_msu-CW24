@@ -95,8 +95,6 @@ class CourseService:
                         "lesson_time": course.lesson_time
                     }
                     result.append(LessonScheduleDTO().load(data))
-        if not result:
-            return {"error": "Занятий нет"}, 404
         return result, 200
 
     def load_from_file(self, request: flask.Request) -> (dict, int):
@@ -288,7 +286,7 @@ class CourseService:
             "emsh_grades": course.emsh_grades,
             "crediting": course.crediting,
             "direction": course.direction,
-            "teachers": course.teachers,
+            "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
             "auditory": course.auditory,
             "lesson_time": course.lesson_time
         }
@@ -316,7 +314,7 @@ class CourseService:
             "emsh_grades": course.emsh_grades,
             "crediting": course.crediting,
             "direction": course.direction,
-            "teachers": course.teachers,
+            "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
             "auditory": course.auditory,
             "lesson_time": course.lesson_time,
             "pupils_number": pupils_number

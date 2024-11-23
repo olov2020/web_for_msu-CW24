@@ -26,10 +26,12 @@ def create_app(config):
     from web_for_msu_back.app.views.admin import AdminView
     from web_for_msu_back.app.views.pupil import PupilView
     from web_for_msu_back.app.views.teacher import TeacherView
+    from web_for_msu_back.app.views.news import NewsView
 
     HomeView.register(app)
     AdminView.register(app)
     PupilView.register(app)
     TeacherView.register(app)
+    NewsView.register(app)
 
     return app

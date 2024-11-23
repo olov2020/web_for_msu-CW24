@@ -9,3 +9,4 @@ from .teacher import Teacher
 from .teacher_course import TeacherCourse
 from .user import User
 from .user_role import user_role
+from .news import News

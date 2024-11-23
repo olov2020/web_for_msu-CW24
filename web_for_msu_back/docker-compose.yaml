@@ -27,8 +27,7 @@ services:
     depends_on:
       - postgres
     environment:
-      FLASK_ENV: development
-      DATABASE_URL: postgresql://user:123@postgres:5432/emsh_db
+      FLASK_ENV: production
     networks:
       - app-network
 
