@@ -95,8 +95,6 @@ class CourseService:
                         "lesson_time": course.lesson_time
                     }
                     result.append(LessonScheduleDTO().load(data))
-        if not result:
-            return {"error": "Занятий нет"}, 404
         return result, 200
 
     def load_from_file(self, request: flask.Request) -> (dict, int):

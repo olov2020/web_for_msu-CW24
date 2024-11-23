@@ -99,10 +99,7 @@ class HomeView(FlaskView):
         date_start = datetime.now().date()
         lessons_in_week, code1 = course_service.get_lessons_in_week(date_start, g.current_user.id)
         lessons_in_two_weeks, code2 = course_service.get_lessons_in_week(get_next_monday(date_start), g.current_user.id)
-        if code1 != 200 or code2 != 200:
-            return ({"lessons_in_week": lessons_in_week}, code1) if code1 != 200 else (
-                {"lessons_in_two_weeks": lessons_in_two_weeks}, code2)
-        return {'lessons_in_week': lessons_in_week, 'lessons_in_two_weeks': lessons_in_two_weeks}, 200
+        return {'lessons_in_week': lessons_in_week, 'lessons_in_two_weeks': lessons_in_two_weeks}, code1
 
     @method("GET")
     def all_courses(self):
