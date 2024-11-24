@@ -60,11 +60,11 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
     // TODO change to Input
     <div className={styleFileInput.container}>
       <label className={`${styleFileInput.label} ${styleInput.label}`}>
-        <p style={{
+        <h3 style={{
           alignSelf: 'flex-start',
         }}>
           {fieldName}
-        </p>
+        </h3>
 
         <input
           type='file'

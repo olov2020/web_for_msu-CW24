@@ -1,16 +1,35 @@
-import {useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 const NewsItem = () => {
 
-  const params = useParams();
+  const { state } = useLocation();
 
   return (
-    <section>
-      <h1>{params.title}</h1>
-      <img src={params.photo} alt={params.title}/>
-      <p>{params.description}</p>
-      <p>{params.date}</p>
-    </section>
+    <article key={state.key}>
+      <h1>{state.title}</h1>
+
+      <p style={{
+        alignSelf: 'flex-end',
+        marginRight: '2rem',
+      }}
+      >
+        {state.date}
+      </p>
+
+      <img src={state.photo} alt={state.title}
+           style={{
+             width: "30vw",
+             objectFit: 'contain',
+           }}
+      />
+
+      <p style={{
+        margin: '0 2rem',
+      }}
+      >
+        {state.description}
+      </p>
+    </article>
   );
 };
 

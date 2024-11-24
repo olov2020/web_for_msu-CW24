@@ -5,6 +5,7 @@
     grid-template-areas:
         'schedule news'
         'myCourses news';
+    gap: 2rem;
 }
 
 .schedule {

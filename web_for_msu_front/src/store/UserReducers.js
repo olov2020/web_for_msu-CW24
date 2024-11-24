@@ -9,7 +9,7 @@ const authStatus = {
 const defaultState = {
     id: 0,
     email: "",
-    authStatus: authStatus.pupil,
+    authStatus: authStatus.newsmaker,
 }
 
 const SET_AUTH = "SET_AUTH"

@@ -1,7 +1,7 @@
 import styleFileInput from "../userInputs/inputFile.module.css";
 import styleInput from "../userInputs/input.module.css";
 import {useEffect, useRef, useState} from "react";
-import defaultUserImage from "../../../../../public/generic/default_user.svg";
+import defaultNewsImage from "../../../../../public/msu_logo.png";
 
 // eslint-disable-next-line react/prop-types
 const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
@@ -16,7 +16,7 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
 
   useEffect(() => {
     if (uploadedImage.current) {
-      uploadedImage.current.src = defaultUserImage;
+      uploadedImage.current.src = defaultNewsImage;
       setValue(uploadedImage.current.src);
     }
   }, []);
@@ -30,7 +30,7 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
       setIsValid(false);
 
       const {current} = uploadedImage;
-      current.src = defaultUserImage;
+      current.src = defaultNewsImage;
       setValue(current.src);
 
       return;
@@ -59,11 +59,11 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
   return (
     <div className={styleFileInput.container}>
       <label className={`${styleFileInput.label} ${styleInput.label}`}>
-        <p style={{
+        <h3 style={{
           alignSelf: 'flex-start',
         }}>
           {fieldName}
-        </p>
+        </h3>
 
         <input
           type='file'
@@ -90,8 +90,8 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
       <img
         onClick={() => imageUploader.current.click()}
         ref={uploadedImage}
-        className={styleFileInput.photo}
-        alt='Фото пользователя'
+        className={styleFileInput.photoNews}
+        alt='Фото новости'
       />
     </div>
   );

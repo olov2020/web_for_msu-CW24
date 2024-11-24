@@ -1,8 +1,8 @@
-import Input from '../Input.jsx'
 import {useState} from "react";
+import Textarea from "../Textarea.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputNewsText = ({name, placeholder, fieldName, value, setValue}) => {
+const InputNewsDescription = ({name, placeholder, fieldName, value, setValue}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -10,7 +10,7 @@ const InputNewsText = ({name, placeholder, fieldName, value, setValue}) => {
     empty: 'Данное поле не может быть пустым',
   }
 
-  const handleInputChange = ((e) => {
+  const handleInputChange = (e) => {
     e.preventDefault();
     setValue(e.target.value);
     const error = validateInput(e.target.value);
@@ -18,9 +18,10 @@ const InputNewsText = ({name, placeholder, fieldName, value, setValue}) => {
     if (error) {
       setIsValid(false);
       setError(error);
+      setValue(undefined);
       console.log(error);
     }
-  })
+  }
 
   const validateInput = (inputValue) => {
     if (inputValue.length === 0) {
@@ -32,7 +33,7 @@ const InputNewsText = ({name, placeholder, fieldName, value, setValue}) => {
   }
 
   return (
-    <Input
+    <Textarea
       name={name}
       placeholder={placeholder}
       fieldName={fieldName}
@@ -44,4 +45,4 @@ const InputNewsText = ({name, placeholder, fieldName, value, setValue}) => {
   );
 };
 
-export default InputNewsText;
+export default InputNewsDescription;

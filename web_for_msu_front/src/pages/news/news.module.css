@@ -1,13 +1,5 @@
-.news {
-
-}
-
 .newsList {
-
-}
-
-.pagination {
-
+    width: 90%;
 }
 
 
@@ -17,9 +9,6 @@
     justify-content: center;
     align-items: center;
 
-    width: 90%;
+    width: 100%;
     height: auto;
-    padding: 2rem;
-
-    border: 1px solid black;
 }

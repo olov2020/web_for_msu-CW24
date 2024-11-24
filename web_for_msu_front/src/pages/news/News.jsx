@@ -7,10 +7,11 @@ import {getAllNews} from "../../api/newsApi.js";
 const News = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
+  const [itemsPerPage, setItemsPerPage] = useState(5); // State for items per page
   const listRef = useRef(null); // Reference to the list
   const [news, setNews] = useState([
-    {title: 'Title', photo: null, date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
+    {id: 1, title: 'Title', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consectetur'},
+    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
   ]);
   /*const [news, setNews] = useState([]);*/
   const [displayedNews, setDisplayedNews] = useState(
@@ -27,7 +28,8 @@ const News = () => {
     const endIndex = startIndex + itemsPerPage;
     setDisplayedNews(news.slice(startIndex, endIndex));
     if (listRef.current) {
-      listRef.current.scrollIntoView({
+      window.scrollTo({
+        top: 0,
         behavior: "smooth",
       });
     }
@@ -38,18 +40,14 @@ const News = () => {
     handlePageChange(1); // Go to the first page when changing items per page
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     const getNews = async () => {
-      try {
-        const data = await getAllNews();
-        setNews(data);
-      } catch (error) {
-        console.log(error);
-      }
+      const data = await getAllNews();
+      setNews(data);
     }
 
     getNews();
-  }, [])
+  }, [])*/
 
   useEffect(() => {
     handlePageChange(1);
@@ -57,7 +55,7 @@ const News = () => {
   }, [itemsPerPage, news])
 
   return (
-    <section ref={listRef} className={style.news}>
+    <article ref={listRef}>
       <h1>Новости</h1>
 
       <List
@@ -65,10 +63,12 @@ const News = () => {
         itemLayout="horizontal"
         dataSource={displayedNews}
         renderItem={(item) => (
-          <List.Item>
+          <List.Item className={style.newsListItem}
+                     key={item.id}
+          >
             <NewsCard
               photo={item.photo}
-              key={item.key}
+              id={item.id}
               title={item.title}
               date={item.date}
               description={item.description}
@@ -77,7 +77,6 @@ const News = () => {
         )}
       >
         <Pagination
-          className={style.pagination}
           defaultCurrent={currentPage}
           total={news.length} // Total number of items
           pageSize={itemsPerPage}
@@ -86,7 +85,7 @@ const News = () => {
           onShowSizeChange={handleItemsPerPageChange} // Handle changes to items per page
         />
       </List>
-    </section>
+    </article>
   );
 };
 

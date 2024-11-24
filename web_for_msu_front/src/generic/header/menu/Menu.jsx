@@ -11,7 +11,7 @@ import {useSelector} from "react-redux";
 
 const Menu = () => {
 
-  const user = useSelector((state) => state.user);
+  const userStatus = useSelector(state => state.user.authStatus);
 
   const menu = [
     {
@@ -76,7 +76,13 @@ const Menu = () => {
     },
   ]
 
-  if (user.authStatus.includes('admin')) {
+  if (userStatus.includes('newsmaker') || userStatus.includes('admin')) {
+    menu[0].dropdown.push({
+      title: 'Добавить новость', link: CREATE_NEWS_ROUTE, id: menu[0].length,
+    })
+  }
+
+  if (userStatus.includes('admin')) {
     menu[1].dropdown.push({
       title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: menu[1].length,
     })

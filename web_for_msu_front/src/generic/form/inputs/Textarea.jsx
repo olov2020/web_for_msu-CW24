@@ -1,7 +1,7 @@
 import styleInput from "./userInputs/input.module.css";
 
 // eslint-disable-next-line react/prop-types
-const Input = ({fieldName = '', placeholder = '', isValid = true, error = '', ...props}) => {
+const Textarea = ({fieldName = '', placeholder = '', isValid = true, error = '', ...props}) => {
   return (
     <label className={styleInput.label}>
       <h3 style={{
@@ -9,22 +9,22 @@ const Input = ({fieldName = '', placeholder = '', isValid = true, error = '', ..
       }}>
         {fieldName}
       </h3>
-      
-      <input {...props}
+
+      <textarea {...props}
              placeholder={placeholder ? placeholder : ''}
              className={
                `${isValid ?
                  `${styleInput.valid}` :
                  `${styleInput.invalid}`}
-                  ${styleInput.input}`
+                  ${styleInput.textarea}`
              }
       />
 
       <p className={styleInput.errorMessage}>
-      {error}
+        {error}
       </p>
     </label>
   );
 };
 
-export default Input;
+export default Textarea;

@@ -37,11 +37,11 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
     переделать под стандартный Input
     */
     <label className={styleInput.label}>
-      <p style={{
+      <h3 style={{
         alignSelf: 'flex-start',
       }}>
         {fieldName}
-      </p>
+      </h3>
 
       <input list="dropdown-options"
              className={

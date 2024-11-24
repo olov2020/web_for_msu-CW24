@@ -84,11 +84,11 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue}) => {
 
   return (
     <label className={styleInput.label}>
-      <p style={{
+      <h3 style={{
         alignSelf: 'flex-start',
       }}>
         {fieldName}
-      </p>
+      </h3>
 
       <input
         type={showPassword ? 'text' : 'password'}

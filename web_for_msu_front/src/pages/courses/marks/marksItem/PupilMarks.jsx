@@ -32,20 +32,20 @@ const PupilMarks = ({courseId}) => {
 
       <thead>
       <tr>
-        {dates.map((date, index) => {
+        {dates.map((date, index) => (
           <th key={index}>{date}</th>
-        })}
+        ))}
       </tr>
       </thead>
 
       <tbody>
       <tr>
-        {marks.map((mark, index) => {
+        {marks.map((mark, index) => (
           <td key={index}>{mark}</td>
-        })}
+        ))}
       </tr>
       </tbody>
-
+      
       <tfoot>
       <tr>
         <th scope="row" colSpan={dates.length - 1}>Итоговая оценка</th>

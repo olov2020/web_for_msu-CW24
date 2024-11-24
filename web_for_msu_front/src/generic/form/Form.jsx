@@ -15,24 +15,47 @@ import InputYear from "./inputs/userInputs/InputYear.jsx";
 import InputMessenger from "./inputs/userInputs/InputMessenger.jsx";
 import InputDropdown from "./inputs/userInputs/InputDropdown.jsx";
 import InputCheckbox from "./inputs/userInputs/InputCheckbox.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import InputPhoto from "./inputs/userInputs/InputPhoto.jsx";
 import InputCourseName from "./inputs/courseInputs/InputCourseName.jsx";
-import InputNewsText from "./inputs/newsInputs/InputNewsText.jsx";
+import InputNewsTitle from "./inputs/newsInputs/InputNewsTitle.jsx";
 import InputNewsPhoto from "./inputs/newsInputs/InputNewsPhoto.jsx";
 import {addNewsItem} from "../../api/newsApi.js";
+import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
+import {redirect} from "react-router-dom";
+import {NEWS_ROUTE} from "../../routing/consts.js";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
   const formValues = useState({})
+  const requiredValues =
+    {
+      pupilRegistration: ['email', 'password', 'newPassword', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
+      courseAdd: ['courseName'],
+      newsAdd: ['newsTitle', 'newsDescription',]
+    }
+  useEffect(() => {
+    requiredValues[type].forEach(item => {
+      console.log(formValues[item])
+    })
+  }, [formValues]);
+
+  const checkFormErrors = () => {
+    requiredValues[type].forEach(item => {
+      if (!formValues[item]) {
+        return false;
+      }
+    })
+    return true;
+  }
 
   // TODO
   // add check for correct and required variables
   const onClick = () => {
     if (type === 'login') {
       userLogin(formValues.email, formValues.password);
-    } else if (type === 'pupil_registration') {
+    } else if (type === 'pupilRegistration') {
       pupilRegistration(formValues);
     } else if (type === 'userChangePhoto') {
       userChangePhoto(formValues.photo);
@@ -43,9 +66,12 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     } else if (type === 'addNewCourse') {
       addNewCourse(formValues);
     } else if (type === 'newsAdd') {
-      const currentDate = new Date();
-      const dateCreated = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-      addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto, dateCreated);
+      if (checkFormErrors()) {
+        addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
+        redirect(NEWS_ROUTE);
+      } else {
+        alert();
+      }
     } else {
       console.error('Invalid type:', type);
     }
@@ -355,12 +381,12 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
       case 'newsTitle': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsTitle, setNewsTitle] = useState();
+        const [newsTitle, setNewsTitle] = useState(undefined);
         formValues.newsTitle = newsTitle
-        return <InputNewsText name={input} placeholder='Введите заголовок новости'
-                              fieldName='Заголовок новости'
-                              value={newsTitle}
-                              setValue={setNewsTitle}
+        return <InputNewsTitle name={input} placeholder='Введите заголовок новости'
+                               fieldName='Заголовок новости'
+                               value={newsTitle}
+                               setValue={setNewsTitle}
         />
       }
       case 'newsPhoto': {
@@ -376,9 +402,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       }
       case 'newsDescription': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsDescription, setNewsDescription] = useState();
+        const [newsDescription, setNewsDescription] = useState(undefined);
         formValues.newsDescription = newsDescription
-        return <InputNewsText name={input} placeholder='Введите текст новости'
+        return <InputNewsDescription name={input} placeholder='Введите текст новости'
                                      fieldName='Описание новости'
                                      value={newsDescription}
                                      setValue={setNewsDescription}
@@ -392,10 +418,10 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   }
 
   return (<form className={style.form}>
-      {inputs.map((input) => (showInput(input)))}
+    {inputs.map((input) => (showInput(input)))}
 
-      <ButtonSubmit text={buttonText} onClick={onClick}/>
-    </form>);
+    <ButtonSubmit text={buttonText} onClick={onClick}/>
+  </form>);
 };
 
 export default Form;

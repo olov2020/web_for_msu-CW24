@@ -11,17 +11,13 @@ export const getAllNews = async () => {
   }
 }
 
-export const addNewsItem = async ({title, description, photo, date}) => {
-  const response = await $host.post('/news/create', {title, description, photo, date}, {
+export const addNewsItem = async (title, description, photo) => {
+  const response = await $authHost.post('/news/create', {title, description, photo}, {
     headers: {
       'content-type': 'application/json'
     }
   })
 
-  try {
-    localStorage.setItem('token', response.data.accessToken);
-    return jwtDecode(response.data.accessToken);
-  } catch (error) {
-    console.log(error);
-  }
+  localStorage.setItem('token', response.data.accessToken);
+  return jwtDecode(response.data.accessToken);
 }

@@ -50,11 +50,11 @@ const InputPhone = ({name = '', placeholder = '', fieldName, value, setValue}) =
 
   return (
     <label className={styleInput.label}>
-      <p style={{
+      <h3 style={{
         alignSelf: 'flex-start',
       }}>
         {fieldName}
-      </p>
+      </h3>
 
       <InputMask
         mask="+7 (999) 999-99-99"

@@ -22,4 +22,11 @@
     height: 20rem;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
+}
+
+.photoNews {
+    width: 30rem;
+    object-fit: contain;
+    cursor: pointer;
 }

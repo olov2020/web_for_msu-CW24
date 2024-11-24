@@ -43,8 +43,30 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
   }
 }
 
-export const getTeacherMarks = async () => {
-  const response = await $host.get(`/marks/teacher`)
+export const getTeacherMarksByCourseId = async ({courseId}) => {
+  const response = await $host.get(`/teacher/get_journal/${courseId}`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error)
+    return {};
+  }
+}
+
+export const updateTeacherMarksByCourseId = async ({
+                                                     courseId,
+                                                     dates,
+                                                     mark_type_choices,
+                                                     mark_types,
+                                                     pupils,
+                                                     visits,
+                                                     averages
+                                                   }) => {
+  const response = await $host.put(`/teacher/update_journal/${courseId}`,
+    {
+      dates, mark_type_choices, mark_types, pupils, visits, averages
+    })
 
   try {
     return response.data;
