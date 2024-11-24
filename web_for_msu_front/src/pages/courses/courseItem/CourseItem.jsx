@@ -1,4 +1,4 @@
-import style from './course.module.css'
+import style from '../course.module.css'
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import PupilMarks from "../marks/marksItem/PupilMarks.jsx";

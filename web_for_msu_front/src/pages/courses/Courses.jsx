@@ -35,14 +35,18 @@ const Courses = () => {
   return (
     <article>
       {
-        url === ('/courses/my') || url === '/'?
+        url === ('/courses/my') || url === '/' ?
           <h1>Мои курсы</h1> :
           url === ('/courses/all') ?
             <h1>Все курсы</h1> :
             redirect(NOT_FOUND_ROUTE)
       }
 
-      <div>
+      <div style={{
+        width: '90vw',
+        border: '1px solid #ccc',
+      }}
+      >
         {courses.map((item) => (
           <CourseCard key={item.id} courseData={item}/>
         ))}
