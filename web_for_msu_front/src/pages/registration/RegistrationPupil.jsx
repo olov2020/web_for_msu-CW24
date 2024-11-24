@@ -13,14 +13,14 @@ const RegistrationPupil = () => {
         <Form inputs={
           ['photo', 'name', 'surname', 'lastname',
             'birthDate', 'email', 'password', 'phone',
-            'school', 'school_end_date', 'registration_address',
+            'school', 'schoolEndDate', 'registrationAddress',
             'telegram', 'vk',
-            'parent1_name', 'parent1_surname', 'parent1_lastname', 'parent1_phone', 'parent1_email',
-            'parent2_name', 'parent2_surname', 'parent2_lastname', 'parent2_phone', 'parent2_email',
-            'agreement', 'how_to_know', 'mailing',
+            'parent1Name', 'parent1Surname', 'parent1Lastname', 'parent1Phone', 'parent1Email',
+            'parent2Name', 'parent2Surname', 'parent2Lastname', 'parent2Phone', 'parent2Email',
+            'agreement', 'howToKnow', 'mailing',
           ]
         }
-              buttonText='Зарегистрироваться' type='pupil_registration'/>
+              buttonText='Зарегистрироваться' type='pupilRegistration'/>
       </div>
 
       <div className={loginStyle.links}>

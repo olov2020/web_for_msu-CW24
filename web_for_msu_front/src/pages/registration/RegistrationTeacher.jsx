@@ -13,14 +13,14 @@ const RegistrationTeacher = () => {
         <Form inputs={
           ['photo', 'name', 'surname', 'lastname',
             'birthDate', 'email', 'password', 'phone',
-            'school', 'school_end_date', 'university', 'university_end_date',
+            'school', 'schoolEndDate', 'university', 'universityEndDate',
             'work',
-            'registration_address',
+            'registrationAddress',
             'telegram', 'vk',
-            'was_pupil',
+            'wasPupil',
           ]
         }
-              buttonText='Зарегистрироваться' type='teacher_registration'/>
+              buttonText='Зарегистрироваться' type='teacherRegistration'/>
       </div>
 
       <div className={loginStyle.links}>

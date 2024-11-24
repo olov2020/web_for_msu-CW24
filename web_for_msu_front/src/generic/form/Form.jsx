@@ -35,24 +35,20 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       courseAdd: ['courseName'],
       newsAdd: ['newsTitle', 'newsDescription',]
     }
-  useEffect(() => {
+
+  /*useEffect(() => {
     requiredValues[type].forEach(item => {
-      console.log(formValues[item])
+      console.log(formValues[item]);
     })
-  }, [formValues]);
+  }, [formValues]);*/
 
   const checkFormErrors = () => {
-    requiredValues[type].forEach(item => {
-      if (!formValues[item]) {
-        return false;
-      }
-    })
-    return true;
+    return requiredValues[type].every(item => formValues[item] !== undefined && formValues[item] !== null);
   }
 
   // TODO
   // add check for correct and required variables
-  const onClick = () => {
+  const onClick = (e) => {
     if (type === 'login') {
       userLogin(formValues.email, formValues.password);
     } else if (type === 'pupilRegistration') {
@@ -70,7 +66,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
         redirect(NEWS_ROUTE);
       } else {
-        alert();
+        e.preventDefault();
+        alert('Заполните все обязательные поля.');
       }
     } else {
       console.error('Invalid type:', type);
@@ -169,7 +166,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           value={school} setValue={setSchool}
         />
       }
-      case 'school_end_date': {
+      case 'schoolEndDate': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [schoolEndDate, setSchoolEndDate] = useState(values[input]);
         formValues.schoolEndDate = schoolEndDate;
@@ -188,7 +185,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           value={university} setValue={setUniversity}
         />
       }
-      case 'university_end_date': {
+      case 'universityEndDate': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [universityEndDate, setUniversityEndDate] = useState(values[input]);
         formValues.universityEndDate = universityEndDate;
@@ -198,7 +195,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setUniversityEndDate}
         />
       }
-      case 'registration_address': {
+      case 'registrationAddress': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [registrationAddress, setRegistrationAddress] = useState(values[input]);
         formValues.registrationAddress = registrationAddress;
@@ -235,7 +232,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                                value={vk} setValue={setVk}
         />
       }
-      case 'parent1_name': {
+      case 'parent1Name': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Name, setParent1Name] = useState(values[input]);
         formValues.parent1Name = parent1Name;
@@ -245,7 +242,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setParent1Name}
         />
       }
-      case 'parent1_surname': {
+      case 'parent1Surname': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Surname, setParent1Surname] = useState(values[input]);
         formValues.parent1Surname = parent1Surname;
@@ -255,7 +252,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setParent1Surname}
         />
       }
-      case 'parent1_lastname': {
+      case 'parent1Lastname': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Lastname, setParent1Lastname] = useState(values[input]);
         formValues.parent1Lastname = parent1Lastname;
@@ -265,7 +262,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setParent1Lastname}
         />
       }
-      case 'parent1_phone': {
+      case 'parent1Phone': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Phone, setParent1Phone] = useState(values[input]);
         formValues.parent1Phone = parent1Phone;
@@ -275,7 +272,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                            setValue={setParent1Phone}
         />
       }
-      case 'parent1_email': {
+      case 'parent1Email': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Email, setParent1Email] = useState(values[input]);
         formValues.parent1Email = parent1Email;
@@ -285,7 +282,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                            setValue={setParent1Email}
         />
       }
-      case 'parent2_name': {
+      case 'parent2Name': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Name, setParent2Name] = useState(values[input]);
         formValues.parent2Name = parent2Name;
@@ -295,7 +292,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setParent2Name}
         />
       }
-      case 'parent2_surname': {
+      case 'parent2Surname': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Surname, setParent2Surname] = useState(values[input]);
         formValues.parent2Surname = parent2Surname;
@@ -305,7 +302,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setParent2Surname}
         />
       }
-      case 'parent2_lastname': {
+      case 'parent2Lastname': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Lastname, setParent2Lastname] = useState(values[input]);
         formValues.parent2Lastname = parent2Lastname;
@@ -315,7 +312,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setParent2Lastname}
         />
       }
-      case 'parent2_phone': {
+      case 'parent2Phone': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Phone, setParent2Phone] = useState(values[input]);
         formValues.parent2Phone = parent2Phone;
@@ -325,7 +322,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                            setValue={setParent2Phone}
         />
       }
-      case 'parent2_email': {
+      case 'parent2Email': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Email, setParent2Email] = useState(values[input]);
         formValues.parent2Email = parent2Email;
@@ -345,10 +342,10 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           setValue={setAgreement}
         />
       }
-      case 'how_to_know': {
+      case 'howToKnow': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [howToKnow, setHowToKnow] = useState(values[input]);
-        formValues.howToKnow = howToKnow
+        formValues.howToKnow = howToKnow;
         return <InputDropdown name={input} placeholder='Расскажжите откуда вы узнали об ЭМШ'
                               fieldName='Откуда вы узнали об ЭМШ'
                               values={['От друзей', 'Из социальных сетей', 'На дополнительных курсах']}
@@ -357,21 +354,21 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       case 'mailing': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [mailing, setMailing] = useState(true);
-        formValues.mailing = mailing
+        formValues.mailing = mailing;
         return <InputCheckbox name={input} fieldName='Согласие на получение рассылки' initialChecked={true}
                               required={false} setValue={setMailing}/>
       }
-      case 'was_pupil': {
+      case 'wasPupil': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [wasPupil, setWasPupil] = useState(true);
-        formValues.wasPupil = wasPupil
+        formValues.wasPupil = wasPupil;
         return <InputCheckbox name={input} fieldName='Был ли учеником ЭМШ' initialChecked={true}
                               required={false} setValue={setWasPupil}/>
       }
       case 'courseName': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [courseName, setCourseName] = useState(values[input]);
-        formValues.courseName = courseName
+        formValues.courseName = courseName;
         return <InputCourseName name={input} placeholder='Название курса'
                                 required={true}
                                 value={courseName}
@@ -382,9 +379,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       case 'newsTitle': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsTitle, setNewsTitle] = useState(undefined);
-        formValues.newsTitle = newsTitle
+        formValues.newsTitle = newsTitle;
         return <InputNewsTitle name={input} placeholder='Введите заголовок новости'
-                               fieldName='Заголовок новости'
+                               fieldName='Заголовок новости*'
                                value={newsTitle}
                                setValue={setNewsTitle}
         />
@@ -392,7 +389,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       case 'newsPhoto': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsPhoto, setNewsPhoto] = useState();
-        formValues.newsPhoto = newsPhoto
+        formValues.newsPhoto = newsPhoto;
         return <InputNewsPhoto name={input}
                                fieldName='Фотография новости'
                                value={newsPhoto}
@@ -403,9 +400,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       case 'newsDescription': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsDescription, setNewsDescription] = useState(undefined);
-        formValues.newsDescription = newsDescription
+        formValues.newsDescription = newsDescription;
         return <InputNewsDescription name={input} placeholder='Введите текст новости'
-                                     fieldName='Описание новости'
+                                     fieldName='Описание новости*'
                                      value={newsDescription}
                                      setValue={setNewsDescription}
         />
@@ -417,7 +414,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     }
   }
 
-  return (<form className={style.form}>
+  return (<form className={style.form} onSubmit={onClick}>
     {inputs.map((input) => (showInput(input)))}
 
     <ButtonSubmit text={buttonText} onClick={onClick}/>
