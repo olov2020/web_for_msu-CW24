@@ -28,7 +28,7 @@ class BaseConfig:
     # MAIL_DEFAULT_SENDER = MAIL_USERNAME
 
 
-class DevelopementConfig(BaseConfig):
+class DevelopmentConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DEVELOPMENT_DATABASE_URI') or \
                               'postgresql+psycopg2://user:123@localhost:5433/emsh_db'

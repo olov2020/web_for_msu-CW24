@@ -7,12 +7,13 @@ from web_for_msu_back.app import db
 from web_for_msu_back.app.dto.formula import FormulaDTO
 from web_for_msu_back.app.dto.schedule import ScheduleDTO
 from web_for_msu_back.app.dto.teacher_course import TeacherCourseDTO
-from web_for_msu_back.app.models import CourseItem, Schedule, Formula, TeacherCourse, Teacher
+from web_for_msu_back.app.models import Course, Schedule, Formula, TeacherCourse, Teacher
 
 
 class CourseDTO(Schema):
     id = fields.Integer()  # Идентификатор курса
     name = fields.String(required=True, validate=Length(min=1))  # Название курса
+    year = fields.Integer(allow_none=True)
     auditory = fields.String(allow_none=True)  # Аудитория (если есть)
     course_review_number = fields.String(required=True, validate=OneOf(
         ['в первый раз', 'во второй раз', 'в третий раз', 'в четвёртый раз', 'в пятый раз']))  # № рассмотрения курса
@@ -52,8 +53,9 @@ class CourseDTO(Schema):
 
     @post_load
     def make_course(self, data, **kwargs):
-        course = CourseItem(  # В случае обновления
+        course = Course(  # В случае обновления
             name=data["name"],
+            year=datetime.now().year,
             auditory=data.get("auditory"),
             course_review_number=data["course_review_number"],
             direction=data["direction"],
@@ -77,7 +79,7 @@ class CourseDTO(Schema):
         )
 
         db.session.add(course)
-        db.session.commit()
+        db.session.flush()
 
         year = datetime.now().year
         # Добавляем связанные объекты расписания (schedules)
@@ -96,6 +98,11 @@ class CourseDTO(Schema):
                 formula_data.setdefault("course_id", course.id)
                 formula = Formula(**formula_data)
                 course.formulas.append(formula)
+        course.formulas.append(Formula(
+            course_id=course.id,
+            name="Баллы",
+            coefficient=1
+        ))
 
         # Добавляем связанных учителей (teachers)
         if "teachers" in data:
@@ -109,5 +116,7 @@ class CourseDTO(Schema):
                     teacher_id=teacher.id,
                     course_id=course.id,
                     year=year))
+
+        course.year = year
 
         return course, year

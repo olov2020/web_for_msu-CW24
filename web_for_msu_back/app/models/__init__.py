@@ -1,4 +1,4 @@
-from .course import CourseItem
+from .course import Course
 from .formula import Formula
 from .mark import Mark
 from .pupil import Pupil
