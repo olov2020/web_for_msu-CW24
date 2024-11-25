@@ -76,25 +76,19 @@ export const updateTeacherMarksByCourseId = async ({
   }
 }
 
-export const addCourseByFile = async ({file}) => {
-  const {data} = await $host.post(`/courses/add/${file}`, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
+export const getCourseByFile = async () => {
+  const response = await $host.get(`/admin/add_from_file`)
 
-  localStorage.setItem('token', data.accessToken)
-  return jwtDecode(data.accessToken)
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error)
+    return {};
+  }
 }
 
-export const getCourseByFile = async ({file}) => {
-  const {data} = await $host.get(`/courses/${file}`)
-
-  return data
-}
-
-export const addNewCourse = async (course) => {
-  const {data} = await $host.post(`/addNewCourse/${course}`, {
+export const courseAdd = async (course) => {
+  const {data} = await $host.post(`/admin/create_course`, {course},{
     headers: {
       'content-type': 'application/json'
     }

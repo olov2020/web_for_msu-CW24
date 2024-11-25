@@ -2,7 +2,7 @@ import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputCourseName = ({name = '', placeholder = '', value, setValue}) => {
+const InputCourseName = ({name, placeholder, value, setValue, fieldName}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -36,6 +36,7 @@ const InputCourseName = ({name = '', placeholder = '', value, setValue}) => {
     <Input name={name} placeholder={placeholder}
            value={value} onChange={handleInputChange}
            isValid={isValid} error={error}
+           fieldName={fieldName}
     />
   );
 };

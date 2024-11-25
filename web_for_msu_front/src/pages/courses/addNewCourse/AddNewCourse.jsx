@@ -7,16 +7,11 @@ import InputFile from "../../../generic/form/inputs/userInputs/InputFile.jsx";
 const AddNewCourse = () => {
 
   const [courseInfo, setCourseInfo] = useState({});
-  const [file, setFile] = useState('');
 
   useEffect(() => {
     const getCourseInfo = async () => {
-      if (file !== '') {
-        const data = getCourseByFile(file);
+      const data = getCourseByFile();
         setCourseInfo(data);
-      } else {
-        console.log('Error uploading file');
-      }
     }
 
     getCourseInfo();
@@ -30,12 +25,12 @@ const AddNewCourse = () => {
         display: 'flex',
         flexDirection: 'column',
         width: '90%',
-        gap: '1rem 0',
+        gap: '5rem 0',
       }}
       >
-      <InputFile setValue={setFile} value={file} accept={'.xls, .xlsx, .csv'}/>
+        <Form inputs={['courseFile']} buttonText='Загрузить новый курс' type='addCourseByFile'></Form>
 
-      <Form inputs={['courseName']} buttonText='Создать новый курс' type='addNewCourse'></Form>
+        {/*<Form inputs={['courseName']} buttonText='Создать новый курс' type='courseAdd'></Form>*/}
       </div>
     </article>
   );

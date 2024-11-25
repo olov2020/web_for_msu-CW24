@@ -5,7 +5,6 @@ import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
   pupilChangeData, pupilRegistration, teacherChangeData, teacherRegistration, userChangePhoto, userLogin
 } from "../../api/userApi.js";
-import {addNewCourse} from '../../api/coursesApi.js'
 import InputFile from "./inputs/userInputs/InputFile.jsx";
 import InputName from "./inputs/userInputs/InputName.jsx";
 import InputDate from "./inputs/userInputs/InputDate.jsx";
@@ -24,6 +23,7 @@ import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {redirect} from "react-router-dom";
 import {NEWS_ROUTE} from "../../routing/consts.js";
+import {courseAdd} from "../../api/coursesApi.js";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type}) => {
@@ -34,6 +34,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       login: ['email', 'password'],
       pupilRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
       teacherRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
+      courseFile: ['courseFile'],
       courseAdd: ['courseName'],
       newsAdd: ['newsTitle', 'newsDescription']
     }
@@ -63,8 +64,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       pupilChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
     } else if (type === 'teacherChangeData') {
       teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
-    } else if (type === 'addNewCourse') {
-      addNewCourse(formValues);
+    } else if (type === 'courseAdd') {
+      courseAdd(formValues);
     } else if (type === 'newsAdd') {
       if (checkFormErrors()) {
         addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
@@ -112,7 +113,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         formValues.photo = photo;
         return <InputPhoto setValue={setPhoto}
                            name={input} accept='image/png, image/gif, image/jpeg, image/jpg'
-                           required={false}
                            fieldName='Выберете фото профиля'
         />
       }
@@ -342,7 +342,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         formValues.agreement = agreement;
         return <InputFile name={input} accept='.pdf'
                           fieldName='Согласие на обработку персональных данных*'
-                          required={true}
                           setValue={setAgreement}
         />
       }
@@ -360,21 +359,32 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         const [mailing, setMailing] = useState(true);
         formValues.mailing = mailing;
         return <InputCheckbox name={input} fieldName='Согласие на получение рассылки' initialChecked={true}
-                              required={false} setValue={setMailing}/>
+                              setValue={setMailing}/>
       }
       case 'wasPupil': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [wasPupil, setWasPupil] = useState(true);
         formValues.wasPupil = wasPupil;
         return <InputCheckbox name={input} fieldName='Был ли учеником ЭМШ' initialChecked={true}
-                              required={false} setValue={setWasPupil}/>
+                              setValue={setWasPupil}/>
       }
+
+      case 'courseFile': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [courseFile, setCourseFile] = useState(values[input]);
+        formValues.courseFile = courseFile;
+        return <InputFile name={input} accept='.xls, .xlsx, .csv'
+                          fieldName='Добавить курс*'
+                          setValue={setCourseFile}
+        />
+      }
+
       case 'courseName': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [courseName, setCourseName] = useState(values[input]);
         formValues.courseName = courseName;
-        return <InputCourseName name={input} placeholder='Название курса'
-                                required={true}
+        return <InputCourseName name={input} placeholder='Введите название курса'
+                                fieldName='Название курса*'
                                 value={courseName}
                                 setValue={setCourseName}
         />
