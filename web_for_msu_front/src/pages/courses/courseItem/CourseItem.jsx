@@ -11,7 +11,7 @@ const CourseItem = () => {
   const {state} = useLocation();
 
   return (
-    <article key={state.key} className={style.courseItem}>
+    <article key={state.key}>
       <h1>{state.courseData.name}</h1>
       <p style={{
         alignSelf: 'flex-end',
@@ -37,7 +37,6 @@ const CourseItem = () => {
         display: 'flex',
         justifyContent: 'space-between',
         width: '90%',
-        gap: '2rem',
       }}
       >
         <div style={{
@@ -76,7 +75,6 @@ const CourseItem = () => {
         display: 'flex',
         justifyContent: 'space-between',
         width: '90%',
-        gap: '2rem',
       }}
       >
         <p>Курс попадает под категорию: <span>{state.courseData.crediting}</span></p>

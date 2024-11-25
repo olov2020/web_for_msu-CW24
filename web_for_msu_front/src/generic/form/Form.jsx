@@ -3,7 +3,7 @@ import InputEmail from "./inputs/userInputs/InputEmail.jsx";
 import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
-  pupilChangeData, pupilRegistration, teacherChangeData, userChangePhoto, userLogin
+  pupilChangeData, pupilRegistration, teacherChangeData, teacherRegistration, userChangePhoto, userLogin
 } from "../../api/userApi.js";
 import {addNewCourse} from '../../api/coursesApi.js'
 import InputFile from "./inputs/userInputs/InputFile.jsx";
@@ -31,9 +31,11 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   const formValues = useState({})
   const requiredValues =
     {
-      pupilRegistration: ['email', 'password', 'newPassword', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
+      login: ['email', 'password'],
+      pupilRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
+      teacherRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
       courseAdd: ['courseName'],
-      newsAdd: ['newsTitle', 'newsDescription',]
+      newsAdd: ['newsTitle', 'newsDescription']
     }
 
   /*useEffect(() => {
@@ -53,6 +55,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       userLogin(formValues.email, formValues.password);
     } else if (type === 'pupilRegistration') {
       pupilRegistration(formValues);
+    } else if (type === 'teacherRegistration') {
+      teacherRegistration(formValues);
     } else if (type === 'userChangePhoto') {
       userChangePhoto(formValues.photo);
     } else if (type === 'pupilChangeData') {
@@ -109,7 +113,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         return <InputPhoto setValue={setPhoto}
                            name={input} accept='image/png, image/gif, image/jpeg, image/jpg'
                            required={false}
-                           fieldName='Выберете фото профиля*'
+                           fieldName='Выберете фото профиля'
         />
       }
       case 'name': {
@@ -337,7 +341,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         const [agreement, setAgreement] = useState(values[input]);
         formValues.agreement = agreement;
         return <InputFile name={input} accept='.pdf'
-                          fieldName='Согласие на обработку персональных данных'
+                          fieldName='Согласие на обработку персональных данных*'
                           required={true}
                           setValue={setAgreement}
         />

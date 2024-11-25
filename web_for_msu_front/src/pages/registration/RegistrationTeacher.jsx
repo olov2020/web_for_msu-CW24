@@ -17,7 +17,7 @@ const RegistrationTeacher = () => {
             'work',
             'registrationAddress',
             'telegram', 'vk',
-            'wasPupil',
+            'agreement', 'wasPupil',
           ]
         }
               buttonText='Зарегистрироваться' type='teacherRegistration'/>

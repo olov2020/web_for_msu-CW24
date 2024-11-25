@@ -86,9 +86,6 @@ const Menu = () => {
     menu[1].dropdown.push({
       title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: menu[1].length,
     })
-    menu[0].dropdown.push({
-      title: 'Добавить новость', link: CREATE_NEWS_ROUTE, id: menu[0].length,
-    })
   }
 
   return (

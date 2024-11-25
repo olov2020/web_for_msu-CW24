@@ -23,13 +23,21 @@ const AddNewCourse = () => {
   }, [])
 
   return (
-    <section className={styleApp.pageSection}>
+    <article>
       <h1 className={styleApp.pageTitle}>Добавить новый курс</h1>
 
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '90%',
+        gap: '1rem 0',
+      }}
+      >
       <InputFile setValue={setFile} value={file} accept={'.xls, .xlsx, .csv'}/>
 
       <Form inputs={['courseName']} buttonText='Создать новый курс' type='addNewCourse'></Form>
-    </section>
+      </div>
+    </article>
   );
 };
 
