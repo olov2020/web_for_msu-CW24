@@ -12,6 +12,7 @@ export const MY_COURSES_ROUTE = '/courses/my'
 export const ALL_COURSES_ROUTE = '/courses/all'
 export const COURSES_ITEM_ROUTE = '/courses/:year/:title'
 export const ADD_NEW_COURSE_ROUTE = '/courses/add'
+export const CHANGE_COURSE_ROUTE = '/courses/change'
 
 export const NEWS_ROUTE = '/news'
 export const CREATE_NEWS_ROUTE = '/news/add'

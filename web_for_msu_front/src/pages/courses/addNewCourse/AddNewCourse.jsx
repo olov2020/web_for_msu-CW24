@@ -1,12 +1,11 @@
 import Form from "../../../generic/form/Form.jsx";
-import styleApp from '../../../app.module.css'
 import {useEffect, useState} from "react";
-import {getCourseByFile} from "../../../api/coursesApi.js";
+import {courseAdd, getCourseByFile} from "../../../api/coursesApi.js";
 import InputFile from "../../../generic/form/inputs/userInputs/InputFile.jsx";
 
 const AddNewCourse = () => {
 
-  const [courseInfo, setCourseInfo] = useState({});
+  /*const [courseInfo, setCourseInfo] = useState({});
 
   useEffect(() => {
     const getCourseInfo = async () => {
@@ -15,11 +14,11 @@ const AddNewCourse = () => {
     }
 
     getCourseInfo();
-  }, [])
+  }, [])*/
 
   return (
     <article>
-      <h1 className={styleApp.pageTitle}>Добавить новый курс</h1>
+      <h1>Добавить новый курс</h1>
 
       <div style={{
         display: 'flex',
@@ -28,7 +27,7 @@ const AddNewCourse = () => {
         gap: '5rem 0',
       }}
       >
-        <Form inputs={['courseFile']} buttonText='Загрузить новый курс' type='addCourseByFile'></Form>
+        <Form inputs={['courseFile']} buttonText='Загрузить новый курс' type='courseAdd'></Form>
 
         {/*<Form inputs={['courseName']} buttonText='Создать новый курс' type='courseAdd'></Form>*/}
       </div>

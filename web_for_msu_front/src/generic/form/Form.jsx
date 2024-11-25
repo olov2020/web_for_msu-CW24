@@ -22,7 +22,7 @@ import InputNewsPhoto from "./inputs/newsInputs/InputNewsPhoto.jsx";
 import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {redirect} from "react-router-dom";
-import {NEWS_ROUTE} from "../../routing/consts.js";
+import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd} from "../../api/coursesApi.js";
 
 // eslint-disable-next-line react/prop-types
@@ -34,8 +34,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       login: ['email', 'password'],
       pupilRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
       teacherRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
-      courseFile: ['courseFile'],
-      courseAdd: ['courseName'],
+      courseAdd: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription']
     }
 
@@ -53,11 +52,29 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   // add check for correct and required variables
   const onClick = (e) => {
     if (type === 'login') {
-      userLogin(formValues.email, formValues.password);
+      if (checkFormErrors()) {
+        userLogin(formValues.email, formValues.password);
+        redirect(HOME_ROUTE);
+      } else {
+        e.preventDefault();
+        alert('Заполните все обязательные поля.');
+      }
     } else if (type === 'pupilRegistration') {
-      pupilRegistration(formValues);
+      if (checkFormErrors()) {
+        pupilRegistration(formValues);
+        redirect(LOGIN_ROUTE);
+      } else {
+        e.preventDefault();
+        alert('Заполните все обязательные поля.');
+      }
     } else if (type === 'teacherRegistration') {
-      teacherRegistration(formValues);
+      if (checkFormErrors()) {
+        teacherRegistration(formValues);
+        redirect(LOGIN_ROUTE);
+      } else {
+        e.preventDefault();
+        alert('Заполните все обязательные поля.');
+      }
     } else if (type === 'userChangePhoto') {
       userChangePhoto(formValues.photo);
     } else if (type === 'pupilChangeData') {
@@ -65,7 +82,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     } else if (type === 'teacherChangeData') {
       teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
     } else if (type === 'courseAdd') {
-      courseAdd(formValues);
+      if (checkFormErrors()) {
+        courseAdd(formValues)
+        redirect(ALL_COURSES_ROUTE);
+      } else {
+        e.preventDefault();
+        alert('Заполните все обязательные поля.');
+      }
     } else if (type === 'newsAdd') {
       if (checkFormErrors()) {
         addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);

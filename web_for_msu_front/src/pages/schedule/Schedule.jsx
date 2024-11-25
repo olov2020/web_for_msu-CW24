@@ -1,4 +1,3 @@
-import styleApp from '../../app.module.css'
 import OneWeek from "./oneWeek/OneWeek.jsx";
 import {useEffect, useState} from "react";
 import {getSchedule} from "../../api/coursesApi.js";

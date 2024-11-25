@@ -2,12 +2,11 @@ import loginStyle from '../login/login.module.css'
 import Form from "../../generic/form/Form.jsx";
 import {Link} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../../routing/consts.js";
-import styleApp from "../../app.module.css";
 
 const RegistrationPupil = () => {
   return (
-    <div className={styleApp.pageSection}>
-      <h1 className={styleApp.pageTitle}>Регистрация Ученика</h1>
+    <article>
+      <h1>Регистрация Ученика</h1>
 
       <div className={loginStyle.form}>
         <Form inputs={
@@ -32,7 +31,7 @@ const RegistrationPupil = () => {
           <p>Вернуться на страницу входа</p>
         </Link>
       </div>
-    </div>
+    </article>
   );
 };
 
