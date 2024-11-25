@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields
 
-from dto.schedule import ScheduleDTO
+from web_for_msu_back.app.dto.schedule import ScheduleDTO
 
 
 class CourseInfoDTO(Schema):
