@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
     from web_for_msu_back.app.services import ImageService
 
+
 class NewsService:
     def __init__(self, db, image_service: ImageService):
         self.db = db

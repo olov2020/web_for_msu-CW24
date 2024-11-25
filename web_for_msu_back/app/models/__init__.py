@@ -1,6 +1,7 @@
 from .course import Course
 from .formula import Formula
 from .mark import Mark
+from .news import News
 from .pupil import Pupil
 from .pupil_course import PupilCourse
 from .role import Role
@@ -9,4 +10,3 @@ from .teacher import Teacher
 from .teacher_course import TeacherCourse
 from .user import User
 from .user_role import user_role
-from .news import News

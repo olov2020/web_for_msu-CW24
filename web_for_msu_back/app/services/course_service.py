@@ -7,7 +7,6 @@ import flask
 import pandas as pd
 from marshmallow import ValidationError
 
-from dto.schedule import ScheduleDTO
 from web_for_msu_back.app.dto.course import CourseDTO
 from web_for_msu_back.app.dto.course_info import CourseInfoDTO
 from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
@@ -103,7 +102,8 @@ class CourseService:
                         "course_type": course_type,
                         "auditory": course.auditory,
                         "date": lesson.date.strftime('%d.%m'),
-                        "lesson_time": course.lesson_time
+                        "lesson_time": course.lesson_time,
+                        "plan": lesson.plan
                     }
                     result.append((LessonScheduleDTO().dump(data), lesson.date))
 

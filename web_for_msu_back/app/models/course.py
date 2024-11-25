@@ -1,5 +1,4 @@
 from datetime import datetime
-from email.policy import default
 
 from web_for_msu_back.app import db
 
