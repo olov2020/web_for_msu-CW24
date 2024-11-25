@@ -1,5 +1,5 @@
 import style from '../course.module.css'
-import {useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import PupilMarks from "../marks/marksItem/PupilMarks.jsx";
 import TeacherMarks from "../marks/marksItem/TeacherMarks.jsx";
@@ -7,25 +7,26 @@ import TeacherMarks from "../marks/marksItem/TeacherMarks.jsx";
 const CourseItem = () => {
 
   const userStatus = useSelector(state => state.user.authStatus);
-  const params = useParams();
+
+  const {state} = useLocation();
 
   return (
-    <article key={params.key} className={style.courseItem}>
-      <h1>{params.title}</h1>
+    <article key={state.key} className={style.courseItem}>
+      <h1>{state.title}</h1>
 
       {
         userStatus.includes('pupil') ?
           <div>
-            <PupilMarks courseId={params.key}/>
+            <PupilMarks courseId={state.key}/>
           </div> :
           userStatus.includes('teacher') ?
             <div>
-              <TeacherMarks courseId={params.key}/>
+              <TeacherMarks courseId={state.key}/>
             </div> :
             <></>
       }
 
-      <p>{params.description}</p>
+      <p>{state.description}</p>
     </article>
   );
 };

@@ -11,7 +11,9 @@ const Courses = () => {
     2024: [
       {
         auditory: null,
+        crediting: "зачётный для всех классов",
         credit: "Зачётный",
+        emsh_grades: "9 - 11",
         current_mark: null,
         direction: "Третий Путь",
         id: 3,
@@ -20,11 +22,13 @@ const Courses = () => {
         teachers: [
           "Иванов Иван Иванович"
         ],
-        year: 2024,
+        following: true,
       },
       {
         auditory: null,
-        credit: "Не зачетный",
+        crediting: "зачётный для всех классов",
+        credit: "Зачётный",
+        emsh_grades: "9 - 11",
         current_mark: null,
         direction: "Третий Путь",
         id: 3,
@@ -33,13 +37,15 @@ const Courses = () => {
         teachers: [
           "Иванов Иван Иванович"
         ],
-        year: 2024,
+        following: false,
       },
     ],
     2023: [
       {
         auditory: null,
+        crediting: "зачётный для всех классов",
         credit: "Зачётный",
+        emsh_grades: "9 - 11",
         current_mark: null,
         direction: "Третий Путь",
         id: 3,
@@ -48,11 +54,13 @@ const Courses = () => {
         teachers: [
           "Иванов Иван Иванович"
         ],
-        year: 2024,
+        following: true,
       },
       {
         auditory: null,
-        credit: "Не зачетный",
+        crediting: "зачётный для всех классов",
+        credit: "Зачётный",
+        emsh_grades: "9 - 11",
         current_mark: null,
         direction: "Третий Путь",
         id: 3,
@@ -61,13 +69,15 @@ const Courses = () => {
         teachers: [
           "Иванов Иван Иванович"
         ],
-        year: 2023,
+        following: false,
       },
     ],
     2022: [
       {
         auditory: null,
+        crediting: "зачётный для всех классов",
         credit: "Зачётный",
+        emsh_grades: "9 - 11",
         current_mark: null,
         direction: "Третий Путь",
         id: 3,
@@ -76,11 +86,13 @@ const Courses = () => {
         teachers: [
           "Иванов Иван Иванович"
         ],
-        year: 2024,
+        following: true,
       },
       {
         auditory: null,
-        credit: "Не зачетный",
+        crediting: "зачётный для 10-11",
+        credit: "Зачётный",
+        emsh_grades: "9 - 11",
         current_mark: null,
         direction: "Третий Путь",
         id: 3,
@@ -89,7 +101,7 @@ const Courses = () => {
         teachers: [
           "Иванов Иван Иванович"
         ],
-        year: 2022,
+        following: false,
       },
     ]
   });
