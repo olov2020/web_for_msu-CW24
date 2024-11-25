@@ -77,6 +77,7 @@ class CourseService:
         return True
 
     def get_lessons_in_week(self, date_start: datetime.date, user_id: int) -> (list[LessonScheduleDTO], int):
+        # TODO check that result is sorted correctly
         user = User.query.get(user_id)
         if not user:
             return {"error": "Пользователь не найден"}, 404
@@ -100,7 +101,18 @@ class CourseService:
                         "date": lesson.date.strftime('%d.%m'),
                         "lesson_time": course.lesson_time
                     }
-                    result.append(LessonScheduleDTO().load(data))
+                    result.append((LessonScheduleDTO().load(data), lesson.date))
+
+        lesson_times = ["Вторник 17:20 - 18:40",
+                        "Вторник 18:55 - 20:15",
+                        "Среда 17:20 - 18:40",
+                        "Среда 18:55 - 20:15",
+                        "Четверг 17:20 - 18:40",
+                        "Четверг 18:55 - 20:15",
+                        "Пятница 17:20 - 18:40",
+                        "Пятница 18:55 - 20:15",]
+        result.sort(key=lambda x: (x[1], lesson_times.index(x[0]["lesson_time"])))
+        result = [x[0] for x in result]
         return result, 200
 
     def load_from_file(self, request: flask.Request) -> (dict, int):
