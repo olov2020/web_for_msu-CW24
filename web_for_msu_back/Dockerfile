@@ -4,6 +4,9 @@ FROM python:3.12
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /web_for_msu-CW24/web_for_msu_back
 
+COPY wait-for-it.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
 # Копируем все файлы проекта в контейнер, включая Dockerfile
 COPY . /web_for_msu-CW24/web_for_msu_back
 RUN pip install --no-cache-dir -r requirements.txt
@@ -17,5 +20,5 @@ ENV PYTHONPATH=/web_for_msu-CW24/web_for_msu_back
 EXPOSE 5000
 
 # Запускаем Flask приложение
-CMD ["sh", "-c", "export PYTHONPATH=/web_for_msu-CW24/web_for_msu_back && flask run"]
+CMD ["sh", "-c", "wait-for-it.sh postgres:5432 -- flask run"]
 
