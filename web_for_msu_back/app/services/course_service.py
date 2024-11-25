@@ -105,7 +105,7 @@ class CourseService:
                         "date": lesson.date.strftime('%d.%m'),
                         "lesson_time": course.lesson_time
                     }
-                    result.append((LessonScheduleDTO().load(data), lesson.date))
+                    result.append((LessonScheduleDTO().dump(data), lesson.date))
 
         lesson_times = ["Вторник 17:20 - 18:40",
                         "Вторник 18:55 - 20:15",
@@ -325,7 +325,7 @@ class CourseService:
         for lesson in course.lessons:
             data = {
                 "lesson_number": lesson.lesson_number,
-                "date": lesson.date.strftime("%Y-%m-%d"),
+                "date": lesson.date,
                 "theme": lesson.theme,
                 "plan": lesson.plan,
                 "additional_info": lesson.additional_info,
@@ -335,17 +335,17 @@ class CourseService:
 
     def get_course_info(self, course: Course) -> CourseInfoDTO:
         data = self.get_base_course_info(course)
-        return CourseInfoDTO().load(data)
+        return CourseInfoDTO().dump(data)
 
     def get_course_info_pupil(self, pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
         data = self.get_base_course_info(course)
         data["current_mark"] = pupil_course.current_mark
-        return CourseInfoPupilDTO().load(data)
+        return CourseInfoPupilDTO().dump(data)
 
     def get_course_info_teacher(self, course: Course) -> CourseInfoTeacherDTO:
         data = self.get_base_course_info(course)
         data["pupils_number"] = len(self.get_pupils(course.id))
-        return CourseInfoTeacherDTO().load(data)
+        return CourseInfoTeacherDTO().dump(data)
 
     def get_pupil_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         pupil = Pupil.query.filter_by(user_id=user_id).first()
