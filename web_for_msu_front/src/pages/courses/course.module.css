@@ -1,5 +1,33 @@
 .courseCard {
     display: flex;
+    justify-content: space-around;
 
     width: 100%;
+    padding: 1rem 0;
+
+    border: 1px dashed #9F1A59;
+    border-radius: 1rem;
+
+    &:hover {
+        background-color: #F7B7CE;
+
+        > * > .credit {
+            background-color: white;
+            color: #9F1A59 !important;
+        }
+    }
+
+    > * {
+        display: flex;
+        justify-content: center;
+        width: 20%;
+        color: black !important;
+    }
+}
+
+.credit {
+    padding: .5rem;
+    background-color: #E094AD;
+    color: white !important;
+    border-radius: 1rem;
 }

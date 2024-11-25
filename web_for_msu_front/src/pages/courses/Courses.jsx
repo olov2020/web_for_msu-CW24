@@ -7,17 +7,92 @@ import {getAllCourses, getMyCourses} from "../../api/coursesApi.js";
 const Courses = () => {
 
   const url = window.location.pathname;
-  const [courses, setCourses] = useState([
-    {
-      id: 0,
-      title: 'Initial name',
-      courseYear: '2024',
-      dayOfWeek: 'monday',
-      time: '15:00-16:00',
-      auditory: '204',
-      description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
-    },
-  ]);
+  const [coursesAll, setCoursesAll] = useState({
+    2024: [
+      {
+        auditory: null,
+        credit: "Зачётный",
+        current_mark: null,
+        direction: "Третий Путь",
+        id: 3,
+        lesson_time: "Пятница 18:55 - 20:15",
+        name: "Приручение python'а",
+        teachers: [
+          "Иванов Иван Иванович"
+        ],
+        year: 2024,
+      },
+      {
+        auditory: null,
+        credit: "Не зачетный",
+        current_mark: null,
+        direction: "Третий Путь",
+        id: 3,
+        lesson_time: "Пятница 18:55 - 20:15",
+        name: "Приручение python'а",
+        teachers: [
+          "Иванов Иван Иванович"
+        ],
+        year: 2024,
+      },
+    ],
+    2023: [
+      {
+        auditory: null,
+        credit: "Зачётный",
+        current_mark: null,
+        direction: "Третий Путь",
+        id: 3,
+        lesson_time: "Пятница 18:55 - 20:15",
+        name: "Приручение python'а",
+        teachers: [
+          "Иванов Иван Иванович"
+        ],
+        year: 2024,
+      },
+      {
+        auditory: null,
+        credit: "Не зачетный",
+        current_mark: null,
+        direction: "Третий Путь",
+        id: 3,
+        lesson_time: "Пятница 18:55 - 20:15",
+        name: "Приручение python'а",
+        teachers: [
+          "Иванов Иван Иванович"
+        ],
+        year: 2023,
+      },
+    ],
+    2022: [
+      {
+        auditory: null,
+        credit: "Зачётный",
+        current_mark: null,
+        direction: "Третий Путь",
+        id: 3,
+        lesson_time: "Пятница 18:55 - 20:15",
+        name: "Приручение python'а",
+        teachers: [
+          "Иванов Иван Иванович"
+        ],
+        year: 2024,
+      },
+      {
+        auditory: null,
+        credit: "Не зачетный",
+        current_mark: null,
+        direction: "Третий Путь",
+        id: 3,
+        lesson_time: "Пятница 18:55 - 20:15",
+        name: "Приручение python'а",
+        teachers: [
+          "Иванов Иван Иванович"
+        ],
+        year: 2022,
+      },
+    ]
+  });
 
   /*useEffect(() => {
     const getCourses = async () => {
@@ -25,7 +100,7 @@ const Courses = () => {
         await getMyCourses() :
         url === '/courses/all' ?
           await getAllCourses() : undefined;
-      setCourses(data);
+      setCoursesAll(data);
     }
 
 
@@ -43,12 +118,24 @@ const Courses = () => {
       }
 
       <div style={{
-        width: '90vw',
-        border: '1px solid #ccc',
-      }}
-      >
-        {courses.map((item) => (
-          <CourseCard key={item.id} courseData={item}/>
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '5rem 0',
+        width: '90%',
+      }}>
+        {Object.entries(coursesAll).map(([year, courses]) => (
+          <div key={year}
+               style={{
+                 display: 'flex',
+                 flexDirection: 'column',
+                 gap: '1rem 0',
+               }}
+          >
+            <h2>{year}</h2>
+            {courses.map((courseData) => (
+              <CourseCard key={courseData.id} year={year} courseData={courseData}/>
+            ))}
+          </div>
         ))}
       </div>
     </article>

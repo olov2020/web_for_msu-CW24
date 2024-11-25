@@ -23,6 +23,12 @@ article {
     gap: 2rem;
 }
 
+span {
+    font-size: 1.1rem;
+    font-weight: 520;
+    color: #9F1A59;
+}
+
 h1 {
     font-size: 2rem;
     font-weight: 700;
