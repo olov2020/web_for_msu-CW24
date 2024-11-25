@@ -12,7 +12,14 @@ const CourseItem = () => {
 
   return (
     <article key={state.key} className={style.courseItem}>
-      <h1>{state.title}</h1>
+      <h1>{state.courseData.name}</h1>
+      <p style={{
+        alignSelf: 'flex-end',
+        marginRight: '2rem',
+      }}
+      >
+        {state.year}
+      </p>
 
       {
         userStatus.includes('pupil') ?
@@ -26,7 +33,58 @@ const CourseItem = () => {
             <></>
       }
 
-      <p>{state.description}</p>
+      <section style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '90%',
+        gap: '2rem',
+      }}
+      >
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '70%',
+          gap: '1rem 0',
+        }}
+        >
+          <h2>Описание курса</h2>
+          <p>{state.courseData.description}</p>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '30%',
+          gap: '1rem 0',
+        }}
+        >
+          <h2>Преподаватели</h2>
+
+          <ol>
+            {state.courseData.teachers.map((teacher, index) => (
+              <li key={index}>
+                <p>{teacher}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '90%',
+        gap: '2rem',
+      }}
+      >
+        <p>Курс попадает под категорию: <span>{state.courseData.crediting}</span></p>
+        <p>Время проведения: <span>{state.courseData.lesson_time}</span></p>
+        <p>Классы: <span>{state.courseData.emsh_grades}</span></p>
+        <p><span>{state.courseData.direction}</span></p>
+        <p>Аудитория: <span>{state.courseData.auditory ? state.courseData.auditory : 'уточняется'}</span></p>
+      </section>
     </article>
   );
 };

@@ -19,8 +19,11 @@ const Courses = () => {
         id: 3,
         lesson_time: "Пятница 18:55 - 20:15",
         name: "Приручение python'а",
+        description: 'Lorem ipsum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Loresum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
         teachers: [
-          "Иванов Иван Иванович"
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
         ],
         following: true,
       },
@@ -34,8 +37,11 @@ const Courses = () => {
         id: 3,
         lesson_time: "Пятница 18:55 - 20:15",
         name: "Приручение python'а",
+        description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
         teachers: [
-          "Иванов Иван Иванович"
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
         ],
         following: false,
       },
@@ -51,8 +57,11 @@ const Courses = () => {
         id: 3,
         lesson_time: "Пятница 18:55 - 20:15",
         name: "Приручение python'а",
+        description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
         teachers: [
-          "Иванов Иван Иванович"
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
         ],
         following: true,
       },
@@ -66,8 +75,11 @@ const Courses = () => {
         id: 3,
         lesson_time: "Пятница 18:55 - 20:15",
         name: "Приручение python'а",
+        description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
         teachers: [
-          "Иванов Иван Иванович"
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
         ],
         following: false,
       },
@@ -83,8 +95,11 @@ const Courses = () => {
         id: 3,
         lesson_time: "Пятница 18:55 - 20:15",
         name: "Приручение python'а",
+        description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
         teachers: [
-          "Иванов Иван Иванович"
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
+          "Иванов Иван Иванович",
         ],
         following: true,
       },
@@ -98,6 +113,7 @@ const Courses = () => {
         id: 3,
         lesson_time: "Пятница 18:55 - 20:15",
         name: "Приручение python'а",
+        description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
         teachers: [
           "Иванов Иван Иванович"
         ],

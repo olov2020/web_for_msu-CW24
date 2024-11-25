@@ -7,16 +7,16 @@ const Home = () => {
   return (
     <main className={style.home}>
 
-      <section className={style.schedule}>
+      <section className={style.left}>
         <Schedule/>
-      </section>
-
-      <section className={style.news}>
-        <News/>
-      </section>
-
-      <section className={style.myCourses}>
+        <hr style={{
+          margin: '5rem',
+        }}/>
         <Courses/>
+      </section>
+
+      <section className={style.right}>
+        <News/>
       </section>
     </main>
   );

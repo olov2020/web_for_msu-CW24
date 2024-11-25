@@ -7,15 +7,51 @@ const Schedule = () => {
 
   const [schedule, setSchedule] = useState({
     lessons_in_week: [
-      {courseName: 'asd', date: 'asd', time: 'asd', auditory: 'asd', credit: true},
-      {courseName: '123', date: '4523', time: '123', auditory: 'a12313sd', credit: false},
-      {courseName: 'asd', date: 'asd', time: 'asd', auditory: 'asd', credit: true},
-      ],
+      {
+        course_name: "Приручение python'а",
+        course_type: "Зачётный",
+        auditory: null,
+        date: "24.11",
+        lesson_time: "Пятница 18:55 - 20:15"
+      },
+      {
+        course_name: "Приручение python'а",
+        course_type: "Не зачетный",
+        auditory: null,
+        date: "24.11",
+        lesson_time: "Пятница 18:55 - 20:15"
+      },
+      {
+        course_name: "Приручение python'а",
+        course_type: "Не зачетный",
+        auditory: null,
+        date: "24.11",
+        lesson_time: "Пятница 18:55 - 20:15"
+      },
+    ],
     lessons_in_two_weeks: [
-      {courseName: '123', date: '4523', time: '123', auditory: 'a12313sd', credit: false},
-      {courseName: 'asd', date: 'asd', time: 'asd', auditory: 'asd', credit: true},
-      {courseName: '123', date: '4523', time: '123', auditory: 'a12313sd', credit: false},
-      ]
+      {
+        course_name: "Приручение python'Приручение python'а",
+        course_type: 'Зачётный',
+        auditory: null,
+        date: "24.11",
+        lesson_time: "Пятница 18:55 - 20:15"
+      },
+      {
+        course_name: "Приручение python'а",
+        course_type: "Зачётный",
+        auditory: null,
+        date: "24.11",
+        lesson_time: "Пятница 18:55 - 20:15"
+      },
+      {
+        course_name: "Приручение python'а",
+        course_type: "Не зачетный",
+        auditory: null,
+        date: "24.11",
+        lesson_time: "Пятница 18:55 - 20:15"
+      },
+    ]
   });
 
   /*useEffect(() => {
@@ -28,15 +64,21 @@ const Schedule = () => {
   }, []);*/
 
   return (
-    <article className={styleApp.pageTitle}>
-      <h1 className={styleApp.pageTitle}>Расписание</h1>
+    <article>
+      <h1>Расписание</h1>
 
-      <div>
-        <OneWeek header='Текущая неделя' data={schedule.lessons_in_week}/>
-      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          gap: '5rem 0',
+        }}
+      >
+      <OneWeek header='Текущая неделя' data={schedule.lessons_in_week}/>
 
-      <div>
-        <OneWeek header='Следующая неделя' data={schedule.lessons_in_two_weeks}/>
+      <OneWeek header='Следующая неделя' data={schedule.lessons_in_two_weeks}/>
       </div>
     </article>
   );

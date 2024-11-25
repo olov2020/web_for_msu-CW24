@@ -1,15 +1,16 @@
 .scheduleItem {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    > * {
+        width: 20%;
+    }
 }
 
-.creditTrue {
-    background-color: #9F1A59;
-    color: white;
-}
-
-.creditFalse {
-    background-color: #E094AD;
-    color: white;
+.course {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem 0;
 }
