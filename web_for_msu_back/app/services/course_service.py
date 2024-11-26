@@ -263,8 +263,12 @@ class CourseService:
         return course_data, 200
 
     def create_course(self, request: flask.Request) -> (dict, int):
+        data, code = self.load_from_file(request)
+        if code != 200:
+            return data, code
+
         try:
-            course, year = CourseDTO().load(request.json)
+            course, year = CourseDTO().load(data)
         except ValidationError as e:
             return e.messages, 400
         self.db.session.add(course)
