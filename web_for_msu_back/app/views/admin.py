@@ -33,3 +33,12 @@ class AdminView(FlaskView):
         course_service: CourseService = services["course_service"]
         response, code = course_service.create_course(flask.request)
         return response, code
+
+    @method("PUT")
+    @auth_required
+    @roles_required('admin')
+    def update_course(self, course_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.update_course(course_id, flask.request)
+        return response, code

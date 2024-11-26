@@ -270,7 +270,7 @@ class CourseService:
         self.db.session.add(course)
         self.db.session.commit()
 
-        # subscribing all pupils to course
+        # TODO subscribing all pupils to course
         pupils = Pupil.query.all()
         for pupil in pupils:
             grade = pupil.school_grade
@@ -290,6 +290,29 @@ class CourseService:
 
         self.db.session.commit()
         return {'msg': 'Курс успешно добавлен'}, 201
+
+    def update_course(self, course_id: int, request: flask.Request) -> (dict, int):
+        course = Course.query.get(course_id)
+        if not course:
+            return {'error': 'Курс не найден'}, 404
+
+        data, code = self.load_from_file(request)
+        if code != 200:
+            return data, code
+
+        for key, value in data.items():
+            match key:
+                case "formulas":
+                    pass
+                case "schedules":
+                    pass
+                case "teachers":
+                    pass
+                case _:
+                    setattr(course, key, value)
+
+        self.db.session.commit()
+        return {'msg': 'Курс успешно обновлён'}, 200
 
     def get_lessons(self, course_id: int) -> list[Schedule]:
         course = Course.query.get(course_id)
@@ -368,3 +391,4 @@ class CourseService:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_teacher(assoc.course))
         return grouped_courses, 200
+
