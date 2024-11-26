@@ -54,7 +54,10 @@ class CourseService:
             if year not in grouped_courses:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info(course))
-        return grouped_courses, 200
+        result = []
+        for key in sorted(grouped_courses.keys()):
+            result.append({key: grouped_courses[key]})
+        return result, 200
 
     def add_pupil_to_course(self, course_id, pupil_id, year):
         course = Course.query.get(course_id)
@@ -99,9 +102,10 @@ class CourseService:
                         "course_type": course_type,
                         "auditory": course.auditory,
                         "date": lesson.date.strftime('%d.%m'),
-                        "lesson_time": course.lesson_time
+                        "lesson_time": course.lesson_time,
+                        "plan": lesson.plan
                     }
-                    result.append((LessonScheduleDTO().load(data), lesson.date))
+                    result.append((LessonScheduleDTO().dump(data), lesson.date))
 
         lesson_times = ["Вторник 17:20 - 18:40",
                         "Вторник 18:55 - 20:15",
@@ -110,7 +114,7 @@ class CourseService:
                         "Четверг 17:20 - 18:40",
                         "Четверг 18:55 - 20:15",
                         "Пятница 17:20 - 18:40",
-                        "Пятница 18:55 - 20:15",]
+                        "Пятница 18:55 - 20:15", ]
         result.sort(key=lambda x: (x[1], lesson_times.index(x[0]["lesson_time"])))
         result = [x[0] for x in result]
         return result, 200
@@ -268,10 +272,14 @@ class CourseService:
             return e.messages, 400
         self.db.session.add(course)
         self.db.session.commit()
+
+        # subscribing all pupils to course
         pupils = Pupil.query.all()
         for pupil in pupils:
             grade = pupil.school_grade
-            if str(grade) in course.crediting or course.crediting == 'зачётный для всех классов':
+            if str(grade) in course.crediting or course.crediting == 'зачётный для всех классов' or (
+                    grade == 9 and "8" in course.crediting and "10" in course.crediting) or (
+                    grade == 10 and "9" in course.crediting and "11" in course.crediting):
                 crediting = True
             else:
                 crediting = False
@@ -282,6 +290,7 @@ class CourseService:
                 crediting=crediting
             )
             self.db.session.add(pupil_course)
+
         self.db.session.commit()
         return {'msg': 'Курс успешно добавлен'}, 201
 
@@ -297,7 +306,7 @@ class CourseService:
         return [self.teacher_service.get_full_name(assoc.teacher) for assoc in
                 course.teachers]
 
-    def get_course_info(self, course: Course) -> CourseInfoDTO:
+    def get_base_course_info(self, course: Course) -> dict:
         data = {
             "id": course.id,
             "name": course.name,
@@ -306,44 +315,53 @@ class CourseService:
             "direction": course.direction,
             "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
             "auditory": course.auditory,
-            "lesson_time": course.lesson_time
+            "lesson_time": course.lesson_time,
+            "lessons": self.get_lessons_info(course)
         }
-        return CourseInfoDTO().load(data)
+        return data
+
+    def get_lessons_info(self, course: Course) -> list[dict]:
+        lessons = []
+        for lesson in course.lessons:
+            data = {
+                "lesson_number": lesson.lesson_number,
+                "date": lesson.date,
+                "theme": lesson.theme,
+                "plan": lesson.plan,
+                "additional_info": lesson.additional_info,
+            }
+            lessons.append(data)
+        return lessons
+
+    def get_course_info(self, course: Course) -> CourseInfoDTO:
+        data = self.get_base_course_info(course)
+        return CourseInfoDTO().dump(data)
 
     def get_course_info_pupil(self, pupil_course: PupilCourse, course: Course) -> CourseInfoPupilDTO:
-        data = {
-            "id": course.id,
-            "name": course.name,
-            "emsh_grades": course.emsh_grades,
-            "crediting": course.crediting,
-            "direction": course.direction,
-            "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
-            "auditory": course.auditory,
-            "lesson_time": course.lesson_time,
-            "current_mark": pupil_course.current_mark
-        }
-        return CourseInfoPupilDTO().load(data)
+        data = self.get_base_course_info(course)
+        data["current_mark"] = pupil_course.current_mark
+        data["credit"] = "Зачётный" if pupil_course.crediting else "Не зачётный"
+        return CourseInfoPupilDTO().dump(data)
 
     def get_course_info_teacher(self, course: Course) -> CourseInfoTeacherDTO:
-        pupils_number = len(self.get_pupils(course.id))
-        data = {
-            "id": course.id,
-            "name": course.name,
-            "emsh_grades": course.emsh_grades,
-            "crediting": course.crediting,
-            "direction": course.direction,
-            "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
-            "auditory": course.auditory,
-            "lesson_time": course.lesson_time,
-            "pupils_number": pupils_number
-        }
-        return CourseInfoTeacherDTO().load(data)
+        data = self.get_base_course_info(course)
+        data["pupils_number"] = len(self.get_pupils(course.id))
+        return CourseInfoTeacherDTO().dump(data)
 
     def get_pupil_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
             return [], 403
-        return [self.get_course_info_pupil(assoc, assoc.course) for assoc in pupil.courses], 200
+        grouped_courses = {}
+        for assoc in pupil.courses:
+            year: int = assoc.course.year
+            if year not in grouped_courses:
+                grouped_courses[year] = []
+            grouped_courses[year].append(self.get_course_info_pupil(assoc, assoc.course))
+        result = []
+        for key in sorted(grouped_courses.keys()):
+            result.append({key: grouped_courses[key]})
+        return result, 200
 
     def get_teacher_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         teacher = Teacher.query.filter_by(user_id=user_id).first()

@@ -8,8 +8,8 @@ from flask_jwt_extended import get_jwt_identity, create_access_token, create_ref
 from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
 
-from web_for_msu_back.app.dto.role import RoleDTO
 from web_for_msu_back.app.dto.login import LoginDTO
+from web_for_msu_back.app.dto.role import RoleDTO
 from web_for_msu_back.app.dto.user_info import UserInfoDTO
 from web_for_msu_back.app.models import User, Role, Teacher, Pupil
 
@@ -126,11 +126,11 @@ class UserService:
             'email': identity.get('email'),
             'admin': 'admin' in identity.get('roles')
         }
-        return UserInfoDTO().load(data), 200
+        return UserInfoDTO().dump(data), 200
 
     def get_all_roles(self) -> (list[RoleDTO], int):
         roles = Role.query.all()
-        return [RoleDTO().load({"name": role.name}) for role in roles], 200
+        return [RoleDTO().dump({"name": role.name}) for role in roles], 200
 
     def get_all_users_with_role(self, role: str) -> (list[UserInfoDTO], int):
         match role:
@@ -157,5 +157,5 @@ class UserService:
                 "photo": self.image_service.get_from_yandex_s3("images", user.image),
                 "status": role
             }
-            result.append(UserInfoDTO().load(data))
+            result.append(UserInfoDTO().dump(data))
         return result, 200

@@ -1,6 +1,7 @@
+from datetime import datetime
+
 import pytz
 from marshmallow import Schema, fields, validates, ValidationError, post_load
-from datetime import datetime
 
 from web_for_msu_back.app.models.news import News
 
