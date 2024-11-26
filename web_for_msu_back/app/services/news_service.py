@@ -37,3 +37,11 @@ class NewsService:
             n.photo = self.image_service.get_from_yandex_s3("news", n.photo)
         news = NewsDTO().dump(news, many=True)
         return news, 200
+
+    def delete_news(self, news_id: int) -> (dict, int):
+        news = News.query.get(news_id)
+        if not news:
+            return {"error": "Новость не найдена"}, 404
+        self.db.session.delete(news)
+        self.db.session.commit()
+        return {"msg": "Новость удалена"}, 200
