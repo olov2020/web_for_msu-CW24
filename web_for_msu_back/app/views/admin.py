@@ -10,7 +10,7 @@ from web_for_msu_back.app.functions import get_services, auth_required, roles_re
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import CourseService
+    from web_for_msu_back.app.services import CourseService, PupilService
 
 
 class AdminView(FlaskView):
@@ -41,4 +41,13 @@ class AdminView(FlaskView):
         services = get_services()
         course_service: CourseService = services["course_service"]
         response, code = course_service.update_course(course_id, flask.request)
+        return response, code
+
+    @method("PATCH")
+    @auth_required
+    @roles_required('admin')
+    def increase_grade(self):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.increase_grade()
         return response, code

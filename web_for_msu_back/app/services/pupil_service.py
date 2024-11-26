@@ -49,3 +49,17 @@ class PupilService:
 
     def get_pupil_by_email(self, email: str) -> Pupil:
         return Pupil.query.filter_by(email=email).first()
+
+    def increase_grade(self) -> (dict, int):
+        pupils = Pupil.query.all()
+        for pupil in pupils:
+            if pupil.former:
+                continue
+            if pupil.graduating:
+                pupil.former = True
+                continue
+            pupil.school_grade = max(pupil.school_grade + 1, 11)
+            if pupil.school_grade == 11:
+                pupil.graduating = True
+        self.db.session.commit()
+        return {"msg": "Все ученики перешли на следующий год"}, 200
