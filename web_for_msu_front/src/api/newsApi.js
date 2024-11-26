@@ -21,3 +21,13 @@ export const addNewsItem = async (title, description, photo) => {
   localStorage.setItem('token', response.data.accessToken);
   return jwtDecode(response.data.accessToken);
 }
+
+export const deleteNewsItem = async ({newsId}) => {
+  const response = await $authHost.delete(`/news/delete/${newsId}`);
+
+  if (response.status === 200) {
+    return true;
+  } else {
+    console.log(`error while deleting ${newsId}`);
+  }
+}

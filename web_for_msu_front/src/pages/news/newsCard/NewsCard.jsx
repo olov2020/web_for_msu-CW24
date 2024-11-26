@@ -17,9 +17,12 @@ const NewsCard = ({photo, title, date, description, id}) => {
             objectFit: 'cover',
           }}
       />
-      <p style={{
-        alignSelf: 'flex-end',
-      }}>{date}</p>
+
+      <p
+        style={{
+          alignSelf: 'flex-end',
+        }}
+      >{date}</p>
     </Link>
   );
 };
