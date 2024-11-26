@@ -23,7 +23,7 @@ export const addNewsItem = async (title, description, photo) => {
 }
 
 export const deleteNewsItem = async ({newsId}) => {
-  const response = await $authHost.delete(`/news/delete/${newsId}`);
+  const response = await $authHost.delete(`/news/${newsId}`);
 
   if (response.status === 200) {
     return true;

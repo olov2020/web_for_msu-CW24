@@ -2,7 +2,7 @@ import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputCourseName = ({name, placeholder, value, setValue, fieldName}) => {
+const InputCourseTitle = ({name, placeholder, value, setValue, fieldName}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -41,4 +41,4 @@ const InputCourseName = ({name, placeholder, value, setValue, fieldName}) => {
   );
 };
 
-export default InputCourseName;
+export default InputCourseTitle;

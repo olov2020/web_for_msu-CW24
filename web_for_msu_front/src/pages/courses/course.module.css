@@ -18,6 +18,12 @@
         }
     }
 
+    > p {
+        display: flex;
+        justify-content: center;
+        gap: 0 .2rem;
+    }
+
     > * {
         display: flex;
         justify-content: center;

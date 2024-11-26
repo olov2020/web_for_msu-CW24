@@ -22,7 +22,7 @@ const Header = () => {
           <p>|</p>
           <p>vk</p>
           <p>|</p>
-          <p>tg</p>
+          <a href='https://t.me/emsch_msu'><p>tg</p></a>
         </div>
       </div>
 

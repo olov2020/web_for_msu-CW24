@@ -26,13 +26,7 @@ const Menu = () => {
       title: 'Курсы', id: 1,
       dropdown: [
         {
-          title: 'Расписание', link: SCHEDULE_ROUTE, id: 0,
-        },
-        {
-          title: 'Мои Курсы', link: MY_COURSES_ROUTE, id: 1,
-        },
-        {
-          title: 'Все курсы', link: ALL_COURSES_ROUTE, id: 2,
+          title: 'Все курсы', link: ALL_COURSES_ROUTE, id: 0,
         },
       ],
     },
@@ -75,6 +69,15 @@ const Menu = () => {
       ],
     },
   ]
+
+  if (userStatus.includes('pupil') || userStatus.includes('teacher')) {
+    menu[1].dropdown.push({
+      title: 'Расписание', link: SCHEDULE_ROUTE, id: menu[1].length,
+    })
+    menu[1].dropdown.push({
+      title: 'Мои Курсы', link: MY_COURSES_ROUTE, id: menu[1].length,
+    })
+  }
 
   if (userStatus.includes('newsmaker') || userStatus.includes('admin')) {
     menu[0].dropdown.push({

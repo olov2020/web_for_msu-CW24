@@ -11,21 +11,24 @@ const Schedule = () => {
         course_type: "Зачётный",
         auditory: null,
         date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15"
+        lesson_time: "Пятница 18:55 - 20:15",
+        plan: "Регулярные выражения",
       },
       {
         course_name: "Приручение python'а",
         course_type: "Не зачетный",
         auditory: null,
         date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15"
+        lesson_time: "Пятница 18:55 - 20:15",
+        plan: "Регулярные выражения",
       },
       {
         course_name: "Приручение python'а",
         course_type: "Не зачетный",
         auditory: null,
         date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15"
+        lesson_time: "Пятница 18:55 - 20:15",
+        plan: "Регулярные выражения",
       },
     ],
     lessons_in_two_weeks: [
@@ -34,21 +37,24 @@ const Schedule = () => {
         course_type: 'Зачётный',
         auditory: null,
         date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15"
+        lesson_time: "Пятница 18:55 - 20:15",
+        plan: "Регулярные выражения",
       },
       {
         course_name: "Приручение python'а",
         course_type: "Зачётный",
         auditory: null,
         date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15"
+        lesson_time: "Пятница 18:55 - 20:15",
+        plan: "Регулярные выражения",
       },
       {
         course_name: "Приручение python'а",
         course_type: "Не зачетный",
         auditory: null,
         date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15"
+        lesson_time: "Пятница 18:55 - 20:15",
+        plan: "Регулярные выражения",
       },
     ]
   });
@@ -75,9 +81,9 @@ const Schedule = () => {
           gap: '5rem 0',
         }}
       >
-      <OneWeek header='Текущая неделя' data={schedule.lessons_in_week}/>
+        <OneWeek header='Текущая неделя' data={schedule.lessons_in_week}/>
 
-      <OneWeek header='Следующая неделя' data={schedule.lessons_in_two_weeks}/>
+        <OneWeek header='Следующая неделя' data={schedule.lessons_in_two_weeks}/>
       </div>
     </article>
   );

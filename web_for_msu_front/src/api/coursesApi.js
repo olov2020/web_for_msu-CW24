@@ -88,12 +88,28 @@ export const getCourseByFile = async () => {
 }
 
 export const courseAdd = async (course) => {
-  const {data} = await $host.post(`/admin/create_course`, {course},{
+  const response = await $host.post(`/admin/create_course`, {course}, {
     headers: {
       'content-type': 'application/json'
     }
   })
 
-  localStorage.setItem('token', data.accessToken)
-  return jwtDecode(data.accessToken)
+  try {
+    localStorage.setItem('token', response.data.accessToken)
+    return jwtDecode(response.data.accessToken)
+  } catch (error) {
+    console.log(error)
+    return {};
+  }
+}
+
+export const courseChange = async (title, year, file) => {
+  const response = await $host.put(`/course/change/${year}/${title}`, {file})
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error)
+    return {};
+  }
 }

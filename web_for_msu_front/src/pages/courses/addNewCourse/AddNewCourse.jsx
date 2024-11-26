@@ -27,9 +27,7 @@ const AddNewCourse = () => {
         gap: '5rem 0',
       }}
       >
-        <Form inputs={['courseFile']} buttonText='Загрузить новый курс' type='courseAdd'></Form>
-
-        {/*<Form inputs={['courseName']} buttonText='Создать новый курс' type='courseAdd'></Form>*/}
+        <Form inputs={['courseFile']} buttonText='Создать новый курс' type='courseAdd'></Form>
       </div>
     </article>
   );
