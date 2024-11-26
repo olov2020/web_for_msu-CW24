@@ -54,10 +54,7 @@ class CourseService:
             if year not in grouped_courses:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info(course))
-        result = []
-        for key in sorted(grouped_courses.keys()):
-            result.append({key: grouped_courses[key]})
-        return result, 200
+        return grouped_courses, 200
 
     def add_pupil_to_course(self, course_id, pupil_id, year):
         course = Course.query.get(course_id)
@@ -358,13 +355,16 @@ class CourseService:
             if year not in grouped_courses:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_pupil(assoc, assoc.course))
-        result = []
-        for key in sorted(grouped_courses.keys()):
-            result.append({key: grouped_courses[key]})
-        return result, 200
+        return grouped_courses, 200
 
     def get_teacher_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         teacher = Teacher.query.filter_by(user_id=user_id).first()
         if not teacher:
             return [], 403
-        return [self.get_course_info_teacher(assoc.course) for assoc in teacher.courses], 200
+        grouped_courses = {}
+        for assoc in teacher.courses:
+            year: int = assoc.course.year
+            if year not in grouped_courses:
+                grouped_courses[year] = []
+            grouped_courses[year].append(self.get_course_info_teacher(assoc.course))
+        return grouped_courses, 200

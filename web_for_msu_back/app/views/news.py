@@ -31,3 +31,12 @@ class NewsView(FlaskView):
         news_service: NewsService = services["news_service"]
         response, code = news_service.get_news()
         return jsonify(response), code
+
+    @method("DELETE")
+    @auth_required
+    @roles_required('newsmaker', 'admin')
+    def delete(self, news_id: int):
+        services = get_services()
+        news_service: NewsService = services["news_service"]
+        response, code = news_service.delete_news(news_id)
+        return jsonify(response), code
