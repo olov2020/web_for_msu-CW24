@@ -13,7 +13,7 @@ from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
-from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
+from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -308,11 +308,58 @@ class CourseService:
         for key, value in data.items():
             match key:
                 case "formulas":
-                    pass
+                    formulas = course.formulas
+                    j = 0
+                    k = 0
+                    while j < len(formulas) and k < len(data["formulas"]):
+                        if formulas[j].name == "Баллы":
+                            j += 1
+                            continue
+                        formulas[j].name = data["formulas"][k]["name"]
+                        formulas[j].coefficient = data["formulas"][k]["coefficient"]
+                        j += 1
+                        k += 1
+                    if len(data["formulas"]) == k:
+                        while j < len(formulas):
+                            if formulas[j].name == "Баллы":
+                                continue
+                            self.db.session.delete(formulas[j])
+                            j += 1
+                    elif j == len(formulas):
+                        for i in range(k, len(data["formulas"])):
+                            course.formulas.append(Formula(course_id=course_id,
+                                                           name=data["formulas"][i]["name"],
+                                                           coefficient=data["formulas"][i]["coefficient"]))
+
                 case "schedules":
-                    pass
+                    schedules = Schedule.query.where(Schedule.course_id == course_id).order_by(Schedule.lesson_number).all()
+                    for i in range(min(len(schedules), len(data["schedules"]))):
+                        schedules[i].lesson_number = data["schedules"][i]["lesson_number"]
+                        schedules[i].date = data["schedules"][i]["date"]
+                        schedules[i].theme = data["schedules"][i]["theme"]
+                        schedules[i].plan = data["schedules"][i]["plan"]
+                        schedules[i].additional_info = data["schedules"][i]["additional_info"]
+                    if len(data["schedules"]) < len(schedules):
+                        for i in range(len(data["schedules"]), len(schedules)):
+                            self.db.session.delete(schedules[i])
+                    elif len(data["schedules"]) > len(schedules):
+                        for i in range(len(schedules), len(data["schedules"])):
+                            course.lessons.append(Schedule(course_id=course_id,
+                                                           lesson_number=data["schedules"][i]["lesson_number"],
+                                                           date=data["schedules"][i]["date"],
+                                                           theme=data["schedules"][i]["theme"],
+                                                           plan=data["schedules"][i]["plan"],
+                                                           additional_info=data["schedules"][i]["additional_info"]))
                 case "teachers":
-                    pass
+                    teachers = course.teachers
+                    for teacher in teachers:
+                        self.db.session.delete(teacher)
+                    for teacher in data["teachers"]:
+                        if teacher["leads"]:
+                            teacher_course = TeacherCourse(teacher_id=teacher["id"],
+                                                           course_id=course_id,
+                                                           year=course.year)
+                            self.db.session.add(teacher_course)
                 case _:
                     setattr(course, key, value)
 
@@ -341,7 +388,21 @@ class CourseService:
             "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
             "auditory": course.auditory,
             "lesson_time": course.lesson_time,
-            "lessons": self.get_lessons_info(course)
+            "additional_info_for_auditory": course.additional_info_for_auditory,
+            "course_purpose": course.course_purpose,
+            "course_objectives": course.course_objectives,
+            "course_features": course.course_features,
+            "course_format": course.course_format,
+            "target_audience": course.target_audience,
+            "short_description": course.short_description,
+            "number_of_listeners": course.number_of_listeners,
+            "selection": course.selection,
+            "assessment": course.assessment,
+            "platform_format": course.platform_format,
+            "additional_info": course.additional_info,
+            "lessons": self.get_lessons_info(course),
+            "formulas": self.get_formulas_info(course),
+
         }
         return data
 
@@ -357,6 +418,16 @@ class CourseService:
             }
             lessons.append(data)
         return lessons
+
+    def get_formulas_info(self, course: Course) -> list[dict]:
+        formulas = []
+        for formula in course.formulas:
+            data = {
+                "name": formula.name,
+                "coefficient": formula.coefficient
+            }
+            formulas.append(data)
+        return formulas
 
     def get_course_info(self, course: Course) -> CourseInfoDTO:
         data = self.get_base_course_info(course)
@@ -396,4 +467,3 @@ class CourseService:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_teacher(assoc.course))
         return grouped_courses, 200
-
