@@ -50,32 +50,12 @@ export const publicRoutes = [
     Element: <RegistrationTeacher/>,
   },
   {
-    path: ACCOUNT_ROUTE,
-    Element: <Account/>,
-  },
-  {
-    path: SCHEDULE_ROUTE,
-    Element: <Schedule/>,
-  },
-  {
-    path: MY_COURSES_ROUTE,
-    Element: <Courses/>,
-  },
-  {
     path: ALL_COURSES_ROUTE,
     Element: <Courses/>,
   },
   {
-    path: ADD_NEW_COURSE_ROUTE,
-    Element: <AddNewCourse/>,
-  },
-  {
     path: NEWS_ROUTE,
     Element: <News/>,
-  },
-  {
-    path: CREATE_NEWS_ROUTE,
-    Element: <NewsCreate/>,
   },
   {
     path: NEWS_ITEM_ROUTE,
@@ -87,4 +67,25 @@ export const publicRoutes = [
   },
 ]
 
-export const authRoutes = []
+export const authRoutes = [
+  {
+    path: ACCOUNT_ROUTE,
+    Element: <Account/>,
+  },
+  {
+    path: CREATE_NEWS_ROUTE,
+    Element: <NewsCreate/>,
+  },
+  {
+    path: ADD_NEW_COURSE_ROUTE,
+    Element: <AddNewCourse/>,
+  },
+  {
+    path: MY_COURSES_ROUTE,
+    Element: <Courses/>,
+  },
+  {
+    path: SCHEDULE_ROUTE,
+    Element: <Schedule/>,
+  },
+]

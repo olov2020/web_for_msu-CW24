@@ -2,6 +2,16 @@ import {$host, $authHost} from './axiosApi.js'
 import {jwtDecode} from 'jwt-decode'
 import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../routing/consts.js";
 
+/*export const getAllRoles = async () => {
+  const response = await $authHost.get(`/api/home/all_roles`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}*/
+
 export const getUserInfoByUserId = async ({userId}) => {
   const response = await $authHost.get(`/api/home/${userId}`)
 

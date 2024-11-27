@@ -77,7 +77,7 @@ export const updateTeacherMarksByCourseId = async ({
   }
 }
 
-export const getCourseByFile = async () => {
+/*export const getCourseByFile = async () => {
   const response = await $host.get(`/api/admin/add_from_file`)
 
   try {
@@ -86,31 +86,28 @@ export const getCourseByFile = async () => {
     console.log(error)
     return {};
   }
-}
+}*/
 
-export const courseAdd = async (course) => {
-  const response = await $host.post(`/api/admin/create_course`, {course}, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
+export const courseAdd = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await $authHost.post(`/api/admin/create_course`, formData)
 
-  try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
-  } catch (error) {
-    console.log(error)
-    return {};
+  if (response.status === 200) {
+    return response.data;
   }
+
+  return new Error(`Курс не создан, произошла ошибка ${response.data.message}`);
 }
 
 export const courseChange = async (id, file) => {
-  const response = await $host.put(`/api/course/change/${id}`, {file})
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await $authHost.put(`/api/admin/update_course/${id}`, formData)
 
-  try {
+  if (response.status === 200) {
     return response.data;
-  } catch (error) {
-    console.log(error)
-    return {};
   }
+
+  return new Error(`Курс не изменен, произошла ошибка ${response.data.message}`);
 }

@@ -2,12 +2,18 @@ import Form from "../../../generic/form/Form.jsx";
 
 const ChangeCourse = () => {
   return (
-    <section>
-      <h2>Изменить курс</h2>
-      <p>Для изменения курса загрузите новый файл с данными в форму ниже</p>
+    <section style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      width: "100%",
+    }}>
+      <div>
+        <h2>Для изменения курса загрузите новый файл в форму ниже</h2>
+      </div>
 
       <div style={{
-        width: '90%',
+        width: '100%',
       }}
       >
         <Form inputs={['courseFile']} buttonText='Изменить курс' type='courseChange'></Form>

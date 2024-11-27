@@ -50,63 +50,68 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     return requiredValues[type].every(item => formValues[item] !== undefined && formValues[item] !== null);
   }
 
-  // TODO
-  // add check for correct and required variables
-  const onClick = (e) => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     if (type === 'login') {
       if (checkFormErrors()) {
-        userLogin(formValues.email, formValues.password);
+        await userLogin(formValues.email, formValues.password);
         navigate(HOME_ROUTE);
       } else {
-        e.preventDefault();
         alert('Заполните все обязательные поля.');
       }
     } else if (type === 'pupilRegistration') {
       if (checkFormErrors()) {
-        pupilRegistration(formValues);
+        await pupilRegistration(formValues);
         navigate(LOGIN_ROUTE);
       } else {
-        e.preventDefault();
         alert('Заполните все обязательные поля.');
       }
     } else if (type === 'teacherRegistration') {
       if (checkFormErrors()) {
-        teacherRegistration(formValues);
+        await teacherRegistration(formValues);
         navigate(LOGIN_ROUTE);
       } else {
-        e.preventDefault();
         alert('Заполните все обязательные поля.');
       }
     } else if (type === 'userChangePhoto') {
-      userChangePhoto(formValues.photo);
+      await userChangePhoto(formValues.photo);
     } else if (type === 'pupilChangeData') {
-      pupilChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
+      await pupilChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
     } else if (type === 'teacherChangeData') {
-      teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
+      await teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
     } else if (type === 'courseAdd') {
       if (checkFormErrors()) {
-        courseAdd(formValues)
-        alert('Новый курс успешно добавлен.');
-        navigate(ALL_COURSES_ROUTE);
+        try {
+          await courseAdd(formValues.courseFile);
+          alert('Новый курс успешно добавлен.');
+          navigate(ALL_COURSES_ROUTE);
+        } catch (error) {
+          alert(error.message);
+        }
       } else {
-        e.preventDefault();
         alert('Заполните все обязательные поля.');
       }
     } else if (type === 'courseChange') {
       if (checkFormErrors()) {
-        courseChange(formValues.courseFile);
-        alert('Курс успешно изменен.');
-        navigate(ALL_COURSES_ROUTE);
+        try {
+          await courseChange(formValues.courseFile);
+          alert('Курс успешно изменен.');
+        } catch (error) {
+          alert(error.message);
+        }
       } else {
-        e.preventDefault();
         alert('Заполните все обязательные поля.');
       }
     } else if (type === 'newsAdd') {
       if (checkFormErrors()) {
-        addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
-        navigate(NEWS_ROUTE);
+        try {
+          await addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
+          alert('Новость успешно создана.');
+          navigate(NEWS_ROUTE);
+        } catch (error) {
+          alert(error.message);
+        }
       } else {
-        e.preventDefault();
         alert('Заполните все обязательные поля.');
       }
     } else {
@@ -452,10 +457,10 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     }
   }
 
-  return (<form className={style.form} onSubmit={onClick}>
+  return (<form className={style.form} onSubmit={onSubmit}>
     {inputs.map((input) => (showInput(input)))}
 
-    <ButtonSubmit text={buttonText} onClick={onClick}/>
+    <ButtonSubmit text={buttonText}/>
   </form>);
 };
 

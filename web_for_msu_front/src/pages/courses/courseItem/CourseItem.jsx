@@ -1,8 +1,8 @@
-import style from '../course.module.css'
 import {useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
-import PupilMarks from "../marks/marksItem/PupilMarks.jsx";
-import TeacherMarks from "../marks/marksItem/TeacherMarks.jsx";
+import PupilMarks from "../marks/PupilMarks.jsx";
+import TeacherMarks from "../marks/TeacherMarks.jsx";
+import ChangeCourse from "../changeCourse/ChangeCourse.jsx";
 
 const CourseItem = () => {
 
@@ -23,13 +23,9 @@ const CourseItem = () => {
 
       {
         userStatus.includes('pupil') ?
-          <div>
-            <PupilMarks courseId={state.key}/>
-          </div> :
+          <PupilMarks courseId={state.key}/> :
           userStatus.includes('teacher') ?
-            <div>
-              <TeacherMarks courseId={state.key}/>
-            </div> :
+            <TeacherMarks courseId={state.key}/> :
             <></>
       }
 
@@ -37,63 +33,126 @@ const CourseItem = () => {
         display: 'flex',
         justifyContent: 'space-between',
         width: '90%',
+        gap: '0 2rem',
       }}
       >
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          width: '70%',
+          alignItems: 'flex-start',
+          width: '80%',
           gap: '1rem 0',
         }}
         >
-          <h2>Описание курса</h2>
-          <p>{state.courseData.description}</p>
+          <h2 style={{
+            alignSelf: 'center',
+          }}>Информация о курсе</h2>
+
+          <p><span>Цель курса:</span> {state.courseData.course_purpose}</p>
+          <p><span>Задачи курса:</span> {state.courseData.course_objectives}</p>
+          <p><span>Особенности курса:</span> {state.courseData.course_features}</p>
+          <p><span>Формат проведения занятий:</span> {state.courseData.course_format}</p>
+          <p><span>Целевая аудитория:</span> {state.courseData.target_audience}</p>
+          <p><span>Количество слушателей:</span> {state.courseData.number_of_listeners}</p>
+          <p><span>Отбор на курс:</span> {state.courseData.selection}</p>
+          <p><span>Система оценивания:</span> {state.courseData.assessment}</p>
+          <p><span>Формат проведения курса:</span> {state.courseData.platform_format}</p>
+          <p><span>Дополнительная информация:</span> {state.courseData.additional_info}</p>
         </div>
 
         <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '30%',
-          gap: '1rem 0',
-        }}
-        >
-          <h2>Преподаватели</h2>
+          width: '20%'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem 0',
+          }}
+          >
+            <h2 style={{
+              alignSelf: 'center',
+            }}>Преподаватели</h2>
 
-          <ol>
-            {state.courseData.teachers.map((teacher, index) => (
-              <li key={index}>
-                <p>{teacher}</p>
-              </li>
-            ))}
-          </ol>
+            <div>
+              {state.courseData.teachers.map((teacher, index) => (
+                <>
+                  <p key={index}>{teacher}</p>
+                  <p key={index}>{teacher}</p>
+                  <p key={index}>{teacher}</p>
+                </>
+              ))}
+            </div>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '2rem',
+            gap: '.5rem 0',
+          }}
+          >
+            <h2 style={{
+              alignSelf: 'center',
+            }}>Краткая информация</h2>
+
+            <p><span>Краткое описание курса:</span> {state.courseData.short_description}</p>
+            <p><span>Курс попадает под категорию:</span> {state.courseData.crediting}</p>
+            <p><span>Время проведения:</span> {state.courseData.lesson_time}</p>
+            <p><span>Классы:</span> {state.courseData.emsh_grades}</p>
+            <p><span>Направление:</span> {state.courseData.direction}</p>
+            <p><span>Аудитория:</span> {state.courseData.auditory ? state.courseData.auditory : 'уточняется'}</p>
+          </div>
         </div>
       </section>
 
-      <section style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '90%',
-      }}
-      >
-        <p>Курс попадает под категорию: <span>{state.courseData.crediting}</span></p>
-        <p>Время проведения: <span>{state.courseData.lesson_time}</span></p>
-        <p>Классы: <span>{state.courseData.emsh_grades}</span></p>
-        <p><span>{state.courseData.direction}</span></p>
-        <p>Аудитория: <span>{state.courseData.auditory ? state.courseData.auditory : 'уточняется'}</span></p>
-      </section>
+      {userStatus.includes('admin') &&
+        <section style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '90%',
+        }}>
+          <ChangeCourse/>
+        </section>
+      }
 
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        alignItems: 'flex-start',
         width: '90%',
       }}
       >
-        <h2>Занятия и темы</h2>
+        <h2 style={{
+          alignSelf: 'center',
+        }}>Занятия и темы</h2>
 
-
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '1rem',
+          marginTop: '2rem',
+        }}>
+          {state.courseData.lessons && state.courseData.lessons.length > 0 && state.courseData.lessons.map((lesson) => (
+            <div key={lesson.lesson_number} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '1rem',
+              gap: '1rem 0',
+              border: '1px dotted #9F1A59',
+              borderRadius: '1rem',
+              height: 'auto',
+            }}>
+              <h3><span style={{fontSize: "inherit"}}>Тема:</span> {lesson.theme}</h3>
+              <p><span>План занятия:</span> {lesson.plan}</p>
+              {/*<p>
+                <span>Дополнительная информация:</span> {lesson.additional_info ? lesson.additional_info : 'отсутствует'}
+              </p>*/}
+              <p style={{
+                alignSelf: 'flex-end',
+              }}><span>Дата:</span> {lesson.date}</p>
+            </div>
+          ))}
+        </div>
       </section>
     </article>
   );

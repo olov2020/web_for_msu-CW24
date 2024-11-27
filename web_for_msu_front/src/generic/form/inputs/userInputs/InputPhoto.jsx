@@ -57,7 +57,6 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
   }
 
   return (
-    // TODO change to Input
     <div className={styleFileInput.container}>
       <label className={`${styleFileInput.label} ${styleInput.label}`}>
         <h3 style={{

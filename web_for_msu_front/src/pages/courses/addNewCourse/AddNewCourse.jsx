@@ -1,20 +1,6 @@
 import Form from "../../../generic/form/Form.jsx";
-import {useEffect, useState} from "react";
-import {courseAdd, getCourseByFile} from "../../../api/coursesApi.js";
-import InputFile from "../../../generic/form/inputs/userInputs/InputFile.jsx";
 
 const AddNewCourse = () => {
-
-  /*const [courseInfo, setCourseInfo] = useState({});
-
-  useEffect(() => {
-    const getCourseInfo = async () => {
-      const data = getCourseByFile();
-        setCourseInfo(data);
-    }
-
-    getCourseInfo();
-  }, [])*/
 
   return (
     <article>

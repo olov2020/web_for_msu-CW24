@@ -12,11 +12,7 @@ export const getAllNews = async () => {
 }
 
 export const addNewsItem = async (title, description, photo) => {
-  const response = await $authHost.post('/api/news/create', {title, description, photo}, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
+  const response = await $authHost.post('/api/news/create', {title, description, photo}, {})
 
   try {
     localStorage.setItem('token', response.data.accessToken);

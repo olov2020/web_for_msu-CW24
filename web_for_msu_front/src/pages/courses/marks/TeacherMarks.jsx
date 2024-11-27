@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
-import {getTeacherMarksByCourseId, updateTeacherMarksByCourseId} from "../../../../api/coursesApi.js";
-import style from '../marks.module.css'
-import Input from "../../../../generic/form/inputs/Input.jsx";
+import {getTeacherMarksByCourseId, updateTeacherMarksByCourseId} from "../../../api/coursesApi.js";
+import style from './marks.module.css'
+import Input from "../../../generic/form/inputs/Input.jsx";
 
 const TeacherMarks = ({courseId}) => {
 

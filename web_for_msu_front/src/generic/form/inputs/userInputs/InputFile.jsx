@@ -39,17 +39,32 @@ const InputFile = ({name = '', fieldName, accept = '', multiple = false, require
   }
 
   return (
-    <Input type='file'
-           name={name}
-           ref={fileUploader}
-           multiple={multiple}
-           accept={accept}
-           fieldName={fieldName}
-           onChange={handleInputChange}
-           error={error}
-           isValid={isValid}
-           required={required}
-    />
+    <label className={styleInput.label}>
+      <h3 style={{
+        alignSelf: 'flex-start',
+      }}>
+        {fieldName}
+      </h3>
+
+      <input type='file'
+             name={name}
+             ref={fileUploader}
+             multiple={multiple}
+             accept={accept}
+             onChange={handleInputChange}
+             required={required}
+             className={
+               `${isValid ?
+                 `${styleInput.valid}` :
+                 `${styleInput.invalid}`}
+                  ${styleInput.input}`
+             }
+      />
+
+      <p className={styleInput.errorMessage}>
+        {error}
+      </p>
+    </label>
   );
 };
 
