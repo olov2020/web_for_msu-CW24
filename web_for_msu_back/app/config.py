@@ -11,7 +11,7 @@ class BaseConfig:
     SECRET_KEY = os.getenv('SECRET_KEY') or 'A SECRET KEY'
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY') or 'A JWT SECRET KEY'
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=30)  # Время жизни access-токена
-    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=3)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join('app', 'static', 'photos', 'people_photo')
     SECURITY_MSG_UNAUTHENTICATED = ("Авторизуйтесь для доступа к этой странице", "error")

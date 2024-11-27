@@ -13,7 +13,7 @@ from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
-from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule
+from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -308,11 +308,41 @@ class CourseService:
         for key, value in data.items():
             match key:
                 case "formulas":
-                    pass
+                    formulas = course.formulas
+                    for i in range(len(formulas) - 1):
+                        formulas[i].name = data["formulas"][i]["name"]
+                        formulas[i].coefficient = data["formulas"][i]["coefficient"]
+                    if len(data["formulas"]) > len(formulas):
+                        for i in range(len(formulas), len(data["formulas"])):
+                            course.formulas.append(Formula(course_id=course_id,
+                                                        name=data["formulas"][i]["name"],
+                                                        coefficient=data["formulas"][i]["coefficient"]))
                 case "schedules":
-                    pass
+                    schedules = Schedule.query.where(Schedule.course_id==course_id).all()
+                    for i in range(len(schedules)):
+                        schedules[i].lesson_number = data["schedules"][i]["lesson_number"]
+                        schedules[i].date = data["schedules"][i]["date"]
+                        schedules[i].theme = data["schedules"][i]["theme"]
+                        schedules[i].plan = data["schedules"][i]["plan"]
+                        schedules[i].additional_info = data["schedules"][i]["additional_info"]
+                    if len(data["schedules"]) > len(schedules):
+                        for i in range(len(schedules), len(data["schedules"])):
+                            course.lessons.append(Schedule(course_id=course_id,
+                                                         lesson_number=data["schedules"][i]["lesson_number"],
+                                                         date=data["schedules"][i]["date"],
+                                                         theme=data["schedules"][i]["theme"],
+                                                         plan=data["schedules"][i]["plan"],
+                                                         additional_info=data["schedules"][i]["additional_info"]))
                 case "teachers":
-                    pass
+                    teachers = course.teachers
+                    for teacher in teachers:
+                        self.db.session.delete(teacher)
+                    for teacher in data["teachers"]:
+                        if teacher["leads"]:
+                            teacher_course = TeacherCourse(teacher_id=teacher["id"],
+                                                           course_id=course_id,
+                                                           year=course.year)
+                            self.db.session.add(teacher_course)
                 case _:
                     setattr(course, key, value)
 
