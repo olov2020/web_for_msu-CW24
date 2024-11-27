@@ -309,23 +309,29 @@ class CourseService:
             match key:
                 case "formulas":
                     formulas = course.formulas
-                    for i in range(len(formulas) - 1):
+                    for i in range(min(len(formulas) - 1, len(data["formulas"]))):
                         formulas[i].name = data["formulas"][i]["name"]
                         formulas[i].coefficient = data["formulas"][i]["coefficient"]
-                    if len(data["formulas"]) > len(formulas):
+                    if len(data["formulas"]) < len(formulas) - 1:
+                        for i in range(len(data["formulas"]), len(formulas) - 1):
+                            self.db.session.delete(formulas[i])
+                    elif len(data["formulas"]) > len(formulas) - 1:
                         for i in range(len(formulas), len(data["formulas"])):
                             course.formulas.append(Formula(course_id=course_id,
                                                         name=data["formulas"][i]["name"],
                                                         coefficient=data["formulas"][i]["coefficient"]))
                 case "schedules":
                     schedules = Schedule.query.where(Schedule.course_id==course_id).all()
-                    for i in range(len(schedules)):
+                    for i in range(min(len(schedules), len(data["schedules"]))):
                         schedules[i].lesson_number = data["schedules"][i]["lesson_number"]
                         schedules[i].date = data["schedules"][i]["date"]
                         schedules[i].theme = data["schedules"][i]["theme"]
                         schedules[i].plan = data["schedules"][i]["plan"]
                         schedules[i].additional_info = data["schedules"][i]["additional_info"]
-                    if len(data["schedules"]) > len(schedules):
+                    if len(data["schedules"]) < len(schedules):
+                        for i in range(len(data["schedules"]), len(schedules)):
+                            self.db.session.delete(schedules[i])
+                    elif len(data["schedules"]) > len(schedules):
                         for i in range(len(schedules), len(data["schedules"])):
                             course.lessons.append(Schedule(course_id=course_id,
                                                          lesson_number=data["schedules"][i]["lesson_number"],
