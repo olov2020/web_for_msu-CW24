@@ -61,12 +61,18 @@ Link, a {
     color: #9F1A59;
 }
 
+thead > tr > th, tbody > tr > td {
+    border: 1px solid rgb(160 160 160);
+    padding: .5rem 1rem;
+}
+
 button {
     cursor: pointer;
 }
 
 ::-webkit-scrollbar {
     width: .4rem;
+    height: .4rem;
 }
 
 ::-webkit-scrollbar-track {

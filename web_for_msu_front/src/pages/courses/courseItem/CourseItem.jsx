@@ -21,6 +21,10 @@ const CourseItem = () => {
         {state.year}
       </h3>
 
+      {(userStatus.includes('pupil') || userStatus.includes('teacher')) &&
+        <h2>Ведомость оценок</h2>
+      }
+
       {
         userStatus.includes('pupil') ?
           <PupilMarks courseId={state.key}/> :

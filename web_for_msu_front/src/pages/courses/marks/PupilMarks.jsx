@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
-import {getPupilMarksByCourseId} from "../../api/coursesApi.js";
-import style from './marks.module.css'
+import {getPupilMarksByCourseId} from "../../../api/coursesApi.js";
 
 // eslint-disable-next-line react/prop-types
 const PupilMarks = ({courseId}) => {
@@ -11,19 +10,103 @@ const PupilMarks = ({courseId}) => {
       "03.10.2024",
       "10.10.2024",
       "17.10.2024",
-      "24.10.2024"
+      "24.10.2024",
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
     ],
     mark_types: [
       "Присутствие",
       "домашняя работа",
       "Баллы",
-      "Баллы"
+      "Баллы",
+      "Присутствие",
+      "домашняя работа",
+      "Баллы",
+      "Баллы",
+      "Присутствие",
+      "домашняя работа",
+      "Баллы",
+      "Баллы",
+      "Присутствие",
+      "домашняя работа",
+      "Баллы",
+      "Баллы",
+      "Присутствие",
+      "домашняя работа",
+      "Баллы",
+      "Баллы",
+      "Присутствие",
+      "домашняя работа",
+      "Баллы",
+      "Баллы",
+      "Присутствие",
+      "домашняя работа",
+      "Баллы",
+      "Баллы",
+      "Присутствие",
+      "домашняя работа",
+      "Баллы",
+      "Баллы",
     ],
     marks: [
       "Н",
       "4",
       "Н",
-      "10"
+      "10",
+      "Н",
+      "4",
+      "Н",
+      "10",
+      "Н",
+      "4",
+      "Н",
+      "10",
+      "Н",
+      "4",
+      "Н",
+      "10",
+      "Н",
+      "4",
+      "Н",
+      "10",
+      "Н",
+      "4",
+      "Н",
+      "10",
+      "Н",
+      "4",
+      "Н",
+      "10",
+      "Н",
+      "4",
+      "Н",
+      "10",
     ],
     result: 12.6,
     skips: 2
@@ -39,38 +122,52 @@ const PupilMarks = ({courseId}) => {
   }, [])*/
 
   return (
-    <table key={courseId} className={style.tablePupil}>
-      <caption>
-        <h2>Ведомость оценок</h2>
-      </caption>
+    <div style={{
+      maxWidth: "90%",
+      overflow: 'auto',
+    }}>
+      <table key={courseId}>
 
-      <thead>
-      <tr>
-        {marks.dates.map((date, index) => (
-          <th key={index}>{date}</th>
-        ))}
-      </tr>
-      </thead>
+        <thead>
+        <tr>
+          <span></span>
+          {marks.dates.map((date, index) => (
+            <th key={index}>{date}</th>
+          ))}
+        </tr>
+        </thead>
 
-      <tbody>
-      <tr>
-        {marks.marks.map((mark, index) => (
-          <td key={index}>{mark}</td>
-        ))}
-      </tr>
-      </tbody>
+        <tbody>
+        <tr>
+          <span></span>
+          {marks.marks.map((mark, index) => (
+            <td key={index} style={{
+              textAlign: "center",
+            }}>{mark}</td>
+          ))}
+        </tr>
+        </tbody>
+      </table>
 
-      <tfoot>
-      <tr>
-        <th scope="row" colSpan={marks.dates.length - 1}>Итоговая оценка</th>
-        <td>{marks.result}</td>
-      </tr>
-      <tr>
-        <th scope="row" colSpan={marks.dates.length - 1}>Общее количество пропусков</th>
-        <td>{marks.skips}</td>
-      </tr>
-      </tfoot>
-    </table>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0 1rem',
+        marginTop: '2rem',
+      }}>
+        <span>Итоговая оценка</span>
+        <h4>{marks.result}</h4>
+      </div>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0 1rem',
+        margin: '.5rem 0',
+      }}>
+        <span>Общее количество пропусков</span>
+        <h4>{marks.skips}</h4>
+      </div>
+    </div>
   );
 };
 
