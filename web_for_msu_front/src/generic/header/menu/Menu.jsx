@@ -2,7 +2,7 @@ import style from "../header.module.css";
 import MenuItem from "./menuItem/MenuItem.jsx";
 import {
   ADD_NEW_COURSE_ROUTE,
-  ALL_COURSES_ROUTE, CHANGE_COURSE_ROUTE, CREATE_NEWS_ROUTE,
+  ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ROUTE, NOT_FOUND_ROUTE,
   SCHEDULE_ROUTE
@@ -89,15 +89,12 @@ const Menu = () => {
     menu[1].dropdown.push({
       title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: menu[1].length,
     })
-    menu[1].dropdown.push({
-      title: 'Изменить курс', link: CHANGE_COURSE_ROUTE, id: menu[1].length,
-    })
   }
 
   return (
     <nav className={style.menu}>
       {menu.map(menuItem => (
-        <MenuItem key={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown} />
+        <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown} />
       ))}
     </nav>
   );

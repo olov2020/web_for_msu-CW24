@@ -16,12 +16,11 @@ import InputDropdown from "./inputs/userInputs/InputDropdown.jsx";
 import InputCheckbox from "./inputs/userInputs/InputCheckbox.jsx";
 import {useEffect, useState} from "react";
 import InputPhoto from "./inputs/userInputs/InputPhoto.jsx";
-import InputCourseTitle from "./inputs/courseInputs/InputCourseTitle.jsx";
 import InputNewsTitle from "./inputs/newsInputs/InputNewsTitle.jsx";
 import InputNewsPhoto from "./inputs/newsInputs/InputNewsPhoto.jsx";
 import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
-import {redirect} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd, courseChange} from "../../api/coursesApi.js";
 
@@ -35,7 +34,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       pupilRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
       teacherRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
       courseAdd: ['courseFile'],
-      courseChange: ['courseTitle', 'courseYear', 'courseFile'],
+      courseChange: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription']
     }
 
@@ -44,6 +43,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       console.log(formValues[item]);
     })
   }, [formValues]);*/
+
+  const navigate = useNavigate();
 
   const checkFormErrors = () => {
     return requiredValues[type].every(item => formValues[item] !== undefined && formValues[item] !== null);
@@ -55,7 +56,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     if (type === 'login') {
       if (checkFormErrors()) {
         userLogin(formValues.email, formValues.password);
-        redirect(HOME_ROUTE);
+        navigate(HOME_ROUTE);
       } else {
         e.preventDefault();
         alert('Заполните все обязательные поля.');
@@ -63,7 +64,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     } else if (type === 'pupilRegistration') {
       if (checkFormErrors()) {
         pupilRegistration(formValues);
-        redirect(LOGIN_ROUTE);
+        navigate(LOGIN_ROUTE);
       } else {
         e.preventDefault();
         alert('Заполните все обязательные поля.');
@@ -71,7 +72,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     } else if (type === 'teacherRegistration') {
       if (checkFormErrors()) {
         teacherRegistration(formValues);
-        redirect(LOGIN_ROUTE);
+        navigate(LOGIN_ROUTE);
       } else {
         e.preventDefault();
         alert('Заполните все обязательные поля.');
@@ -85,15 +86,17 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     } else if (type === 'courseAdd') {
       if (checkFormErrors()) {
         courseAdd(formValues)
-        redirect(ALL_COURSES_ROUTE);
+        alert('Новый курс успешно добавлен.');
+        navigate(ALL_COURSES_ROUTE);
       } else {
         e.preventDefault();
         alert('Заполните все обязательные поля.');
       }
     } else if (type === 'courseChange') {
       if (checkFormErrors()) {
-        courseChange(formValues.courseTitle, formValues.courseYear, formValues.courseFile);
-        redirect(ALL_COURSES_ROUTE);
+        courseChange(formValues.courseFile);
+        alert('Курс успешно изменен.');
+        navigate(ALL_COURSES_ROUTE);
       } else {
         e.preventDefault();
         alert('Заполните все обязательные поля.');
@@ -101,7 +104,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     } else if (type === 'newsAdd') {
       if (checkFormErrors()) {
         addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
-        redirect(NEWS_ROUTE);
+        navigate(NEWS_ROUTE);
       } else {
         e.preventDefault();
         alert('Заполните все обязательные поля.');
@@ -408,17 +411,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         return <InputFile name={input} accept='.xls, .xlsx, .csv'
                           fieldName='Добавить курс*'
                           setValue={setCourseFile}
-        />
-      }
-
-      case 'courseTitle': {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [courseTitle, setCourseTitle] = useState(values[input]);
-        formValues.courseTitle = courseTitle;
-        return <InputCourseTitle name={input} placeholder='Введите название курса'
-                                 fieldName='Название курса*'
-                                 value={courseTitle}
-                                 setValue={setCourseTitle}
         />
       }
 

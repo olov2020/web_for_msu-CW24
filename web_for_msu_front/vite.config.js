@@ -7,15 +7,16 @@ export default defineConfig({
   plugins: [react()],
   build: {
     assetsDir: 'static',
+    outDir: 'dist',
   },
   server: {
     port: 5173,
     cors: true,
     proxy: {
       "/api": {
-        target: "http://127.0.0.1:5000/",
+        target: "http://127.0.0.1:5000",
         changeOrigin: true,
-        secure: false,
+        secure: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },

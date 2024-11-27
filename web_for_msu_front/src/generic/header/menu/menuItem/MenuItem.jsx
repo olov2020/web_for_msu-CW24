@@ -3,11 +3,11 @@ import {useState} from "react";
 import MenuDropdown from "./menuDropdown/MenuDropdown.jsx";
 
 // eslint-disable-next-line react/prop-types
-const MenuItem = ({key, title, dropdown}) => {
+const MenuItem = ({id, title, dropdown}) => {
 
   const [showMenu, setShowMenu] = useState(false);
   return (
-    <div className={style.menu__item} key={key}>
+    <div className={style.menu__item} key={id}>
       <div className={style.menu__name}
            onMouseEnter={() => setShowMenu(true)}
            onMouseLeave={() => setShowMenu(false)}

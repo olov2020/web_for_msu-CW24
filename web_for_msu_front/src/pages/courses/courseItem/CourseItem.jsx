@@ -13,13 +13,13 @@ const CourseItem = () => {
   return (
     <article key={state.key}>
       <h1>{state.courseData.name}</h1>
-      <p style={{
+      <h3 style={{
         alignSelf: 'flex-end',
         marginRight: '2rem',
       }}
       >
         {state.year}
-      </p>
+      </h3>
 
       {
         userStatus.includes('pupil') ?
@@ -82,6 +82,18 @@ const CourseItem = () => {
         <p>Классы: <span>{state.courseData.emsh_grades}</span></p>
         <p><span>{state.courseData.direction}</span></p>
         <p>Аудитория: <span>{state.courseData.auditory ? state.courseData.auditory : 'уточняется'}</span></p>
+      </section>
+
+      <section style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        width: '90%',
+      }}
+      >
+        <h2>Занятия и темы</h2>
+
+
       </section>
     </article>
   );

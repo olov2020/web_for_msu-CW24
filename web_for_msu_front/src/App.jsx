@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import Loading from "./pages/loading/Loading.jsx";
 import Header from "./generic/header/Header.jsx";
 import Footer from "./generic/footer/Footer.jsx";
+import {$host} from "./api/axiosApi.js";
 
 const App = () => {
 
@@ -23,6 +24,57 @@ const App = () => {
   if (isLoading) {
     return <Loading/>
   }*/
+
+  /*const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || null);
+  const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken') || null);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    const checkToken = async () => {
+      if (!accessToken || !refreshToken){
+        return; // No tokens yet, wait for login
+      }
+      try {
+        setLoading(true);
+        const response = await $host.get('/api/protected', { //Example protected route
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        setData(response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 401) { //Unauthorized - Token expired
+          await refreshTokenLogic();
+        } else {
+          setError(error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    checkToken();
+  }, [accessToken, refreshToken]);
+
+  const refreshTokenLogic = async () => {
+    try {
+      const response = await axios.post(REFRESH_ENDPOINT, { refreshToken });
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;
+      setAccessToken(newAccessToken);
+      setRefreshToken(newRefreshToken);
+      localStorage.setItem('accessToken', newAccessToken);
+      localStorage.setItem('refreshToken', newRefreshToken);
+    } catch (error) {
+      setError('Refresh token failed. Please log in again.');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      setAccessToken(null);
+      setRefreshToken(null);
+      //Redirect to login
+    }
+  };*/
 
   return (
     <BrowserRouter>
