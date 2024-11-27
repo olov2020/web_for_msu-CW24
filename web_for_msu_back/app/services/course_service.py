@@ -341,7 +341,21 @@ class CourseService:
             "teachers": [self.teacher_service.get_full_name(assoc.teacher) for assoc in course.teachers],
             "auditory": course.auditory,
             "lesson_time": course.lesson_time,
-            "lessons": self.get_lessons_info(course)
+            "additional_info_for_auditory": course.additional_info_for_auditory,
+            "course_purpose": course.course_purpose,
+            "course_objectives": course.course_objectives,
+            "course_features": course.course_features,
+            "course_format": course.course_format,
+            "target_audience": course.target_audience,
+            "short_description": course.short_description,
+            "number_of_listeners": course.number_of_listeners,
+            "selection": course.selection,
+            "assessment": course.assessment,
+            "platform_format": course.platform_format,
+            "additional_info": course.additional_info,
+            "lessons": self.get_lessons_info(course),
+            "formulas": self.get_formulas_info(course),
+
         }
         return data
 
@@ -357,6 +371,16 @@ class CourseService:
             }
             lessons.append(data)
         return lessons
+
+    def get_formulas_info(self, course: Course) -> list[dict]:
+        formulas = []
+        for formula in course.formulas:
+            data = {
+                "name": formula.name,
+                "coefficient": formula.coefficient
+            }
+            formulas.append(data)
+        return formulas
 
     def get_course_info(self, course: Course) -> CourseInfoDTO:
         data = self.get_base_course_info(course)
@@ -396,4 +420,3 @@ class CourseService:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_teacher(assoc.course))
         return grouped_courses, 200
-
