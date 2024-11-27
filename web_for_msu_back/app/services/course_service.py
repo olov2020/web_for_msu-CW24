@@ -309,23 +309,30 @@ class CourseService:
             match key:
                 case "formulas":
                     formulas = course.formulas
-                    for i in range(min(len(formulas), len(data["formulas"]))):
-                        if formulas[i].name == "Баллы":
+                    j = 0
+                    k = 0
+                    while j < len(formulas) and k < len(data["formulas"]):
+                        if formulas[j].name == "Баллы":
+                            j += 1
                             continue
-                        formulas[i].name = data["formulas"][i]["name"]
-                        formulas[i].coefficient = data["formulas"][i]["coefficient"]
-                    if len(data["formulas"]) < len(formulas) - 1:
-                        for i in range(len(data["formulas"]), len(formulas)):
-                            if formulas[i].name == "Баллы":
+                        formulas[j].name = data["formulas"][k]["name"]
+                        formulas[j].coefficient = data["formulas"][k]["coefficient"]
+                        j += 1
+                        k += 1
+                    if len(data["formulas"]) == k:
+                        while j < len(formulas):
+                            if formulas[j].name == "Баллы":
                                 continue
-                            self.db.session.delete(formulas[i])
-                    elif len(data["formulas"]) > len(formulas) - 1:
-                        for i in range(len(formulas) - 1, len(data["formulas"])):
+                            self.db.session.delete(formulas[j])
+                            j += 1
+                    elif j == len(formulas):
+                        for i in range(k, len(data["formulas"])):
                             course.formulas.append(Formula(course_id=course_id,
                                                            name=data["formulas"][i]["name"],
                                                            coefficient=data["formulas"][i]["coefficient"]))
+
                 case "schedules":
-                    schedules = Schedule.query.where(Schedule.course_id == course_id).all()
+                    schedules = Schedule.query.where(Schedule.course_id == course_id).order_by(Schedule.lesson_number).all()
                     for i in range(min(len(schedules), len(data["schedules"]))):
                         schedules[i].lesson_number = data["schedules"][i]["lesson_number"]
                         schedules[i].date = data["schedules"][i]["date"]
