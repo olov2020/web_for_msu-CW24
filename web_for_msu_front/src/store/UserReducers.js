@@ -7,9 +7,9 @@ const authStatus = {
 }
 
 const defaultState = {
-    id: 0,
+    id: 1,
     email: "",
-    authStatus: authStatus.pupil,
+    authStatus: authStatus.teacher,
 }
 
 const SET_AUTH = "SET_AUTH"

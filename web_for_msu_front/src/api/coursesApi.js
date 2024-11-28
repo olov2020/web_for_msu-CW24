@@ -55,19 +55,12 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
   }
 }
 
-export const updateTeacherMarksByCourseId = async ({
+export const updateTeacherMarksByCourseId = async (
                                                      courseId,
-                                                     dates,
-                                                     mark_type_choices,
-                                                     mark_types,
-                                                     pupils,
-                                                     visits,
-                                                     averages
-                                                   }) => {
-  const response = await $host.put(`/api/teacher/update_journal/${courseId}`,
-    {
-      dates, mark_type_choices, mark_types, pupils, visits, averages
-    })
+                                                     marks) => {
+
+
+  const response = await $host.put(`/api/teacher/update_journal/${courseId}`, marks)
 
   try {
     return response.data;

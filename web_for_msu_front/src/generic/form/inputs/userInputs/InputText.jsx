@@ -11,7 +11,7 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue}) => {
     empty: 'Данное поле не может быть пустым',
   }
 
-  const handleInputChange = ((e) => {
+  const handleInputChange = (e) => {
     e.preventDefault();
     setValue(e.target.value);
     const error = validateInput(e.target.value);
@@ -21,7 +21,7 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue}) => {
       setError(error);
       console.log(error);
     }
-  })
+  }
 
   const validateInput = (inputValue) => {
     if (inputValue.length === 0) {
