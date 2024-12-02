@@ -1,6 +1,7 @@
 import style from "../header.module.css";
 import MenuItem from "./menuItem/MenuItem.jsx";
 import {
+  ABOUT_ROUTE,
   ADD_NEW_COURSE_ROUTE,
   ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE,
   MY_COURSES_ROUTE,
@@ -58,14 +59,14 @@ const Menu = () => {
       id: 3,
       dropdown: [
         {
-          title: 'Об ЭМШ', link: NOT_FOUND_ROUTE, id: 0,
+          title: 'Об ЭМШ', link: ABOUT_ROUTE, id: 0,
         },
         {
           title: 'Преподаватели и дирекция', link: NOT_FOUND_ROUTE, id: 1,
         },
-        {
+        /*{
           title: 'Список учащихся', link: NOT_FOUND_ROUTE, id: 2,
-        },
+        },*/
       ],
     },
   ]

@@ -9,7 +9,7 @@ const authStatus = {
 const defaultState = {
     id: 1,
     email: "",
-    authStatus: authStatus.teacher,
+    authStatus: authStatus.none,
 }
 
 const SET_AUTH = "SET_AUTH"

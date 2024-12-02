@@ -15,13 +15,26 @@ const Footer = () => {
         <h3>Контакты:</h3>
 
         <div>
-          <p>Телефон - 8 (495) 939-16-06</p>
-          <p>E-mail - info@emsch.ru</p>
-          <p>Вконтакте - </p>
           <p style={{
             display: 'flex',
+            alignItems: 'center',
             gap: '0 .2rem',
-          }}>Телеграм - <a href='https://t.me/emsch_msu'>ЭМШ</a></p>
+          }}>Телефон - <a href='tel:+74959391606'>8 (495) 939-16-06</a></p>
+          <p style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0 .2rem',
+          }}>E-mail - <a href='mailto:info@emsch.ru'>info@emsch.ru</a></p>
+          <p style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0 .2rem',
+          }}><a href='https://t.me/emsch_msu'>ЭМШ ВКонтакте</a></p>
+          <p style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0 .2rem',
+          }}><a href='https://t.me/emsch_msu'>Телеграм ЭМШ</a></p>
         </div>
       </div>
 

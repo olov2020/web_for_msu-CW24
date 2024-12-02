@@ -3,6 +3,7 @@ import Schedule from "../schedule/Schedule.jsx";
 import News from "../news/News.jsx";
 import Courses from "../courses/Courses.jsx";
 import {useSelector} from "react-redux";
+import About from "../about/About.jsx";
 
 const Home = () => {
 
@@ -23,9 +24,9 @@ const Home = () => {
         <section style={{
           display: 'flex',
           justifyContent: 'center',
-          width: '90%',
+          width: '100%',
         }}>
-          <h1>Описание ЭМШ</h1>
+          <About/>
         </section>
       }
 

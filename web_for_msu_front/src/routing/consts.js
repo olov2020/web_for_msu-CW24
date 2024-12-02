@@ -17,4 +17,6 @@ export const NEWS_ROUTE = '/news'
 export const CREATE_NEWS_ROUTE = '/news/add'
 export const NEWS_ITEM_ROUTE = '/news/:title/:date'
 
+export const ABOUT_ROUTE = '/about'
+
 export const NOT_FOUND_ROUTE = '/not-found'

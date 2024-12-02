@@ -1,0 +1,32 @@
+.section {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 1rem 2rem;
+
+    color: black;
+    background-color: #F7B7CE;
+
+    border: 1px dotted #9F1A59;
+    border-radius: 1rem;
+
+    z-index: 100;
+
+    > h3 {
+        align-self: center;
+    }
+
+    > img {
+        position: absolute;
+        top: .2rem;
+        right: .2rem;
+
+        width: 1.5rem;
+        object-fit: contain;
+    }
+}

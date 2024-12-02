@@ -1,4 +1,5 @@
 import {
+  ABOUT_ROUTE,
   ACCOUNT_ROUTE,
   ADD_NEW_COURSE_ROUTE,
   ALL_COURSES_ROUTE,
@@ -27,6 +28,7 @@ import News from "../pages/news/News.jsx";
 import NewsCreate from "../pages/news/newsCreate/NewsCreate.jsx";
 import NewsItem from "../pages/news/newsItem/NewsItem.jsx";
 import CourseItem from "../pages/courses/courseItem/CourseItem.jsx";
+import About from "../pages/about/About.jsx";
 
 export const publicRoutes = [
   {
@@ -64,6 +66,10 @@ export const publicRoutes = [
   {
     path: COURSES_ITEM_ROUTE,
     Element: <CourseItem/>,
+  },
+  {
+    path: ABOUT_ROUTE,
+    Element: <About/>,
   },
 ]
 
