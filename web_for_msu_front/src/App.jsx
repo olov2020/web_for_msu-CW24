@@ -1,12 +1,18 @@
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./routing/AppRouter.jsx";
-import {useEffect, useState} from "react";
-import Loading from "./pages/loading/Loading.jsx";
 import Header from "./generic/header/Header.jsx";
 import Footer from "./generic/footer/Footer.jsx";
-import {$host} from "./api/axiosApi.js";
 
 const App = () => {
+
+  /*useEffect(() => {
+    const getRoles = async () => {
+      const data = await getAllRoles();
+      console.log(data);
+    }
+
+    getRoles();
+  }, []);*/
 
   /*const [isLoading, setIsLoading] = useState(true);
 

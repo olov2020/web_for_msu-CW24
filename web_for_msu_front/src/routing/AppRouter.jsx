@@ -1,6 +1,13 @@
 import {useSelector} from 'react-redux'
 import {Navigate, Route, Routes, useLocation} from "react-router-dom";
-import {authRoutes, publicRoutes} from "./routes.jsx";
+import {
+  adminRoutes,
+  authRoutes,
+  coursemakerRoutes,
+  marksmakerRoutes,
+  newsmakerRoutes,
+  publicRoutes
+} from "./routes.jsx";
 import {NOT_FOUND_ROUTE} from "./consts.js";
 import {useEffect} from "react";
 
@@ -16,7 +23,23 @@ const AppRouter = () => {
 
   return (
     <Routes>
-      {authStatus !== 'none' && authRoutes.map(({path, Element}) => {
+      {(authStatus.includes('admin') || authStatus.includes('marksmaker')) && marksmakerRoutes.map(({path, Element}) => {
+        return <Route key={path} path={path} element={Element}/>
+      })}
+
+      {(authStatus.includes('admin') || authStatus.includes('coursemaker')) && coursemakerRoutes.map(({path, Element}) => {
+        return <Route key={path} path={path} element={Element}/>
+      })}
+
+      {(authStatus.includes('admin') || authStatus.includes('newsmaker')) && newsmakerRoutes.map(({path, Element}) => {
+        return <Route key={path} path={path} element={Element}/>
+      })}
+
+      {authStatus.includes('admin') && adminRoutes.map(({path, Element}) => {
+        return <Route key={path} path={path} element={Element}/>
+      })}
+
+      {(authStatus.includes('pupil') || authStatus.includes('teacher') || authStatus.includes('newsmaker') || authStatus.includes('coursemaker') || authStatus.includes('marksmaker')) && authRoutes.map(({path, Element}) => {
         return <Route key={path} path={path} element={Element}/>
       })}
 

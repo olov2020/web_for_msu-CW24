@@ -3,12 +3,25 @@ import styleHeader from "../header.module.css";
 import {getUserInfoByUserId} from "../../../api/userApi.js";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {ACCOUNT_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
+import {ACCOUNT_ROUTE, ADMIN_ROUTE, HANDLE_ROLES_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
+import MenuItem from "../menu/menuItem/MenuItem.jsx";
 
 const Profile = () => {
 
   const user = useSelector(state => state.user);
   const userInfo = getUserInfoByUserId(user.id);
+
+  if (user.authStatus === 'admin') {
+    return (
+      <div className={styleHeader.menu__item}>
+        <Link to={ADMIN_ROUTE}>
+          <div className={styleHeader.menu__name}>
+            <h2>Админ панель</h2>
+          </div>
+        </Link>
+      </div>
+    )
+  }
 
   return (
     (user.authStatus !== 'none') ?

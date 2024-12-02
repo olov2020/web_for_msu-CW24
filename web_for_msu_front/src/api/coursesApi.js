@@ -1,8 +1,7 @@
-import {$authHost, $host} from "./axiosApi.js";
-import {jwtDecode} from "jwt-decode";
+import axios from "axios";
 
 export const getAllCourses = async () => {
-  const response = await $host.get(`/api/home/all_courses`)
+  const response = await axios.get(`/api/home/all_courses`)
 
   try {
     console.log(response);
@@ -13,7 +12,7 @@ export const getAllCourses = async () => {
 }
 
 export const getMyCourses = async () => {
-  const response = await $host.get(`/api/pupil/my_courses`)
+  const response = await axios.get(`/api/pupil/my_courses`)
 
   try {
     return response.data;
@@ -23,7 +22,7 @@ export const getMyCourses = async () => {
 }
 
 export const getSchedule = async () => {
-  const response = await $host.get(`/api/home/schedule`)
+  const response = await axios.get(`/api/home/schedule`)
 
   try {
     return response.data;
@@ -34,7 +33,7 @@ export const getSchedule = async () => {
 }
 
 export const getPupilMarksByCourseId = async ({courseId}) => {
-  const response = await $host.get(`/api/pupil/marks/${courseId}`)
+  const response = await axios.get(`/api/pupil/marks/${courseId}`)
 
   try {
     return response.data;
@@ -45,7 +44,7 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
 }
 
 export const getTeacherMarksByCourseId = async ({courseId}) => {
-  const response = await $host.get(`/api/teacher/get_journal/${courseId}`)
+  const response = await axios.get(`/api/teacher/get_journal/${courseId}`)
 
   try {
     return response.data;
@@ -60,7 +59,7 @@ export const updateTeacherMarksByCourseId = async (
                                                      marks) => {
 
 
-  const response = await $host.put(`/api/teacher/update_journal/${courseId}`, marks)
+  const response = await axios.put(`/api/teacher/update_journal/${courseId}`, marks)
 
   try {
     return response.data;
@@ -84,7 +83,7 @@ export const updateTeacherMarksByCourseId = async (
 export const courseAdd = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await $authHost.post(`/api/admin/create_course`, formData)
+  const response = await axios.post(`/api/admin/create_course`, formData)
 
   if (response.status === 200) {
     return response.data;
@@ -96,7 +95,7 @@ export const courseAdd = async (file) => {
 export const courseChange = async (id, file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await $authHost.put(`/api/admin/update_course/${id}`, formData)
+  const response = await axios.put(`/api/admin/update_course/${id}`, formData)
 
   if (response.status === 200) {
     return response.data;

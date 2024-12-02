@@ -1,15 +1,17 @@
 const authStatus = {
     none: 'none',
+    applicant: 'applicant',
     pupil: 'pupil',
     teacher: 'teacher',
-    admin: 'admin',
     newsmaker: 'newsmaker',
+    coursemaker: 'coursemaker',
+    marksmaker: 'marksmaker',
+    admin: 'admin',
 }
 
 const defaultState = {
-    id: 1,
-    email: "",
-    authStatus: authStatus.none,
+    id: 0,
+    authStatus: authStatus.admin,
 }
 
 const SET_AUTH = "SET_AUTH"
@@ -22,7 +24,6 @@ export const userReducer = (state = defaultState, action) => {
         case SET_AUTH:
             return {
                 id: payload.id,
-                email: payload.email,
                 authStatus: payload.authStatus,
             }
 

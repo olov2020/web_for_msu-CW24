@@ -7,7 +7,7 @@ const MenuItem = ({id, title, dropdown}) => {
 
   const [showMenu, setShowMenu] = useState(false);
   return (
-    <div className={style.menu__item} key={id}>
+    <section className={style.menu__item} key={id}>
       <div className={style.menu__name}
            onMouseEnter={() => setShowMenu(true)}
            onMouseLeave={() => setShowMenu(false)}
@@ -18,7 +18,7 @@ const MenuItem = ({id, title, dropdown}) => {
       {showMenu &&
         <MenuDropdown onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)} items={dropdown} onClick={() => setShowMenu(false)}/>
       }
-    </div>
+    </section>
   );
 };
 

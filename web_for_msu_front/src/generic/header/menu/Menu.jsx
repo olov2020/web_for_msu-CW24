@@ -3,7 +3,7 @@ import MenuItem from "./menuItem/MenuItem.jsx";
 import {
   ABOUT_ROUTE,
   ADD_NEW_COURSE_ROUTE,
-  ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE,
+  ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ROUTE, NOT_FOUND_ROUTE,
   SCHEDULE_ROUTE
@@ -71,7 +71,7 @@ const Menu = () => {
     },
   ]
 
-  if (userStatus.includes('pupil') || userStatus.includes('teacher')) {
+  if (userStatus.includes('pupil') || userStatus.includes('teacher') || userStatus.includes('newsmaker') || userStatus.includes('coursemaker') || userStatus.includes('marksmaker')) {
     menu[1].dropdown.push({
       title: 'Расписание', link: SCHEDULE_ROUTE, id: menu[1].length,
     })
@@ -86,15 +86,22 @@ const Menu = () => {
     })
   }
 
-  if (userStatus.includes('admin')) {
+  if (userStatus.includes('admin') || userStatus.includes('coursemaker')) {
     menu[1].dropdown.push({
       title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: menu[1].length,
+    })
+  }
+
+  if (userStatus.includes('admin') || userStatus.includes('marksmaker')) {
+    menu[1].dropdown.push({
+      title: 'Все ведомости', link: MARKS_ROUTE, id: menu[1].length,
     })
   }
 
   return (
     <nav className={style.menu}>
       {menu.map(menuItem => (
+        // eslint-disable-next-line react/jsx-key
         <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown} />
       ))}
     </nav>

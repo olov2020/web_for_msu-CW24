@@ -1,9 +1,9 @@
-import {$host, $authHost} from './axiosApi.js'
 import {jwtDecode} from 'jwt-decode'
 import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../routing/consts.js";
+import axios from "axios";
 
 /*export const getAllRoles = async () => {
-  const response = await $authHost.get(`/api/home/all_roles`)
+  const response = await axios.get(`/api/home/all_roles`)
 
   try {
     return response.data;
@@ -13,7 +13,7 @@ import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../routing/c
 }*/
 
 export const getUserInfoByUserId = async ({userId}) => {
-  const response = await $authHost.get(`/api/home/${userId}`)
+  const response = await axios.get(`/api/home/${userId}`)
 
   try {
     return response.data;
@@ -23,7 +23,7 @@ export const getUserInfoByUserId = async ({userId}) => {
 }
 
 export const userChangePhoto = async ({photo}) => {
-  const response = await $host.post('/api/account/photo', {photo}, {
+  const response = await axios.post('/api/account/photo', {photo}, {
     headers: {
       'content-type': 'application/json'
     }
@@ -38,7 +38,7 @@ export const userChangePhoto = async ({photo}) => {
 }
 
 export const pupilChangeData = async ({name, surname, lastname, email, phone, school}) => {
-  const response = await $host.post('/api/account/data', {name, surname, lastname, email, phone, school}, {
+  const response = await axios.post('/api/account/data', {name, surname, lastname, email, phone, school}, {
     headers: {
       'content-type': 'application/json'
     }
@@ -53,7 +53,7 @@ export const pupilChangeData = async ({name, surname, lastname, email, phone, sc
 }
 
 export const teacherChangeData = async ({name, surname, lastname, email, phone, university, work}) => {
-  const response = await $host.post('/api/account/data', {name, surname, lastname, email, phone, university, work}, {
+  const response = await axios.post('/api/account/data', {name, surname, lastname, email, phone, university, work}, {
     headers: {
       'content-type': 'application/json'
     }
@@ -68,7 +68,7 @@ export const teacherChangeData = async ({name, surname, lastname, email, phone, 
 }
 
 export const userLogin = async ({email, password}) => {
-  const response = await $host.post('/api/signIn', {email, password}, {
+  const response = await axios.post('/api/signIn', {email, password}, {
     headers: {
       'content-type': 'application/json'
     }
@@ -83,7 +83,7 @@ export const userLogin = async ({email, password}) => {
 }
 
 export const pupilRegistration = async (formValues) => {
-  const response = await $host.post(`/api/${REGISTRATION_PUPIL_ROUTE}`, formValues, {
+  const response = await axios.post(`/api/${REGISTRATION_PUPIL_ROUTE}`, formValues, {
     headers: {
       'content-type': 'application/json'
     }
@@ -98,7 +98,7 @@ export const pupilRegistration = async (formValues) => {
 }
 
 export const teacherRegistration = async (formValues) => {
-  const response = await $host.post(`/api/${REGISTRATION_TEACHER_ROUTE}`, formValues, {
+  const response = await axios.post(`/api/${REGISTRATION_TEACHER_ROUTE}`, formValues, {
     headers: {
       'content-type': 'application/json'
     }
@@ -113,7 +113,7 @@ export const teacherRegistration = async (formValues) => {
 }
 
 export const refreshToken = async () => {
-  const response = await $authHost.get('/api/refreshToken')
+  const response = await axios.get('/api/refreshToken')
 
   try {
     localStorage.setItem('token', response.data.accessToken)
@@ -124,7 +124,7 @@ export const refreshToken = async () => {
 }
 
 export const userLogout = async () => {
-  const response = await $authHost.get('/api/account/logout');
+  const response = await axios.get('/api/account/logout');
 
   try {
     localStorage.setItem('token', response.data.accessToken)

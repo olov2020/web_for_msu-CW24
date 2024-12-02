@@ -1,16 +1,16 @@
 import {
   ABOUT_ROUTE,
   ACCOUNT_ROUTE,
-  ADD_NEW_COURSE_ROUTE,
+  ADD_NEW_COURSE_ROUTE, ADMIN_ROUTE,
   ALL_COURSES_ROUTE,
   COURSES_ITEM_ROUTE,
-  CREATE_NEWS_ROUTE,
+  CREATE_NEWS_ROUTE, HANDLE_ROLES_ROUTE,
   HOME_ROUTE,
-  LOGIN_ROUTE,
+  LOGIN_ROUTE, MARKS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ITEM_ROUTE,
   NEWS_ROUTE,
-  NOT_FOUND_ROUTE,
+  NOT_FOUND_ROUTE, PEOPLE_LIST_ROUTE,
   REGISTRATION_PUPIL_ROUTE,
   REGISTRATION_TEACHER_ROUTE,
   SCHEDULE_ROUTE
@@ -29,6 +29,10 @@ import NewsCreate from "../pages/news/newsCreate/NewsCreate.jsx";
 import NewsItem from "../pages/news/newsItem/NewsItem.jsx";
 import CourseItem from "../pages/courses/courseItem/CourseItem.jsx";
 import About from "../pages/about/About.jsx";
+import HandleRoles from "../pages/adminPanel/handleRoles/HandleRoles.jsx";
+import AdminPanel from "../pages/adminPanel/AdminPanel.jsx";
+import Marks from "../pages/adminPanel/marks/Marks.jsx";
+import ListOfPeople from "../pages/adminPanel/listsOf/ListOfPeople.jsx";
 
 export const publicRoutes = [
   {
@@ -79,19 +83,47 @@ export const authRoutes = [
     Element: <Account/>,
   },
   {
-    path: CREATE_NEWS_ROUTE,
-    Element: <NewsCreate/>,
-  },
-  {
-    path: ADD_NEW_COURSE_ROUTE,
-    Element: <AddNewCourse/>,
-  },
-  {
     path: MY_COURSES_ROUTE,
     Element: <Courses/>,
   },
   {
     path: SCHEDULE_ROUTE,
     Element: <Schedule/>,
+  },
+]
+
+export const newsmakerRoutes = [
+  {
+    path: CREATE_NEWS_ROUTE,
+    Element: <NewsCreate/>,
+  },
+]
+
+export const coursemakerRoutes = [
+  {
+    path: ADD_NEW_COURSE_ROUTE,
+    Element: <AddNewCourse/>,
+  },
+]
+
+export const marksmakerRoutes = [
+  {
+    path: MARKS_ROUTE,
+    Element: <Marks/>,
+  },
+]
+
+export const adminRoutes = [
+  {
+    path: ADMIN_ROUTE,
+    Element: <AdminPanel/>,
+  },
+  {
+    path: HANDLE_ROLES_ROUTE,
+    Element: <HandleRoles/>,
+  },
+  {
+    path: PEOPLE_LIST_ROUTE,
+    Element: <ListOfPeople/>,
   },
 ]
