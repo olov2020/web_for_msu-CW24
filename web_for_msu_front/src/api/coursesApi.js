@@ -69,17 +69,6 @@ export const updateTeacherMarksByCourseId = async (
   }
 }
 
-/*export const getCourseByFile = async () => {
-  const response = await $host.get(`/api/admin/add_from_file`)
-
-  try {
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return {};
-  }
-}*/
-
 export const courseAdd = async (file) => {
   const formData = new FormData();
   formData.append('file', file);

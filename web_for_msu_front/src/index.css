@@ -24,7 +24,7 @@ article {
 }
 
 span {
-    font-size: 1.1rem;
+    font-size: inherit;
     font-weight: 520;
     color: #9F1A59;
 }
