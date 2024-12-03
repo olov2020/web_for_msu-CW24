@@ -1,7 +1,15 @@
 import {useEffect, useState} from "react";
-import {addPupil, deletePupil, getAllApplicants, getAllPupils, getAllTeachers} from "../../../api/adminApi.js";
+import {
+  addPupil, addTeacher,
+  deletePupil,
+  deleteTeacher,
+  getAllApplicants,
+  getAllPupils,
+  getAllTeachers
+} from "../../../api/adminApi.js";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
 import style from './listOfPeople.module.css';
+import ToggleSwitch from "../../../generic/form/toggleSwitch/ToggleSwitch.jsx";
 
 const ListOfPeople = () => {
 
@@ -64,6 +72,24 @@ const ListOfPeople = () => {
       alert('Ученик успешно исключен!');
     } else {
       alert('Упс, что-то пошло не так... Ученик не был исключен');
+    }
+  }
+
+  const addTeacherFunc = async (teacherId) => {
+    const data = await addTeacher({teacherId});
+    if (data) {
+      alert('Преподаватель успешно добавлен!');
+    } else {
+      alert('Упс, что-то пошло не так... Преподаватель не был добавлен');
+    }
+  }
+
+  const deleteTeacherFunc = async (teacherId) => {
+    const data = await deleteTeacher({teacherId});
+    if (data) {
+      alert('Преподаватель успешно исключен!');
+    } else {
+      alert('Упс, что-то пошло не так... Преподаватель не был исключен');
     }
   }
 
@@ -130,27 +156,98 @@ const ListOfPeople = () => {
       {url.includes('teachers') && (
         <section className={style.section}>
           <div className={style.container}>
-            <h2 className={style.item}>ФИО</h2>
-            <h2 className={style.item}>Добавлять новости</h2>
-            <h2 className={style.item}>Добавлять курсы</h2>
-            <h2 className={style.item}>Доступ ко всем ведомостям</h2>
-            <h2 className={style.item}>Статус организатора</h2>
+            <h2 className={style.itemTeacher} style={{
+              width: '15%',
+            }}>ФИО</h2>
+            <h2 className={style.itemTeacher} style={{
+              width: '15%',
+            }}>Почта</h2>
+            <div className={style.itemTeacher} style={{
+              width: '20%',
+            }}>
+              <h2>Функциональная роль</h2>
+
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '100%',
+                gap: '0 1rem',
+              }}>
+                <p>Добавление новостей</p>
+                <p>Добавление курсов</p>
+                <p>Просмотр ведомостей</p>
+              </div>
+            </div>
+            <div className={style.itemTeacher} style={{
+              width: '30%',
+            }}>
+              <h2>Статус организатора</h2>
+
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '100%',
+                gap: '0 1rem',
+              }}>
+                <p className={style.itemTeacher}>Конкурс научных работ</p>
+                <p className={style.itemTeacher}>Выездная школа</p>
+                <p className={style.itemTeacher}>Летняя школа</p>
+                <p className={style.itemTeacher}>Вступительные очные</p>
+                <p className={style.itemTeacher}>Вступительные онлайн</p>
+              </div>
+            </div>
+            <h2 className={style.itemTeacher} style={{
+              width: '20%',
+            }}>Действие</h2>
           </div>
 
           {people.map((person) => (
             <div key={person.id} className={style.container}>
-              <h3 className={style.item}>{person.name}</h3>
-              <p className={style.item}>{person.class}</p>
-              <h3 className={style.item}><span>{person.status}</span></h3>
-              <div style={{
+              <h3 className={style.itemTeacher} style={{
+                width: '15%',
+              }}>{person.name}</h3>
+              <p className={style.itemTeacher} style={{
+                width: '15%',
+              }}><span>{person.email}</span></p>
+              <div className={style.itemTeacher} style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '20%',
+                gap: '0 1rem',
+              }}>
+                <ToggleSwitch/>
+                <ToggleSwitch/>
+                <ToggleSwitch/>
+              </div>
+              <div className={style.itemTeacher} style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '30%',
+                gap: '0 1rem',
+              }}>
+                <ToggleSwitch/>
+                <ToggleSwitch/>
+                <ToggleSwitch/>
+                <ToggleSwitch/>
+                <ToggleSwitch/>
+              </div>
+              <div className={style.itemTeacher} style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '25%',
+                width: '20%',
                 gap: '0 1rem',
               }}>
-                <ButtonSubmit text='Добавить ученика' onClick={() => {addPupilFunc(person.id)}}/>
-                <ButtonSubmit text='Удалить ученика' type='delete' onClick={() => {deletePupilFunc(person.id)}}/>
+                <ButtonSubmit text='Добавить учителя' onClick={() => {
+                  addTeacherFunc(person.id)
+                }}/>
+                <ButtonSubmit text='Удалить учителя' type='delete' onClick={() => {
+                  deleteTeacherFunc(person.id)
+                }}/>
               </div>
             </div>
           ))}

@@ -9,6 +9,8 @@
 }
 
 .delete {
+    background-color: #ccc;
+
     &:hover {
         color: white;
         background-color: black;

@@ -79,3 +79,23 @@ export const deletePupil = async ({pupilId}) => {
 
   return new Error(`Ученик не был удален, произошла ошибка ${response.data.message}`);
 }
+
+export const addTeacher = async ({teacherId}) => {
+  const response = await axios.post(`/api/admin/add/teacher`, teacherId);
+
+  if (response.status === 200) {
+    return response.data;
+  }
+
+  return new Error(`Преподаватель не был добавлен, произошла ошибка ${response.data.message}`);
+}
+
+export const deleteTeacher = async ({teacherId}) => {
+  const response = await axios.post(`/api/admin/delete/teacher`, teacherId);
+
+  if (response.status === 200) {
+    return response.data;
+  }
+
+  return new Error(`Преподаватель не был удален, произошла ошибка ${response.data.message}`);
+}
