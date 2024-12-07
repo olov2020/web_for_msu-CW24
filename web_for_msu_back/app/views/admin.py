@@ -27,7 +27,7 @@ class AdminView(FlaskView):
 
     @method("POST")
     @auth_required
-    @roles_required('admin')
+    @roles_required('coursemaker', 'admin')
     def create_course(self):
         services = get_services()
         course_service: CourseService = services["course_service"]
@@ -36,7 +36,7 @@ class AdminView(FlaskView):
 
     @method("PUT")
     @auth_required
-    @roles_required('admin')
+    @roles_required('coursemaker', 'admin')
     def update_course(self, course_id: int):
         services = get_services()
         course_service: CourseService = services["course_service"]

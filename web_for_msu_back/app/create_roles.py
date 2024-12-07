@@ -10,6 +10,8 @@ def create_roles():
         Role(id=2, name='teacher'),
         Role(id=3, name='pupil'),
         Role(id=4, name='newsmaker'),
+        Role(id=5, name='coursemaker'),
+        Role(id=6, name='marksmaker'),
     ]
     for role in roles:
         db.session.add(role)
