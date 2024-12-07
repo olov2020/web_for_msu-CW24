@@ -51,3 +51,21 @@ class AdminView(FlaskView):
         pupil_service: PupilService = services["pupil_service"]
         response, code = pupil_service.increase_grade()
         return response, code
+
+    @method("POST")
+    @auth_required
+    @roles_required('admin')
+    def open_courses_registration(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.open_courses_registration()
+        return response, code
+
+    @method("POST")
+    @auth_required
+    @roles_required('admin')
+    def close_courses_registration(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.close_courses_registration()
+        return response, code

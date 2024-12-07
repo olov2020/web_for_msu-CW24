@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 import flask
 import pandas as pd
+import pytz
 from marshmallow import ValidationError
 
 from web_for_msu_back.app.dto.course import CourseDTO
@@ -13,7 +14,8 @@ from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
-from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
+    CourseRegistrationPeriod
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -478,3 +480,26 @@ class CourseService:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_teacher(assoc.course))
         return grouped_courses, 200
+
+    def open_courses_registration(self) -> (dict, int):
+        opened = CourseRegistrationPeriod.query.filter_by(is_open=True).all()
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        new_reg = CourseRegistrationPeriod(is_open=True,
+                                           opened_at=today_date)
+        self.db.session.add(new_reg)
+        self.db.session.commit()
+        return {"msg": "Регистрация на курсы открыта"}, 200
+
+    def close_courses_registration(self) -> (dict, int):
+        opened = CourseRegistrationPeriod.query.filter_by(is_open=True).all()
+        if not opened:
+            return {"error": "Регистрация на курс не была открыта"}, 404
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        self.db.session.commit()
+        return {"msg": "Регистрация на курсы закрыта"}, 200
