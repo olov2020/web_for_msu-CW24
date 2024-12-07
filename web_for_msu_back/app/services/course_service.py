@@ -132,9 +132,11 @@ class CourseService:
                     # Замена переносов строк на конец предложений.
                     sentences = str(data[i][j]).split('\n')
                     for k in range(1, len(sentences)):
-                        sentences[k] = sentences[k].capitalize()
+                        for m in range(len(sentences[k])):
+                            if sentences[k][m].isalpha():
+                                sentences[k] = sentences[k][:m] + sentences[k][m].capitalize() + sentences[k][m + 1:]
+                                break
                     data[i][j] = '. '.join(sentences)
-
 
         auditory = None
         course_review_number = data[23][3]
@@ -340,7 +342,8 @@ class CourseService:
                                                            coefficient=data["formulas"][i]["coefficient"]))
 
                 case "schedules":
-                    schedules = Schedule.query.where(Schedule.course_id == course_id).order_by(Schedule.lesson_number).all()
+                    schedules = Schedule.query.where(Schedule.course_id == course_id).order_by(
+                        Schedule.lesson_number).all()
                     for i in range(min(len(schedules), len(data["schedules"]))):
                         schedules[i].lesson_number = data["schedules"][i]["lesson_number"]
                         schedules[i].date = data["schedules"][i]["date"]
