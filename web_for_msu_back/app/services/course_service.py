@@ -128,6 +128,14 @@ class CourseService:
             for j in range(len(data[i])):
                 if str(data[i][j]) == 'nan':
                     data[i][j] = None
+                else:
+                    # Замена переносов строк на конец предложений.
+                    sentences = str(data[i][j]).split('\n')
+                    for k in range(1, len(sentences)):
+                        sentences[k] = sentences[k].capitalize()
+                    data[i][j] = '. '.join(sentences)
+
+
         auditory = None
         course_review_number = data[23][3]
         direction = data[24][3]
@@ -184,7 +192,7 @@ class CourseService:
             additional_info = data[i][4]
             schedule_data = {
                 "lesson_number": lesson_number,
-                "date": date.date().isoformat(),
+                "date": str(date).split()[0],
                 "theme": theme,
                 "plan": plan,
                 "additional_info": additional_info
