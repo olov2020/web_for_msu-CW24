@@ -15,7 +15,7 @@ from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
 from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
-    CourseRegistrationPeriod
+    CourseRegistrationPeriod, RegistrationPeriod
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -503,3 +503,26 @@ class CourseService:
             reg.closed_at = today_date
         self.db.session.commit()
         return {"msg": "Регистрация на курсы закрыта"}, 200
+
+    def open_registration(self) -> (dict, int):
+        opened = RegistrationPeriod.query.filter_by(is_open=True).all()
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        new_reg = RegistrationPeriod(is_open=True,
+                                     opened_at=today_date)
+        self.db.session.add(new_reg)
+        self.db.session.commit()
+        return {"msg": "Регистрация открыта"}, 200
+
+    def close_registration(self) -> (dict, int):
+        opened = RegistrationPeriod.query.filter_by(is_open=True).all()
+        if not opened:
+            return {"error": "Регистрация не была открыта"}, 404
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        self.db.session.commit()
+        return {"msg": "Регистрация закрыта"}, 200
