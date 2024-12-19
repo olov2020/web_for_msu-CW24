@@ -2,9 +2,12 @@
 
 const Marks = () => {
   return (
-    <div>
-
-    </div>
+    <article>
+      <h1>Список всех ведомостей</h1>
+      {
+        // TODO
+      }
+    </article>
   );
 };
 

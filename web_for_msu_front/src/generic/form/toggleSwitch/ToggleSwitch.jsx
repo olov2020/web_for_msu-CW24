@@ -2,19 +2,19 @@ import { useState } from "react";
 import style from './toggleSwitch.module.css';
 
 // eslint-disable-next-line react/prop-types
-const ToggleSwitch = ({ addAdmin, deleteAdmin }) => {
+const ToggleSwitch = ({ funcOn, funcOff }) => {
   const [isToggled, setIsToggled] = useState(false);
 
   const onToggle = async () => {
     try {
       if (!isToggled) {
-        const response = await addAdmin();
+        const response = await funcOn();
         alert(response);
         if (response) {
           setIsToggled(true);
         }
       } else {
-        const response = await deleteAdmin();
+        const response = await funcOff();
         alert(response);
         if (response) {
           setIsToggled(false);

@@ -3,7 +3,7 @@ import MenuItem from "./menuItem/MenuItem.jsx";
 import {
   ABOUT_ROUTE,
   ADD_NEW_COURSE_ROUTE,
-  ALL_COURSES_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE,
+  ALL_COURSES_ROUTE, COURSES_SELECT_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ROUTE, NOT_FOUND_ROUTE,
   SCHEDULE_ROUTE
@@ -77,6 +77,9 @@ const Menu = () => {
     })
     menu[1].dropdown.push({
       title: 'Мои Курсы', link: MY_COURSES_ROUTE, id: menu[1].length,
+    })
+    menu[1].dropdown.push({
+      title: userStatus.includes('pupil') ? 'Выбор курсов' : 'Списки заявок на курсы', link: COURSES_SELECT_ROUTE, id: menu[1].length,
     })
   }
 

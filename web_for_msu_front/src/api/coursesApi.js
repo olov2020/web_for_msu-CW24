@@ -8,7 +8,26 @@ export const getAllCourses = async () => {
     return response.data;
   } catch (error) {
     console.log(error);
+    return new Error(error);
   }
+}
+
+export const getCoursesSelect = async () => {
+  const response = await axios.get(`/api/home/select_courses`)
+
+  try {
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return new Error(error);
+  }
+}
+
+export const getCoursesSelectStatus = async () => {
+  const response = await axios.get(`/api/home/select_courses/status`)
+
+  return response.status === 200;
 }
 
 export const getMyCourses = async () => {

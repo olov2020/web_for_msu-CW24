@@ -13,6 +13,7 @@ export const ALL_COURSES_ROUTE = '/courses/all'
 export const COURSES_ITEM_ROUTE = '/courses/:year/:title'
 export const ADD_NEW_COURSE_ROUTE = '/courses/add'
 export const MARKS_ROUTE = '/marks'
+export const COURSES_SELECT_ROUTE = '/courses/select/'
 
 export const NEWS_ROUTE = '/news'
 export const CREATE_NEWS_ROUTE = '/news/add'
@@ -21,6 +22,7 @@ export const NEWS_ITEM_ROUTE = '/news/:title/:date'
 export const ABOUT_ROUTE = '/about'
 
 export const ADMIN_ROUTE = '/admin'
-export const PEOPLE_LIST_ROUTE = '/admin/list/:people'
+export const ADMIN_LISTS_ROUTE = '/admin/list/:people'
+export const ADMIN_MARKS_ROUTE = '/admin/marks'
 
 export const NOT_FOUND_ROUTE = '/not-found'

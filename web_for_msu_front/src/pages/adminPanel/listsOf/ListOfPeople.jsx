@@ -293,12 +293,12 @@ const ListOfPeople = () => {
                 alignItems: 'center',
                 width: '20%',
               }}>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setNewsAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setCourseAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setMarksAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setNewsAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setCourseAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setMarksAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
                 display: 'flex',
@@ -306,16 +306,16 @@ const ListOfPeople = () => {
                 alignItems: 'center',
                 width: '30%',
               }}>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setKNRAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setVSHAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setLSHAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setTestsOfflineAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
-                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setTestsOnlineAdmin')}
-                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setKNRAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setVSHAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setLSHAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setTestsOfflineAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
+                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setTestsOnlineAdmin')}
+                              funcOff={() => deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
                 display: 'flex',

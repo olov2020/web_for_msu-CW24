@@ -1,6 +1,7 @@
 import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
 import {useNavigate} from "react-router-dom";
 import {closeRegistrationCourses, openRegistrationCourses, openRegistrationTests} from "../../api/adminApi.js";
+import {ADMIN_MARKS_ROUTE} from "../../routing/consts.js";
 
 const AdminPanel = () => {
 
@@ -58,7 +59,7 @@ const AdminPanel = () => {
 
       <h1 style={{
         marginTop: '5rem',
-      }}>Списки людей</h1>
+      }}>Списки</h1>
 
       <section style={{
         display: 'flex',
@@ -69,6 +70,7 @@ const AdminPanel = () => {
         <ButtonSubmit text='Список всех абитуриентов' onClick={() => navigate('/admin/list/applicants')}/>
         <ButtonSubmit text='Список всех учеников' onClick={() => navigate('/admin/list/pupils')}/>
         <ButtonSubmit text='Список всех преподавателей' onClick={() => navigate('/admin/list/teachers')}/>
+        <ButtonSubmit text='Список всех ведомостей' onClick={() => navigate(ADMIN_MARKS_ROUTE)}/>
       </section>
     </article>
   );

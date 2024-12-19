@@ -3,17 +3,17 @@ import {
   ACCOUNT_ROUTE,
   ADD_NEW_COURSE_ROUTE, ADMIN_ROUTE,
   ALL_COURSES_ROUTE,
-  COURSES_ITEM_ROUTE,
+  COURSES_ITEM_ROUTE, COURSES_SELECT_ROUTE,
   CREATE_NEWS_ROUTE,
   HOME_ROUTE,
   LOGIN_ROUTE, MARKS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ITEM_ROUTE,
   NEWS_ROUTE,
-  NOT_FOUND_ROUTE, PEOPLE_LIST_ROUTE,
+  NOT_FOUND_ROUTE, ADMIN_LISTS_ROUTE,
   REGISTRATION_PUPIL_ROUTE,
   REGISTRATION_TEACHER_ROUTE,
-  SCHEDULE_ROUTE
+  SCHEDULE_ROUTE, ADMIN_MARKS_ROUTE,
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -32,6 +32,7 @@ import About from "../pages/about/About.jsx";
 import AdminPanel from "../pages/adminPanel/AdminPanel.jsx";
 import Marks from "../pages/adminPanel/marks/Marks.jsx";
 import ListOfPeople from "../pages/adminPanel/listsOf/ListOfPeople.jsx";
+import CoursesSelect from "../pages/courses/coursesSelect/CoursesSelect.jsx";
 
 export const publicRoutes = [
   {
@@ -89,6 +90,10 @@ export const authRoutes = [
     path: SCHEDULE_ROUTE,
     Element: <Schedule/>,
   },
+  {
+    path: COURSES_SELECT_ROUTE,
+    Element: <CoursesSelect/>,
+  },
 ]
 
 export const newsmakerRoutes = [
@@ -118,7 +123,11 @@ export const adminRoutes = [
     Element: <AdminPanel/>,
   },
   {
-    path: PEOPLE_LIST_ROUTE,
+    path: ADMIN_LISTS_ROUTE,
     Element: <ListOfPeople/>,
+  },
+  {
+    path: ADMIN_MARKS_ROUTE,
+    Element: <Marks/>,
   },
 ]
