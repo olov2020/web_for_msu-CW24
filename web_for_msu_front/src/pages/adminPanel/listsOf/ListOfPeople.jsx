@@ -21,6 +21,7 @@ import {
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
 import style from './listOfPeople.module.css';
 import ToggleSwitch from "../../../generic/form/toggleSwitch/ToggleSwitch.jsx";
+import checkMarkIcon from "../../../../public/generic/checkMarkIcon.svg";
 
 const ListOfPeople = () => {
 
@@ -192,7 +193,7 @@ const ListOfPeople = () => {
             <h2 className={style.item}>ФИО</h2>
             <h2 className={style.item}>Класс</h2>
             <h2 className={style.item}>Статус</h2>
-            <h2 className={style.item}>Действие</h2>
+            <h2 className={style.item}>Статус ученика</h2>
           </div>
 
           {people.map((person) => (
@@ -207,12 +208,23 @@ const ListOfPeople = () => {
                 width: '25%',
                 gap: '0 1rem',
               }}>
-                <ButtonSubmit text='Добавить ученика' onClick={() => {
-                  addPupilFunc(person.id)
-                }}/>
-                <ButtonSubmit text='Удалить ученика' type='delete' onClick={() => {
-                  deletePupilFunc(person.id)
-                }}/>
+                {person.authorized ?
+                  <>
+                    <ButtonSubmit text='Добавить ученика' onClick={() => {
+                      addPupilFunc(person.id)
+                    }}/>
+                    <ButtonSubmit text='Удалить ученика' type='delete' onClick={() => {
+                      deletePupilFunc(person.id)
+                    }}/>
+                  </> :
+                  <>
+                    <h3>Ученик добавлен</h3>
+                    <img src={checkMarkIcon} alt='Ученик добавлен' style={{
+                      width: '2rem',
+                      objectFit: 'contain',
+                    }}/>
+                  </>
+                }
               </div>
             </div>
           ))}
@@ -264,7 +276,7 @@ const ListOfPeople = () => {
             </div>
             <h2 className={style.itemTeacher} style={{
               width: '20%',
-            }}>Действие</h2>
+            }}>Статус преподавателя</h2>
           </div>
 
           {people.map((person) => (
@@ -312,9 +324,18 @@ const ListOfPeople = () => {
                 width: '20%',
                 gap: '0 1rem',
               }}>
-                <ButtonSubmit text='Добавить учителя' onClick={() => {
-                  addTeacherFunc(person.id)
-                }}/>
+                {person.authorized ?
+                  <ButtonSubmit text='Добавить учителя' onClick={() => {
+                    addTeacherFunc(person.id)
+                  }}/> :
+                  <>
+                    <h3>Преподаватель добавлен</h3>
+                    <img src={checkMarkIcon} alt='Преподаватель добавлен' style={{
+                      width: '2rem',
+                      objectFit: 'contain',
+                    }}/>
+                  </>
+                }
               </div>
             </div>
           ))}
