@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {
-  getPupilMarksByCourseId,
   getTeacherMarksByCourseId,
   updateTeacherMarksByCourseId
 } from "../../../api/coursesApi.js";
@@ -163,8 +162,13 @@ const TeacherMarks = ({courseId}) => {
 
   useEffect(() => {
     const getMarks = async () => {
-      const data = await getTeacherMarksByCourseId({courseId});
-      setMarks(data.pupils.marks);
+      try {
+        const data = await getTeacherMarksByCourseId({courseId});
+        setMarks(data.pupils.marks);
+        // eslint-disable-next-line no-unused-vars
+      } catch (error) {
+        setMarks(null);
+      }
     }
 
     getMarks();
@@ -181,6 +185,10 @@ const TeacherMarks = ({courseId}) => {
     marks.mark_types[index] = e.target.value;
     const data = await updateTeacherMarksByCourseId(courseId, marks);
     setMarks(data);
+  }
+
+  if (!marks) {
+    return <></>;
   }
 
   return (
@@ -201,9 +209,10 @@ const TeacherMarks = ({courseId}) => {
           <span></span>
           {marks.mark_types.map((markType, index) => (
             <td key={index}>
-              <InputDropdown value={markType} setValue={(e) => setMarkTypes(e, index)} values={marks.mark_type_choices} style={{
-                textAlign: 'center',
-              }}/>
+              <InputDropdown value={markType} setValue={(e) => setMarkTypes(e, index)} values={marks.mark_type_choices}
+                             style={{
+                               textAlign: 'center',
+                             }}/>
             </td>
           ))}
         </tr>
@@ -212,10 +221,14 @@ const TeacherMarks = ({courseId}) => {
         <tbody>
         {marks.pupils.map((pupil, pupilIndex) => (
           <tr key={pupil.id}>
-            <th scope="row"><span>{pupil.name}</span></th>
+            <th scope="row"><span style={{
+              fontSize: '1.2rem',
+              color: 'black',
+            }}>{pupil.name}</span></th>
             {pupil.marks.map((mark, index) => (
               <td key={index}>
-                <Input value={mark} type='text' name={`markAt${pupil.id}${index}`} onChange={(e) => setPupilMark(e, pupilIndex)} style={{
+                <Input value={mark} type='text' name={`markAt${pupil.id}${index}`}
+                       onChange={(e) => setPupilMark(e, pupilIndex)} style={{
                   textAlign: 'center',
                 }}/>
               </td>

@@ -112,14 +112,23 @@ const PupilMarks = ({courseId}) => {
     skips: 2
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     const getMarks = async () => {
-      const data = await getPupilMarksByCourseId({courseId});
-      setMarks(data.marks);
+      try {
+        const data = await getPupilMarksByCourseId({courseId});
+        setMarks(data.marks);
+        // eslint-disable-next-line no-unused-vars
+      } catch (error) {
+        setMarks(null);
+      }
     }
 
     getMarks();
-  }, [])*/
+  }, [])
+
+  if (!marks) {
+    return <></>;
+  }
 
   return (
     <div style={{
