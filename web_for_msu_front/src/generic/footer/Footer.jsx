@@ -29,7 +29,7 @@ const Footer = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0 .2rem',
-          }}><a href='https://t.me/emsch_msu'>ЭМШ ВКонтакте</a></p>
+          }}><a href='https://vk.com/emsch'>ЭМШ ВКонтакте</a></p>
           <p style={{
             display: 'flex',
             alignItems: 'center',

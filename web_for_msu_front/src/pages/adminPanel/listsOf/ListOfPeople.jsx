@@ -1,11 +1,22 @@
 import {useEffect, useState} from "react";
 import {
-  addPupil, addTeacher,
-  deletePupil,
-  deleteTeacher,
+  addPupil,
+  addTeacher,
+  deleteApplicants,
+  deleteCourseAdmin, deleteKNRAdmin, deleteLSHAdmin,
+  deleteMarksAdmin,
+  deleteNewsAdmin,
+  deletePupil, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
   getAllApplicants,
   getAllPupils,
-  getAllTeachers
+  getAllTeachers,
+  setCourseAdmin,
+  setKNRAdmin,
+  setLSHAdmin,
+  setMarksAdmin,
+  setNewsAdmin,
+  setTestsOfflineAdmin, setTestsOnlineAdmin,
+  setVSHAdmin
 } from "../../../api/adminApi.js";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
 import style from './listOfPeople.module.css';
@@ -23,14 +34,16 @@ const ListOfPeople = () => {
       class: 8,
       status: 'Ученик',
       date: '2024-11-10',
+      authorized: false,
     },
     {
       id: 0,
-      name: 'Иванов Иван Иванович',
+      name: 'Иванов Станислав Иванович',
       email: 'ivanivan@mail.ru',
       class: 11,
       status: 'Выпускник',
       date: '2024-11-10',
+      authorized: true,
     },
     {
       id: 0,
@@ -39,6 +52,7 @@ const ListOfPeople = () => {
       class: 8,
       status: 'Бывший ученик',
       date: '2024-11-10',
+      authorized: true,
     },
   ]);
 
@@ -84,12 +98,58 @@ const ListOfPeople = () => {
     }
   }
 
-  const deleteTeacherFunc = async (teacherId) => {
-    const data = await deleteTeacher({teacherId});
+  const clearApplicants = async () => {
+    const data = await deleteApplicants();
     if (data) {
-      alert('Преподаватель успешно исключен!');
+      alert('Список абитуриентов успешно очищен!');
     } else {
-      alert('Упс, что-то пошло не так... Преподаватель не был исключен');
+      alert('Упс, что-то пошло не так... Не удалось очистить список');
+    }
+  }
+
+  const addAdminRole = async (userId, funcName) => {
+    switch (funcName) {
+      case 'setNewsAdmin':
+        return await setNewsAdmin(userId);
+      case 'setCourseAdmin':
+        return await setCourseAdmin(userId);
+      case 'setMarksAdmin':
+        return await setMarksAdmin(userId);
+      case 'setKNRAdmin':
+        return await setKNRAdmin(userId);
+      case 'setVSHAdmin':
+        return await setVSHAdmin(userId);
+      case 'setLSHAdmin':
+        return await setLSHAdmin(userId);
+      case 'setTestsOfflineAdmin':
+        return await setTestsOfflineAdmin(userId);
+      case 'setTestsOnlineAdmin':
+        return await setTestsOnlineAdmin(userId);
+      default:
+        return Promise.reject(new Error('Invalid function name'));
+    }
+  }
+
+  const deleteAdminRole = async (userId, funcName) => {
+    switch (funcName) {
+      case 'deleteNewsAdmin':
+        return await deleteNewsAdmin(userId);
+      case 'deleteCourseAdmin':
+        return await deleteCourseAdmin(userId);
+      case 'deleteMarksAdmin':
+        return await deleteMarksAdmin(userId);
+      case 'deleteKNRAdmin':
+        return await deleteKNRAdmin(userId);
+      case 'deleteVSHAdmin':
+        return await deleteVSHAdmin(userId);
+      case 'deleteLSHAdmin':
+        return await deleteLSHAdmin(userId);
+      case 'deleteTestsOfflineAdmin':
+        return await deleteTestsOfflineAdmin(userId);
+      case 'deleteTestsOnlineAdmin':
+        return await deleteTestsOnlineAdmin(userId);
+      default:
+        return Promise.reject(new Error('Invalid function name'));
     }
   }
 
@@ -121,6 +181,8 @@ const ListOfPeople = () => {
               <p className={style.item}>{person.date}</p>
             </div>
           ))}
+
+          <ButtonSubmit text='Очистить список абитуриентов' onClick={clearApplicants}/>
         </section>
       )}
 
@@ -145,8 +207,12 @@ const ListOfPeople = () => {
                 width: '25%',
                 gap: '0 1rem',
               }}>
-                <ButtonSubmit text='Добавить ученика' onClick={() => {addPupilFunc(person.id)}}/>
-                <ButtonSubmit text='Удалить ученика' type='delete' onClick={() => {deletePupilFunc(person.id)}}/>
+                <ButtonSubmit text='Добавить ученика' onClick={() => {
+                  addPupilFunc(person.id)
+                }}/>
+                <ButtonSubmit text='Удалить ученика' type='delete' onClick={() => {
+                  deletePupilFunc(person.id)
+                }}/>
               </div>
             </div>
           ))}
@@ -172,7 +238,6 @@ const ListOfPeople = () => {
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 width: '100%',
-                gap: '0 1rem',
               }}>
                 <p>Добавление новостей</p>
                 <p>Добавление курсов</p>
@@ -189,7 +254,6 @@ const ListOfPeople = () => {
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 width: '100%',
-                gap: '0 1rem',
               }}>
                 <p className={style.itemTeacher}>Конкурс научных работ</p>
                 <p className={style.itemTeacher}>Выездная школа</p>
@@ -216,24 +280,30 @@ const ListOfPeople = () => {
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 width: '20%',
-                gap: '0 1rem',
               }}>
-                <ToggleSwitch/>
-                <ToggleSwitch/>
-                <ToggleSwitch/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setNewsAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setCourseAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setMarksAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
                 display: 'flex',
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 width: '30%',
-                gap: '0 1rem',
               }}>
-                <ToggleSwitch/>
-                <ToggleSwitch/>
-                <ToggleSwitch/>
-                <ToggleSwitch/>
-                <ToggleSwitch/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setKNRAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setVSHAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setLSHAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setTestsOfflineAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
+                <ToggleSwitch addAdmin={() => addAdminRole(person.id, 'setTestsOnlineAdmin')}
+                              deleteAdmin={() => deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
                 display: 'flex',
@@ -244,9 +314,6 @@ const ListOfPeople = () => {
               }}>
                 <ButtonSubmit text='Добавить учителя' onClick={() => {
                   addTeacherFunc(person.id)
-                }}/>
-                <ButtonSubmit text='Удалить учителя' type='delete' onClick={() => {
-                  deleteTeacherFunc(person.id)
                 }}/>
               </div>
             </div>

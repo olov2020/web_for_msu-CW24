@@ -3,6 +3,7 @@ const authStatus = {
     applicant: 'applicant',
     pupil: 'pupil',
     teacher: 'teacher',
+    retired: 'retired',
     newsmaker: 'newsmaker',
     coursemaker: 'coursemaker',
     marksmaker: 'marksmaker',

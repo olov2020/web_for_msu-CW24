@@ -4,7 +4,7 @@ import {
   ADD_NEW_COURSE_ROUTE, ADMIN_ROUTE,
   ALL_COURSES_ROUTE,
   COURSES_ITEM_ROUTE,
-  CREATE_NEWS_ROUTE, HANDLE_ROLES_ROUTE,
+  CREATE_NEWS_ROUTE,
   HOME_ROUTE,
   LOGIN_ROUTE, MARKS_ROUTE,
   MY_COURSES_ROUTE,
@@ -29,7 +29,6 @@ import NewsCreate from "../pages/news/newsCreate/NewsCreate.jsx";
 import NewsItem from "../pages/news/newsItem/NewsItem.jsx";
 import CourseItem from "../pages/courses/courseItem/CourseItem.jsx";
 import About from "../pages/about/About.jsx";
-import HandleRoles from "../pages/adminPanel/handleRoles/HandleRoles.jsx";
 import AdminPanel from "../pages/adminPanel/AdminPanel.jsx";
 import Marks from "../pages/adminPanel/marks/Marks.jsx";
 import ListOfPeople from "../pages/adminPanel/listsOf/ListOfPeople.jsx";
@@ -117,10 +116,6 @@ export const adminRoutes = [
   {
     path: ADMIN_ROUTE,
     Element: <AdminPanel/>,
-  },
-  {
-    path: HANDLE_ROLES_ROUTE,
-    Element: <HandleRoles/>,
   },
   {
     path: PEOPLE_LIST_ROUTE,

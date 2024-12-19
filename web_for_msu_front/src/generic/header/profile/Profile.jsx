@@ -3,8 +3,7 @@ import styleHeader from "../header.module.css";
 import {getUserInfoByUserId} from "../../../api/userApi.js";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {ACCOUNT_ROUTE, ADMIN_ROUTE, HANDLE_ROLES_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
-import MenuItem from "../menu/menuItem/MenuItem.jsx";
+import {ACCOUNT_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
 
 const Profile = () => {
 

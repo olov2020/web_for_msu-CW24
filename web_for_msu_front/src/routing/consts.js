@@ -21,7 +21,6 @@ export const NEWS_ITEM_ROUTE = '/news/:title/:date'
 export const ABOUT_ROUTE = '/about'
 
 export const ADMIN_ROUTE = '/admin'
-export const HANDLE_ROLES_ROUTE = '/admin/roles'
 export const PEOPLE_LIST_ROUTE = '/admin/list/:people'
 
 export const NOT_FOUND_ROUTE = '/not-found'

@@ -90,12 +90,109 @@ export const addTeacher = async ({teacherId}) => {
   return new Error(`Преподаватель не был добавлен, произошла ошибка ${response.data.message}`);
 }
 
-export const deleteTeacher = async ({teacherId}) => {
-  const response = await axios.post(`/api/admin/delete/teacher`, teacherId);
+export const deleteApplicants = async () => {
+  const response = await axios.delete(`/api/admin/delete/applicants`);
 
   if (response.status === 200) {
     return response.data;
   }
 
   return new Error(`Преподаватель не был удален, произошла ошибка ${response.data.message}`);
+}
+
+export const setNewsAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/news/${userId}`);
+
+  return response.status === 200;
+}
+
+export const setCourseAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/course/${userId}`);
+
+  return response.status === 200;
+}
+
+export const setMarksAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/marks/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteNewsAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/news/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteCourseAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/course/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteMarksAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/marks/${userId}`);
+
+  return response.status === 200;
+}
+
+
+export const setKNRAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/knr/${userId}`);
+
+  return response.status === 200;
+}
+
+export const setVSHAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/vsh/${userId}`);
+
+  return response.status === 200;
+}
+
+export const setLSHAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/lsh/${userId}`);
+
+  return response.status === 200;
+}
+
+export const setTestsOfflineAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/tests_offline/${userId}`);
+
+  return response.status === 200;
+}
+
+export const setTestsOnlineAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/add/tests_online/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteKNRAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/knr/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteVSHAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/vsh/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteLSHAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/lsh/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteTestsOfflineAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/tests_offline/${userId}`);
+
+  return response.status === 200;
+}
+
+export const deleteTestsOnlineAdmin = async (userId) => {
+  const response = await axios.post(`/api/admin/role/delete/tests_online/${userId}`);
+
+  return response.status === 200;
 }
