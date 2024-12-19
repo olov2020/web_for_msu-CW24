@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 import flask
 import pandas as pd
+import pytz
 from marshmallow import ValidationError
 
 from web_for_msu_back.app.dto.course import CourseDTO
@@ -13,7 +14,8 @@ from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
-from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula
+from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
+    CourseRegistrationPeriod, RegistrationPeriod
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -128,6 +130,16 @@ class CourseService:
             for j in range(len(data[i])):
                 if str(data[i][j]) == 'nan':
                     data[i][j] = None
+                else:
+                    # Замена переносов строк на конец предложений.
+                    sentences = str(data[i][j]).split('\n')
+                    for k in range(1, len(sentences)):
+                        for m in range(len(sentences[k])):
+                            if sentences[k][m].isalpha():
+                                sentences[k] = sentences[k][:m] + sentences[k][m].capitalize() + sentences[k][m + 1:]
+                                break
+                    data[i][j] = '. '.join(sentences)
+
         auditory = None
         course_review_number = data[23][3]
         direction = data[24][3]
@@ -184,7 +196,7 @@ class CourseService:
             additional_info = data[i][4]
             schedule_data = {
                 "lesson_number": lesson_number,
-                "date": date.date().isoformat(),
+                "date": str(date).split()[0],
                 "theme": theme,
                 "plan": plan,
                 "additional_info": additional_info
@@ -332,7 +344,8 @@ class CourseService:
                                                            coefficient=data["formulas"][i]["coefficient"]))
 
                 case "schedules":
-                    schedules = Schedule.query.where(Schedule.course_id == course_id).order_by(Schedule.lesson_number).all()
+                    schedules = Schedule.query.where(Schedule.course_id == course_id).order_by(
+                        Schedule.lesson_number).all()
                     for i in range(min(len(schedules), len(data["schedules"]))):
                         schedules[i].lesson_number = data["schedules"][i]["lesson_number"]
                         schedules[i].date = data["schedules"][i]["date"]
@@ -467,3 +480,49 @@ class CourseService:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_teacher(assoc.course))
         return grouped_courses, 200
+
+    def open_courses_registration(self) -> (dict, int):
+        opened = CourseRegistrationPeriod.query.filter_by(is_open=True).all()
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        new_reg = CourseRegistrationPeriod(is_open=True,
+                                           opened_at=today_date)
+        self.db.session.add(new_reg)
+        self.db.session.commit()
+        return {"msg": "Регистрация на курсы открыта"}, 200
+
+    def close_courses_registration(self) -> (dict, int):
+        opened = CourseRegistrationPeriod.query.filter_by(is_open=True).all()
+        if not opened:
+            return {"error": "Регистрация на курс не была открыта"}, 404
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        self.db.session.commit()
+        return {"msg": "Регистрация на курсы закрыта"}, 200
+
+    def open_registration(self) -> (dict, int):
+        opened = RegistrationPeriod.query.filter_by(is_open=True).all()
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        new_reg = RegistrationPeriod(is_open=True,
+                                     opened_at=today_date)
+        self.db.session.add(new_reg)
+        self.db.session.commit()
+        return {"msg": "Регистрация открыта"}, 200
+
+    def close_registration(self) -> (dict, int):
+        opened = RegistrationPeriod.query.filter_by(is_open=True).all()
+        if not opened:
+            return {"error": "Регистрация не была открыта"}, 404
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        self.db.session.commit()
+        return {"msg": "Регистрация закрыта"}, 200

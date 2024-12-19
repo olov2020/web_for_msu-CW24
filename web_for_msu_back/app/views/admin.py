@@ -27,7 +27,7 @@ class AdminView(FlaskView):
 
     @method("POST")
     @auth_required
-    @roles_required('admin')
+    @roles_required('coursemaker', 'admin')
     def create_course(self):
         services = get_services()
         course_service: CourseService = services["course_service"]
@@ -36,7 +36,7 @@ class AdminView(FlaskView):
 
     @method("PUT")
     @auth_required
-    @roles_required('admin')
+    @roles_required('coursemaker', 'admin')
     def update_course(self, course_id: int):
         services = get_services()
         course_service: CourseService = services["course_service"]
@@ -50,4 +50,41 @@ class AdminView(FlaskView):
         services = get_services()
         pupil_service: PupilService = services["pupil_service"]
         response, code = pupil_service.increase_grade()
+        return response, code
+
+    @method("POST")
+    @auth_required
+    @roles_required('admin')
+    def open_courses_registration(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.open_courses_registration()
+        return response, code
+
+    @method("POST")
+    @auth_required
+    @roles_required('admin')
+    def close_courses_registration(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.close_courses_registration()
+        return response, code
+
+    @method("POST")
+    @auth_required
+    @roles_required('admin')
+    def open_registration(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.open_registration()
+        return response, code
+
+    @method("POST")
+    @auth_required
+    @roles_required('admin')
+    # TODO replace with scheduled call
+    def close_registration(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.close_registration()
         return response, code
