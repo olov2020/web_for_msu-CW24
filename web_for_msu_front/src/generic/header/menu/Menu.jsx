@@ -3,7 +3,7 @@ import MenuItem from "./menuItem/MenuItem.jsx";
 import {
   ABOUT_ROUTE,
   ADD_NEW_COURSE_ROUTE,
-  ALL_COURSES_ROUTE, COURSES_SELECT_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE,
+  ALL_COURSES_ROUTE, COURSES_SELECT_ROUTE, CREATE_NEWS_ROUTE, EVENTS_TESTS_ROUTE, MARKS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ROUTE, NOT_FOUND_ROUTE,
   SCHEDULE_ROUTE
@@ -35,7 +35,7 @@ const Menu = () => {
       title: 'События', id: 2,
       dropdown: [
         {
-          title: 'Вступительные испытания', link: NOT_FOUND_ROUTE, id: 0,
+          title: 'Вступительные испытания', link: EVENTS_TESTS_ROUTE, id: 0,
         },
         {
           title: 'Открытый Чемпионат', link: NOT_FOUND_ROUTE, id: 1,

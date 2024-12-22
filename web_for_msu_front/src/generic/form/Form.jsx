@@ -23,6 +23,8 @@ import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd, courseChange} from "../../api/coursesApi.js";
+import {testsRegistration} from "../../api/eventsApi.js";
+import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type}) => {
@@ -35,7 +37,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       teacherRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
       courseAdd: ['courseFile'],
       courseChange: ['courseFile'],
-      newsAdd: ['newsTitle', 'newsDescription']
+      newsAdd: ['newsTitle', 'newsDescription'],
+      testsRegistration: ['name', 'surname', 'email', 'phone', 'classOver', 'format', 'city', 'agreementAb'],
     }
 
   /*useEffect(() => {
@@ -111,6 +114,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         } catch (error) {
           alert(error.message);
         }
+      } else {
+        alert('Заполните все обязательные поля.');
+      }
+    } else if (type === 'testsRegistration') {
+      if (checkFormErrors()) {
+        await testsRegistration(formValues);
+        alert('Форма успешно отправлена!');
       } else {
         alert('Заполните все обязательные поля.');
       }
@@ -449,6 +459,43 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                                      value={newsDescription}
                                      setValue={setNewsDescription}
         />
+      }
+
+      case 'classOver': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [classOver, setClassOver] = useState(undefined);
+        formValues.classOver = classOver;
+        return <InputClass name={input} placeholder='Введите номер класса, который вы заканчиваете в этом году'
+                                     fieldName='Номер класса*'
+                                     value={classOver}
+                                     setValue={setClassOver}
+        />
+      }
+      case 'city': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [city, setCity] = useState(undefined);
+        formValues.city = city;
+        return <InputText name={input} placeholder='Введите название города'
+                                     fieldName='Название города*'
+                                     value={city}
+                                     setValue={setCity}
+        />
+      }
+      case 'format': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [format, setFormat] = useState(undefined);
+        formValues.format = format;
+        return <InputDropdown name={input} placeholder='Выберете формат обучения в ЭМШ'
+                              fieldName='Формат обучения в ЭМШ*'
+                              values={['Очный', 'Онлайн (я не из Москвы)']}
+                              setValue={setFormat}/>
+      }
+      case 'agreementAb': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [agreementAb, setAgreementAb] = useState(undefined);
+        formValues.agreementAb = agreementAb;
+        return <InputCheckbox name={input} fieldName='Согласие на обработку персональных данных*' initialChecked={true}
+                                  setValue={setAgreementAb}/>
       }
 
       default:

@@ -13,7 +13,7 @@ import {
   NOT_FOUND_ROUTE, ADMIN_LISTS_ROUTE,
   REGISTRATION_PUPIL_ROUTE,
   REGISTRATION_TEACHER_ROUTE,
-  SCHEDULE_ROUTE, ADMIN_MARKS_ROUTE,
+  SCHEDULE_ROUTE, ADMIN_MARKS_ROUTE, EVENTS_TESTS_ROUTE,
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -33,6 +33,7 @@ import AdminPanel from "../pages/adminPanel/AdminPanel.jsx";
 import Marks from "../pages/adminPanel/marks/Marks.jsx";
 import ListOfPeople from "../pages/adminPanel/listsOf/ListOfPeople.jsx";
 import CoursesSelect from "../pages/courses/coursesSelect/CoursesSelect.jsx";
+import EventsTests from "../pages/events/tests/EventsTests.jsx";
 
 export const publicRoutes = [
   {
@@ -74,6 +75,10 @@ export const publicRoutes = [
   {
     path: ABOUT_ROUTE,
     Element: <About/>,
+  },
+  {
+    path: EVENTS_TESTS_ROUTE,
+    Element: <EventsTests/>,
   },
 ]
 

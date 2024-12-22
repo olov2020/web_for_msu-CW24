@@ -29,6 +29,10 @@ span {
     color: #9F1A59;
 }
 
+strong {
+    font-size: inherit;
+}
+
 h1 {
     font-size: 2rem;
     font-weight: 700;
@@ -54,10 +58,6 @@ a {
 }
 
 Link, a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     color: #9F1A59;
 }
 
@@ -66,6 +66,7 @@ thead > tr > th {
     padding: .5rem 1rem;
     border-radius: .5rem;
 }
+
 tbody > tr > td {
     padding: .5rem 1rem;
 }
