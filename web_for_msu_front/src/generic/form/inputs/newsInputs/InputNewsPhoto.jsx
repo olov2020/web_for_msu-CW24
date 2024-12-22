@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import defaultNewsImage from "../../../../../public/msu_logo.png";
 
 // eslint-disable-next-line react/prop-types
-const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
+const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue, formErrors}) => {
 
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
@@ -28,6 +28,7 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
 
       const {current} = uploadedImage;
       current.src = defaultNewsImage;
@@ -52,6 +53,7 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
     }
 
     setIsValid(true);
+    formErrors = null;
     setError('');
     return '';
   }

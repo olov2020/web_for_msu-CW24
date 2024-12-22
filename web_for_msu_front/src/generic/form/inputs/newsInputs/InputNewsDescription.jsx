@@ -1,8 +1,8 @@
 import {useState} from "react";
 import Textarea from "../Textarea.jsx";
 
-// eslint-disable-next-line react/prop-types
-const InputNewsDescription = ({name, placeholder, fieldName, value, setValue}) => {
+// eslint-disable-next-line react/prop-types,no-unused-vars
+const InputNewsDescription = ({name, placeholder, fieldName, value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -17,6 +17,7 @@ const InputNewsDescription = ({name, placeholder, fieldName, value, setValue}) =
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
       setError(error);
       setValue(undefined);
       console.log(error);
@@ -27,7 +28,9 @@ const InputNewsDescription = ({name, placeholder, fieldName, value, setValue}) =
     if (inputValue.length === 0) {
       return errors.empty;
     }
+
     setIsValid(true);
+    formErrors = null;
     setError('');
     return '';
   }

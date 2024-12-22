@@ -4,7 +4,7 @@ import {useState} from "react";
 import {FiEye} from "react-icons/fi";
 
 // eslint-disable-next-line react/prop-types
-const InputPassword = ({name, placeholder, fieldName, value, setValue}) => {
+const InputPassword = ({name, placeholder, fieldName, value, setValue, formErrors}) => {
   const [isValid, setIsValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -24,6 +24,7 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue}) => {
     const error = validateInput(e.target.value);
 
     if (error) {
+      formErrors = error;
       setIsValid(false);
       setError(error)
       console.log(error);
@@ -79,6 +80,7 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue}) => {
     // All checks passed!
     setIsValid(true);
     setError('')
+    formErrors = null;
     return '';
   }
 

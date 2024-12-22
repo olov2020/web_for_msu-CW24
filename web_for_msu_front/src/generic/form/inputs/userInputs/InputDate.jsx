@@ -2,7 +2,7 @@ import {useState} from "react";
 import Input from '../Input.jsx'
 
 // eslint-disable-next-line react/prop-types
-const InputDate = ({name = '', fieldName, value, setValue}) => {
+const InputDate = ({name = '', fieldName, value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -17,6 +17,7 @@ const InputDate = ({name = '', fieldName, value, setValue}) => {
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
       setError(error);
       console.log(error);
     }
@@ -26,7 +27,9 @@ const InputDate = ({name = '', fieldName, value, setValue}) => {
     if (inputValue.length === 0) {
       return errors.empty;
     }
+
     setIsValid(true);
+    formErrors = null;
     setError('');
     return '';
   }

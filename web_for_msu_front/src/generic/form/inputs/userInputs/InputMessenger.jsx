@@ -4,7 +4,7 @@ import Input from "../Input.jsx";
 
 
 // eslint-disable-next-line react/prop-types
-const InputMessenger = ({name = '', placeholder = '', fieldName, value, setValue}) => {
+const InputMessenger = ({name = '', placeholder = '', fieldName, value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -20,6 +20,7 @@ const InputMessenger = ({name = '', placeholder = '', fieldName, value, setValue
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
       setError(error);
       console.log(error);
     }
@@ -32,7 +33,9 @@ const InputMessenger = ({name = '', placeholder = '', fieldName, value, setValue
     if (inputValue[0] !== '@' && inputValue[0] !== '-') {
       return errors.errorInvalid;
     }
+
     setIsValid(true);
+    formErrors = null;
     setError('');
     return '';
   }

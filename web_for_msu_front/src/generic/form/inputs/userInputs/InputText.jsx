@@ -3,7 +3,7 @@ import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputText = ({name = '', placeholder='', fieldName, value, setValue}) => {
+const InputText = ({name = '', placeholder='', fieldName, value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
@@ -18,6 +18,7 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue}) => {
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
       setError(error);
       console.log(error);
     }
@@ -27,7 +28,9 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue}) => {
     if (inputValue.length === 0) {
       return errors.empty;
     }
+
     setIsValid(true);
+    formErrors = null;
     setError('');
     return '';
   }

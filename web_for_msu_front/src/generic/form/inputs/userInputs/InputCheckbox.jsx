@@ -2,7 +2,7 @@ import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputCheckbox = ({name, initialChecked = false, required = false, fieldName, setValue}) => {
+const InputCheckbox = ({name, initialChecked = false, required = false, fieldName, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [checked, setChecked] = useState(initialChecked);
@@ -19,6 +19,7 @@ const InputCheckbox = ({name, initialChecked = false, required = false, fieldNam
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
       setError(error);
       console.log(error);
     }
@@ -36,6 +37,7 @@ const InputCheckbox = ({name, initialChecked = false, required = false, fieldNam
     }
 
     setIsValid(true);
+    formErrors = null;
     setError('');
     return '';
   }

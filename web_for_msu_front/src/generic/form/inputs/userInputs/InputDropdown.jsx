@@ -2,12 +2,13 @@ import styleInput from "./input.module.css";
 import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
-const InputDropdown = ({name, placeholder, fieldName, values = [], value, setValue}) => {
+const InputDropdown = ({name, placeholder, fieldName, values = [], value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
+    notInList: 'Выберете вариант из выпадающего списка',
   }
 
   const handleInputChange = ((e) => {
@@ -17,6 +18,7 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
       setError(error);
       console.log(error);
     }
@@ -27,7 +29,12 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
       return errors.empty;
     }
 
+    if (name === 'agreementAb' && !values.includes(inputValue)) {
+      return errors.notInList;
+    }
+
     setIsValid(true);
+    formErrors = null;
     setError('');
     return '';
   }

@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import defaultUserImage from '../../../../../public/generic/default_user.svg'
 
 // eslint-disable-next-line react/prop-types
-const InputPhoto = ({name = '', fieldName, accept = '', required = false, setValue}) => {
+const InputPhoto = ({name = '', fieldName, accept = '', required = false, setValue, formErrors}) => {
 
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
@@ -28,7 +28,7 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
 
     if (error) {
       setIsValid(false);
-
+      formErrors = error;
       const {current} = uploadedImage;
       current.src = defaultUserImage;
       setValue(current.src);
@@ -53,6 +53,7 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
 
     setIsValid(true);
     setError('');
+    formErrors = null;
     return '';
   }
 

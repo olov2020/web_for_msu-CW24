@@ -3,7 +3,7 @@ import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputName = ({name = '', placeholder = '', fieldName, value, setValue}) => {
+const InputName = ({name = '', placeholder = '', fieldName, value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const nameValidationRegex = /^[a-zA-Zа-яА-ЯёЁ\-]+(?:\s+[a-zA-Zа-яА-ЯёЁ\-]+)*$/;
@@ -24,6 +24,8 @@ const InputName = ({name = '', placeholder = '', fieldName, value, setValue}) =>
 
     if (error) {
       setIsValid(false);
+      console.log(formErrors);
+      formErrors = error;
       setError(error);
       console.log(error);
     }
@@ -36,8 +38,10 @@ const InputName = ({name = '', placeholder = '', fieldName, value, setValue}) =>
     if (!nameValidationRegex.test(inputValue)) {
       return errors.errorInvalid;
     }
+
     setIsValid(true);
     setError('');
+    formErrors = null;
     return '';
   }
 

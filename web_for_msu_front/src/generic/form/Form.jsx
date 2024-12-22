@@ -29,7 +29,8 @@ import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
-  const formValues = useState({})
+  const formValues = useState({});
+  const formErrors = useState({});
   const requiredValues =
     {
       login: ['email', 'password'],
@@ -50,7 +51,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   const navigate = useNavigate();
 
   const checkFormErrors = () => {
-    return requiredValues[type].every(item => formValues[item] !== undefined && formValues[item] !== null);
+    console.log(formErrors)
+    return requiredValues[type].every(item => !formErrors[item]);
   }
 
   const onSubmit = async (e) => {
@@ -135,7 +137,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [email, setEmail] = useState(values[input]);
         formValues.email = email;
-        return <InputEmail name={input} value={email} setValue={setEmail}
+        formErrors.email = null;
+        return <InputEmail name={input} value={email} setValue={setEmail} formErrors={formErrors.email}
                            placeholder='Введите вашу почту' fieldName='Почта*'
         />
       }
@@ -143,8 +146,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [password, setPassword] = useState(values[input]);
         formValues.password = password;
+        formErrors.password = null;
         return <InputPassword name={input} placeholder='Введите ваш пароль'
-                              fieldName='Пароль*'
+                              fieldName='Пароль*' formErrors={formErrors.password}
                               value={password} setValue={setPassword}
         />
       }
@@ -152,8 +156,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newPassword, setNewPassword] = useState(values[input]);
         formValues.newPassword = newPassword;
+        formErrors.newPassword = null;
         return <InputPassword name={input} placeholder='Введите новый пароль'
-                              fieldName='Новый пароль'
+                              fieldName='Новый пароль' formErrors={formErrors.newPassword}
                               value={newPassword} setValue={setNewPassword}
         />
       }
@@ -161,7 +166,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [photo, setPhoto] = useState(values[input]);
         formValues.photo = photo;
-        return <InputPhoto setValue={setPhoto}
+        formErrors.photo = null;
+        return <InputPhoto setValue={setPhoto} formErrors={formErrors.photo}
                            name={input} accept='image/png, image/gif, image/jpeg, image/jpg'
                            fieldName='Выберете фото профиля'
         />
@@ -170,7 +176,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [name, setName] = useState(values[input]);
         formValues.name = name;
-        return <InputName name={input} placeholder='Введите свое имя'
+        formErrors.name = null;
+        return <InputName name={input} placeholder='Введите свое имя' formErrors={formErrors.name}
                           fieldName='Имя*'
                           value={name} setValue={setName}
         />
@@ -179,7 +186,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [surname, setSurname] = useState(values[input]);
         formValues.surname = surname;
-        return <InputName name={input} placeholder='Введите свою фамилию'
+        formErrors.surname = null;
+        return <InputName name={input} placeholder='Введите свою фамилию' formErrors={formErrors.surname}
                           fieldName='Фамилия*'
                           value={surname} setValue={setSurname}
         />
@@ -188,7 +196,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [lastname, setLastname] = useState(values[input]);
         formValues.lastname = lastname;
-        return <InputName name={input} placeholder='Введите свое отчество'
+        formErrors.lastname = null;
+        return <InputName name={input} placeholder='Введите свое отчество' formErrors={formErrors.lastname}
                           fieldName='Отчество'
                           value={lastname} setValue={setLastname}
         />
@@ -197,7 +206,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [birthDate, setBirthDate] = useState(values[input]);
         formValues.birthDate = birthDate;
-        return <InputDate name={input}
+        formErrors.birthDate = null;
+        return <InputDate name={input} formErrors={formErrors.birthDate}
                           fieldName='Дата рождения*'
                           value={birthDate} setValue={setBirthDate}
         />
@@ -206,7 +216,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [phone, setPhone] = useState(values[input]);
         formValues.phone = phone;
-        return <InputPhone name={input} placeholder='Введите свой номер телефона'
+        formErrors.phone = null;
+        return <InputPhone name={input} placeholder='Введите свой номер телефона' formErrors={formErrors.phone}
                            fieldName='Телефон*'
                            value={phone} setValue={setPhone}
         />
@@ -215,7 +226,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [school, setSchool] = useState(values[input]);
         formValues.school = school;
-        return <InputText name={input} placeholder='Введите название своей школы'
+        formErrors.school = null;
+        return <InputText name={input} placeholder='Введите название своей школы' formErrors={formErrors.school}
                           fieldName='Школа*'
                           value={school} setValue={setSchool}
         />
@@ -224,7 +236,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [schoolEndDate, setSchoolEndDate] = useState(values[input]);
         formValues.schoolEndDate = schoolEndDate;
-        return <InputYear name={input} placeholder='Введите год окончания школы'
+        formErrors.schoolEndDate = null;
+        return <InputYear name={input} placeholder='Введите год окончания школы' formErrors={formErrors.schoolEndDate}
                           fieldName='Год окончания школы*'
                           value={schoolEndDate}
                           setValue={setSchoolEndDate}
@@ -234,7 +247,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [university, setUniversity] = useState(values[input]);
         formValues.university = university;
-        return <InputText name={input} placeholder='Введите название университета'
+        formErrors.university = null;
+        return <InputText name={input} placeholder='Введите название университета' formErrors={formErrors.university}
                           fieldName='Университет*'
                           value={university} setValue={setUniversity}
         />
@@ -243,7 +257,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [universityEndDate, setUniversityEndDate] = useState(values[input]);
         formValues.universityEndDate = universityEndDate;
+        formErrors.universityEndDate = null;
         return <InputYear name={input} placeholder='Введите год окончания университета'
+                          formErrors={formErrors.universityEndDate}
                           fieldName='Год окончания университета*'
                           value={universityEndDate}
                           setValue={setUniversityEndDate}
@@ -253,7 +269,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [registrationAddress, setRegistrationAddress] = useState(values[input]);
         formValues.registrationAddress = registrationAddress;
+        formErrors.registrationAddress = null;
         return <InputText name={input} placeholder='Введите свой адрес регистрации'
+                          formErrors={formErrors.registrationAddress}
                           fieldName='Адрес регистрации*'
                           value={registrationAddress}
                           setValue={setRegistrationAddress}
@@ -263,7 +281,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [work, setWork] = useState(values[input]);
         formValues.work = work;
-        return <InputText name={input} placeholder='Введите свое место работы'
+        formErrors.work = null;
+        return <InputText name={input} placeholder='Введите свое место работы' formErrors={formErrors.work}
                           fieldName='Место работы'
                           value={work} setValue={setWork}
         />
@@ -272,7 +291,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [telegram, setTelegram] = useState(values[input]);
         formValues.telegram = telegram;
-        return <InputMessenger name={input} placeholder='Введите свой ник в Телеграме'
+        formErrors.telegram = null;
+        return <InputMessenger name={input} placeholder='Введите свой ник в Телеграме' formErrors={formErrors.telegram}
                                fieldName='Телеграм'
                                value={telegram} setValue={setTelegram}
         />
@@ -281,7 +301,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [vk, setVk] = useState(values[input]);
         formValues.vk = vk;
-        return <InputMessenger name={input} placeholder='Введите свой ник в ВК'
+        formErrors.vk = null;
+        return <InputMessenger name={input} placeholder='Введите свой ник в ВК' formErrors={formErrors.vk}
                                fieldName='ВК'
                                value={vk} setValue={setVk}
         />
@@ -290,8 +311,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Name, setParent1Name] = useState(values[input]);
         formValues.parent1Name = parent1Name;
+        formErrors.parent1Name = null;
         return <InputName name={input} placeholder='Введите имя первого родителя / опекуна'
-                          fieldName='Имя первого родителя / опекуна*'
+                          fieldName='Имя первого родителя / опекуна*' formErrors={formErrors.parent1Name}
                           value={parent1Name}
                           setValue={setParent1Name}
         />
@@ -300,8 +322,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Surname, setParent1Surname] = useState(values[input]);
         formValues.parent1Surname = parent1Surname;
+        formErrors.parent1Surname = null;
         return <InputName name={input} placeholder='Введите фамилию первого родителя / опекуна'
-                          fieldName='Фамилия первого родителя / опекуна*'
+                          fieldName='Фамилия первого родителя / опекуна*' formErrors={formErrors.parent1Surname}
                           value={parent1Surname}
                           setValue={setParent1Surname}
         />
@@ -310,8 +333,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Lastname, setParent1Lastname] = useState(values[input]);
         formValues.parent1Lastname = parent1Lastname;
+        formErrors.parent1Lastname = null;
         return <InputName name={input} placeholder='Введите отчество первого родителя / опекуна'
-                          fieldName='Отчество первого родителя / опекуна'
+                          fieldName='Отчество первого родителя / опекуна' formErrors={formErrors.parent1Lastname}
                           value={parent1Lastname}
                           setValue={setParent1Lastname}
         />
@@ -320,8 +344,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Phone, setParent1Phone] = useState(values[input]);
         formValues.parent1Phone = parent1Phone;
+        formErrors.parent1Phone = null;
         return <InputPhone name={input} placeholder='Введите телефон первого родителя / опекуна'
-                           fieldName='Телефон первого родителя / опекуна*'
+                           fieldName='Телефон первого родителя / опекуна*' formErrors={formErrors.parent1Phone}
                            value={parent1Phone}
                            setValue={setParent1Phone}
         />
@@ -330,8 +355,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent1Email, setParent1Email] = useState(values[input]);
         formValues.parent1Email = parent1Email;
+        formErrors.parent1Email = null;
         return <InputEmail name={input} placeholder='Введите почту первого родителя / опекуна'
-                           fieldName='Почта первого родителя / опекуна*'
+                           fieldName='Почта первого родителя / опекуна*' formErrors={formErrors.parent1Email}
                            value={parent1Email}
                            setValue={setParent1Email}
         />
@@ -340,8 +366,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Name, setParent2Name] = useState(values[input]);
         formValues.parent2Name = parent2Name;
+        formErrors.parent2Name = null;
         return <InputName name={input} placeholder='Введите имя второго родителя / опекуна'
-                          fieldName='Имя второго родителя / опекуна'
+                          fieldName='Имя второго родителя / опекуна' formErrors={formErrors.parent2Name}
                           value={parent2Name}
                           setValue={setParent2Name}
         />
@@ -350,8 +377,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Surname, setParent2Surname] = useState(values[input]);
         formValues.parent2Surname = parent2Surname;
+        formErrors.parent2Surname = null;
         return <InputName name={input} placeholder='Введите фамилию второго родителя / опекуна'
-                          fieldName='Фамилия второго родителя / опекуна'
+                          fieldName='Фамилия второго родителя / опекуна' formErrors={formErrors.parent2Surname}
                           value={parent2Surname}
                           setValue={setParent2Surname}
         />
@@ -360,8 +388,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Lastname, setParent2Lastname] = useState(values[input]);
         formValues.parent2Lastname = parent2Lastname;
+        formErrors.parent2Lastname = null;
         return <InputName name={input} placeholder='Введите отчество второго родителя / опекуна'
-                          fieldName='Отчество второго родителя / опекуна'
+                          fieldName='Отчество второго родителя / опекуна' formErrors={formErrors.parent2Lastname}
                           value={parent2Lastname}
                           setValue={setParent2Lastname}
         />
@@ -370,8 +399,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Phone, setParent2Phone] = useState(values[input]);
         formValues.parent2Phone = parent2Phone;
+        formErrors.parent2Phone = null;
         return <InputPhone name={input} placeholder='Введите телефон второго родителя / опекуна'
-                           fieldName='Телефон второго родителя / опекуна'
+                           fieldName='Телефон второго родителя / опекуна' formErrors={formErrors.parent2Phone}
                            value={parent2Phone}
                            setValue={setParent2Phone}
         />
@@ -380,8 +410,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [parent2Email, setParent2Email] = useState(values[input]);
         formValues.parent2Email = parent2Email;
+        formErrors.parent2Email = null;
         return <InputEmail name={input} placeholder='Введите почту второго родителя / опекуна'
-                           fieldName='Почта второго родителя / опекуна'
+                           fieldName='Почта второго родителя / опекуна' formErrors={formErrors.parent2Email}
                            value={parent2Email}
                            setValue={setParent2Email}
         />
@@ -390,7 +421,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [agreement, setAgreement] = useState(values[input]);
         formValues.agreement = agreement;
-        return <InputFile name={input} accept='.pdf'
+        formErrors.agreement = null;
+        return <InputFile name={input} accept='.pdf' formErrors={formErrors.agreement}
                           fieldName='Согласие на обработку персональных данных*'
                           setValue={setAgreement}
         />
@@ -399,8 +431,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [howToKnow, setHowToKnow] = useState(values[input]);
         formValues.howToKnow = howToKnow;
+        formErrors.howToKnow = null;
         return <InputDropdown name={input} placeholder='Расскажжите откуда вы узнали об ЭМШ'
-                              fieldName='Откуда вы узнали об ЭМШ'
+                              fieldName='Откуда вы узнали об ЭМШ' formErrors={formErrors.howToKnow}
                               values={['От друзей', 'Из социальных сетей', 'На дополнительных курсах']}
                               setValue={setHowToKnow}/>
       }
@@ -408,14 +441,18 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [mailing, setMailing] = useState(true);
         formValues.mailing = mailing;
+        formErrors.mailing = null;
         return <InputCheckbox name={input} fieldName='Согласие на получение рассылки' initialChecked={true}
+                              formErrors={formErrors.mailing}
                               setValue={setMailing}/>
       }
       case 'wasPupil': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [wasPupil, setWasPupil] = useState(true);
         formValues.wasPupil = wasPupil;
+        formErrors.wasPupil = null;
         return <InputCheckbox name={input} fieldName='Был ли учеником ЭМШ' initialChecked={true}
+                              formErrors={formErrors.wasPupil}
                               setValue={setWasPupil}/>
       }
 
@@ -423,8 +460,10 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [courseFile, setCourseFile] = useState(values[input]);
         formValues.courseFile = courseFile;
+        formErrors.courseFile = null;
         return <InputFile name={input} accept='.xls, .xlsx, .csv'
                           fieldName='Добавить курс*'
+                          formErrors={formErrors.courseFile}
                           setValue={setCourseFile}
         />
       }
@@ -433,7 +472,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsTitle, setNewsTitle] = useState(undefined);
         formValues.newsTitle = newsTitle;
-        return <InputNewsTitle name={input} placeholder='Введите заголовок новости'
+        formErrors.newsTitle = null;
+        return <InputNewsTitle name={input} placeholder='Введите заголовок новости' formErrors={formErrors.newsTitle}
                                fieldName='Заголовок новости*'
                                value={newsTitle}
                                setValue={setNewsTitle}
@@ -443,8 +483,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsPhoto, setNewsPhoto] = useState();
         formValues.newsPhoto = newsPhoto;
+        formErrors.newsPhoto = null;
         return <InputNewsPhoto name={input}
-                               fieldName='Фотография новости'
+                               fieldName='Фотография новости' formErrors={formErrors.newsPhoto}
                                value={newsPhoto}
                                setValue={setNewsPhoto}
                                accept='image/png, image/gif, image/jpeg, image/jpg'
@@ -454,7 +495,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsDescription, setNewsDescription] = useState(undefined);
         formValues.newsDescription = newsDescription;
+        formErrors.newsDescription = null;
         return <InputNewsDescription name={input} placeholder='Введите текст новости'
+                                     formErrors={formErrors.newsDescription}
                                      fieldName='Описание новости*'
                                      value={newsDescription}
                                      setValue={setNewsDescription}
@@ -465,27 +508,30 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [classOver, setClassOver] = useState(undefined);
         formValues.classOver = classOver;
+        formErrors.classOver = null;
         return <InputClass name={input} placeholder='Введите номер класса, который вы заканчиваете в этом году'
-                                     fieldName='Номер класса*'
-                                     value={classOver}
-                                     setValue={setClassOver}
+                           fieldName='Номер класса*' formErrors={formErrors.classOver}
+                           value={classOver}
+                           setValue={setClassOver}
         />
       }
       case 'city': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [city, setCity] = useState(undefined);
         formValues.city = city;
-        return <InputText name={input} placeholder='Введите название города'
-                                     fieldName='Название города*'
-                                     value={city}
-                                     setValue={setCity}
+        formErrors.city = null;
+        return <InputText name={input} placeholder='Введите название города' formErrors={formErrors.city}
+                          fieldName='Название города*'
+                          value={city}
+                          setValue={setCity}
         />
       }
       case 'format': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [format, setFormat] = useState(undefined);
         formValues.format = format;
-        return <InputDropdown name={input} placeholder='Выберете формат обучения в ЭМШ'
+        formErrors.format = null;
+        return <InputDropdown name={input} placeholder='Выберете формат обучения в ЭМШ' formErrors={formErrors.format}
                               fieldName='Формат обучения в ЭМШ*'
                               values={['Очный', 'Онлайн (я не из Москвы)']}
                               setValue={setFormat}/>
@@ -494,8 +540,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [agreementAb, setAgreementAb] = useState(undefined);
         formValues.agreementAb = agreementAb;
+        formErrors.agreementAb = null;
         return <InputCheckbox name={input} fieldName='Согласие на обработку персональных данных*' initialChecked={true}
-                                  setValue={setAgreementAb}/>
+                              setValue={setAgreementAb} formErrors={formErrors.agreementAb} required={true}/>
       }
 
       default:

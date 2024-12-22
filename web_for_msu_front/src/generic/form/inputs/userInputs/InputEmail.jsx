@@ -2,7 +2,7 @@ import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValue}) => {
+const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
   const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,6 +21,7 @@ const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValu
 
     if (error) {
       setIsValid(false);
+      formErrors = error;
       setError(error);
       console.log(error);
     }
@@ -43,6 +44,7 @@ const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValu
 
     setIsValid(true);
     setError('');
+    formErrors = null;
     return '';
   }
 
