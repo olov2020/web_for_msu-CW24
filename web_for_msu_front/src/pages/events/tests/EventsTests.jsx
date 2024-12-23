@@ -5,6 +5,8 @@ import {
   getStatusRegistrationTests
 } from "../../../api/eventsApi.js";
 import TestsRegistration from "./testsRegistration/TestsRegistration.jsx";
+import styleEvents from '../events.module.css';
+import TeachersSection from "../teachersSection/TeachersSection.jsx";
 
 const EventsTests = () => {
 
@@ -66,12 +68,7 @@ const EventsTests = () => {
     <article>
       <h1>Как поступить?</h1>
 
-      <section style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '50%',
-        gap: '1rem 0',
-      }}>
+      <section className={styleEvents.section}>
         <p><strong>{examDate} сентября {year}</strong> года абитуриентам предстоит написать два теста: по математике и
           общеобразовательный (тест на общую эрудицию).</p>
         <p>При успешном прохождении тестов в следующее воскресенье, <strong>{examDate + 7} сентября</strong>, школьникам
@@ -94,42 +91,15 @@ const EventsTests = () => {
         <p>Мы всегда рады помочь!</p>
 
         {testsOfflineTeachers && (
-          <aside style={{
-            position: 'absolute',
-            right: '2rem',
-            width: '20%',
-            display: 'flex',
-            flexDirection: 'column',
-            textAlign: 'center',
-            gap: '2rem 0',
-          }}>
-            <h3>Ответственные за очные вступительные испытания</h3>
-            <ul style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '.3rem 0',
-            }}>
-              {testsOfflineTeachers.map((teacher) => (
-                <li key={teacher.id} style={{
-                  listStyleType: 'none',
-                }}>
-                  <p>{teacher.name}: <a href={`tel:${teacher.phone}`}>{teacher.phone}</a></p>
-                </li>
-              ))}
-            </ul>
+          <aside className={styleEvents.asideAdmins}>
+            <TeachersSection teachers={testsOfflineTeachers}/>
           </aside>
         )}
       </section>
 
       <h1>ЭМШ-онлайн</h1>
 
-      <section style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '50%',
-        gap: '1rem 0',
-      }}>
+      <section className={styleEvents.section}>
         <p>Если ты учишься <strong>не в Москве</strong>, но давно хотел учиться в Экономико-математической школе при МГУ
           (ЭМШ), то специально для тебя мы запускаем «ЭМШ-онлайн», приуроченную к юбилею ЭМШ (нам 55 лет!). Теперь ЭМШ
           доступна для школьников со всех уголков России. Мы рады, что география перестанет быть барьером для учёбы в
@@ -145,44 +115,13 @@ const EventsTests = () => {
         <p>Если у вас остались какие-либо вопросы об обучении или поступлении в онлайн подразделение ЭМШ, пишите на
           почту <strong><a href='mailto:online@emsch.ru'>online@emsch.ru</a></strong>.</p>
         {testsOnlineTeachers && (
-          <aside style={{
-            position: 'absolute',
-            right: '2rem',
-            width: '20%',
-            display: 'flex',
-            flexDirection: 'column',
-            textAlign: 'center',
-            gap: '2rem 0',
-          }}>
-            <h3>Ответственные за онлайн вступительные испытания</h3>
-            <ul style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '.3rem 0',
-            }}>
-              {testsOnlineTeachers.map((teacher) => (
-                <li key={teacher.id} style={{
-                  listStyleType: 'none',
-                }}>
-                  <p>{teacher.name}: <a href={`tel:${teacher.phone}`}>{teacher.phone}</a></p>
-                </li>
-              ))}
-            </ul>
+          <aside className={styleEvents.asideAdmins}>
+            <TeachersSection teachers={testsOnlineTeachers}/>
           </aside>
         )}
       </section>
 
-      <aside style={{
-        position: 'absolute',
-        top: '20%',
-        left: '2rem',
-        width: '20%',
-        display: 'flex',
-        flexDirection: 'column',
-        textAlign: 'center',
-        gap: '2rem 0',
-      }}>
+      <aside className={styleEvents.asideLeft}>
         <h2>Регистрация на вступительные</h2>
 
         {statusRegistrationTests ?

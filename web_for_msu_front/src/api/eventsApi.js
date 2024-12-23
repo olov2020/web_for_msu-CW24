@@ -20,6 +20,16 @@ export const getEventsTestsOnlineTeachers = async () => {
   }
 }
 
+export const getEventsOpenChampionshipTeachers = async () => {
+  const response = await axios.get(`/api/events/open-championship`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getStatusRegistrationTests = async () => {
   const response = await axios.get(`/api/events/tests/status`)
 

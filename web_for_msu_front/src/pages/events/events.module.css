@@ -1,0 +1,29 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 1rem 0;
+}
+
+.asideAdmins {
+    position: absolute;
+    right: 2rem;
+    width: 20%;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem 0;
+}
+
+.asideLeft {
+    position: absolute;
+    left: 2rem;
+    top: 20%;
+    width: 20%;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem 0;
+}
