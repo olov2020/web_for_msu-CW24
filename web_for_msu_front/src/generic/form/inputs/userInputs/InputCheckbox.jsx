@@ -19,7 +19,7 @@ const InputCheckbox = ({name, initialChecked = false, required = false, fieldNam
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       console.log(error);
     }
@@ -37,7 +37,7 @@ const InputCheckbox = ({name, initialChecked = false, required = false, fieldNam
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false)
     setError('');
     return '';
   }

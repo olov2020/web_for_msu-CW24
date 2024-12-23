@@ -18,7 +18,7 @@ const InputFile = ({name = '', fieldName, accept = '', multiple = false, require
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setValue(null);
 
       return;
@@ -33,7 +33,7 @@ const InputFile = ({name = '', fieldName, accept = '', multiple = false, require
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }

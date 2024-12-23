@@ -17,7 +17,7 @@ const InputNewsTitle = ({name, placeholder, fieldName, value, setValue, formErro
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       setValue(undefined);
       console.log(error);
@@ -30,7 +30,7 @@ const InputNewsTitle = ({name, placeholder, fieldName, value, setValue, formErro
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }

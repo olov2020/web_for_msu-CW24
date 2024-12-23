@@ -21,7 +21,7 @@ const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValu
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       console.log(error);
     }
@@ -44,7 +44,7 @@ const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValu
 
     setIsValid(true);
     setError('');
-    formErrors = null;
+    formErrors(false);
     return '';
   }
 

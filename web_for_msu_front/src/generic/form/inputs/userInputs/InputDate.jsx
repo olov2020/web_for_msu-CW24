@@ -17,7 +17,7 @@ const InputDate = ({name = '', fieldName, value, setValue, formErrors}) => {
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       console.log(error);
     }
@@ -29,7 +29,7 @@ const InputDate = ({name = '', fieldName, value, setValue, formErrors}) => {
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }

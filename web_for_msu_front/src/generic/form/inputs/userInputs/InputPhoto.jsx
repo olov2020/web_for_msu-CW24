@@ -28,7 +28,7 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       const {current} = uploadedImage;
       current.src = defaultUserImage;
       setValue(current.src);
@@ -53,7 +53,7 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
 
     setIsValid(true);
     setError('');
-    formErrors = null;
+    formErrors(false);
     return '';
   }
 

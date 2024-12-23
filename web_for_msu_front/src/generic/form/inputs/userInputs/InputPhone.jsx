@@ -23,7 +23,7 @@ const InputPhone = ({name = '', placeholder = '', fieldName, value, setValue, fo
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       console.log(error);
     }
@@ -45,7 +45,7 @@ const InputPhone = ({name = '', placeholder = '', fieldName, value, setValue, fo
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }

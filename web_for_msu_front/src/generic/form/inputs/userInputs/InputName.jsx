@@ -24,10 +24,9 @@ const InputName = ({name = '', placeholder = '', fieldName, value, setValue, for
 
     if (error) {
       setIsValid(false);
+      formErrors(error);
       console.log(formErrors);
-      formErrors = error;
       setError(error);
-      console.log(error);
     }
   })
 
@@ -41,7 +40,7 @@ const InputName = ({name = '', placeholder = '', fieldName, value, setValue, for
 
     setIsValid(true);
     setError('');
-    formErrors = null;
+    formErrors(false);
     return '';
   }
 

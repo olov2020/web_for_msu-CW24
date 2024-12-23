@@ -20,7 +20,7 @@ const InputMessenger = ({name = '', placeholder = '', fieldName, value, setValue
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       console.log(error);
     }
@@ -35,7 +35,7 @@ const InputMessenger = ({name = '', placeholder = '', fieldName, value, setValue
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }

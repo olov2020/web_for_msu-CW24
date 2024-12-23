@@ -18,7 +18,7 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       console.log(error);
     }
@@ -34,7 +34,7 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }

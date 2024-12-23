@@ -24,7 +24,7 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue, formError
     const error = validateInput(e.target.value);
 
     if (error) {
-      formErrors = error;
+      formErrors(error);
       setIsValid(false);
       setError(error)
       console.log(error);
@@ -80,7 +80,7 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue, formError
     // All checks passed!
     setIsValid(true);
     setError('')
-    formErrors = null;
+    formErrors(false);
     return '';
   }
 

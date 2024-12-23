@@ -28,7 +28,7 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
 
       const {current} = uploadedImage;
       current.src = defaultNewsImage;
@@ -53,7 +53,7 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }

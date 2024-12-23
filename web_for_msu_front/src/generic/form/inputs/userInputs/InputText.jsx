@@ -1,4 +1,3 @@
-import styleInput from "./input.module.css";
 import {useState} from "react";
 import Input from "../Input.jsx";
 
@@ -18,7 +17,7 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue, formE
 
     if (error) {
       setIsValid(false);
-      formErrors = error;
+      formErrors(error);
       setError(error);
       console.log(error);
     }
@@ -30,7 +29,7 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue, formE
     }
 
     setIsValid(true);
-    formErrors = null;
+    formErrors(false);
     setError('');
     return '';
   }
