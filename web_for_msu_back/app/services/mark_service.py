@@ -215,6 +215,9 @@ class MarkService:
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
+        pupil_course = PupilCourse.query.filter_by(PupilCourse.course_id == course_id, PupilCourse.pupil_id == pupil_id)
+        if not pupil_course:
+            return {'error': 'Ученик не записан на этот курс'}, 404
         course_name = course.name
         formulas = course.formulas
         marks = self.get_pupil_marks(course_id, pupil_id)
