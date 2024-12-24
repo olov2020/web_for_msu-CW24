@@ -75,8 +75,8 @@ class AdminView(FlaskView):
     @roles_required('admin')
     def open_registration(self):
         services = get_services()
-        course_service: CourseService = services["course_service"]
-        response, code = course_service.open_registration()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.open_registration()
         return response, code
 
     @method("POST")
@@ -85,8 +85,8 @@ class AdminView(FlaskView):
     # TODO replace with scheduled call
     def close_registration(self):
         services = get_services()
-        course_service: CourseService = services["course_service"]
-        response, code = course_service.close_registration()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.close_registration()
         return response, code
 
     @route("/role/add/<role>/<user_id>/", methods=["POST"])
@@ -96,10 +96,11 @@ class AdminView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         roles, _ = user_service.get_all_roles()
-        roles = ["course", "news", "marks"]
+        roles = ["course", "news", "marks", "tests_online", "tests_offline"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
-        role += "maker"
+        if role in ["course", "news", "marks"]:
+            role += "maker"
         response, code = user_service.add_role(user_id, role)
         return response, code
 
@@ -107,12 +108,11 @@ class AdminView(FlaskView):
     @auth_required
     @roles_required('admin')
     def delete_news_role(self, role: str, user_id: int):
-        services = get_services()
-        user_service: UserService = services["user_service"]
-        roles, _ = user_service.get_all_roles()
         roles = ["course", "news", "marks"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
+        services = get_services()
+        user_service: UserService = services["user_service"]
         role += "maker"
         response, code = user_service.delete_role(user_id, role)
         return response, code

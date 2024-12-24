@@ -12,6 +12,8 @@ def create_roles():
         Role(id=4, name='newsmaker'),
         Role(id=5, name='coursemaker'),
         Role(id=6, name='marksmaker'),
+        Role(id=7, name='tests_offline'),
+        Role(id=8, name='tests_online'),
     ]
     for role in roles:
         db.session.add(role)

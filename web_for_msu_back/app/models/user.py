@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import pytz
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from web_for_msu_back.app import db
@@ -14,7 +15,8 @@ class User(db.Model):
     image = db.Column(db.String(), nullable=False, default='default.jpg')
     authorized = db.Column(db.Boolean, default=False)
     created_on = db.Column(db.DateTime(), default=None)
-    updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_on = db.Column(db.DateTime(), default=lambda: datetime.now(tz=pytz.timezone('Europe/Moscow')).date(),
+                           onupdate=lambda: datetime.now(tz=pytz.timezone('Europe/Moscow')).date())
     roles = db.relationship('Role', secondary=user_role, backref='users')
 
     active = True

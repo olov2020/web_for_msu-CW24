@@ -7,7 +7,8 @@ import flask
 from marshmallow import ValidationError
 
 from web_for_msu_back.app.dto.teacher import TeacherDTO
-from web_for_msu_back.app.models import Teacher
+from web_for_msu_back.app.dto.test_teacher_info import TestTeacherInfoDTO
+from web_for_msu_back.app.models import Teacher, User, user_role, Role
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -40,3 +41,20 @@ class TeacherService:
 
     def get_teacher_by_email(self, email):
         return Teacher.query.filter_by(email=email).first()
+
+    def get_entrance_tests_teachers(self, test_type: str) -> (list[TestTeacherInfoDTO], int):
+        teachers = ((self.db.session.query(Teacher)
+                     .join(User, Teacher.user_id == User.id)
+                     .join(user_role, User.id == user_role.c.user_id)
+                     .join(Role, Role.id == user_role.c.role_id)
+                     .filter(Role.name == test_type))
+                    .all())
+        test_teachers = []
+        for teacher in teachers:
+            data = {
+                "id": teacher.id,
+                "name": self.get_full_name(teacher),
+                "phone": teacher.phone
+            }
+            test_teachers.append(TestTeacherInfoDTO().dump(data))
+        return test_teachers, 200

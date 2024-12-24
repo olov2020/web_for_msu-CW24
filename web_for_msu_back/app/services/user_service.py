@@ -1,9 +1,11 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import json
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import flask
+import pytz
 from flask_jwt_extended import get_jwt_identity, create_access_token, create_refresh_token
 from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
@@ -11,7 +13,7 @@ from werkzeug.datastructures import FileStorage
 from web_for_msu_back.app.dto.login import LoginDTO
 from web_for_msu_back.app.dto.role import RoleDTO
 from web_for_msu_back.app.dto.user_info import UserInfoDTO
-from web_for_msu_back.app.models import User, Role, Teacher, Pupil
+from web_for_msu_back.app.models import User, Role, Teacher, Pupil, RegistrationPeriod
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -182,3 +184,32 @@ class UserService:
             user.roles.remove(role_to_delete)
         self.db.session.commit()
         return {"msg": "Роль удалена"}, 200
+
+    def open_registration(self) -> (dict, int):
+        opened = RegistrationPeriod.query.filter_by(is_open=True).all()
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        new_reg = RegistrationPeriod(is_open=True,
+                                     opened_at=today_date)
+        self.db.session.add(new_reg)
+        self.db.session.commit()
+        return {"msg": "Регистрация открыта"}, 200
+
+    def close_registration(self) -> (dict, int):
+        opened = RegistrationPeriod.query.filter_by(is_open=True).all()
+        if not opened:
+            return {"error": "Регистрация не была открыта"}, 404
+        today_date = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
+        for reg in opened:
+            reg.is_open = False
+            reg.closed_at = today_date
+        self.db.session.commit()
+        return {"msg": "Регистрация закрыта"}, 200
+
+    def is_registration_opened(self) -> (bool, int):
+        opened = RegistrationPeriod.query.filter_by(is_open=True).all()
+        if opened:
+            return True, 200
+        return False, 200
