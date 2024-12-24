@@ -75,8 +75,8 @@ class AdminView(FlaskView):
     @roles_required('admin')
     def open_registration(self):
         services = get_services()
-        course_service: CourseService = services["course_service"]
-        response, code = course_service.open_registration()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.open_registration()
         return response, code
 
     @method("POST")
@@ -85,8 +85,8 @@ class AdminView(FlaskView):
     # TODO replace with scheduled call
     def close_registration(self):
         services = get_services()
-        course_service: CourseService = services["course_service"]
-        response, code = course_service.close_registration()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.close_registration()
         return response, code
 
     @route("/role/add/<role>/<user_id>/", methods=["POST"])

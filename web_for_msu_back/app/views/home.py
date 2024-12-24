@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from flask import jsonify, g
 from flask import request
-from flask_classful import FlaskView, method
+from flask_classful import FlaskView, method, route
 from flask_jwt_extended import jwt_required
 
 from web_for_msu_back.app.functions import get_next_monday, auth_required, get_services, output_json
@@ -121,3 +121,17 @@ class HomeView(FlaskView):
         user_service: UserService = services["user_service"]
         users, code = user_service.get_all_users_with_role(role)
         return jsonify(users), code
+
+    @route("/select_courses/status/", methods=["GET"])
+    def is_course_selection_opened(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.is_courses_registration_opened()
+        return response, code
+
+    @route("/events/tests/status/", methods=["GET"])
+    def is_course_selection_opened(self):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.is_registration_opened()
+        return response, code
