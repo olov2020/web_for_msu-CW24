@@ -5,7 +5,7 @@ import {
   ADD_NEW_COURSE_ROUTE,
   ALL_COURSES_ROUTE,
   COURSES_SELECT_ROUTE,
-  CREATE_NEWS_ROUTE,
+  CREATE_NEWS_ROUTE, EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
   EVENTS_OPEN_CHAMPIONSHIP_ROUTE,
   EVENTS_TESTS_ROUTE,
   MARKS_ROUTE,
@@ -47,7 +47,7 @@ const Menu = () => {
           title: 'Открытый Чемпионат', link: EVENTS_OPEN_CHAMPIONSHIP_ROUTE, id: 1,
         },
         {
-          title: 'Конкурс Научных Работ', link: NOT_FOUND_ROUTE, id: 2,
+          title: 'Конкурс Научных Работ', link: EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE, id: 2,
         },
         {
           title: 'Выездная Школа', link: NOT_FOUND_ROUTE, id: 3,

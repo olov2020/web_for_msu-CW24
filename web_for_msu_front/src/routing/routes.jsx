@@ -1,19 +1,27 @@
 import {
   ABOUT_ROUTE,
   ACCOUNT_ROUTE,
-  ADD_NEW_COURSE_ROUTE, ADMIN_ROUTE,
+  ADD_NEW_COURSE_ROUTE,
+  ADMIN_ROUTE,
   ALL_COURSES_ROUTE,
-  COURSES_ITEM_ROUTE, COURSES_SELECT_ROUTE,
+  COURSES_ITEM_ROUTE,
+  COURSES_SELECT_ROUTE,
   CREATE_NEWS_ROUTE,
   HOME_ROUTE,
-  LOGIN_ROUTE, MARKS_ROUTE,
+  LOGIN_ROUTE,
+  MARKS_ROUTE,
   MY_COURSES_ROUTE,
   NEWS_ITEM_ROUTE,
   NEWS_ROUTE,
-  NOT_FOUND_ROUTE, ADMIN_LISTS_ROUTE,
+  NOT_FOUND_ROUTE,
+  ADMIN_LISTS_ROUTE,
   REGISTRATION_PUPIL_ROUTE,
   REGISTRATION_TEACHER_ROUTE,
-  SCHEDULE_ROUTE, ADMIN_MARKS_ROUTE, EVENTS_TESTS_ROUTE, EVENTS_OPEN_CHAMPIONSHIP_ROUTE,
+  SCHEDULE_ROUTE,
+  ADMIN_MARKS_ROUTE,
+  EVENTS_TESTS_ROUTE,
+  EVENTS_OPEN_CHAMPIONSHIP_ROUTE,
+  EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -35,6 +43,7 @@ import ListOfPeople from "../pages/adminPanel/listsOf/ListOfPeople.jsx";
 import CoursesSelect from "../pages/courses/coursesSelect/CoursesSelect.jsx";
 import EventsTests from "../pages/events/tests/EventsTests.jsx";
 import EventsOpenChampionship from "../pages/events/openChampionship/EventsOpenChampionship.jsx";
+import ContestScientificWorks from "../pages/events/contestScientificWorks/ContestScientificWorks.jsx";
 
 export const publicRoutes = [
   {
@@ -84,6 +93,10 @@ export const publicRoutes = [
   {
     path: EVENTS_OPEN_CHAMPIONSHIP_ROUTE,
     Element: <EventsOpenChampionship/>,
+  },
+  {
+    path: EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
+    Element: <ContestScientificWorks/>,
   },
 ]
 

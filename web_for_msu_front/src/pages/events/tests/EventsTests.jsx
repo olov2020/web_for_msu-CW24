@@ -91,10 +91,21 @@ const EventsTests = () => {
         <p>Мы всегда рады помочь!</p>
 
         {testsOfflineTeachers && (
-          <aside className={styleEvents.asideAdmins}>
+          <aside className={styleEvents.asideRight}>
             <TeachersSection teachers={testsOfflineTeachers}/>
           </aside>
         )}
+
+        <aside className={styleEvents.asideLeft}>
+          <h2>Регистрация на вступительные</h2>
+
+          {statusRegistrationTests ?
+            <div>
+              <TestsRegistration/>
+            </div> :
+            <h3><span>Регистрация в данный момент закрыта</span></h3>
+          }
+        </aside>
       </section>
 
       <h1>ЭМШ-онлайн</h1>
@@ -115,22 +126,12 @@ const EventsTests = () => {
         <p>Если у вас остались какие-либо вопросы об обучении или поступлении в онлайн подразделение ЭМШ, пишите на
           почту <strong><a href='mailto:online@emsch.ru'>online@emsch.ru</a></strong>.</p>
         {testsOnlineTeachers && (
-          <aside className={styleEvents.asideAdmins}>
+          <aside className={styleEvents.asideRight}>
             <TeachersSection teachers={testsOnlineTeachers}/>
           </aside>
         )}
       </section>
 
-      <aside className={styleEvents.asideLeft}>
-        <h2>Регистрация на вступительные</h2>
-
-        {statusRegistrationTests ?
-          <div>
-            <TestsRegistration/>
-          </div> :
-          <h3><span>Регистрация в данный момент закрыта</span></h3>
-        }
-      </aside>
     </article>
   );
 };
