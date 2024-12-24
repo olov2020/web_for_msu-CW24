@@ -1,11 +1,16 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import json
+from datetime import datetime
+from sndhdr import test_au
 from typing import TYPE_CHECKING
 
 import flask
+import pytz
 from marshmallow import ValidationError
 
+from dto.test_teacher_info import TestTeacherInfoDTO
+from models import EntranceTestTeacher
 from web_for_msu_back.app.dto.teacher import TeacherDTO
 from web_for_msu_back.app.models import Teacher
 
@@ -40,3 +45,18 @@ class TeacherService:
 
     def get_teacher_by_email(self, email):
         return Teacher.query.filter_by(email=email).first()
+
+    def get_entrance_tests_teachers(self, test_type: str) -> (list[TestTeacherInfoDTO], int):
+        year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
+        teachers = EntranceTestTeacher.query.filter_by(EntranceTestTeacher.test_type == test_type,
+                                                       EntranceTestTeacher.year == year).all()
+        test_teachers = []
+        for teacher_test in teachers:
+            teacher = teacher_test.teacher
+            data = {
+                "id": teacher.id,
+                "name": self.get_full_name(teacher),
+                "phone": teacher.phone
+            }
+            test_teachers.append(TestTeacherInfoDTO().dump(data))
+        return test_teachers, 200

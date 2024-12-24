@@ -12,7 +12,7 @@ from web_for_msu_back.app.functions import get_next_monday, auth_required, get_s
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import UserService, CourseService
+    from web_for_msu_back.app.services import UserService, CourseService, TeacherService
 
 
 class HomeView(FlaskView):
@@ -130,8 +130,18 @@ class HomeView(FlaskView):
         return response, code
 
     @route("/events/tests/status/", methods=["GET"])
-    def is_course_selection_opened(self):
+    def is_registration_opened(self):
         services = get_services()
         user_service: UserService = services["user_service"]
         response, code = user_service.is_registration_opened()
         return response, code
+
+    @route("/events/tests/<test_type>/", methods=["GET"])
+    def tests_teachers(self, test_type: str):
+        test_types = ["offline", "online"]
+        if test_type not in test_types:
+            return {"error": "Нет такого типа теста"}, 404
+        services = get_services()
+        teacher_service: TeacherService = services["teacher_service"]
+        teachers, code = teacher_service.get_entrance_tests_teachers(test_type)
+        return jsonify(teachers), code
