@@ -133,6 +133,7 @@ class UserService:
         return [RoleDTO().dump({"name": role.name}) for role in roles], 200
 
     def get_all_users_with_role(self, role: str) -> (list[UserInfoDTO], int):
+        # TODO add entrant
         match role:
             case "teacher":
                 role_class = Teacher
@@ -145,7 +146,8 @@ class UserService:
             role_class.name,
             role_class.surname,
             role_class.patronymic,
-            User.image
+            User.image,
+            User.authorized
         ).join(User, role_class.user_id == User.id)
 
         result = []
@@ -155,7 +157,28 @@ class UserService:
                 "surname": user.surname,
                 "patronymic": user.patronymic,
                 "photo": self.image_service.get_from_yandex_s3("images", user.image),
-                "status": role
+                "status": role,
+                "authorized": user.authorized
             }
             result.append(UserInfoDTO().dump(data))
         return result, 200
+
+    def add_role(self, user_id: int, role: str) -> (dict, int):
+        user: User = User.query.get(user_id)
+        if not user:
+            return {"error": "Нет такого пользователя"}, 404
+        role_to_add = Role.query.filter_by(name=role).first()
+        if role_to_add not in user.roles:
+            user.roles.append(Role.query.filter_by(name=role).first())
+            self.db.session.commit()
+        return {"msg": "Роль добавлена"}, 200
+
+    def delete_role(self, user_id: int, role: str) -> (dict, int):
+        user: User = User.query.get(user_id)
+        if not user:
+            return {"error": "Нет такого пользователя"}, 404
+        role_to_delete = Role.query.filter_by(name=role).first()
+        if role_to_delete in user.roles:
+            user.roles.remove(role_to_delete)
+        self.db.session.commit()
+        return {"msg": "Роль удалена"}, 200

@@ -13,3 +13,4 @@ class UserInfoDTO(Schema):
     phone = fields.String(allow_none=True)
     school = fields.String(allow_none=True)
     admin = fields.Boolean(default=False)
+    authorized = fields.Boolean(default=False)

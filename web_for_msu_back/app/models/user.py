@@ -12,6 +12,7 @@ class User(db.Model):
     email = db.Column(db.String(), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False)
     image = db.Column(db.String(), nullable=False, default='default.jpg')
+    authorized = db.Column(db.Boolean, default=False)
     created_on = db.Column(db.DateTime(), default=None)
     updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     roles = db.relationship('Role', secondary=user_role, backref='users')

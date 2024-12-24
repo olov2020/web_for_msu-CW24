@@ -4,13 +4,13 @@ from typing import TYPE_CHECKING
 
 import flask
 from flask import jsonify
-from flask_classful import FlaskView, method
+from flask_classful import FlaskView, method, route
 
 from web_for_msu_back.app.functions import get_services, auth_required, roles_required, output_json
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import CourseService, PupilService
+    from web_for_msu_back.app.services import CourseService, PupilService, UserService
 
 
 class AdminView(FlaskView):
@@ -87,4 +87,32 @@ class AdminView(FlaskView):
         services = get_services()
         course_service: CourseService = services["course_service"]
         response, code = course_service.close_registration()
+        return response, code
+
+    @route("/role/add/<role>/<user_id>/", methods=["POST"])
+    @auth_required
+    @roles_required('admin')
+    def add_news_role(self, role: str, user_id: int):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        roles, _ = user_service.get_all_roles()
+        roles = ["course", "news", "marks"]
+        if role not in roles:
+            return {"error": "Нет такой роли"}, 404
+        role += "maker"
+        response, code = user_service.add_role(user_id, role)
+        return response, code
+
+    @route("/role/delete/<role>/<user_id>/", methods=["DELETE"])
+    @auth_required
+    @roles_required('admin')
+    def delete_news_role(self, role: str, user_id: int):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        roles, _ = user_service.get_all_roles()
+        roles = ["course", "news", "marks"]
+        if role not in roles:
+            return {"error": "Нет такой роли"}, 404
+        role += "maker"
+        response, code = user_service.delete_role(user_id, role)
         return response, code
