@@ -141,6 +141,7 @@ class HomeView(FlaskView):
         test_types = ["offline", "online"]
         if test_type not in test_types:
             return {"error": "Нет такого типа теста"}, 404
+        test_type = "tests_" + test_type
         services = get_services()
         teacher_service: TeacherService = services["teacher_service"]
         teachers, code = teacher_service.get_entrance_tests_teachers(test_type)

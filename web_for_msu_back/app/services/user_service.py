@@ -10,11 +10,10 @@ from flask_jwt_extended import get_jwt_identity, create_access_token, create_ref
 from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
 
-from models import RegistrationPeriod
 from web_for_msu_back.app.dto.login import LoginDTO
 from web_for_msu_back.app.dto.role import RoleDTO
 from web_for_msu_back.app.dto.user_info import UserInfoDTO
-from web_for_msu_back.app.models import User, Role, Teacher, Pupil
+from web_for_msu_back.app.models import User, Role, Teacher, Pupil, RegistrationPeriod
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов

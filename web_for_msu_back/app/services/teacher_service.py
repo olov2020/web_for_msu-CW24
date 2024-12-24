@@ -1,18 +1,14 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import json
-from datetime import datetime
-from sndhdr import test_au
 from typing import TYPE_CHECKING
 
 import flask
-import pytz
 from marshmallow import ValidationError
 
-from dto.test_teacher_info import TestTeacherInfoDTO
-from models import EntranceTestTeacher
 from web_for_msu_back.app.dto.teacher import TeacherDTO
-from web_for_msu_back.app.models import Teacher
+from web_for_msu_back.app.dto.test_teacher_info import TestTeacherInfoDTO
+from web_for_msu_back.app.models import Teacher, User, user_role, Role
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -47,12 +43,14 @@ class TeacherService:
         return Teacher.query.filter_by(email=email).first()
 
     def get_entrance_tests_teachers(self, test_type: str) -> (list[TestTeacherInfoDTO], int):
-        year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
-        teachers = EntranceTestTeacher.query.filter_by(EntranceTestTeacher.test_type == test_type,
-                                                       EntranceTestTeacher.year == year).all()
+        teachers = ((self.db.session.query(Teacher)
+                     .join(User, Teacher.user_id == User.id)
+                     .join(user_role, User.id == user_role.c.user_id)
+                     .join(Role, Role.id == user_role.c.role_id)
+                     .filter(Role.name == test_type))
+                    .all())
         test_teachers = []
-        for teacher_test in teachers:
-            teacher = teacher_test.teacher
+        for teacher in teachers:
             data = {
                 "id": teacher.id,
                 "name": self.get_full_name(teacher),

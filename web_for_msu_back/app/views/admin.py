@@ -96,10 +96,11 @@ class AdminView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         roles, _ = user_service.get_all_roles()
-        roles = ["course", "news", "marks"]
+        roles = ["course", "news", "marks", "tests_online", "tests_offline"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
-        role += "maker"
+        if role in ["course", "news", "marks"]:
+            role += "maker"
         response, code = user_service.add_role(user_id, role)
         return response, code
 
