@@ -2,7 +2,8 @@ import styleEvents from '../events.module.css';
 import {useEffect, useState} from "react";
 import {getEventsContestScientificWorksTeachers} from "../../../api/eventsApi.js";
 import TeachersSection from "../teachersSection/TeachersSection.jsx";
-import TestsRegistration from "../tests/testsRegistration/TestsRegistration.jsx";
+import subjectObjectImg from '../../../../public/knr/1.jpg';
+import diagram1 from '../../../../public/knr/2.jpg';
 
 const ContestScientificWorks = () => {
 
@@ -160,8 +161,58 @@ const ContestScientificWorks = () => {
         </ol>
 
         <aside className={styleEvents.asideRight}>
-          <TeachersSection teachers={teachers}/>
+          <img src={subjectObjectImg} alt='Предмет входит в объект' style={{
+            width: '50%',
+            objectFit: 'contain',
+          }}/>
         </aside>
+
+        <p><strong>Основные критерии оценки исследовательской работы</strong>: логика этапов анализа и работа с
+          гипотезой, результативность исследования.</p>
+
+        <img src={diagram1} alt='Критерии оценки работ' style={{
+          width: '50%',
+          alignSelf: 'center',
+          objectFit: 'contain',
+        }}/>
+      </section>
+
+      <h1>Штрафы и санкции</h1>
+
+      <section>
+        <p><strong>Снимается с конкурса:</strong></p>
+        <ol style={{
+          textAlign: 'left',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '.5rem 0',
+        }}>
+          <li><p>Работа, в которой нарушены правила анонимности (где-либо в работе упоминается имя автора или название
+            знает кто-либо из преподавателей ЭМШ, за исключением тьюторов и Организаторов).</p></li>
+          <li><p>Работа, содержащая более 20% плагиата.</p></li>
+          <li><p>Работа, содержащая более 50% цитат (если для раскрытия заявленной темы не является необходимым обширное
+            цитирование, например, работа затрагивает анализ чьего-либо творчества).</p></li>
+          <li><p>Работа, содержащая экстремистские или оскорбительные высказывания в части авторского текста.</p></li>
+          <li><p>Работа, содержащая нецензурную лексику (включая название и девиз).</p></li>
+          <li><p>Работа, написанная на иностранном языке.</p></li>
+        </ol>
+
+        <p style={{
+          marginTop: '1rem',
+        }}><strong>Штрафуется:</strong></p>
+        <ol style={{
+          textAlign: 'left',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '.5rem 0',
+        }}>
+          <li><p>Работа, содержащая более 5% плагиата.</p></li>
+          <li><p>Работа, содержащая более 30% цитат.</p></li>
+          <li><p>Работа, в которой не соблюдены правила цитирования, а именно: есть кавычки, но нет ссылки; или есть
+            ссылка, но нет кавычек, а также цитаты на иностранном языке без перевода; а также неверно оформлены
+            определения.</p></li>
+          <li><p>Работа, содержащая нецензурную лексику в цитатах.</p></li>
+        </ol>
       </section>
     </article>
   );
