@@ -135,7 +135,7 @@ class UserService:
         return [RoleDTO().dump({"name": role.name}) for role in roles], 200
 
     def get_all_users_with_role(self, role: str) -> (list[UserInfoDTO], int):
-        # TODO add entrant
+        # TODO add entrant, make a function with unique output for entrant, pupil, teacher
         match role:
             case "teacher":
                 role_class = Teacher
