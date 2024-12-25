@@ -21,7 +21,10 @@ import {
   ADMIN_MARKS_ROUTE,
   EVENTS_TESTS_ROUTE,
   EVENTS_OPEN_CHAMPIONSHIP_ROUTE,
-  EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE, EVENTS_RESIDENTIAL_SCHOOL_ROUTE,
+  EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
+  EVENTS_RESIDENTIAL_SCHOOL_ROUTE,
+  EVENTS_SUMMER_SCHOOL_ROUTE,
+  EVENTS_SUMMER_CAMP_ROUTE,
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -45,6 +48,8 @@ import EventsTests from "../pages/events/tests/EventsTests.jsx";
 import EventsOpenChampionship from "../pages/events/openChampionship/EventsOpenChampionship.jsx";
 import ContestScientificWorks from "../pages/events/contestScientificWorks/ContestScientificWorks.jsx";
 import ResidentialSchool from "../pages/events/residentialSchool/ResidentialSchool.jsx";
+import SummerSchool from "../pages/events/summerSchool/SummerSchool.jsx";
+import SummerCamp from "../pages/events/summerCamp/SummerCamp.jsx";
 
 export const publicRoutes = [
   {
@@ -102,6 +107,14 @@ export const publicRoutes = [
   {
     path: EVENTS_RESIDENTIAL_SCHOOL_ROUTE,
     Element: <ResidentialSchool/>,
+  },
+  {
+    path: EVENTS_SUMMER_SCHOOL_ROUTE,
+    Element: <SummerSchool/>,
+  },
+  {
+    path: EVENTS_SUMMER_CAMP_ROUTE,
+    Element: <SummerCamp/>,
   },
 ]
 

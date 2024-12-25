@@ -23,7 +23,6 @@ import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd, courseChange} from "../../api/coursesApi.js";
-import {testsRegistration} from "../../api/eventsApi.js";
 import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
 
 // eslint-disable-next-line react/prop-types
@@ -39,7 +38,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       courseAdd: ['courseFile'],
       courseChange: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription'],
-      testsRegistration: ['name', 'surname', 'email', 'phone', 'classOver', 'format', 'city', 'agreementAb'],
     }
 
   /*useEffect(() => {
@@ -116,13 +114,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         } catch (error) {
           alert(error.message);
         }
-      } else {
-        alert('Заполните все обязательные поля.');
-      }
-    } else if (type === 'testsRegistration') {
-      if (checkFormErrors()) {
-        await testsRegistration(formValues);
-        alert('Форма успешно отправлена!');
       } else {
         alert('Заполните все обязательные поля.');
       }

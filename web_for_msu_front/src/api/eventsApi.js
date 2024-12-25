@@ -50,27 +50,22 @@ export const getEventsResidentialSchoolTeachers = async () => {
   }
 }
 
-export const getStatusRegistrationTests = async () => {
-  const response = await axios.get(`/api/events/tests/status`)
+export const getEventsSummerSchoolTeachers = async () => {
+  const response = await axios.get(`/api/events/summer-school`)
 
-  return response.data;
-}
-
-export const testsRegistration = async (values) => {
-  const formData = new FormData();
-  formData.append('name', values.name);
-  formData.append('surname', values.surname);
-  formData.append('lastname', values.lastname);
-  formData.append('email', values.email);
-  formData.append('phone', values.phone);
-  formData.append('classOver', values.classOver);
-  formData.append('format', values.format);
-  formData.append('city', values.city);
-  formData.append('agreementAb', values.agreementAb);
-  const response = await axios.post(`/api/events/tests/registration`, formData);
   try {
     return response.data;
   } catch (error) {
     console.log(error);
   }
 }
+export const getEventsSummerCampTeachers = async () => {
+  const response = await axios.get(`/api/events/summer-camp`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+

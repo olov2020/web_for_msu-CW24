@@ -6,7 +6,7 @@ import {
   ALL_COURSES_ROUTE,
   COURSES_SELECT_ROUTE,
   CREATE_NEWS_ROUTE, EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
-  EVENTS_OPEN_CHAMPIONSHIP_ROUTE, EVENTS_RESIDENTIAL_SCHOOL_ROUTE,
+  EVENTS_OPEN_CHAMPIONSHIP_ROUTE, EVENTS_RESIDENTIAL_SCHOOL_ROUTE, EVENTS_SUMMER_CAMP_ROUTE, EVENTS_SUMMER_SCHOOL_ROUTE,
   EVENTS_TESTS_ROUTE,
   MARKS_ROUTE,
   MY_COURSES_ROUTE,
@@ -53,10 +53,10 @@ const Menu = () => {
           title: 'Выездная Школа', link: EVENTS_RESIDENTIAL_SCHOOL_ROUTE, id: 3,
         },
         {
-          title: 'Летняя Школа', link: NOT_FOUND_ROUTE, id: 4,
+          title: 'Летняя Школа', link: EVENTS_SUMMER_SCHOOL_ROUTE, id: 4,
         },
         {
-          title: 'Летний Лагерь', link: NOT_FOUND_ROUTE, id: 5,
+          title: 'Летний Лагерь', link: EVENTS_SUMMER_CAMP_ROUTE, id: 5,
         },
       ],
     },

@@ -2,9 +2,7 @@ import {useEffect, useState} from "react";
 import {
   getEventsTestsOfflineTeachers,
   getEventsTestsOnlineTeachers,
-  getStatusRegistrationTests
 } from "../../../api/eventsApi.js";
-import TestsRegistration from "./testsRegistration/TestsRegistration.jsx";
 import styleEvents from '../events.module.css';
 import TeachersSection from "../teachersSection/TeachersSection.jsx";
 
@@ -41,8 +39,6 @@ const EventsTests = () => {
     {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
   ]);
 
-  const [statusRegistrationTests, setStatusRegistrationTests] = useState(true);
-
   useEffect(() => {
     const getEventsTestsOfflineTeachersFunc = async () => {
       const data = await getEventsTestsOfflineTeachers();
@@ -54,14 +50,8 @@ const EventsTests = () => {
       setTestsOnlineTeachers(data);
     }
 
-    const getStatusRegistrationTestsFunc = async () => {
-      const data = await getStatusRegistrationTests();
-      setStatusRegistrationTests(data);
-    }
-
     getEventsTestsOfflineTeachersFunc();
     getEventsTestsOnlineTeachersFunc();
-    getStatusRegistrationTestsFunc();
   }, []);
 
   return (
@@ -99,12 +89,9 @@ const EventsTests = () => {
         <aside className={styleEvents.asideLeft}>
           <h2>Регистрация на вступительные</h2>
 
-          {statusRegistrationTests ?
-            <div>
-              <TestsRegistration/>
-            </div> :
-            <h3><span>Регистрация в данный момент закрыта</span></h3>
-          }
+          <div>
+            Таймпад виджет
+          </div>
         </aside>
       </section>
 

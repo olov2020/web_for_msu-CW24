@@ -30,16 +30,6 @@ export const closeRegistrationCourses = async () => {
   return new Error(`Запись не закрыта, произошла ошибка ${response.data.message}`);
 }
 
-export const getAllApplicants = async () => {
-  const response = await axios.get(`/api/admin/list/applicants`);
-
-  try {
-    return response.data;
-  } catch (error) {
-    return error;
-  }
-}
-
 export const getAllPupils = async () => {
   const response = await axios.get(`/api/admin/list/pupils`);
 
@@ -88,16 +78,6 @@ export const addTeacher = async ({teacherId}) => {
   }
 
   return new Error(`Преподаватель не был добавлен, произошла ошибка ${response.data.message}`);
-}
-
-export const deleteApplicants = async () => {
-  const response = await axios.delete(`/api/admin/delete/applicants`);
-
-  if (response.status === 200) {
-    return response.data;
-  }
-
-  return new Error(`Преподаватель не был удален, произошла ошибка ${response.data.message}`);
 }
 
 export const setNewsAdmin = async (userId) => {

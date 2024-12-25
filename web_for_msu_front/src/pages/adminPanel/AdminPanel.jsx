@@ -40,21 +40,13 @@ const AdminPanel = () => {
 
       <section style={{
         display: 'flex',
-        flexDirection: 'column',
         width: '30%',
-        gap: '2rem 0',
+        gap: '0 1rem',
       }}>
-        <ButtonSubmit text='Открыть регистрацию на встпупительные' onClick={openRegistration}/>
-
-        <div style={{
-          display: 'flex',
-          gap: '0 1rem',
-        }}>
           <ButtonSubmit text='Открыть запись на курсы' onClick={openCourseRegistration}/>
           <ButtonSubmit text='Закрыть запись на курсы' onClick={closeCourseRegistration}
                         type='delete'
           />
-        </div>
       </section>
 
       <h1 style={{
@@ -67,7 +59,6 @@ const AdminPanel = () => {
         width: '30%',
         gap: '1rem 0',
       }}>
-        <ButtonSubmit text='Список всех абитуриентов' onClick={() => navigate('/admin/list/applicants')}/>
         <ButtonSubmit text='Список всех учеников' onClick={() => navigate('/admin/list/pupils')}/>
         <ButtonSubmit text='Список всех преподавателей' onClick={() => navigate('/admin/list/teachers')}/>
         <ButtonSubmit text='Список всех ведомостей' onClick={() => navigate(ADMIN_MARKS_ROUTE)}/>

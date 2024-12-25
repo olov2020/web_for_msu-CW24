@@ -2,12 +2,10 @@ import {useEffect, useState} from "react";
 import {
   addPupil,
   addTeacher,
-  deleteApplicants,
   deleteCourseAdmin, deleteKNRAdmin, deleteLSHAdmin,
   deleteMarksAdmin,
   deleteNewsAdmin,
   deletePupil, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
-  getAllApplicants,
   getAllPupils,
   getAllTeachers,
   setCourseAdmin,
@@ -59,9 +57,7 @@ const ListOfPeople = () => {
 
   useEffect(() => {
     const getPeople = async () => {
-      const data = url.includes('applicants') ?
-        await getAllApplicants() :
-        url.includes('pupils') ?
+      const data = url.includes('pupils') ?
           await getAllPupils() :
           url.includes('teachers') ?
             await getAllTeachers() :
@@ -96,15 +92,6 @@ const ListOfPeople = () => {
       alert('Преподаватель успешно добавлен!');
     } else {
       alert('Упс, что-то пошло не так... Преподаватель не был добавлен');
-    }
-  }
-
-  const clearApplicants = async () => {
-    const data = await deleteApplicants();
-    if (data) {
-      alert('Список абитуриентов успешно очищен!');
-    } else {
-      alert('Упс, что-то пошло не так... Не удалось очистить список');
     }
   }
 
@@ -156,36 +143,12 @@ const ListOfPeople = () => {
 
   return (
     <article>
-      {url.includes('applicants') ?
-        <h1>Список абитуриентов</h1> :
-        url.includes('pupils') ?
+      {url.includes('pupils') ?
           <h1>Список учеников</h1> :
           url.includes('teachers') ?
             <h1>Список преподавателей</h1> :
             null
       }
-
-      {url.includes('applicants') && (
-        <section className={style.section}>
-          <div className={style.container}>
-            <h2 className={style.item}>ФИО</h2>
-            <h2 className={style.item}>Почта</h2>
-            <h2 className={style.item}>Класс</h2>
-            <h2 className={style.item}>Дата подачи заявки</h2>
-          </div>
-
-          {people.map((person) => (
-            <div key={person.id} className={style.container}>
-              <h3 className={style.item}>{person.name}</h3>
-              <p className={style.item}>{person.email}</p>
-              <h3 className={style.item}><span>{person.class}</span></h3>
-              <p className={style.item}>{person.date}</p>
-            </div>
-          ))}
-
-          <ButtonSubmit text='Очистить список абитуриентов' onClick={clearApplicants}/>
-        </section>
-      )}
 
       {url.includes('pupils') && (
         <section className={style.section}>
