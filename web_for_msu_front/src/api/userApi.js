@@ -112,6 +112,16 @@ export const teacherRegistration = async (formValues) => {
   }
 }
 
+export const getDirectoryTeachers = async () => {
+  const response = await axios.get('/api/teachers');
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const refreshToken = async () => {
   const response = await axios.get('/api/refreshToken')
 

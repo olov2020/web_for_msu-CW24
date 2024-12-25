@@ -12,7 +12,7 @@ import {
   MY_COURSES_ROUTE,
   NEWS_ROUTE,
   NOT_FOUND_ROUTE,
-  SCHEDULE_ROUTE
+  SCHEDULE_ROUTE, TEACHERS_ROUTE
 } from "../../../routing/consts.js";
 import {useSelector} from "react-redux";
 
@@ -68,7 +68,7 @@ const Menu = () => {
           title: 'Об ЭМШ', link: ABOUT_ROUTE, id: 0,
         },
         {
-          title: 'Преподаватели и дирекция', link: NOT_FOUND_ROUTE, id: 1,
+          title: 'Преподаватели и дирекция', link: TEACHERS_ROUTE, id: 1,
         },
         /*{
           title: 'Список учащихся', link: NOT_FOUND_ROUTE, id: 2,

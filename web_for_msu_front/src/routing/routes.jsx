@@ -24,7 +24,7 @@ import {
   EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
   EVENTS_RESIDENTIAL_SCHOOL_ROUTE,
   EVENTS_SUMMER_SCHOOL_ROUTE,
-  EVENTS_SUMMER_CAMP_ROUTE,
+  EVENTS_SUMMER_CAMP_ROUTE, TEACHERS_ROUTE,
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -50,6 +50,7 @@ import ContestScientificWorks from "../pages/events/contestScientificWorks/Conte
 import ResidentialSchool from "../pages/events/residentialSchool/ResidentialSchool.jsx";
 import SummerSchool from "../pages/events/summerSchool/SummerSchool.jsx";
 import SummerCamp from "../pages/events/summerCamp/SummerCamp.jsx";
+import Teachers from "../pages/teachers/Teachers.jsx";
 
 export const publicRoutes = [
   {
@@ -115,6 +116,10 @@ export const publicRoutes = [
   {
     path: EVENTS_SUMMER_CAMP_ROUTE,
     Element: <SummerCamp/>,
+  },
+  {
+    path: TEACHERS_ROUTE,
+    Element: <Teachers/>,
   },
 ]
 
