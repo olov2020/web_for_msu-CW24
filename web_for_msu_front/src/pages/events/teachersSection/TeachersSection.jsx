@@ -1,9 +1,9 @@
 
 // eslint-disable-next-line react/prop-types
-const TeachersSection = ({teachers = []}) => {
+const TeachersSection = ({header, teachers = []}) => {
   return (
     <>
-      <h3>Ответственные за онлайн вступительные испытания</h3>
+      <h3>{header}</h3>
       <ul style={{
         display: 'flex',
         flexDirection: 'column',

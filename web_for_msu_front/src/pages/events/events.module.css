@@ -3,6 +3,19 @@
     flex-direction: column;
     width: 50%;
     gap: 1rem 0;
+
+    > ol, ul {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem 0;
+        text-align: left;
+    }
+
+    > img {
+        width: 50%;
+        object-fit: contain;
+        align-self: center;
+    }
 }
 
 .asideRight {
@@ -14,6 +27,19 @@
     flex-direction: column;
     text-align: center;
     gap: 2rem 0;
+
+    > ol, ul {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem 0;
+        text-align: left;
+    }
+
+    > img {
+        width: 50%;
+        object-fit: contain;
+        align-self: center;
+    }
 }
 
 .asideLeft {
@@ -26,4 +52,17 @@
     flex-direction: column;
     text-align: center;
     gap: 2rem 0;
+
+    > ol, ul {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem 0;
+        text-align: left;
+    }
+
+    > img {
+        width: 50%;
+        object-fit: contain;
+        align-self: center;
+    }
 }

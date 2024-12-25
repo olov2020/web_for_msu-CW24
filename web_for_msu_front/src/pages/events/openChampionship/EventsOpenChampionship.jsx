@@ -40,7 +40,7 @@ const EventsOpenChampionship = () => {
 
         {teachers && (
           <aside className={styleEvents.asideRight}>
-            <TeachersSection teachers={teachers}/>
+            <TeachersSection header='Ответственные за Открытый Чемпионат' teachers={teachers}/>
           </aside>
         )}
       </section>

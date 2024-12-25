@@ -92,7 +92,7 @@ const EventsTests = () => {
 
         {testsOfflineTeachers && (
           <aside className={styleEvents.asideRight}>
-            <TeachersSection teachers={testsOfflineTeachers}/>
+            <TeachersSection header='Ответственные за офлайн вступительные' teachers={testsOfflineTeachers}/>
           </aside>
         )}
 
@@ -127,7 +127,7 @@ const EventsTests = () => {
           почту <strong><a href='mailto:online@emsch.ru'>online@emsch.ru</a></strong>.</p>
         {testsOnlineTeachers && (
           <aside className={styleEvents.asideRight}>
-            <TeachersSection teachers={testsOnlineTeachers}/>
+            <TeachersSection header='Ответственные за онлайн вступительные' teachers={testsOnlineTeachers}/>
           </aside>
         )}
       </section>

@@ -28,5 +28,6 @@ export const ADMIN_MARKS_ROUTE = '/admin/marks'
 export const EVENTS_TESTS_ROUTE = '/events/entrance-tests';
 export const EVENTS_OPEN_CHAMPIONSHIP_ROUTE = '/events/open-championship';
 export const EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE = '/events/contest-of-scientific-works';
+export const EVENTS_RESIDENTIAL_SCHOOL_ROUTE = '/events/residential-school';
 
 export const NOT_FOUND_ROUTE = '/not-found'

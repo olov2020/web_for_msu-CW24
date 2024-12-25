@@ -40,10 +40,20 @@ export const getEventsContestScientificWorksTeachers = async () => {
   }
 }
 
+export const getEventsResidentialSchoolTeachers = async () => {
+  const response = await axios.get(`/api/events/residential-school`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getStatusRegistrationTests = async () => {
   const response = await axios.get(`/api/events/tests/status`)
 
-  return response.status === 200;
+  return response.data;
 }
 
 export const testsRegistration = async (values) => {
