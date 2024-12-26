@@ -176,3 +176,13 @@ export const deleteTestsOnlineAdmin = async (userId) => {
 
   return response.status === 200;
 }
+
+export const getAllCoursesIds = async () => {
+  const response = await axios.get('/api/admin/courses-ids');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}

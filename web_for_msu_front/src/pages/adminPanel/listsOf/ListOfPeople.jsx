@@ -30,7 +30,7 @@ const ListOfPeople = () => {
       id: 0,
       name: 'Иванов Иван Иванович',
       email: 'ivan@mail.ru',
-      class: 8,
+      grade: 8,
       status: 'Ученик',
       date: '2024-11-10',
       authorized: false,
@@ -39,7 +39,7 @@ const ListOfPeople = () => {
       id: 0,
       name: 'Иванов Станислав Иванович',
       email: 'ivanivan@mail.ru',
-      class: 11,
+      grade: 11,
       status: 'Выпускник',
       date: '2024-11-10',
       authorized: true,
@@ -48,7 +48,7 @@ const ListOfPeople = () => {
       id: 0,
       name: 'Иванов Иван Иванович',
       email: 'ivan@mail.ru',
-      class: 8,
+      grade: 8,
       status: 'Бывший ученик',
       date: '2024-11-10',
       authorized: true,
@@ -162,7 +162,7 @@ const ListOfPeople = () => {
           {people.map((person) => (
             <div key={person.id} className={style.container}>
               <h3 className={style.item}>{person.name}</h3>
-              <p className={style.item}>{person.class}</p>
+              <p className={style.item}>{person.grade}</p>
               <h3 className={style.item}><span>{person.status}</span></h3>
               <div style={{
                 display: 'flex',

@@ -160,7 +160,7 @@ const TeacherMarks = ({courseId}) => {
     ]
   });
 
-  useEffect(() => {
+  /*useEffect(() => {
     const getMarks = async () => {
       try {
         const data = await getTeacherMarksByCourseId({courseId});
@@ -172,7 +172,7 @@ const TeacherMarks = ({courseId}) => {
     }
 
     getMarks();
-  }, [marks])
+  }, [marks])*/
 
   const setPupilMark = async (e, pupilIndex, index) => {
     marks.pupils[pupilIndex].marks[index] = e.target.value;
