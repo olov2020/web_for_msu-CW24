@@ -5,4 +5,3 @@ from .news_service import NewsService
 from .pupil_service import PupilService
 from .teacher_service import TeacherService
 from .user_service import UserService
-from .entrant_service import EntrantService

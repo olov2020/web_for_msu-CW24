@@ -12,4 +12,3 @@ from .user import User
 from .user_role import user_role
 from .course_registration_period import CourseRegistrationPeriod
 from .registration_period import RegistrationPeriod
-from .entrant import Entrant

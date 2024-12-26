@@ -10,10 +10,12 @@ from flask_jwt_extended import get_jwt_identity, create_access_token, create_ref
 from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
 
+from web_for_msu_back.app.dto.teacher_admin_list import TeacherAdminListDTO
+from web_for_msu_back.app.dto.pupil_admin_list import PupilAdminListDTO
 from web_for_msu_back.app.dto.login import LoginDTO
 from web_for_msu_back.app.dto.role import RoleDTO
 from web_for_msu_back.app.dto.user_info import UserInfoDTO
-from web_for_msu_back.app.models import User, Role, Teacher, Pupil, RegistrationPeriod
+from web_for_msu_back.app.models import User, Role, Teacher, Pupil, RegistrationPeriod, user_role
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -134,35 +136,63 @@ class UserService:
         roles = Role.query.all()
         return [RoleDTO().dump({"name": role.name}) for role in roles], 200
 
-    def get_all_users_with_role(self, role: str) -> (list[UserInfoDTO], int):
-        # TODO add entrant, make a function with unique output for entrant, pupil, teacher
-        match role:
-            case "teacher":
-                role_class = Teacher
-            case "pupil":
-                role_class = Pupil
-            case _:
-                role_class = Teacher
-
-        users = role_class.query.with_entities(
-            role_class.name,
-            role_class.surname,
-            role_class.patronymic,
-            User.image,
-            User.authorized
-        ).join(User, role_class.user_id == User.id)
+    def get_pupil_admin_list(self) -> (list[PupilAdminListDTO], int):
+        users = Pupil.query.with_entities(
+            User.id,
+            User.email,
+            Pupil.name,
+            Pupil.surname,
+            Pupil.patronymic,
+            Pupil.school_grade,
+            User.authorized,
+        ).join(User, Pupil.user_id == User.id)
 
         result = []
         for user in users:
+            roles = (Role.query
+                     .join(user_role, user_role.c.role_id == Role.id)
+                     .filter(user_role.c.user_id == user.id).all())
+            role_names = [role.name for role in roles]
+            status = "Ученик"
+            if "former_pupil" in role_names:
+                status = "Бывший ученик"
+            elif "graduated_pupil" in role_names:
+                status = "Выпускник"
             data = {
-                "name": user.name,
-                "surname": user.surname,
-                "patronymic": user.patronymic,
-                "photo": self.image_service.get_from_yandex_s3("images", user.image),
-                "status": role,
+                "id": user.id,
+                "name": f"{user.surname} {user.name} {user.patronymic}",
+                "email": user.email,
+                "grade": user.school_grade,
+                "status": status,
                 "authorized": user.authorized
             }
-            result.append(UserInfoDTO().dump(data))
+            result.append(PupilAdminListDTO().dump(data))
+        return result, 200
+
+    def get_teacher_admin_list(self) -> (list[TeacherAdminListDTO], int):
+        users = Pupil.query.with_entities(
+            User.id,
+            User.email,
+            Teacher.name,
+            Teacher.surname,
+            Teacher.patronymic,
+            User.authorized,
+        ).join(User, Teacher.user_id == User.id)
+
+        result = []
+        for user in users:
+            roles = (Role.query
+                     .join(user_role, user_role.c.role_id == Role.id)
+                     .filter(user_role.c.user_id == user.id).all())
+            role_names = [role.name for role in roles]
+            data = {
+                "id": user.id,
+                "name": f"{user.surname} {user.name} {user.patronymic}",
+                "email": user.email,
+                "roles": role_names,
+                "authorized": user.authorized
+            }
+            result.append(TeacherAdminListDTO().dump(data))
         return result, 200
 
     def add_role(self, user_id: int, role: str) -> (dict, int):

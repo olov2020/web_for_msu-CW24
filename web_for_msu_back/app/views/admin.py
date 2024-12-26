@@ -89,6 +89,21 @@ class AdminView(FlaskView):
         response, code = user_service.close_registration()
         return response, code
 
+    @route("/list/<role>/", methods=["GET"])
+    @auth_required
+    @roles_required('admin')
+    def pupil_admin_list(self, role: str):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        match role:
+            case "pupils":
+                users, code = user_service.get_pupil_admin_list()
+            case "teachers":
+                users, code = user_service.get_teacher_admin_list()
+            case _:
+                return {"error": "Нет такого списка"}, 404
+        return jsonify(users), code
+
     @route("/role/add/<role>/<user_id>/", methods=["POST"])
     @auth_required
     @roles_required('admin')
