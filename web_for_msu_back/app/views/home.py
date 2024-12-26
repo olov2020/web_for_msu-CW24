@@ -146,10 +146,3 @@ class HomeView(FlaskView):
         teacher_service: TeacherService = services["teacher_service"]
         teachers, code = teacher_service.get_entrance_tests_teachers(test_type)
         return jsonify(teachers), code
-
-    @route("/events/tests/registration/", methods=["POST"])
-    def add_entrant(self):
-        services = get_services()
-        entrant_service: EntrantService = services["entrant_service"]
-        response, code = entrant_service.add_entrant(request)
-        return response, code
