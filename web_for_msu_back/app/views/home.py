@@ -12,7 +12,7 @@ from web_for_msu_back.app.functions import get_next_monday, auth_required, get_s
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import UserService, CourseService, TeacherService, EntrantService
+    from web_for_msu_back.app.services import UserService, CourseService, TeacherService
 
 
 class HomeView(FlaskView):
@@ -114,13 +114,6 @@ class HomeView(FlaskView):
         user_service: UserService = services["user_service"]
         roles, code = user_service.get_all_roles()
         return jsonify(roles), code
-
-    @method("GET")
-    def all_users_with_role(self, role: str):
-        services = get_services()
-        user_service: UserService = services["user_service"]
-        users, code = user_service.get_all_users_with_role(role)
-        return jsonify(users), code
 
     @route("/select_courses/status/", methods=["GET"])
     def is_course_selection_opened(self):
