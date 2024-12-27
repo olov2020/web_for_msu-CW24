@@ -29,7 +29,8 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
       return errors.empty;
     }
 
-    if (name === 'agreementAb' && !values.includes(inputValue)) {
+    // eslint-disable-next-line react/prop-types
+    if (name.includes('course') && !values.includes(inputValue)) {
       return errors.notInList;
     }
 

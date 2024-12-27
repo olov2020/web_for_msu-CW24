@@ -18,7 +18,6 @@ import {
   REGISTRATION_PUPIL_ROUTE,
   REGISTRATION_TEACHER_ROUTE,
   SCHEDULE_ROUTE,
-  ADMIN_MARKS_ROUTE,
   EVENTS_TESTS_ROUTE,
   EVENTS_OPEN_CHAMPIONSHIP_ROUTE,
   EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
@@ -136,6 +135,9 @@ export const authRoutes = [
     path: SCHEDULE_ROUTE,
     Element: <Schedule/>,
   },
+]
+
+export const pupilRoutes = [
   {
     path: COURSES_SELECT_ROUTE,
     Element: <CoursesSelect/>,
@@ -171,9 +173,5 @@ export const adminRoutes = [
   {
     path: ADMIN_LISTS_ROUTE,
     Element: <ListOfPeople/>,
-  },
-  {
-    path: ADMIN_MARKS_ROUTE,
-    Element: <Marks/>,
   },
 ]

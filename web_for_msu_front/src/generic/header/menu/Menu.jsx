@@ -83,8 +83,11 @@ const Menu = () => {
     menu[1].dropdown.push({
       title: 'Мои Курсы', link: MY_COURSES_ROUTE, id: menu[1].length,
     })
+  }
+
+  if (userStatus === 'pupil') {
     menu[1].dropdown.push({
-      title: userStatus.includes('pupil') ? 'Выбор курсов' : 'Списки заявок на курсы', link: COURSES_SELECT_ROUTE, id: menu[1].length,
+      title: 'Выбор курсов', link: COURSES_SELECT_ROUTE, id: menu[1].length,
     })
   }
 
@@ -110,7 +113,7 @@ const Menu = () => {
     <nav className={style.menu}>
       {menu.map(menuItem => (
         // eslint-disable-next-line react/jsx-key
-        <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown} />
+        <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown}/>
       ))}
     </nav>
   );

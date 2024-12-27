@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import PupilMarks from "../marks/PupilMarks.jsx";
 import TeacherMarks from "../marks/TeacherMarks.jsx";
 import ChangeCourse from "../changeCourse/ChangeCourse.jsx";
+import ApprovePupils from "../approvePupils/ApprovePupils.jsx";
 
 const CourseItem = () => {
 
@@ -116,6 +117,14 @@ const CourseItem = () => {
           width: '90%',
         }}>
           <ChangeCourse/>
+        </section>
+      }
+
+      {userStatus.includes('teacher') &&
+        <section style={{
+          width: '90%',
+        }}>
+          <ApprovePupils courseId={state.courseId}/>
         </section>
       }
 

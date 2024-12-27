@@ -1,20 +1,11 @@
 import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
 import {useNavigate} from "react-router-dom";
-import {closeRegistrationCourses, openRegistrationCourses, openRegistrationTests} from "../../api/adminApi.js";
-import {ADMIN_MARKS_ROUTE} from "../../routing/consts.js";
+import {closeRegistrationCourses, openRegistrationCourses} from "../../api/adminApi.js";
+import {MARKS_ROUTE} from "../../routing/consts.js";
 
 const AdminPanel = () => {
 
   const navigate = useNavigate();
-
-  const openRegistration = async () => {
-    const data = await openRegistrationTests();
-    if (data) {
-      alert('Регистрация на вступительные открыта!');
-    } else {
-      alert('Что-то пошло не так... Регистрация не открыта');
-    }
-  }
 
   const openCourseRegistration = async () => {
     const data = await openRegistrationCourses();
@@ -43,10 +34,10 @@ const AdminPanel = () => {
         width: '30%',
         gap: '0 1rem',
       }}>
-          <ButtonSubmit text='Открыть запись на курсы' onClick={openCourseRegistration}/>
-          <ButtonSubmit text='Закрыть запись на курсы' onClick={closeCourseRegistration}
-                        type='delete'
-          />
+        <ButtonSubmit text='Открыть запись на курсы' onClick={openCourseRegistration}/>
+        <ButtonSubmit text='Закрыть запись на курсы' onClick={closeCourseRegistration}
+                      type='delete'
+        />
       </section>
 
       <h1 style={{
@@ -61,7 +52,7 @@ const AdminPanel = () => {
       }}>
         <ButtonSubmit text='Список всех учеников' onClick={() => navigate('/admin/list/pupils')}/>
         <ButtonSubmit text='Список всех преподавателей' onClick={() => navigate('/admin/list/teachers')}/>
-        <ButtonSubmit text='Список всех ведомостей' onClick={() => navigate(ADMIN_MARKS_ROUTE)}/>
+        <ButtonSubmit text='Список всех ведомостей' onClick={() => navigate(MARKS_ROUTE)}/>
       </section>
     </article>
   );

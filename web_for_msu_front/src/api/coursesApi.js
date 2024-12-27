@@ -74,8 +74,8 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
 }
 
 export const updateTeacherMarksByCourseId = async (
-                                                     courseId,
-                                                     marks) => {
+  courseId,
+  marks) => {
 
 
   const response = await axios.put(`/api/teacher/update_journal/${courseId}`, marks)
@@ -110,4 +110,24 @@ export const courseChange = async (id, file) => {
   }
 
   return new Error(`Курс не изменен, произошла ошибка ${response.data.message}`);
+}
+
+export const approvePupilsOnCourse = async (courseId, pupilId) => {
+  const response = await axios.put(`/api/teacher/approve_pupils/${courseId}/${pupilId}`);
+
+  try {
+    return response.status === 200;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getAllPupilsOnCourse = async ({courseId}) => {
+  const response = await axios.get(`/api/courses/get_pupils/${courseId}`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 }

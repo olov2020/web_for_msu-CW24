@@ -24,7 +24,6 @@ export const TEACHERS_ROUTE = '/teachers';
 
 export const ADMIN_ROUTE = '/admin';
 export const ADMIN_LISTS_ROUTE = '/admin/list/:people';
-export const ADMIN_MARKS_ROUTE = '/admin/marks';
 
 export const EVENTS_TESTS_ROUTE = '/events/entrance-tests';
 export const EVENTS_OPEN_CHAMPIONSHIP_ROUTE = '/events/open-championship';

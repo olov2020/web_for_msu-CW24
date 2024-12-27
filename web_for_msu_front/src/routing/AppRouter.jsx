@@ -6,7 +6,7 @@ import {
   coursemakerRoutes,
   marksmakerRoutes,
   newsmakerRoutes,
-  publicRoutes
+  publicRoutes, pupilRoutes
 } from "./routes.jsx";
 import {NOT_FOUND_ROUTE} from "./consts.js";
 import {useEffect} from "react";
@@ -32,6 +32,10 @@ const AppRouter = () => {
       })}
 
       {(authStatus.includes('admin') || authStatus.includes('newsmaker')) && newsmakerRoutes.map(({path, Element}) => {
+        return <Route key={path} path={path} element={Element}/>
+      })}
+
+      {authStatus.includes('pupil') && pupilRoutes.map(({path, Element}) => {
         return <Route key={path} path={path} element={Element}/>
       })}
 
