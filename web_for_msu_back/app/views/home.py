@@ -34,7 +34,6 @@ class HomeView(FlaskView):
         return response, code
 
     @method("POST")
-    @jwt_required(refresh=True)
     def refresh(self):
         services = get_services()
         user_service: UserService = services["user_service"]
