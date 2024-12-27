@@ -35,10 +35,10 @@ class Teacher(db.Model):
 
     # TODO add foreign keys: entrance_id	organizational_meeting_ids	FA_id	KNR_id	KOTE_id	VS_id	NS_ids	OK_ids	OC_ids	LS_id	graduation_id	council_id	method_council_id
 
-    def __init__(self, user_id, email, name, surname, patronymic, second_surname, nickname, birth_date, phone, telegram,
-                 vk, school, school_date_start, school_date_end, university, university_date_start, university_date_end,
-                 workplace, registration_address,
-                 was_pupil):
+    def __init__(self, user_id, email, name, surname, birth_date, phone, school, school_date_end, university,
+                 university_date_end, registration_address,
+                 was_pupil, patronymic=None, second_surname=None, nickname=None, telegram=None,
+                 vk=None, school_date_start=None, university_date_start=None, workplace=None):
         self.user_id = user_id
         self.email = email
         self.name = name
