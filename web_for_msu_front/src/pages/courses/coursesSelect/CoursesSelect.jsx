@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {getCoursesSelect, getCoursesSelectStatus} from "../../../api/coursesApi.js";
+import {getCoursesSelectStatus} from "../../../api/coursesApi.js";
 import styleCourse from "../course.module.css";
 import InputDropdown from "../../../generic/form/inputs/userInputs/InputDropdown.jsx";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";

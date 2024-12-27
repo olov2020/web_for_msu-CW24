@@ -1,8 +1,5 @@
 import {jwtDecode} from 'jwt-decode'
-import {HOME_ROUTE} from "../routing/consts.js";
 import {$authHost, $host} from "./axiosApi.js";
-import {useNavigate} from "react-router-dom";
-import axios from "axios";
 
 export const userChangePhoto = async ({photo}) => {
   const response = await $authHost.post('/api/account/photo', {photo}, {

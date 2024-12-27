@@ -1,6 +1,5 @@
 import Form from "../../../generic/form/Form.jsx";
 
-
 const NewsCreate = () => {
   return (
     <article>

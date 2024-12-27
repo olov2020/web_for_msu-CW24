@@ -1,8 +1,9 @@
-import {jwtDecode} from 'jwt-decode'
 import axios from "axios";
+import {$authHost, $host} from "./axiosApi.js";
+import {jwtDecode} from "jwt-decode";
 
 export const getAllNews = async () => {
-  const response = await axios.get(`/api/news`)
+  const response = await $host.get(`/api/news`)
 
   try {
     return response.data;
@@ -12,11 +13,22 @@ export const getAllNews = async () => {
 }
 
 export const addNewsItem = async (title, description, photo) => {
-  const response = await axios.post('/api/news/create', {title, description, photo}, {})
+  const formData = new FormData();
+  const value = {
+    title: title,
+    description: description,
+  }
+  formData.append('data', JSON.stringify(value));
+  formData.append('photo', photo);
+
+  const response = await $authHost.post('/api/news/create', formData, {
+    headers: {
+      "Content-Type": 'multipart/form-data'
+    }
+  })
 
   try {
-    localStorage.setItem('token', response.data.accessToken);
-    return jwtDecode(response.data.accessToken);
+    return response.data;
   } catch (error) {
     console.log(error);
   }

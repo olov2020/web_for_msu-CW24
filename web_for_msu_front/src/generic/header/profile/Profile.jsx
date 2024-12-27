@@ -1,10 +1,8 @@
 import style from './profile.module.css'
 import styleHeader from "../header.module.css";
-import {userLogout} from "../../../api/userApi.js";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
-import ButtonSubmit from "../../form/submit/ButtonSubmit.jsx";
 
 const Profile = () => {
 

@@ -69,9 +69,6 @@ const Menu = () => {
         {
           title: 'Преподаватели и контакты', link: TEACHERS_ROUTE, id: 1,
         },
-        /*{
-          title: 'Список учащихся', link: NOT_FOUND_ROUTE, id: 2,
-        },*/
       ],
     },
   ]

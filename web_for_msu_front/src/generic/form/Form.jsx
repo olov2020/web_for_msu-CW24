@@ -14,7 +14,7 @@ import InputYear from "./inputs/userInputs/InputYear.jsx";
 import InputMessenger from "./inputs/userInputs/InputMessenger.jsx";
 import InputDropdown from "./inputs/userInputs/InputDropdown.jsx";
 import InputCheckbox from "./inputs/userInputs/InputCheckbox.jsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import InputPhoto from "./inputs/userInputs/InputPhoto.jsx";
 import InputNewsTitle from "./inputs/newsInputs/InputNewsTitle.jsx";
 import InputNewsPhoto from "./inputs/newsInputs/InputNewsPhoto.jsx";
@@ -39,12 +39,6 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       courseChange: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription'],
     }
-
-  /*useEffect(() => {
-    requiredValues[type].forEach(item => {
-      console.log(formValues[item]);
-    })
-  }, [formValues]);*/
 
   const navigate = useNavigate();
 

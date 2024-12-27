@@ -13,6 +13,7 @@ import {useEffect} from "react";
 
 const AppRouter = () => {
   const authStatus = useSelector(state => state.user.authStatus);
+  console.log(authStatus);
 
   const { pathname } = useLocation();
 

@@ -28,7 +28,7 @@ const Account = () => {
   return (
     <section className={style.account}>
       <div>
-        <Form inputs={['photo']} values={[user.name, user.surname, user.lastname, user.email]}
+        <Form inputs={['photo']}
               buttonText='Сменить фото' type='userChangePhoto'/>
       </div>
 
@@ -42,10 +42,10 @@ const Account = () => {
 
         {user.authStatus.includes('pupil') ?
           <Form inputs={['name', 'surname', 'lastname', 'email', 'phone', 'school']}
-                values={[user.name, user.surname, user.lastname, user.email]}
+
                 buttonText='Обновить данные' type='pupilChangeData'/> :
           <Form inputs={['name', 'surname', 'lastname', 'email', 'phone', 'university', 'work']}
-                values={[user.name, user.surname, user.lastname, user.email]}
+
                 buttonText='Обновить данные' type='teacherChangeData'/>
         }
       </div>
