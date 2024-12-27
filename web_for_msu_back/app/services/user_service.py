@@ -6,14 +6,14 @@ from typing import TYPE_CHECKING
 
 import flask
 import pytz
-from flask_jwt_extended import get_jwt_identity, create_access_token, create_refresh_token
+from flask_jwt_extended import get_jwt_identity, create_access_token, create_refresh_token, decode_token
 from marshmallow import ValidationError
 from werkzeug.datastructures import FileStorage
 
-from web_for_msu_back.app.dto.teacher_admin_list import TeacherAdminListDTO
-from web_for_msu_back.app.dto.pupil_admin_list import PupilAdminListDTO
 from web_for_msu_back.app.dto.login import LoginDTO
+from web_for_msu_back.app.dto.pupil_admin_list import PupilAdminListDTO
 from web_for_msu_back.app.dto.role import RoleDTO
+from web_for_msu_back.app.dto.teacher_admin_list import TeacherAdminListDTO
 from web_for_msu_back.app.dto.user_info import UserInfoDTO
 from web_for_msu_back.app.models import User, Role, Teacher, Pupil, RegistrationPeriod, user_role
 
@@ -108,8 +108,32 @@ class UserService:
 
         return {"error": "Неверные данные"}, 401
 
-    def refresh(self) -> (dict, int):
-        identity = get_jwt_identity()
+    def refresh(self, request: flask.Request) -> (dict, int):
+
+        data = request.get_json()
+        if not data or "refresh_token" not in data:
+            return {"error": "Неправильный запрос"}, 400
+
+        refresh_token = data["refresh_token"]
+
+        try:
+            decoded_token = decode_token(refresh_token)
+            if decoded_token["type"] != "refresh":
+                return {"error": "Неправильный тип токена, ожидается refresh"}, 400
+
+            identity = decoded_token["sub"]
+            email = identity["email"]
+        except Exception as e:
+            return {"message": f"Неправильный refresh token: {str(e)}"}, 401
+
+        user = self.get_user_by_email(email)
+        identity = {'id': user.id,
+                    'name': user.get_name(),
+                    'patronymic': user.get_patronymic(),
+                    'surname': user.get_surname(),
+                    'email': email,
+                    'image': self.image_service.get_from_yandex_s3("images", user.image),
+                    'roles': user.get_roles()}
         access_token = create_access_token(identity=identity, fresh=False)
         return {"access_token": access_token}, 200
 
