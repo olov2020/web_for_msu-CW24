@@ -42,11 +42,11 @@ class UserService:
         roles = []
         user_exists = False
         data = json.loads(request.form.get('data'))
-        if self.get_user_by_email(data['email']) is not None:
-            if self.teacher_service.get_teacher_by_email(data['email']) is not None:
+        if self.get_user_by_email(data['email']):
+            if self.teacher_service.get_teacher_by_email(data['email']):
                 return {'error': 'Преподаватель с такой почтой уже существует'}, 400
             pupil = self.pupil_service.get_pupil_by_email(data['email'])
-            if pupil.name == data['name'] and pupil.surname == data['surname']:
+            if pupil and pupil.name == data['name'] and pupil.surname == data['surname']:
                 roles = [Role.query.filter_by(name='pupil').first()]
                 user_exists = True
             else:

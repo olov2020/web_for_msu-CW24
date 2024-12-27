@@ -11,7 +11,7 @@ class Teacher(db.Model):
     surname = db.Column(db.String(), nullable=False)
     patronymic = db.Column(db.String())
     second_surname = db.Column(db.String())
-    nickname = db.Column(db.String(), nullable=False)
+    nickname = db.Column(db.String(), nullable=False, default="Преподаватель")
     birth_date = db.Column(db.Date(), nullable=False)
     date_of_death = db.Column(db.Date())
     phone = db.Column(db.String(), nullable=False)
