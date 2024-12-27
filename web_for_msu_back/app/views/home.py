@@ -38,7 +38,7 @@ class HomeView(FlaskView):
     def refresh(self):
         services = get_services()
         user_service: UserService = services["user_service"]
-        response, code = user_service.refresh()
+        response, code = user_service.refresh(request)
         return response, code
 
     # @main.route('/account', methods=['GET', 'POST'])

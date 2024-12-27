@@ -24,7 +24,7 @@ class TeacherDTO(Schema):
     university = fields.Str(required=True, error_messages={"required": "Поле университет обязательно."})
     university_date_start = fields.Int(allow_none=True)
     university_date_end = fields.Int(allow_none=True)
-    workplace = fields.Str(required=True)
+    workplace = fields.Str(allow_none=True)
     passport_number = fields.Str(allow_none=True)
     passport_series = fields.Str(allow_none=True)
     passport_date = fields.Date(allow_none=True)

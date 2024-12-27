@@ -12,13 +12,14 @@ from web_for_msu_back.app.models import Teacher, User, user_role, Role
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import UserService
+    from web_for_msu_back.app.services import UserService, ImageService
 
 
 class TeacherService:
-    def __init__(self, db, user_service: UserService):
+    def __init__(self, db, user_service: UserService, image_service: ImageService):
         self.db = db
         self.user_service = user_service
+        self.image_service = image_service
 
     def add_teacher(self, request: flask.Request):
         result, code = self.user_service.add_teacher(request)
@@ -32,6 +33,7 @@ class TeacherService:
         except ValidationError as e:
             return e.messages, 400
         teacher.user_id = result['user_id']
+        teacher.agreement = self.image_service.save_user_agreement(request.files['agreement'])
         self.db.session.add(teacher)
         self.db.session.commit()
         return {'msg': 'Преподаватель успешно добавлен'}, 201
