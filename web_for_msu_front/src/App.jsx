@@ -8,18 +8,6 @@ import {setAuthFromToken, setNotAuthAction} from "./store/UserReducers.js";
 
 const App = () => {
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      dispatch(setAuthFromToken(token));
-    } else {
-      dispatch(setNotAuthAction());
-    }
-  }, [dispatch]);
-
   return (
     <BrowserRouter>
       <Header/>

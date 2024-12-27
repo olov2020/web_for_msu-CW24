@@ -26,7 +26,7 @@ import {courseAdd, courseChange} from "../../api/coursesApi.js";
 import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
 
 // eslint-disable-next-line react/prop-types
-const Form = ({inputs = [], values = {}, buttonText, type}) => {
+const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}}) => {
 
   const formValues = useState({});
   const formErrors = useState({});
@@ -51,7 +51,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     e.preventDefault();
     if (type === 'login') {
       if (checkFormErrors()) {
-        await userLogin(formValues.email, formValues.password);
+        await userLogin(formValues.email, formValues.password, dispatch);
         navigate(HOME_ROUTE);
       } else {
         alert('Заполните все обязательные поля.');

@@ -261,7 +261,7 @@ const Courses = () => {
   }, [])*/
 
 
-  /*useEffect(() => {
+  useEffect(() => {
     const getCourses = async () => {
       const data = url === '/courses/my' ?
         await getMyCourses() :
@@ -273,7 +273,7 @@ const Courses = () => {
     }
 
     getCourses();
-  }, [url]);*/
+  }, [url]);
 
 
   return (

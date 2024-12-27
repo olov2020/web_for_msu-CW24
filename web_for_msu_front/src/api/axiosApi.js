@@ -1,7 +1,6 @@
-// src/api/userApi.js
 import axios from "axios";
-import { LOGIN_ROUTE } from "../routing/consts.js";
-import { setAuthFromToken, setNotAuthAction } from "../store/UserReducers.js";
+import {LOGIN_ROUTE} from "../routing/consts.js";
+import {setAuthFromToken, setNotAuthAction} from "../store/UserReducers.js";
 import store from "../store/index.js";
 
 export const $host = axios.create({
@@ -13,11 +12,16 @@ export const $authHost = axios.create({
 });
 
 const authInterceptor = config => {
-  config.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = `Bearer ${token}`;
+  console.log(token)
   return config;
 };
 
-$authHost.interceptors.request.use(authInterceptor);
+$authHost.interceptors.request.use(authInterceptor, error => {
+  console.error("Interceptor error:", error);
+  return Promise.reject(error);
+});
 
 // Interceptor to handle token refresh
 $authHost.interceptors.response.use(
@@ -31,6 +35,7 @@ $authHost.interceptors.response.use(
 
       try {
         const refreshToken = localStorage.getItem("refreshToken");
+
         const formData = new FormData();
         formData.append("refresh_token", refreshToken);
         const response = await $host.post("/api/home/refresh", formData, {
@@ -47,7 +52,7 @@ $authHost.interceptors.response.use(
         store.dispatch(setAuthFromToken(newAccessToken));
 
         // Update the authorization header with the new token
-        originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         // Retry the original request
         return $authHost(originalRequest);

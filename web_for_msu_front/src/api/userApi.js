@@ -1,5 +1,6 @@
 import {jwtDecode} from 'jwt-decode'
 import {$authHost, $host} from "./axiosApi.js";
+import {setAuthFromToken} from "../store/UserReducers.js";
 
 export const userChangePhoto = async ({photo}) => {
   const response = await $authHost.post('/api/account/photo', {photo}, {
@@ -54,18 +55,20 @@ export const teacherChangeData = async ({name, surname, lastname, email, phone, 
   }
 }
 
-export const userLogin = async (email, password) => {
+export const userLogin = async (email, password, dispatch) => {
   console.log(email, password);
   const response = await $host.post('/api/home/login', {email, password}, {
     headers: {
-      'content-type': 'application/json'
+      'Content-Type': 'application/json'
     }
   })
 
   try {
     localStorage.setItem('token', response.data.access_token)
     localStorage.setItem('refreshToken', response.data.refresh_token)
-    return jwtDecode(response.data.access_token);
+
+    dispatch(setAuthFromToken(response.data.access_token));
+    return true;
   } catch (error) {
     console.log(error);
     return false;
