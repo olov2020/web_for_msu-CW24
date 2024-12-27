@@ -127,6 +127,8 @@ class UserService:
             return {"message": f"Неправильный refresh token: {str(e)}"}, 401
 
         user = self.get_user_by_email(email)
+        if not user:
+            return {"error": "Войдите в аккаунт еще раз"}, 404
         identity = {'id': user.id,
                     'name': user.get_name(),
                     'patronymic': user.get_patronymic(),
