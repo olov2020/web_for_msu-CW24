@@ -35,7 +35,7 @@ class UserService:
             return {'error': 'Пользователь с такой почтой уже существует'}, 400
         roles = [Role.query.filter_by(name='pupil').first()]
         user = self.add_user(email=data['email'], password=data['password'], roles=roles,
-                             user_image=request.files['image'])
+                             user_image=request.files.get('image', None))
         return {'user_id': user.id}, 201
 
     def add_teacher(self, request: flask.Request) -> (dict, int):
@@ -53,7 +53,7 @@ class UserService:
                 return {'error': 'Пользователь с такой почтой уже существует'}, 400
         roles.append(Role.query.filter_by(name='teacher').first())
         user = self.add_user(email=data['email'], password=data['password'], roles=roles,
-                             user_image=request.files['image'], user_exists=user_exists)
+                             user_image=request.files.get('image', None), user_exists=user_exists)
         return {'user_id': user.id, 'user_exists': user_exists}, 201
 
     def add_user(self, email: str, password: str, roles: list[Role], user_image: FileStorage = None,
