@@ -4,7 +4,7 @@ from web_for_msu_back.app.services import PupilService, ImageService, UserServic
 
 
 def create_services() -> dict[str, object]:
-    teacher_service = TeacherService(db, None)  # Временно передаём None
+    teacher_service = TeacherService(db, None, None)  # Временно передаём None
     course_service = CourseService(db, teacher_service)
     image_service = ImageService(None)
     pupil_service = PupilService(db, None, None)
@@ -13,6 +13,7 @@ def create_services() -> dict[str, object]:
     image_service.user_service = user_service
     pupil_service.user_service = user_service
     pupil_service.image_service = image_service
+    teacher_service.image_service = image_service
     mark_service = MarkService(db, course_service, pupil_service)
     news_service = NewsService(db, image_service)
     return {
