@@ -3,6 +3,6 @@ import { userReducer } from './UserReducers.js'
 
 const rootReducer = combineReducers({
   user: userReducer,
-})
+});
 
-export const store = createStore(rootReducer)
+export const store = createStore(rootReducer);

@@ -67,18 +67,23 @@ export const teacherChangeData = async ({name, surname, lastname, email, phone, 
   }
 }
 
-export const userLogin = async ({email, password}) => {
-  const response = await axios.post('/api/signIn', {email, password}, {
+export const userLogin = async (email, password) => {
+  console.log(email, password);
+  const response = await axios.post('/api/home/login', {email, password}, {
     headers: {
       'content-type': 'application/json'
     }
   })
 
   try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
+    localStorage.setItem('token', response.data.access_token)
+    localStorage.setItem('refreshToken', response.data.refresh_token)
+    console.log(response.data.access_token)
+    console.log(response.data.refresh_token)
+    return jwtDecode(response.data.access_token)
   } catch (error) {
     console.log(error);
+    return false;
   }
 }
 
@@ -89,8 +94,8 @@ export const pupilRegistration = async (formValues) => {
       "surname": "Doe",
       "patronymic": "Ivanovich",
       "birth_date": "2005-05-20",
-      "email": "aaaaaa@example.com",
-      "password": "password123",
+      "email": "bb@example.com",
+      "password": "QWer1234",
       "phone": "+1234567890",
       "school_grade": 10,
       "school": "School No.1",
@@ -107,9 +112,6 @@ export const pupilRegistration = async (formValues) => {
   formData.append('data', JSON.stringify(value));
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
-  formData.forEach((value) => {
-    console.log(value);
-  })
 
   const response = await axios.post(`/api/pupil/add_pupil`, formData, {
     headers: {
