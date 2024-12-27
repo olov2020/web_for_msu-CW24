@@ -99,6 +99,7 @@ class ImageService:
     def change_user_image(self, image, user_id):
         filename = "default.svg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         image.save(path)
         self.reduce_image_size(path, path)
         image_name = self.generate_unique_imagename()
@@ -112,8 +113,8 @@ class ImageService:
 
     def save_user_image(self, image):
         filename = "default.svg"
-        os.makedirs(os.path.dirname(current_app.config['UPLOAD_FOLDER']), exist_ok=True)
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         image.save(path)
         self.reduce_image_size(path, path)
         image_name = self.generate_unique_imagename()
@@ -124,6 +125,7 @@ class ImageService:
     def save_user_agreement(self, agreement):
         filename = self.generate_unique_filename(agreement.filename)
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         agreement.save(path)
         self.upload_to_yandex_s3(path, "documents", filename)
         os.remove(path)
@@ -132,6 +134,7 @@ class ImageService:
     def save_news_photo(self, photo):
         filename = self.generate_unique_filename(photo.filename)
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         photo.save(path)
         self.upload_to_yandex_s3(path, "news", filename)
         os.remove(path)
