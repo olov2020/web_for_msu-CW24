@@ -33,7 +33,11 @@ $authHost.interceptors.response.use(
         const refreshToken = localStorage.getItem("refreshToken");
         const formData = new FormData();
         formData.append("refresh_token", refreshToken);
-        const response = await $host.post("/api/home/refresh", formData);
+        const response = await $host.post("/api/home/refresh", formData, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
         const newAccessToken = response.data.access_token;
 
         // Update the token in local storage

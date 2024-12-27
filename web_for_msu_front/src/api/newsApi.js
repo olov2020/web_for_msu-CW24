@@ -1,6 +1,5 @@
 import axios from "axios";
 import {$authHost, $host} from "./axiosApi.js";
-import {jwtDecode} from "jwt-decode";
 
 export const getAllNews = async () => {
   const response = await $host.get(`/api/news`)
@@ -21,6 +20,9 @@ export const addNewsItem = async (title, description, photo) => {
   formData.append('data', JSON.stringify(value));
   formData.append('photo', photo);
 
+  formData.forEach((value) => {
+    console.log(value)
+  })
   const response = await $authHost.post('/api/news/create', formData, {
     headers: {
       "Content-Type": 'multipart/form-data'
