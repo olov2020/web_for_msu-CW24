@@ -112,6 +112,7 @@ class ImageService:
 
     def save_user_image(self, image):
         filename = "default.svg"
+        os.makedirs(os.path.dirname(current_app.config['UPLOAD_FOLDER']), exist_ok=True)
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
         self.reduce_image_size(path, path)
