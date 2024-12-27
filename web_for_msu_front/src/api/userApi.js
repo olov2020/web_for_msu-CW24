@@ -83,17 +83,46 @@ export const userLogin = async ({email, password}) => {
 }
 
 export const pupilRegistration = async (formValues) => {
-  const response = await axios.post(`/api/${REGISTRATION_PUPIL_ROUTE}`, formValues, {
-    headers: {
-      'content-type': 'application/json'
-    }
+  const formData = new FormData();
+  const value = {
+      "name": "John",
+      "surname": "Doe",
+      "patronymic": "Ivanovich",
+      "birth_date": "2005-05-20",
+      "email": "aaaaaa@example.com",
+      "password": "password123",
+      "phone": "+1234567890",
+      "school_grade": 10,
+      "school": "School No.1",
+      "registration_address": "123 Main St",
+      "telegram": "@johndoe",
+      "vk": "johndoevk",
+      "parent1_surname": "Doe",
+      "parent1_name": "Jane",
+      "parent1_patronymic": "Ivanovna",
+      "parent1_phone": "+0987654321",
+      "parent1_email": "jane.doe@example.com",
+      "mailing": "True"
+    };
+  formData.append('data', JSON.stringify(value));
+  formData.append('image', formValues.photo);
+  formData.append('agreement', formValues.agreement);
+  formData.forEach((value) => {
+    console.log(value);
   })
 
+  const response = await axios.post(`/api/pupil/add_pupil`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+
   try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
+    console.log("Response from server:", response.data);
+    return response.status === 200;
   } catch (error) {
     console.log(error);
+    return false;
   }
 }
 

@@ -33,8 +33,8 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   const requiredValues =
     {
       login: ['email', 'password'],
-      pupilRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
-      teacherRegistration: ['email', 'password', 'name', 'surname', 'birthdate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
+      pupilRegistration: ['email', 'password', 'name', 'surname', 'birthDate', 'phone', 'school', 'schoolEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
+      teacherRegistration: ['email', 'password', 'name', 'surname', 'birthDate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
       courseAdd: ['courseFile'],
       courseChange: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription'],
@@ -50,7 +50,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
   const checkFormErrors = () => {
     console.log(formErrors)
-    return requiredValues[type].every(item => !formErrors[item]);
+    return requiredValues[type].every(item => !formErrors[item]) //&& !formValues[item]);
   }
 
   const onSubmit = async (e) => {

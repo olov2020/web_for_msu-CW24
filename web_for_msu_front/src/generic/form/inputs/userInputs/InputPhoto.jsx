@@ -6,44 +6,45 @@ import defaultUserImage from '../../../../../public/generic/default_user.svg'
 // eslint-disable-next-line react/prop-types
 const InputPhoto = ({name = '', fieldName, accept = '', required = false, setValue, formErrors}) => {
 
-  const uploadedImage = useRef(null);
-  const imageUploader = useRef(null);
+  /*const uploadedImage = useRef(null);
+  const imageUploader = useRef(null);*/
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (uploadedImage.current) {
       uploadedImage.current.src = defaultUserImage;
       setValue(uploadedImage.current.src);
     }
-  }, []);
+  }, []);*/
 
   const handleInputChange = ((e) => {
     e.preventDefault();
     const file = e.target.files[0];
     const error = validateInput(file);
+    setValue(file);
 
     if (error) {
       setIsValid(false);
       formErrors(error);
-      const {current} = uploadedImage;
+      /*const {current} = uploadedImage;
       current.src = defaultUserImage;
-      setValue(current.src);
+      setValue(current.src);*/
+      setValue(defaultUserImage);
 
       return;
     }
 
-    const reader = new FileReader();
+    /*const reader = new FileReader();
     const {current} = uploadedImage;
     current.file = file;
     reader.onload = e => {
       current.src = e.target.result;
-      setValue(current.src);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file);*/
   })
 
   const validateInput = (value) => {
@@ -70,7 +71,6 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
           type='file'
           required={required}
           name={name}
-          ref={imageUploader}
           multiple={false}
           accept={accept}
           className={
@@ -89,8 +89,8 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
       </label>
 
       <img
-        onClick={() => imageUploader.current.click()}
-        ref={uploadedImage}
+       /* onClick={() => imageUploader.current.click()}
+        ref={uploadedImage}*/
         className={styleFileInput.photo}
         alt='Фото пользователя'
       />
