@@ -21,6 +21,8 @@ class NewsService:
 
     def add_news(self, request: flask.Request) -> (dict, int):
         data = json.loads(request.form.get('data'))
+        if 'photo' not in request.files:
+            return {"error": "Нет изображения"}, 400
         photo = request.files['photo']
         data["photo"] = self.image_service.save_news_photo(photo)
         try:

@@ -97,30 +97,28 @@ class ImageService:
         image.convert("RGB").save(output_path, "JPEG", quality=quality)
 
     def change_user_image(self, image, user_id):
-        filename = "default.svg"
+        filename = self.generate_unique_imagename()
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         image.save(path)
         self.reduce_image_size(path, path)
-        image_name = self.generate_unique_imagename()
-        self.upload_to_yandex_s3(path, "images", image_name)
+        self.upload_to_yandex_s3(path, "images", filename)
         current_user = self.user_service.get_user_by_id(user_id)
         if current_user.image != "default.svg":
             self.delete_from_yandex_s3("images", current_user.image)
-        current_user.image = image_name
+        current_user.image = filename
         current_user.save()
         os.remove(path)
 
     def save_user_image(self, image):
-        filename = "default.svg"
+        filename = self.generate_unique_imagename()
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         image.save(path)
         self.reduce_image_size(path, path)
-        image_name = self.generate_unique_imagename()
-        self.upload_to_yandex_s3(path, "images", image_name)
+        self.upload_to_yandex_s3(path, "images", filename)
         os.remove(path)
-        return image_name
+        return filename
 
     def save_user_agreement(self, agreement):
         filename = self.generate_unique_filename(agreement.filename)
