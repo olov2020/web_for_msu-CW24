@@ -5,7 +5,7 @@ class Teacher(db.Model):
     __tablename__ = 'teacher'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref='teacher')
+    user = db.relationship('User', backref='teacher', passive_deletes=True)
     email = db.Column(db.String(), nullable=False)
     name = db.Column(db.String(), nullable=False)
     surname = db.Column(db.String(), nullable=False)

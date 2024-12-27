@@ -131,3 +131,27 @@ class AdminView(FlaskView):
         role += "maker"
         response, code = user_service.delete_role(user_id, role)
         return response, code
+
+    @route('/add/<role>/<user_id>/', methods=["POST"])
+    @auth_required
+    @roles_required('admin')
+    def authorize_user(self, role: str, user_id: int):
+        roles = ["pupil", "teacher"]
+        if role not in roles:
+            return {"error": "Нет такой роли"}, 404
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.authorize_user(user_id)
+        return jsonify(response), code
+
+    @route('/delete/<role>/<user_id>/', methods=["DELETE"])
+    @auth_required
+    @roles_required('admin')
+    def delete_user(self, role: str, user_id: int):
+        roles = ["pupil", "teacher"]
+        if role not in roles:
+            return {"error": "Нет такой роли"}, 404
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.delete_user(user_id, role)
+        return jsonify(response), code
