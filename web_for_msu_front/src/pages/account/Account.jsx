@@ -1,13 +1,29 @@
 import style from './account.module.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Form from "../../generic/form/Form.jsx";
 import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
-import {userLogout} from "../../api/userApi.js";
+import {useNavigate} from "react-router-dom";
+import {HOME_ROUTE} from "../../routing/consts.js";
+import {setNotAuthAction} from "../../store/UserReducers.js";
 
 const Account = () => {
 
   const user = useSelector(state => state.user);
   console.log(user);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userLogout = () => {
+    try {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      dispatch(setNotAuthAction());
+      navigate(HOME_ROUTE);
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <section className={style.account}>

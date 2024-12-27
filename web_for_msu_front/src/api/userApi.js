@@ -145,9 +145,13 @@ export const teacherRegistration = async (formValues) => {
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
 
+  formData.forEach((value) => {
+    console.log(value)
+  })
+
   const response = await $host.post(`/api/teacher/add_teacher`, formData, {
     headers: {
-      'content-type': 'application/json'
+      'Content-Type': 'multipart/form-data'
     }
   })
 
@@ -163,19 +167,6 @@ export const getDirectoryTeachers = async () => {
 
   try {
     return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export const userLogout = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const navigate = useNavigate();
-  try {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
-    navigate(HOME_ROUTE);
-    return true;
   } catch (error) {
     console.log(error);
   }
