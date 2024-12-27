@@ -1,41 +1,18 @@
 import style from './account.module.css'
 import {useSelector} from "react-redux";
-import {getUserInfoByUserId} from "../../api/userApi.js";
 import Form from "../../generic/form/Form.jsx";
-import {useEffect, useState} from "react";
+import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
+import {userLogout} from "../../api/userApi.js";
 
 const Account = () => {
 
   const user = useSelector(state => state.user);
-  const [userInfo, setUserInfo] = useState({});
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const info = await getUserInfoByUserId(user.id);
-      setUserInfo(info);
-      console.log(userInfo);
-    }
-
-    getUserInfo();
-  }, []);
-
-  // FOR TEST
-  /*const userInfo = {
-    name: 'Vladimir',
-    surname: 'Vinogradov',
-    lastname: 'Andreevich',
-    email: 'vavinogradov@edu.hse.ru',
-    phone: '+79855800882',
-    school: 'Лицей НИУ ВШЭ',
-    university: 'НИУ ВШЭ',
-    work: 'Сбер',
-    authStatus: 'teacher',
-  }*/
+  console.log(user);
 
   return (
     <section className={style.account}>
       <div>
-        <Form inputs={['photo']} values={userInfo}
+        <Form inputs={['photo']} values={[user.name, user.surname, user.lastname, user.email]}
               buttonText='Сменить фото' type='userChangePhoto'/>
       </div>
 
@@ -47,12 +24,12 @@ const Account = () => {
           Данные пользователя
         </h1>
 
-        {userInfo.authStatus === 'pupil' ?
+        {user.authStatus.includes('pupil') ?
           <Form inputs={['name', 'surname', 'lastname', 'email', 'phone', 'school']}
-                values={userInfo}
+                values={[user.name, user.surname, user.lastname, user.email]}
                 buttonText='Обновить данные' type='pupilChangeData'/> :
           <Form inputs={['name', 'surname', 'lastname', 'email', 'phone', 'university', 'work']}
-                values={userInfo}
+                values={[user.name, user.surname, user.lastname, user.email]}
                 buttonText='Обновить данные' type='teacherChangeData'/>
         }
       </div>
@@ -64,6 +41,11 @@ const Account = () => {
         >
           Достижения
         </h1>
+
+
+        <div>
+          <ButtonSubmit text='Выйти из аккаунта' onClick={userLogout} type='delete'/>
+        </div>
       </div>
     </section>
   );

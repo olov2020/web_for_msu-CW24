@@ -1,17 +1,17 @@
 import style from './profile.module.css'
 import styleHeader from "../header.module.css";
-import {getUserInfoByUserId} from "../../../api/userApi.js";
+import {userLogout} from "../../../api/userApi.js";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
+import ButtonSubmit from "../../form/submit/ButtonSubmit.jsx";
 
 const Profile = () => {
 
   const user = useSelector(state => state.user);
   console.log(user)
-  const userInfo = getUserInfoByUserId(user.id);
 
-  if (user.authStatus === 'admin') {
+  if (user.authStatus.includes('admin')) {
     return (
       <div className={styleHeader.menu__item}>
         <Link to={ADMIN_ROUTE}>
@@ -24,19 +24,19 @@ const Profile = () => {
   }
 
   return (
-    (user.authStatus !== 'none') ?
+    (!user.authStatus.includes('none')) ?
       (
         <Link to={ACCOUNT_ROUTE}>
           <div>
             <div className={style.profile__info}>
-              <h3>{userInfo.name}</h3>
-              <h3>{userInfo.surname}</h3>
-              <h3>{userInfo.name}</h3>
+              <h3>{user.name}</h3>
+              <h3>{user.surname}</h3>
+              <h3>{user.name}</h3>
             </div>
 
             <img className={style.profile__photo}
                  alt='Фотография профиля'
-                 src={userInfo.photo}
+                 src={user.photo}
             />
           </div>
         </Link>) :

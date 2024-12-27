@@ -50,7 +50,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
   const checkFormErrors = () => {
     console.log(formErrors)
-    return requiredValues[type].every(item => !formErrors[item]) //&& !formValues[item]);
+    return requiredValues[type].every(item => !formErrors[item] && formValues[item]);
   }
 
   const onSubmit = async (e) => {

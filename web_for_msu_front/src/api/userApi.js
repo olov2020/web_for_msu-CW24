@@ -1,67 +1,57 @@
 import {jwtDecode} from 'jwt-decode'
-import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../routing/consts.js";
+import {HOME_ROUTE} from "../routing/consts.js";
+import {$authHost, $host} from "./axiosApi.js";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
-/*export const getAllRoles = async () => {
-  const response = await axios.get(`/api/home/all_roles`)
-
-  try {
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}*/
-
-export const getUserInfoByUserId = async ({userId}) => {
-  const response = await axios.get(`/api/home/${userId}`)
-
-  try {
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export const userChangePhoto = async ({photo}) => {
-  const response = await axios.post('/api/account/photo', {photo}, {
+  const response = await $authHost.post('/api/account/photo', {photo}, {
     headers: {
       'content-type': 'application/json'
     }
   })
 
   try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
+    localStorage.setItem('token', response.data.access_token)
+    return jwtDecode(response.data.access_token)
   } catch (error) {
     console.log(error);
   }
 }
 
 export const pupilChangeData = async ({name, surname, lastname, email, phone, school}) => {
-  const response = await axios.post('/api/account/data', {name, surname, lastname, email, phone, school}, {
+  const response = await $authHost.post('/api/account/data', {name, surname, lastname, email, phone, school}, {
     headers: {
       'content-type': 'application/json'
     }
   })
 
   try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
+    localStorage.setItem('token', response.data.access_token)
+    return jwtDecode(response.data.access_token)
   } catch (error) {
     console.log(error);
   }
 }
 
 export const teacherChangeData = async ({name, surname, lastname, email, phone, university, work}) => {
-  const response = await axios.post('/api/account/data', {name, surname, lastname, email, phone, university, work}, {
+  const response = await $authHost.post('/api/account/data', {
+    name,
+    surname,
+    lastname,
+    email,
+    phone,
+    university,
+    work
+  }, {
     headers: {
       'content-type': 'application/json'
     }
   })
 
   try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
+    localStorage.setItem('token', response.data.access_token)
+    return jwtDecode(response.data.access_token)
   } catch (error) {
     console.log(error);
   }
@@ -69,7 +59,7 @@ export const teacherChangeData = async ({name, surname, lastname, email, phone, 
 
 export const userLogin = async (email, password) => {
   console.log(email, password);
-  const response = await axios.post('/api/home/login', {email, password}, {
+  const response = await $host.post('/api/home/login', {email, password}, {
     headers: {
       'content-type': 'application/json'
     }
@@ -78,9 +68,7 @@ export const userLogin = async (email, password) => {
   try {
     localStorage.setItem('token', response.data.access_token)
     localStorage.setItem('refreshToken', response.data.refresh_token)
-    console.log(response.data.access_token)
-    console.log(response.data.refresh_token)
-    return jwtDecode(response.data.access_token)
+    return jwtDecode(response.data.access_token);
   } catch (error) {
     console.log(error);
     return false;
@@ -90,61 +78,88 @@ export const userLogin = async (email, password) => {
 export const pupilRegistration = async (formValues) => {
   const formData = new FormData();
   const value = {
-      "name": "John",
-      "surname": "Doe",
-      "patronymic": "Ivanovich",
-      "birth_date": "2005-05-20",
-      "email": "bb@example.com",
-      "password": "QWer1234",
-      "phone": "+1234567890",
-      "school_grade": 10,
-      "school": "School No.1",
-      "registration_address": "123 Main St",
-      "telegram": "@johndoe",
-      "vk": "johndoevk",
-      "parent1_surname": "Doe",
-      "parent1_name": "Jane",
-      "parent1_patronymic": "Ivanovna",
-      "parent1_phone": "+0987654321",
-      "parent1_email": "jane.doe@example.com",
-      "mailing": "True"
-    };
+    "name": formValues.name,
+    "surname": formValues.surname,
+    "patronymic": formValues.lastname,
+    "birth_date": formValues.birthDate,
+    "email": formValues.email,
+    "password": formValues.password,
+    "phone": formValues.phone,
+    "school_grade": 11 - formValues.schoolEndDate + new Date().getFullYear(),
+    "school": formValues.school,
+    "registration_address": formValues.registrationAddress,
+    "telegram": formValues.telegram,
+    "vk": formValues.vk,
+    "parent1_surname": formValues.parent1Surname,
+    "parent1_name": formValues.parent1Name,
+    "parent1_patronymic": formValues.parent1Lastname,
+    "parent1_phone": formValues.parent1Phone,
+    "parent1_email": formValues.parent1Email,
+    "parent2_surname": formValues.parent2Surname,
+    "parent2_name": formValues.parent2Name,
+    "parent2_patronymic": formValues.parent2Lastname,
+    "parent2_phone": formValues.parent2Phone,
+    "parent2_email": formValues.parent2Email,
+    "mailing": formValues.mailing,
+    "how_know": formValues.howToKnow,
+  };
   formData.append('data', JSON.stringify(value));
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
 
-  const response = await axios.post(`/api/pupil/add_pupil`, formData, {
+  const response = await $host.post(`/api/pupil/add_pupil`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   });
 
   try {
-    console.log("Response from server:", response.data);
     return response.status === 200;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }
 
 export const teacherRegistration = async (formValues) => {
-  const response = await axios.post(`/api/${REGISTRATION_TEACHER_ROUTE}`, formValues, {
+  const formData = new FormData();
+  const value = {
+    "password": formValues.password,
+    "email": formValues.email,
+    "name": formValues.name,
+    "surname": formValues.surname,
+    "patronymic": formValues.lastname,
+    "birth_date": formValues.birthDate,
+    "phone": formValues.phone,
+    "telegram": formValues.telegram,
+    "vk": formValues.vk,
+    "school": formValues.school,
+    "school_date_end": formValues.schoolEndDate,
+    "university": formValues.university,
+    "university_date_end": formValues.universityEndDate,
+    "workplace": formValues.work,
+    "registration_address": formValues.registrationAddress,
+    "was_pupil": formValues.wasPupil,
+  };
+  formData.append('data', JSON.stringify(value));
+  formData.append('image', formValues.photo);
+  formData.append('agreement', formValues.agreement);
+
+  const response = await $host.post(`/api/teacher/add_teacher`, formData, {
     headers: {
       'content-type': 'application/json'
     }
   })
 
   try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
+    return response.status === 200;
   } catch (error) {
     console.log(error);
   }
 }
 
 export const getDirectoryTeachers = async () => {
-  const response = await axios.get('/api/teachers');
+  const response = await $host.get('/api/teachers');
 
   try {
     return response.data;
@@ -153,23 +168,14 @@ export const getDirectoryTeachers = async () => {
   }
 }
 
-export const refreshToken = async () => {
-  const response = await axios.get('/api/refreshToken')
-
+export const userLogout = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigate = useNavigate();
   try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export const userLogout = async () => {
-  const response = await axios.get('/api/account/logout');
-
-  try {
-    localStorage.setItem('token', response.data.accessToken)
-    return jwtDecode(response.data.accessToken)
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    navigate(HOME_ROUTE);
+    return true;
   } catch (error) {
     console.log(error);
   }

@@ -43,7 +43,7 @@ export const setNotAuthAction = (payload) => ({type: SET_NOTAUTH, payload})
 export const setAuthFromToken = (token) => {
     const decodedToken = jwtDecode(token);
     return setAuthAction({
-        id: decodedToken.sub.id, // Assuming the token contains an 'id' field
-        authStatus: decodedToken.sub.roles, // Assuming the token contains a 'role' field
+        id: decodedToken.sub.id,
+        authStatus: decodedToken.sub.roles,
     });
 }
