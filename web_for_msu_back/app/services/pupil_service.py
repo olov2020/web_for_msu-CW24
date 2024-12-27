@@ -21,6 +21,9 @@ class PupilService:
         self.image_service = image_service
 
     def add_pupil(self, request: flask.Request) -> (dict, int):
+        pdf = request.files.get("agreement")
+        if not pdf:
+            return {"error": "Не хватает соглашения"}
         result, code = self.user_service.add_pupil(request)
         if code != 201:
             return result, code

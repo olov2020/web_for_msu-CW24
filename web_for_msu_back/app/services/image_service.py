@@ -97,21 +97,21 @@ class ImageService:
         image.convert("RGB").save(output_path, "JPEG", quality=quality)
 
     def change_user_image(self, image, user_id):
-        filename = "temp.jpeg"
+        filename = "default.svg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
         self.reduce_image_size(path, path)
         image_name = self.generate_unique_imagename()
         self.upload_to_yandex_s3(path, "images", image_name)
         current_user = self.user_service.get_user_by_id(user_id)
-        if current_user.image != "default.png":
+        if current_user.image != "default.svg":
             self.delete_from_yandex_s3("images", current_user.image)
         current_user.image = image_name
         current_user.save()
         os.remove(path)
 
     def save_user_image(self, image):
-        filename = "temp.jpeg"
+        filename = "default.svg"
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         image.save(path)
         self.reduce_image_size(path, path)

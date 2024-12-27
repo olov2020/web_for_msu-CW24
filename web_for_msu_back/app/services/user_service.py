@@ -61,7 +61,7 @@ class UserService:
         if user_image:
             image = self.image_service.save_user_image(user_image)
         else:
-            image = 'default.png'
+            image = 'default.svg'
         if not user_exists:
             user = User(email=email, password=password, image=image)
             user.roles = roles
