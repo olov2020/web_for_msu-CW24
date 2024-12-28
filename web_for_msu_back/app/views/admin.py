@@ -107,11 +107,11 @@ class AdminView(FlaskView):
     @route("/role/add/<role>/<user_id>/", methods=["POST"])
     @auth_required
     @roles_required('admin')
-    def add_news_role(self, role: str, user_id: int):
+    def add_role(self, role: str, user_id: int):
         services = get_services()
         user_service: UserService = services["user_service"]
         roles, _ = user_service.get_all_roles()
-        roles = ["course", "news", "marks", "tests_online", "tests_offline"]
+        roles = ["course", "news", "marks", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
         if role in ["course", "news", "marks"]:
@@ -122,13 +122,14 @@ class AdminView(FlaskView):
     @route("/role/delete/<role>/<user_id>/", methods=["DELETE"])
     @auth_required
     @roles_required('admin')
-    def delete_news_role(self, role: str, user_id: int):
-        roles = ["course", "news", "marks"]
+    def delete_role(self, role: str, user_id: int):
+        roles = ["course", "news", "marks", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
         services = get_services()
         user_service: UserService = services["user_service"]
-        role += "maker"
+        if role in ["course", "news", "marks"]:
+            role += "maker"
         response, code = user_service.delete_role(user_id, role)
         return response, code
 
