@@ -1,4 +1,3 @@
-import {jwtDecode} from 'jwt-decode'
 import {$authHost, $host} from "./axiosApi.js";
 import {setAuthFromToken} from "../store/UserReducers.js";
 

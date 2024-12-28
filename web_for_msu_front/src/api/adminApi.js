@@ -1,4 +1,3 @@
-import axios from "axios";
 import {$authHost} from "./axiosApi.js";
 
 export const openRegistrationCourses = async () => {
