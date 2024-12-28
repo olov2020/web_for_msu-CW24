@@ -3,15 +3,16 @@ import {$authHost, $host} from "./axiosApi.js";
 import {setAuthFromToken} from "../store/UserReducers.js";
 
 export const userChangePhoto = async ({photo}) => {
-  const response = await $authHost.post('/api/account/photo', {photo}, {
+  const formData = new FormData();
+  formData.append('photo', photo);
+  const response = await $authHost.post('/api/account/photo', formData, {
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'multipart/form-data',
     }
   })
 
   try {
-    localStorage.setItem('token', response.data.access_token)
-    return jwtDecode(response.data.access_token)
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -25,8 +26,7 @@ export const pupilChangeData = async ({name, surname, lastname, email, phone, sc
   })
 
   try {
-    localStorage.setItem('token', response.data.access_token)
-    return jwtDecode(response.data.access_token)
+    return response.data
   } catch (error) {
     console.log(error);
   }
@@ -48,8 +48,7 @@ export const teacherChangeData = async ({name, surname, lastname, email, phone, 
   })
 
   try {
-    localStorage.setItem('token', response.data.access_token)
-    return jwtDecode(response.data.access_token)
+    return response.data
   } catch (error) {
     console.log(error);
   }
@@ -59,7 +58,7 @@ export const userLogin = async (email, password, dispatch) => {
   console.log(email, password);
   const response = await $host.post('/api/home/login', {email, password}, {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     }
   })
 

@@ -1,7 +1,7 @@
-import axios from "axios";
+import {$authHost, $host} from "./axiosApi.js";
 
 export const getAllCourses = async () => {
-  const response = await axios.get(`/api/home/all_courses`)
+  const response = await $host.get(`/api/home/all_courses`)
 
   try {
     console.log(response);
@@ -13,7 +13,7 @@ export const getAllCourses = async () => {
 }
 
 export const getCoursesSelect = async () => {
-  const response = await axios.get(`/api/home/select_courses`)
+  const response = await $authHost.get(`/api/home/select_courses`)
 
   try {
     console.log(response);
@@ -25,13 +25,13 @@ export const getCoursesSelect = async () => {
 }
 
 export const getCoursesSelectStatus = async () => {
-  const response = await axios.get(`/api/home/select_courses/status`)
+  const response = await $authHost.get(`/api/home/select_courses/status`)
 
   return response.status === 200;
 }
 
 export const getMyCourses = async () => {
-  const response = await axios.get(`/api/pupil/my_courses`)
+  const response = await $authHost.get(`/api/pupil/my_courses`)
 
   try {
     return response.data;
@@ -41,7 +41,7 @@ export const getMyCourses = async () => {
 }
 
 export const getSchedule = async () => {
-  const response = await axios.get(`/api/home/schedule`)
+  const response = await $authHost.get(`/api/home/schedule`)
 
   try {
     return response.data;
@@ -52,7 +52,7 @@ export const getSchedule = async () => {
 }
 
 export const getPupilMarksByCourseId = async ({courseId}) => {
-  const response = await axios.get(`/api/pupil/marks/${courseId}`)
+  const response = await $authHost.get(`/api/pupil/marks/${courseId}`)
 
   try {
     return response.data;
@@ -63,7 +63,7 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
 }
 
 export const getTeacherMarksByCourseId = async ({courseId}) => {
-  const response = await axios.get(`/api/teacher/get_journal/${courseId}`)
+  const response = await $authHost.get(`/api/teacher/get_journal/${courseId}`)
 
   try {
     return response.data;
@@ -73,12 +73,9 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
   }
 }
 
-export const updateTeacherMarksByCourseId = async (
-  courseId,
-  marks) => {
+export const updateTeacherMarksByCourseId = async (courseId, marks) => {
 
-
-  const response = await axios.put(`/api/teacher/update_journal/${courseId}`, marks)
+  const response = await $authHost.put(`/api/teacher/update_journal/${courseId}`, marks)
 
   try {
     return response.data;
@@ -91,7 +88,11 @@ export const updateTeacherMarksByCourseId = async (
 export const courseAdd = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post(`/api/admin/create_course`, formData)
+  const response = await $authHost.post(`/api/admin/create_course`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
+  })
 
   if (response.status === 200) {
     return response.data;
@@ -103,7 +104,7 @@ export const courseAdd = async (file) => {
 export const courseChange = async (id, file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.put(`/api/admin/update_course/${id}`, formData)
+  const response = await $authHost.put(`/api/admin/update_course/${id}`, formData)
 
   if (response.status === 200) {
     return response.data;
@@ -113,7 +114,7 @@ export const courseChange = async (id, file) => {
 }
 
 export const approvePupilsOnCourse = async (courseId, pupilId) => {
-  const response = await axios.put(`/api/teacher/approve_pupils/${courseId}/${pupilId}`);
+  const response = await $authHost.put(`/api/teacher/approve_pupils/${courseId}/${pupilId}`);
 
   try {
     return response.status === 200;
@@ -123,7 +124,7 @@ export const approvePupilsOnCourse = async (courseId, pupilId) => {
 }
 
 export const getAllPupilsOnCourse = async ({courseId}) => {
-  const response = await axios.get(`/api/courses/get_pupils/${courseId}`);
+  const response = await $authHost.get(`/api/courses/get_pupils/${courseId}`);
 
   try {
     return response.data;

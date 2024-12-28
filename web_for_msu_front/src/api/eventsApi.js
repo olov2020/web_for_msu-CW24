@@ -1,7 +1,7 @@
-import axios from "axios";
+import {$host} from "./axiosApi.js";
 
 export const getEventsTestsOfflineTeachers = async () => {
-  const response = await axios.get(`/api/events/tests/offline`)
+  const response = await $host.get(`/api/events/tests/offline`)
 
   try {
     return response.data;
@@ -11,7 +11,7 @@ export const getEventsTestsOfflineTeachers = async () => {
 }
 
 export const getEventsTestsOnlineTeachers = async () => {
-  const response = await axios.get(`/api/events/tests/online`)
+  const response = await $host.get(`/api/events/tests/online`)
 
   try {
     return response.data;
@@ -21,7 +21,7 @@ export const getEventsTestsOnlineTeachers = async () => {
 }
 
 export const getEventsOpenChampionshipTeachers = async () => {
-  const response = await axios.get(`/api/events/open-championship`)
+  const response = await $host.get(`/api/events/open-championship`)
 
   try {
     return response.data;
@@ -31,7 +31,7 @@ export const getEventsOpenChampionshipTeachers = async () => {
 }
 
 export const getEventsContestScientificWorksTeachers = async () => {
-  const response = await axios.get(`/api/events/contest-of-scientific-works`)
+  const response = await $host.get(`/api/events/contest-of-scientific-works`)
 
   try {
     return response.data;
@@ -41,7 +41,7 @@ export const getEventsContestScientificWorksTeachers = async () => {
 }
 
 export const getEventsResidentialSchoolTeachers = async () => {
-  const response = await axios.get(`/api/events/residential-school`)
+  const response = await $host.get(`/api/events/residential-school`)
 
   try {
     return response.data;
@@ -51,7 +51,7 @@ export const getEventsResidentialSchoolTeachers = async () => {
 }
 
 export const getEventsSummerSchoolTeachers = async () => {
-  const response = await axios.get(`/api/events/summer-school`)
+  const response = await $host.get(`/api/events/summer-school`)
 
   try {
     return response.data;
@@ -60,7 +60,7 @@ export const getEventsSummerSchoolTeachers = async () => {
   }
 }
 export const getEventsSummerCampTeachers = async () => {
-  const response = await axios.get(`/api/events/summer-camp`)
+  const response = await $host.get(`/api/events/summer-camp`)
 
   try {
     return response.data;
