@@ -93,7 +93,7 @@ class UserService:
 
         # Проверка пользователя и его пароля
         user = self.get_user_by_email(email)
-        if user and user.check_password(password):
+        if user and user.check_password(password) and user.authorized:
             # Создание JWT токена с ролями пользователя
             identity = {'id': user.id,
                         'name': user.get_name(),
@@ -269,3 +269,27 @@ class UserService:
         if opened:
             return True, 200
         return False, 200
+
+    def authorize_user(self, user_id: int) -> (dict, int):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "Пользователь не найден"}, 404
+        user.authorized = True
+        self.db.session.commit()
+        return {"msg": "Пользователь успешно добавлен"}, 200
+
+    def delete_user(self, user_id: int, role: str) -> (dict, int):
+        #TODO Add checks for role of user before deleting
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "Пользователь не найден"}, 404
+        match role:
+            case "pupil":
+                model = Pupil
+            case _:
+                model = Teacher
+        self.db.session.query(model).filter(model.user_id == user_id).delete()
+        # Удаляем пользователя
+        self.db.session.delete(user)
+        self.db.session.commit()
+        return {"msg": "Пользователь успешно удален"}, 200
