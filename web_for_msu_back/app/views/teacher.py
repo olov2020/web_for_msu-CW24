@@ -2,7 +2,7 @@ from __future__ import annotations  # Поддержка строковых ан
 
 from typing import TYPE_CHECKING
 
-from flask import request, g
+from flask import request, g, jsonify
 from flask_classful import FlaskView, method
 
 from web_for_msu_back.app.functions import auth_required, roles_required, get_services, output_json
@@ -48,3 +48,12 @@ class TeacherView(FlaskView):
         mark_service: MarkService = services["mark_service"]
         response, code = mark_service.update_journal(course_id, g.current_user.id, request)
         return response, code
+
+    @method("PUT")
+    @auth_required
+    @roles_required("teacher")
+    def approve_pupils(self, course_id: int, pupil_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.approve_pupil_course(course_id, pupil_id)
+        return jsonify(response), code

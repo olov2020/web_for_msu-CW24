@@ -500,6 +500,9 @@ class CourseService:
             return [], 403
         grouped_courses = {}
         for assoc in pupil.courses:
+            # проверка на то, что ученика добавили на курс
+            if not assoc.accepted:
+                continue
             year: int = assoc.course.year
             if year not in grouped_courses:
                 grouped_courses[year] = []
@@ -580,3 +583,18 @@ class CourseService:
                 return response, code
         self.db.session.commit()
         return {"msg": "Заявки успешно поданы на все курсы"}, 200
+
+    def approve_pupil_course(self, course_id: int, pupil_id: int) -> (dict, int):
+        course = Course.query.get(course_id)
+        pupil = Pupil.query.get(pupil_id)
+        if not course:
+            return {"error": "Нет такого курса"}, 404
+        if not pupil:
+            return {"error": "Нет такого ученика"}, 404
+        pupil_course = PupilCourse.query.filter(PupilCourse.pupil_id == pupil_id,
+                                                PupilCourse.course_id == course_id).first()
+        if not pupil_course:
+            return {"error": "Этот ученик не подавал заявку на этот курс"}, 404
+        pupil_course.accepted = True
+        self.db.session.commit()
+        return {"msg": "Ученик успешно добавлен на курс"}, 200
