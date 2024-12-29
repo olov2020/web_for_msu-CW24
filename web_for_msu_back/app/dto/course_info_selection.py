@@ -1,7 +1,11 @@
-from marshmallow import fields
-
-from web_for_msu_back.app.dto.course_info import CourseInfoDTO
+from marshmallow import fields, Schema
 
 
-class CourseInfoSelectionDTO(CourseInfoDTO):
-    selected = fields.String()
+class CourseInfoSelectionDTO(Schema):
+    id = fields.Int(required=True)
+    name = fields.Str()
+    emsh_grades = fields.String()
+    crediting = fields.Str()
+    direction = fields.Str()
+    lesson_time = fields.Str()
+    selected = fields.String(required=True)

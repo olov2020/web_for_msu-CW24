@@ -11,8 +11,8 @@ from marshmallow import ValidationError
 from web_for_msu_back.app.dto.course import CourseDTO
 from web_for_msu_back.app.dto.course_info import CourseInfoDTO
 from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
-from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.course_info_selection import CourseInfoSelectionDTO
+from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
 from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
@@ -59,25 +59,56 @@ class CourseService:
             grouped_courses[year].append(self.get_course_info(course))
         return grouped_courses, 200
 
-    def get_all_current_courses(self) -> (dict[int, list[CourseInfoDTO]], int):
-        courses = Course.query.filter(Course.year == datetime.now(tz=pytz.timezone('Europe/Moscow')).year).all()
-        grouped_courses = {}
-        for course in courses:
-            year: int = course.year
-            if year not in grouped_courses:
-                grouped_courses[year] = []
-            grouped_courses[year].append(self.get_course_info_selection(course))
-        return grouped_courses, 200
-
-    def add_pupil_to_course(self, course_id, pupil_id, year):
-        course = Course.query.get(course_id)
+    def get_all_current_courses(self, pupil_id: int) -> (list[CourseInfoSelectionDTO], int):
         pupil = Pupil.query.get(pupil_id)
-        if not course or not pupil:
-            return False
-        pupil_course = PupilCourse(pupil_id=pupil_id, course_id=course_id, year=year)
+        if not pupil:
+            return {"error": "Нет такого ученика"}, 404
+        grade = pupil.school_grade
+        courses = Course.query.filter(Course.year == datetime.now(tz=pytz.timezone('Europe/Moscow')).year).all()
+        available_courses = []
+        for course in courses:
+            if str(grade) in course.emsh_grades or (
+                    grade == 9 and "8" in course.emsh_grades and "10" in course.emsh_grades) or (
+                    grade == 10 and "9" in course.emsh_grades and "11" in course.emsh_grades):
+                available_courses.append(course)
+        courses_for_selection = [self.get_course_info_selection(course) for course in available_courses]
+        return courses_for_selection, 200
+
+    def add_pupil_to_course(self, course_id: int, pupil: Pupil, crediting_selected: str) -> (dict, int):
+        course = Course.query.get(course_id)
+        if not course:
+            return {"error": f"Курс с id {course_id} не найден"}, 404
+        year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
+        grade = pupil.school_grade
+        match crediting_selected:
+            case "Зачетный":
+                if str(grade) in course.crediting or course.crediting == 'зачётный для всех классов' or (
+                        grade == 9 and "8" in course.crediting and "10" in course.crediting) or (
+                        grade == 10 and "9" in course.crediting and "11" in course.crediting):
+                    crediting = True
+                else:
+                    return {
+                        "error": f"Нельзя выбрать курс {course.name} зачетным, так как вы в {str(grade)} классе, "
+                                 f"а курс {course.crediting}"}, 404
+            case "Незачетный":
+                if str(grade) in course.emsh_grades or (
+                        grade == 9 and "8" in course.emsh_grades and "10" in course.emsh_grades) or (
+                        grade == 10 and "9" in course.emsh_grades and "11" in course.emsh_grades):
+                    crediting = False
+                else:
+                    return {
+                        "error": f"Нельзя выбрать курс {course.name} незачетным, так как вы в {str(grade)} классе, "
+                                 f"а на курс могут поступить только учащиеся {course.emsh_grades} классов"}, 404
+            case _:
+                return {"error": "Некорректный тип курса, может быть только Зачетный или Незачетный"}, 404
+        pupil_course = PupilCourse(
+            pupil_id=pupil.id,
+            course_id=course.id,
+            year=year,
+            crediting=crediting
+        )
         self.db.session.add(pupil_course)
-        self.db.session.commit()
-        return True
+        return {"msg": f"Заявка на курс {course.name} подана"}, 200
 
     def add_teacher_to_course(self, course_id, teacher_id, year):
         course = Course.query.get(course_id)
@@ -297,24 +328,6 @@ class CourseService:
         self.db.session.add(course)
         self.db.session.commit()
 
-        # TODO subscribing all pupils to course
-        pupils = Pupil.query.all()
-        for pupil in pupils:
-            grade = pupil.school_grade
-            if str(grade) in course.crediting or course.crediting == 'зачётный для всех классов' or (
-                    grade == 9 and "8" in course.crediting and "10" in course.crediting) or (
-                    grade == 10 and "9" in course.crediting and "11" in course.crediting):
-                crediting = True
-            else:
-                crediting = False
-            pupil_course = PupilCourse(
-                pupil_id=pupil.id,
-                course_id=course.id,
-                year=year,
-                crediting=crediting
-            )
-            self.db.session.add(pupil_course)
-
         self.db.session.commit()
         return {'msg': 'Курс успешно добавлен'}, 201
 
@@ -469,8 +482,16 @@ class CourseService:
         return CourseInfoTeacherDTO().dump(data)
 
     def get_course_info_selection(self, course: Course) -> CourseInfoSelectionDTO:
-        data = self.get_base_course_info(course)
-        data["selection"] = ""
+        data = {
+            "id": course.id,
+            "name": course.name,
+            "emsh_grades": course.emsh_grades,
+            "crediting": course.crediting,
+            "direction": course.direction,
+            "auditory": course.auditory,
+            "lesson_time": course.lesson_time,
+            "selected": "",
+        }
         return CourseInfoSelectionDTO().dump(data)
 
     def get_pupil_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
@@ -525,3 +546,37 @@ class CourseService:
         if opened:
             return True, 200
         return False, 200
+
+    def add_pupil_to_courses(self, pupil_id: int, request: flask.Request):
+        if not self.is_courses_registration_opened():
+            return {"error": "Сейчас нельзя записаться на курс"}
+        pupil = Pupil.query.get(pupil_id)
+        if not pupil:
+            return {"error": "Ученик не найден"}
+        try:
+            courses = CourseInfoSelectionDTO().load(request.json, many=True)
+        except ValidationError as e:
+            return e.messages, 400
+        selected_courses = [course for course in courses if course["selected"] != ""]
+        crediting_courses = [course for course in courses if course["selected"] == "Зачетный"]
+        crediting_count = len(crediting_courses)
+        if crediting_count != 2:
+            return {"error": f"Надо выбрать два курса зачетными, вы выбрали {str(crediting_count)}"}, 404
+        first_crediting_id = crediting_courses[0]["id"]
+        second_crediting_id = crediting_courses[1]["id"]
+        first_crediting = Course.query.get(first_crediting_id)
+        second_crediting = Course.query.get(second_crediting_id)
+        if not first_crediting:
+            return {"error": f"Курс с id {first_crediting_id} не найден"}, 404
+        if not second_crediting:
+            return {"error": f"Курс с id {second_crediting_id} не найден"}, 404
+        if first_crediting.direction == second_crediting.direction:
+            return {
+                "error": f"Нельзя выбирать два зачетных курса одного направления, "
+                         f"вы выбрали оба курса направления {first_crediting.direction}"}, 404
+        for course in selected_courses:
+            response, code = self.add_pupil_to_course(course.id, pupil, course.selected)
+            if code != 200:
+                return response, code
+        self.db.session.commit()
+        return {"msg": "Заявки успешно поданы на все курсы"}, 200
