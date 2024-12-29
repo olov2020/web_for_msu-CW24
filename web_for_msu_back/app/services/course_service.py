@@ -12,6 +12,7 @@ from web_for_msu_back.app.dto.course import CourseDTO
 from web_for_msu_back.app.dto.course_info import CourseInfoDTO
 from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
+from web_for_msu_back.app.dto.course_info_selection import CourseInfoSelectionDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.functions import get_next_monday
 from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
@@ -56,6 +57,16 @@ class CourseService:
             if year not in grouped_courses:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info(course))
+        return grouped_courses, 200
+
+    def get_all_current_courses(self) -> (dict[int, list[CourseInfoDTO]], int):
+        courses = Course.query.filter(Course.year == datetime.now(tz=pytz.timezone('Europe/Moscow')).year).all()
+        grouped_courses = {}
+        for course in courses:
+            year: int = course.year
+            if year not in grouped_courses:
+                grouped_courses[year] = []
+            grouped_courses[year].append(self.get_course_info_selection(course))
         return grouped_courses, 200
 
     def add_pupil_to_course(self, course_id, pupil_id, year):
@@ -456,6 +467,11 @@ class CourseService:
         data = self.get_base_course_info(course)
         data["pupils_number"] = len(self.get_pupils(course.id))
         return CourseInfoTeacherDTO().dump(data)
+
+    def get_course_info_selection(self, course: Course) -> CourseInfoSelectionDTO:
+        data = self.get_base_course_info(course)
+        data["selection"] = ""
+        return CourseInfoSelectionDTO().dump(data)
 
     def get_pupil_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
         pupil = Pupil.query.filter_by(user_id=user_id).first()

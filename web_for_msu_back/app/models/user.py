@@ -25,7 +25,7 @@ class User(db.Model):
         self.email = email
         self.password = generate_password_hash(password)
         self.image = image
-        self.created_on = datetime.utcnow()
+        self.created_on = datetime.now(tz=pytz.timezone('Europe/Moscow')).date()
 
     def set_password(self, password):
         if self.password == generate_password_hash(password):
