@@ -7,7 +7,7 @@ import flask
 from marshmallow import ValidationError
 
 from web_for_msu_back.app.dto.pupil import PupilDTO
-from web_for_msu_back.app.models import Pupil
+from web_for_msu_back.app.models import Pupil, Role
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -60,6 +60,8 @@ class PupilService:
                 continue
             if pupil.graduating:
                 pupil.former = True
+                role = Role.query.filter_by(name='graduated_pupil').first()
+                pupil.user.roles.append(role)
                 continue
             pupil.school_grade = max(pupil.school_grade + 1, 11)
             if pupil.school_grade == 11:
