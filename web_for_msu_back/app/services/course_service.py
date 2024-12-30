@@ -8,6 +8,7 @@ import pandas as pd
 import pytz
 from marshmallow import ValidationError
 
+from web_for_msu_back.app.dto.pupil_course_approval_list import PupilCourseApprovalListDTO
 from web_for_msu_back.app.dto.course import CourseDTO
 from web_for_msu_back.app.dto.course_info import CourseInfoDTO
 from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
@@ -517,7 +518,7 @@ class CourseService:
         grouped_courses = {}
         for assoc in pupil.courses:
             # проверка на то, что ученика добавили на курс
-            if not assoc.accepted:
+            if not assoc.approved:
                 continue
             year: int = assoc.course.year
             if year not in grouped_courses:
@@ -611,6 +612,22 @@ class CourseService:
                                                 PupilCourse.course_id == course_id).first()
         if not pupil_course:
             return {"error": "Этот ученик не подавал заявку на этот курс"}, 404
-        pupil_course.accepted = True
+        pupil_course.approved = True
         self.db.session.commit()
         return {"msg": "Ученик успешно добавлен на курс"}, 200
+
+    def get_pupils_list(self, course_id: int) -> (dict, int):
+        course = Course.query.get(course_id)
+        if not course:
+            return {"error": "Нет такого курса"}, 404
+        data = []
+        for pupil_course in course.pupils:
+            pupil = pupil_course.pupil
+            pupil_data = {
+                "id": pupil.id,
+                "name": f'{pupil.surname} {pupil.name} {pupil.patronymic}',
+                "approved": pupil_course.approved,
+            }
+            data.append(pupil_data)
+
+        return PupilCourseApprovalListDTO().dump(data, many=True), 200
