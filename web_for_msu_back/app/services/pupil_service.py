@@ -1,13 +1,17 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import json
+from os import access
 from typing import TYPE_CHECKING  # Условный импорт для проверки типов
 
 import flask
+from flask_jwt_extended import create_access_token
 from marshmallow import ValidationError
+from numpy.ma.core import identity
 
 from web_for_msu_back.app.dto.pupil import PupilDTO
-from web_for_msu_back.app.models import Pupil, Role
+from web_for_msu_back.app.dto.pupil_account import PupilAccountDTO
+from web_for_msu_back.app.models import Pupil, Role, User
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -68,3 +72,44 @@ class PupilService:
                 pupil.graduating = True
         self.db.session.commit()
         return {"msg": "Все ученики перешли на следующий год"}, 200
+
+    def change_account(self, user_id: int, request: flask.Request) -> (dict, int):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "Пользователь не найден"}, 404
+        pupil = Pupil.query.filter(Pupil.user_id == user_id).first()
+        if not pupil:
+            return {"error": "Пользователь не найден"}, 404
+        try:
+            data = PupilAccountDTO().load(request.json)
+        except ValidationError as e:
+            return e.messages, 400
+        if data["email"] != user.email and User.query.filter_by(email=data["email"]).first():
+            return {"error": "Пользователь с такой почтой уже существует"}, 404
+        user.email = pupil.email = data["email"]
+        pupil.name = data["name"]
+        pupil.surname = data["surname"]
+        pupil.patronymic = data["lastname"]
+        pupil.phone = data["phone"]
+        pupil.school = data["school"]
+        self.db.session.commit()
+        identity = self.user_service.create_user_identity(user)
+        access_token = create_access_token(identity=identity, fresh=False)
+        return {"msg": "Данные изменены", "access_token": access_token}, 200
+
+    def get_data_to_change(self, user_id: int):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "Пользователь не найден"}, 404
+        pupil = Pupil.query.filter(Pupil.user_id == user_id).first()
+        if not pupil:
+            return {"error": "Пользователь не найден"}, 404
+        data = {
+            "name": pupil.name,
+            "surname": pupil.surname,
+            "lastname": pupil.patronymic,
+            "email": pupil.email,
+            "phone": pupil.phone,
+            "school": pupil.school,
+        }
+        return PupilAccountDTO().dump(data), 200

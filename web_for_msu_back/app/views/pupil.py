@@ -63,3 +63,21 @@ class PupilView(FlaskView):
         pupil_id = pupil_service.get_pupil_id(g.current_user.id)
         response, code = course_service.add_pupil_to_courses(pupil_id, request)
         return jsonify(response), code
+
+    @method("GET")
+    @auth_required
+    @roles_required('pupil')
+    def get_account_data(self):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.get_data_to_change(g.current_user.id)
+        return jsonify(response), code
+
+    @method("PUT")
+    @auth_required
+    @roles_required('pupil')
+    def change_account_data(self):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.change_account(g.current_user.id, request)
+        return jsonify(response), code

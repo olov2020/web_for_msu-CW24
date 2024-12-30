@@ -69,3 +69,21 @@ class TeacherView(FlaskView):
         course_service: CourseService = services["course_service"]
         response, code = course_service.get_pupils_list(course_id)
         return jsonify(response), code
+
+    @method("GET")
+    @auth_required
+    @roles_required('teacher')
+    def get_account_data(self):
+        services = get_services()
+        teacher_service: TeacherService = services["teacher_service"]
+        response, code = teacher_service.get_data_to_change(g.current_user.id)
+        return jsonify(response), code
+
+    @method("PUT")
+    @auth_required
+    @roles_required('teacher')
+    def change_account_data(self):
+        services = get_services()
+        teacher_service: TeacherService = services["teacher_service"]
+        response, code = teacher_service.change_account(g.current_user.id, request)
+        return jsonify(response), code

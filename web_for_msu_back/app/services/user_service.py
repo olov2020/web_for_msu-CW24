@@ -95,18 +95,23 @@ class UserService:
         user = self.get_user_by_email(email)
         if user and user.check_password(password) and user.authorized:
             # Создание JWT токена с ролями пользователя
-            identity = {'id': user.id,
-                        'name': user.get_name(),
-                        'patronymic': user.get_patronymic(),
-                        'surname': user.get_surname(),
-                        'email': email,
-                        'image': self.image_service.get_from_yandex_s3("images", user.image),
-                        'roles': user.get_roles()}
+            identity = self.create_user_identity(user)
             access_token = create_access_token(identity=identity, fresh=True)
             refresh_token = create_refresh_token(identity=identity)
             return {"access_token": access_token, "refresh_token": refresh_token}, 200
 
         return {"error": "Неверные данные"}, 401
+
+    def create_user_identity(self, user):
+        return {
+            'id': user.id,
+            'name': user.get_name(),
+            'patronymic': user.get_patronymic(),
+            'surname': user.get_surname(),
+            'email': user.email,
+            'image': self.image_service.get_from_yandex_s3("images", user.image),
+            'roles': user.get_roles(),
+        }
 
     def refresh(self, request: flask.Request) -> (dict, int):
 
@@ -279,7 +284,7 @@ class UserService:
         return {"msg": "Пользователь успешно добавлен"}, 200
 
     def delete_user(self, user_id: int, role: str) -> (dict, int):
-        #TODO Add checks for role of user before deleting
+        # TODO Add checks for role of user before deleting
         user = User.query.get(user_id)
         if not user:
             return {"error": "Пользователь не найден"}, 404
@@ -293,3 +298,14 @@ class UserService:
         self.db.session.delete(user)
         self.db.session.commit()
         return {"msg": "Пользователь успешно удален"}, 200
+
+    def change_photo(self, user_id: int, request: flask.Request) -> (dict, int):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "Пользователь не найден"}, 404
+        if "photo" not in request.files:
+            return {"error": "Неправильный формат запроса"}, 400
+        self.image_service.change_user_image(request.files.get("photo"), user_id)
+        identity = self.create_user_identity(user)
+        access_token = create_access_token(identity=identity, fresh=False)
+        return {"msg": "Фотография изменена", "access_token": access_token}, 200

@@ -4,10 +4,12 @@ import json
 from typing import TYPE_CHECKING
 
 import flask
+from flask_jwt_extended import create_access_token
 from marshmallow import ValidationError
 
-from web_for_msu_back.app.dto.teacher import TeacherDTO
 from web_for_msu_back.app.dto.duty_teacher_info import DutyTeacherInfoDTO
+from web_for_msu_back.app.dto.teacher import TeacherDTO
+from web_for_msu_back.app.dto.teacher_account import TeacherAccountDTO
 from web_for_msu_back.app.models import Teacher, User, user_role, Role
 
 if TYPE_CHECKING:
@@ -60,3 +62,46 @@ class TeacherService:
             }
             role_teachers.append(DutyTeacherInfoDTO().dump(data))
         return role_teachers, 200
+
+    def change_account(self, user_id: int, request: flask.Request) -> (dict, int):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "Пользователь не найден"}, 404
+        teacher = Teacher.query.filter(Teacher.user_id == user_id).first()
+        if not teacher:
+            return {"error": "Пользователь не найден"}, 404
+        try:
+            data = TeacherAccountDTO().load(request.json)
+        except ValidationError as e:
+            return e.messages, 400
+        if data["email"] != user.email and User.query.filter_by(email=data["email"]).first():
+            return {"error": "Пользователь с такой почтой уже существует"}, 404
+        user.email = teacher.email = data["email"]
+        teacher.name = data["name"]
+        teacher.surname = data["surname"]
+        teacher.patronymic = data["lastname"]
+        teacher.phone = data["phone"]
+        teacher.university = data["university"]
+        teacher.workplace = data["work"]
+        self.db.session.commit()
+        identity = self.user_service.create_user_identity(user)
+        access_token = create_access_token(identity=identity, fresh=False)
+        return {"msg": "Данные изменены", "access_token": access_token}, 200
+
+    def get_data_to_change(self, user_id: int):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "Пользователь не найден"}, 404
+        teacher = Teacher.query.filter(Teacher.user_id == user_id).first()
+        if not teacher:
+            return {"error": "Пользователь не найден"}, 404
+        data = {
+            "name": teacher.name,
+            "surname": teacher.surname,
+            "lastname": teacher.patronymic,
+            "email": teacher.email,
+            "phone": teacher.phone,
+            "university": teacher.university,
+            "work": teacher.workplace,
+        }
+        return TeacherAccountDTO().dump(data), 200

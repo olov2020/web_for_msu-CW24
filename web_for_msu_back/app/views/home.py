@@ -153,3 +153,11 @@ class HomeView(FlaskView):
         teacher_service: TeacherService = services["teacher_service"]
         teachers, code = teacher_service.get_teachers_with_role(role)
         return jsonify(teachers), code
+
+    @method("PUT")
+    @auth_required
+    def change_photo(self):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.change_photo(g.current_user.id, request)
+        return jsonify(response), code
