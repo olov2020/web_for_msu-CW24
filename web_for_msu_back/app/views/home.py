@@ -136,5 +136,20 @@ class HomeView(FlaskView):
         test_type = "tests_" + test_type
         services = get_services()
         teacher_service: TeacherService = services["teacher_service"]
-        teachers, code = teacher_service.get_entrance_tests_teachers(test_type)
+        teachers, code = teacher_service.get_teachers_with_role(test_type)
+        return jsonify(teachers), code
+
+    @route("/events/<event_type>/", methods=["GET"])
+    def tests_teachers(self, event_type: str):
+        event_types = {
+            "contest-of-scientific-works": "knr",
+            "residential-school": "vsh",
+            "summer-school": "lsh",
+        }
+        if event_type not in event_types.keys():
+            return {"error": "Нет такого типа события"}, 404
+        role = event_types[event_type]
+        services = get_services()
+        teacher_service: TeacherService = services["teacher_service"]
+        teachers, code = teacher_service.get_teachers_with_role(role)
         return jsonify(teachers), code
