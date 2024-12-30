@@ -22,7 +22,9 @@ def create_app(config):
 
     db.init_app(app)
     JWTManager(app)
-    CORS(app, resources={r"/*": {"origins": os.getenv('FRONTEND_HOST', '*')}})
+    CORS(app, resources={r"/*": {"origins": os.getenv('FRONTEND_HOST', '*')}},
+         supports_credentials=True,
+         allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
     # mail.init_app(app)
     # migrate.init_app(app, db)
 
