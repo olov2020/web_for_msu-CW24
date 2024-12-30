@@ -1,10 +1,12 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import itertools
+from datetime import datetime
 from operator import attrgetter
 from typing import TYPE_CHECKING
 
 import flask
+import pytz
 from marshmallow import ValidationError
 from sqlalchemy import asc
 
@@ -25,9 +27,10 @@ class MarkService:
 
     def get_pupils_marks(self, course_id: int, lessons: list[Schedule], pupils: list[Pupil]) -> dict[str, list[str]]:
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
+        lessons_ids = set(lesson.id for lesson in lessons)
         marks_grouped = {}
         for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
-            marks_grouped[key] = list(group)
+            marks_grouped[key] = [mark for mark in group if mark.schedule_id in lessons_ids]
         for pupil in pupils:
             if pupil.id not in marks_grouped:
                 marks_grouped[pupil.id] = []
@@ -54,17 +57,21 @@ class MarkService:
                     result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
         return result
 
-    def get_journal(self, course_id: int, current_user_id: int) -> (dict, int):
+    def get_current_journal(self, course_id: int, current_user_id: int, is_admin: bool, part: str) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
 
-        if current_user_id not in [assoc.teacher.user_id for assoc in course.teachers]:
+        if not (is_admin or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
             return {'error': 'У вас нет доступа к этому курсу'}, 403
 
+        lessons = self.get_lessons_by_part(course, course_id, part)
+
+        return self.get_journal_part(course, course_id, lessons)
+
+    def get_journal_part(self, course: Course, course_id: int, lessons: list[Schedule]) -> (dict, int):
         formulas = course.formulas
         choices = [formula.name for formula in formulas] + ['Присутствие']
-        lessons = self.course_service.get_lessons(course_id)
         if not lessons:
             return {'error': 'Уроков пока нет'}, 404
 
@@ -118,19 +125,43 @@ class MarkService:
             return e.messages, 400
         return marks_dto, 200
 
-    def update_journal(self, course_id: int, current_user_id: int, request: flask.Request) -> (dict, int):
+    def get_lessons_by_part(self, course, course_id, part):
+        if part == "current":
+            year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
+            if year == course.year:
+                part = "first"
+            else:
+                part = "second"
+
+        match part:
+            case "first":
+                lessons = self.course_service.get_lessons_first_part(course_id)
+            case "second":
+                lessons = self.course_service.get_lessons_second_part(course_id)
+            case _:
+                lessons = self.course_service.get_lessons(course_id)
+        return lessons
+
+    def update_current_journal(self, course_id: int, current_user_id: int, request: flask.Request, is_admin: bool,
+                               part: str) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
 
-        if current_user_id not in [assoc.teacher.user_id for assoc in course.teachers]:
+        if not (is_admin or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
             return {'error': 'У вас нет доступа к этому курсу'}, 403
+
+        lessons = self.get_lessons_by_part(course, course_id, part)
+
+        return self.update_journal_part(course_id, request, lessons)
+
+    def update_journal_part(self, course_id: int, request: flask.Request, lessons) -> (dict, int):
 
         try:
             marks_dto = MarksDTO().load(request.json)
         except ValidationError as e:
             return e.messages, 400
-        lessons = Schedule.query.filter_by(course_id=course_id).order_by(Schedule.date).all()
+        lessons_ids = set(lesson.id for lesson in lessons)
         formula_vals = Formula.query.filter_by(course_id=course_id).all()
         formulas = {formula.name: formula for formula in formula_vals}
 
@@ -147,7 +178,7 @@ class MarkService:
         marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
         marks_grouped = {}
         for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
-            marks_grouped[key] = {mark.schedule_id: mark for mark in group}
+            marks_grouped[key] = {mark.schedule_id: mark for mark in group if mark.schedule_id in lessons_ids}
 
         for i in range(len(marks_dto["pupils"])):
             for j in range(len(marks_dto["dates"])):
@@ -192,10 +223,14 @@ class MarkService:
         self.db.session.commit()
         return marks_dto, 200
 
-    def get_pupil_marks(self, course_id: int, pupil_id: int) -> list[Mark]:
+    def get_pupil_marks(self, course_id: int, pupil_id: int, lessons: list[Schedule]) -> list[Mark]:
         marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
                  .order_by(Mark.schedule_id).all())
-        return marks
+        lessons_ids = [lesson.id for lesson in lessons]
+        pupil_marks = sorted([mark for mark in marks if mark.schedule_id in lessons_ids],
+                             key=lambda mark: lessons_ids.index(mark.schedule_id))
+
+        return pupil_marks
 
     def extend_pupil_marks(self, marks: list[Mark], lessons: list[Schedule]) -> list[str]:
         pupil_marks = marks
@@ -215,12 +250,14 @@ class MarkService:
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
-        pupil_course = PupilCourse.query.filter_by(PupilCourse.course_id == course_id, PupilCourse.pupil_id == pupil_id)
+        pupil_course = PupilCourse.query.filter(PupilCourse.course_id == course_id,
+                                                PupilCourse.pupil_id == pupil_id).first()
         if not pupil_course:
             return {'error': 'Ученик не записан на этот курс'}, 404
         course_name = course.name
         formulas = course.formulas
-        marks = self.get_pupil_marks(course_id, pupil_id)
+        lessons = self.get_lessons_by_part(course, course_id, "current")
+        marks = self.get_pupil_marks(course_id, pupil_id, lessons)
         lessons = [mark.schedule for mark in marks]
         dates = [lesson.date.strftime('%d.%m.%Y') for lesson in lessons]
         mark_types = [lesson.formulas.name if lesson.formulas else 'Присутствие' for lesson in lessons]

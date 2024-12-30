@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from flask import request, g, jsonify
 from flask_classful import FlaskView, method
+from flask_jwt_extended import get_jwt_identity
 
 from web_for_msu_back.app.functions import auth_required, roles_required, get_services, output_json
 
@@ -37,7 +38,8 @@ class TeacherView(FlaskView):
     def get_journal(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
-        response, code = mark_service.get_journal(course_id, g.current_user.id)
+        response, code = mark_service.get_current_journal(course_id, g.current_user.id,
+                                                          "admin" in get_jwt_identity()["roles"], "current")
         return response, code
 
     @method("PUT")
@@ -46,7 +48,8 @@ class TeacherView(FlaskView):
     def update_journal(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
-        response, code = mark_service.update_journal(course_id, g.current_user.id, request)
+        response, code = mark_service.update_current_journal(course_id, g.current_user.id, request,
+                                                             "admin" in get_jwt_identity()["roles"], "current")
         return response, code
 
     @method("PUT")

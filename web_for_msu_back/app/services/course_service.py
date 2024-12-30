@@ -409,6 +409,22 @@ class CourseService:
             return []
         return sorted(course.lessons, key=lambda x: x.lesson_number)
 
+    def get_lessons_first_part(self, course_id: int) -> list[Schedule]:
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        lessons = sorted(course.lessons, key=lambda x: x.lesson_number)
+        lessons_in_part = [lesson for lesson in lessons if lesson.date.year == lessons[0].date.year]
+        return lessons_in_part
+
+    def get_lessons_second_part(self, course_id: int) -> list[Schedule]:
+        course = Course.query.get(course_id)
+        if not course:
+            return []
+        lessons = sorted(course.lessons, key=lambda x: x.lesson_number)
+        lessons_in_part = [lesson for lesson in lessons if lesson.date.year == lessons[-1].date.year]
+        return lessons_in_part
+
     def get_course_teachers(self, course):
         if not course:
             return []
