@@ -268,7 +268,6 @@ const Courses = () => {
         url === '/courses/all' ?
           await getAllCourses() : undefined;
       setCoursesAll(data);
-      console.log(data);
       setIsMyCourses(url === '/courses/my');
     }
 

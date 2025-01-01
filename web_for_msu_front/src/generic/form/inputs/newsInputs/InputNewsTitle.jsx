@@ -20,7 +20,6 @@ const InputNewsTitle = ({name, placeholder, fieldName, value, setValue, formErro
       formErrors(error);
       setError(error);
       setValue(undefined);
-      console.log(error);
     }
   }
 

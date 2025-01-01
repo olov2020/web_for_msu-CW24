@@ -22,7 +22,6 @@ const InputMessenger = ({name = '', placeholder = '', fieldName, value, setValue
       setIsValid(false);
       formErrors(error);
       setError(error);
-      console.log(error);
     }
   })
 

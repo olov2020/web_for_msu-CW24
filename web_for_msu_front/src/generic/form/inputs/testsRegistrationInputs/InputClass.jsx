@@ -20,7 +20,6 @@ const InputClass = ({name = '', placeholder = '', fieldName, value, setValue, fo
       setIsValid(false);
       formErrors(error);
       setError(error);
-      console.log(error);
     }
   })
 

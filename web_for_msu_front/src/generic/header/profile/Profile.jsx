@@ -7,7 +7,6 @@ import {ACCOUNT_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.j
 const Profile = () => {
 
   const user = useSelector(state => state.user);
-  console.log(user)
 
   if (user.authStatus.includes('admin')) {
     return (

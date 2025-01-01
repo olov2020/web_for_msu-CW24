@@ -9,7 +9,6 @@ import {setNotAuthAction} from "../../store/UserReducers.js";
 const Account = () => {
 
   const user = useSelector(state => state.user);
-  console.log(user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const Account = () => {
       navigate(HOME_ROUTE);
       return true;
     } catch (error) {
-      console.log(error);
+      alert(`Выход из аккаунта не выполнен, повторите попытку позже.\nОшибка: ${error}`)
     }
   }
 

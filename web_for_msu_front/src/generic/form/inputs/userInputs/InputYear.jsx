@@ -20,7 +20,6 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
       setIsValid(false);
       formErrors(error);
       setError(error);
-      console.log(error);
     }
   })
 

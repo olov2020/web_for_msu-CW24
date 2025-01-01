@@ -20,7 +20,6 @@ const InputNewsDescription = ({name, placeholder, fieldName, value, setValue, fo
       formErrors(error);
       setError(error);
       setValue(undefined);
-      console.log(error);
     }
   }
 

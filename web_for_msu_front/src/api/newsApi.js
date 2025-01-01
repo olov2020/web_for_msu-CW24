@@ -6,7 +6,7 @@ export const getAllNews = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -27,7 +27,7 @@ export const addNewsItem = async (title, description, photo) => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 };
 
@@ -37,6 +37,6 @@ export const deleteNewsItem = async ({newsId}) => {
   if (response.status === 200) {
     return true;
   } else {
-    console.log(`error while deleting ${newsId}`);
+    return new Error(error);
   }
 }

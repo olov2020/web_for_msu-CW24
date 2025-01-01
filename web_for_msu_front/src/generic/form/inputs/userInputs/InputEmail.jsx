@@ -23,7 +23,6 @@ const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValu
       setIsValid(false);
       formErrors(error);
       setError(error);
-      console.log(error);
     }
   })
 

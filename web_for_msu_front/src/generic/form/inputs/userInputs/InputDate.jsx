@@ -19,7 +19,6 @@ const InputDate = ({name = '', fieldName, value, setValue, formErrors}) => {
       setIsValid(false);
       formErrors(error);
       setError(error);
-      console.log(error);
     }
   })
 

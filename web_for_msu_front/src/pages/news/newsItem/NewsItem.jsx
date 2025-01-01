@@ -2,11 +2,13 @@ import {useLocation} from "react-router-dom";
 import deleteIcon from '../../../../public/generic/deleteIcon.svg'
 import DeleteWindow from "./deleteWindow/DeleteWindow.jsx";
 import {useState} from "react";
+import {useSelector} from "react-redux";
 
 const NewsItem = () => {
 
   const {state} = useLocation();
   const [showDeleteWindow, setShowDeleteWindow] = useState(false);
+  const authStatus = useSelector(state => state.user.authStatus);
 
   return (
     <article key={state.key}>
@@ -25,6 +27,7 @@ const NewsItem = () => {
           {state.date}
         </h3>
 
+        {(authStatus.includes('admin') || authStatus.includes('newsmaker')) &&
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -42,6 +45,7 @@ const NewsItem = () => {
           />
           {showDeleteWindow && <DeleteWindow setShowDeleteWindow={setShowDeleteWindow} newsId={state.key}/>}
         </div>
+        }
       </section>
 
       <img src={state.photo} alt={state.title}
@@ -53,6 +57,7 @@ const NewsItem = () => {
 
       <p style={{
         margin: '0 2rem',
+        width: '60%',
       }}
       >
         {state.description}

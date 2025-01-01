@@ -7,10 +7,10 @@ import {getAllNews} from "../../api/newsApi.js";
 const News = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); // State for items per page
+  const [itemsPerPage, setItemsPerPage] = useState(3); // State for items per page
   const listRef = useRef(null); // Reference to the list
   const [news, setNews] = useState([
-    /*{id: 1, title: 'Title', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consectetur'},
+    {id: 1, title: 'Title', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consectetur'},
     {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
     {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
     {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
@@ -18,7 +18,7 @@ const News = () => {
     {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
     {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
     {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
-*/  ]);
+  ]);
 
   const [displayedNews, setDisplayedNews] = useState(
     news.slice(0, Math.min(itemsPerPage, news.length))
@@ -46,14 +46,14 @@ const News = () => {
     handlePageChange(1); // Go to the first page when changing items per page
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     const getNews = async () => {
       const data = await getAllNews();
       setNews(data);
     }
 
     getNews();
-  }, [])
+  }, [])*/
 
   useEffect(() => {
     handlePageChange(1);

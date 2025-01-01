@@ -6,7 +6,7 @@ export const getEventsTestsOfflineTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -16,7 +16,7 @@ export const getEventsTestsOnlineTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -26,7 +26,7 @@ export const getEventsOpenChampionshipTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -36,7 +36,7 @@ export const getEventsContestScientificWorksTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -46,7 +46,7 @@ export const getEventsResidentialSchoolTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -56,7 +56,7 @@ export const getEventsSummerSchoolTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 export const getEventsSummerCampTeachers = async () => {
@@ -65,7 +65,7 @@ export const getEventsSummerCampTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 

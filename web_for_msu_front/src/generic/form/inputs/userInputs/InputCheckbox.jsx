@@ -21,7 +21,6 @@ const InputCheckbox = ({name, initialChecked = false, required = false, fieldNam
       setIsValid(false);
       formErrors(error);
       setError(error);
-      console.log(error);
     }
   })
 

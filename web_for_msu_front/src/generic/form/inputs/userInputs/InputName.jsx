@@ -1,4 +1,3 @@
-import styleInput from "./input.module.css";
 import {useState} from "react";
 import Input from "../Input.jsx";
 
@@ -25,7 +24,6 @@ const InputName = ({name = '', placeholder = '', fieldName, value, setValue, for
     if (error) {
       setIsValid(false);
       formErrors(error);
-      console.log(formErrors);
       setError(error);
     }
   })

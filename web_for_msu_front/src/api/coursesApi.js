@@ -4,10 +4,8 @@ export const getAllCourses = async () => {
   const response = await $host.get(`/api/home/all_courses`)
 
   try {
-    console.log(response);
     return response.data;
   } catch (error) {
-    console.log(error);
     return new Error(error);
   }
 }
@@ -16,10 +14,8 @@ export const getCoursesSelect = async () => {
   const response = await $authHost.get(`/api/home/select_courses`)
 
   try {
-    console.log(response);
     return response.data;
   } catch (error) {
-    console.log(error);
     return new Error(error);
   }
 }
@@ -36,7 +32,7 @@ export const getMyCourses = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -45,8 +41,8 @@ export const getSchedule = async () => {
 
   try {
     return response.data;
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    console.log(error)
     return {};
   }
 }
@@ -56,8 +52,8 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
 
   try {
     return response.data;
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    console.log(error)
     return {};
   }
 }
@@ -67,8 +63,8 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
 
   try {
     return response.data;
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    console.log(error)
     return {};
   }
 }
@@ -79,8 +75,8 @@ export const updateTeacherMarksByCourseId = async (courseId, marks) => {
 
   try {
     return response.data;
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    console.log(error)
     return {};
   }
 }
@@ -119,7 +115,7 @@ export const approvePupilsOnCourse = async (courseId, pupilId) => {
   try {
     return response.status === 200;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -129,6 +125,6 @@ export const getAllPupilsOnCourse = async ({courseId}) => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }

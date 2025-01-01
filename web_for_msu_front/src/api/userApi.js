@@ -13,7 +13,7 @@ export const userChangePhoto = async ({photo}) => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -27,7 +27,7 @@ export const pupilChangeData = async ({name, surname, lastname, email, phone, sc
   try {
     return response.data
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -49,12 +49,11 @@ export const teacherChangeData = async ({name, surname, lastname, email, phone, 
   try {
     return response.data
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
 export const userLogin = async (email, password, dispatch) => {
-  console.log(email, password);
   const response = await $host.post('/api/home/login', {email, password}, {
     headers: {
       'Content-Type': 'application/json',
@@ -68,8 +67,7 @@ export const userLogin = async (email, password, dispatch) => {
     dispatch(setAuthFromToken(response.data.access_token));
     return true;
   } catch (error) {
-    console.log(error);
-    return false;
+    return new Error(error);
   }
 }
 
@@ -114,8 +112,7 @@ export const pupilRegistration = async (formValues) => {
   try {
     return response.status === 200;
   } catch (error) {
-    console.error(error);
-    return false;
+    return new Error(error);
   }
 }
 
@@ -143,10 +140,6 @@ export const teacherRegistration = async (formValues) => {
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
 
-  formData.forEach((value) => {
-    console.log(value)
-  })
-
   const response = await $host.post(`/api/teacher/add_teacher`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -156,7 +149,7 @@ export const teacherRegistration = async (formValues) => {
   try {
     return response.status === 200;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }
 
@@ -166,6 +159,6 @@ export const getDirectoryTeachers = async () => {
   try {
     return response.data;
   } catch (error) {
-    console.log(error);
+    return new Error(error);
   }
 }

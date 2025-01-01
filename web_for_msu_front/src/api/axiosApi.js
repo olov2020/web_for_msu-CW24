@@ -14,12 +14,10 @@ export const $authHost = axios.create({
 const authInterceptor = config => {
   const token = localStorage.getItem("token");
   config.headers.Authorization = `Bearer ${token}`;
-  console.log(token)
   return config;
 };
 
 $authHost.interceptors.request.use(authInterceptor, error => {
-  console.error("Interceptor error:", error);
   return Promise.reject(error);
 });
 

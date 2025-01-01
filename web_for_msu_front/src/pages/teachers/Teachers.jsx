@@ -28,7 +28,6 @@ const Teachers = () => {
   });
 
   const teachersList = Object.entries(teachers);
-  console.log(teachersList)
 
   const titles = ['Дирекция', 'Совет', 'Преподаватели', 'Организаторы'];
 
@@ -40,8 +39,6 @@ const Teachers = () => {
 
     getAllTeachersFunc();
   }, []);
-
-  console.log(teachers[0]);
 
   return (
     <article>

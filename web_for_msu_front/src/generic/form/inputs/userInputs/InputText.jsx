@@ -19,7 +19,6 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue, formE
       setIsValid(false);
       formErrors(error);
       setError(error);
-      console.log(error);
     }
   }
 

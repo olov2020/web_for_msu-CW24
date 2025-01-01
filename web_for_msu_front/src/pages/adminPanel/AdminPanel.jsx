@@ -35,7 +35,7 @@ const AdminPanel = () => {
       navigate(HOME_ROUTE);
       return true;
     } catch (error) {
-      console.log(error);
+      alert(`Выход из аккаунта не выполнен, повторите попытку позже.\nОшибка: ${error}`)
     }
   }
 

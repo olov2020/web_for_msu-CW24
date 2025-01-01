@@ -43,7 +43,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
   const navigate = useNavigate();
 
   const checkFormErrors = () => {
-    console.log(formErrors)
     return requiredValues[type].every(item => !formErrors[item] && formValues[item]);
   }
 
@@ -609,7 +608,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
       }
 
       default:
-        console.log('There is no such field in form')
         return <input value={input}/>
     }
   }

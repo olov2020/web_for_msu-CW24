@@ -27,7 +27,6 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue, formError
       formErrors(error);
       setIsValid(false);
       setError(error)
-      console.log(error);
     }
   })
 
