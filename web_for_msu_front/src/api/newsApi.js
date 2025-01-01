@@ -34,9 +34,9 @@ export const addNewsItem = async (title, description, photo) => {
 export const deleteNewsItem = async ({newsId}) => {
   const response = await $authHost.delete(`/api/news/${newsId}`);
 
-  if (response.status === 200) {
-    return true;
-  } else {
+  try {
+    return response.data;
+  } catch (error) {
     return new Error(error);
   }
 }

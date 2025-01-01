@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux'
 import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {
-  adminRoutes,
+  adminRoutes, auditorymakerRoutes,
   authRoutes,
   coursemakerRoutes,
   marksmakerRoutes,
@@ -23,6 +23,10 @@ const AppRouter = () => {
 
   return (
     <Routes>
+      {(authStatus.includes('admin') || authStatus.includes('auditorymaker')) && auditorymakerRoutes.map(({path, Element}) => {
+        return <Route key={path} path={path} element={Element}/>
+      })}
+
       {(authStatus.includes('admin') || authStatus.includes('marksmaker')) && marksmakerRoutes.map(({path, Element}) => {
         return <Route key={path} path={path} element={Element}/>
       })}
@@ -43,7 +47,7 @@ const AppRouter = () => {
         return <Route key={path} path={path} element={Element}/>
       })}
 
-      {(authStatus.includes('pupil') || authStatus.includes('teacher') || authStatus.includes('newsmaker') || authStatus.includes('coursemaker') || authStatus.includes('marksmaker')) && authRoutes.map(({path, Element}) => {
+      {(authStatus.includes('pupil') || authStatus.includes('teacher')) && authRoutes.map(({path, Element}) => {
         return <Route key={path} path={path} element={Element}/>
       })}
 

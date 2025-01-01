@@ -607,6 +607,20 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
                               setValue={setAgreementAb} formErrors={setError} required={true}/>
       }
 
+      case /^auditory .* .*/: {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        var [auditory, setAuditory] = useState([]);
+        auditory.push(name);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [error, setError] = useState(false);
+        formValues.auditory = auditory;
+        formErrors.auditory = error;
+        return <InputText name={input} placeholder='Введите номер аудитории' formErrors={setError}
+                          fieldName='Номер аудитории'
+                          value={auditory}
+                          setValue={setAuditory}/>
+      }
+
       default:
         return <input value={input}/>
     }

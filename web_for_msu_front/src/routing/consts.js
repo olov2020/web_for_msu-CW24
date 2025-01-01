@@ -14,6 +14,7 @@ export const COURSES_ITEM_ROUTE = '/courses/:year/:title';
 export const ADD_NEW_COURSE_ROUTE = '/courses/add';
 export const MARKS_ROUTE = '/marks';
 export const COURSES_SELECT_ROUTE = '/courses/select/';
+export const AUDITORY_ROUTE = '/auditory';
 
 export const NEWS_ROUTE = '/news';
 export const CREATE_NEWS_ROUTE = '/news/add';

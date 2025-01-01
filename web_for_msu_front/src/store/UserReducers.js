@@ -9,12 +9,13 @@ const authStatus = {
     newsmaker: 'newsmaker',
     coursemaker: 'coursemaker',
     marksmaker: 'marksmaker',
+    auditorymaker: 'auditorymaker',
     admin: 'admin',
 }
 
 const defaultState = {
     id: 0,
-    authStatus: authStatus.pupil,
+    authStatus: authStatus.none,
 }
 
 const SET_AUTH = "SET_AUTH"

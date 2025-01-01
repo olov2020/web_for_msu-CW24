@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {getAllCoursesIds} from "../../../api/adminApi.js";
-import TeacherMarks from "../../courses/marks/TeacherMarks.jsx";
+import {getAllCoursesIds} from "../../api/adminApi.js";
+import TeacherMarks from "../courses/marks/TeacherMarks.jsx";
 
 
 const Marks = () => {

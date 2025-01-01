@@ -3,7 +3,7 @@ import MenuItem from "./menuItem/MenuItem.jsx";
 import {
   ABOUT_ROUTE,
   ADD_NEW_COURSE_ROUTE,
-  ALL_COURSES_ROUTE,
+  ALL_COURSES_ROUTE, AUDITORY_ROUTE,
   COURSES_SELECT_ROUTE,
   CREATE_NEWS_ROUTE, EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
   EVENTS_OPEN_CHAMPIONSHIP_ROUTE, EVENTS_RESIDENTIAL_SCHOOL_ROUTE, EVENTS_SUMMER_CAMP_ROUTE, EVENTS_SUMMER_SCHOOL_ROUTE,
@@ -73,7 +73,7 @@ const Menu = () => {
     },
   ]
 
-  if (userStatus.includes('pupil') || userStatus.includes('teacher') || userStatus.includes('newsmaker') || userStatus.includes('coursemaker') || userStatus.includes('marksmaker')) {
+  if (userStatus.includes('pupil') || userStatus.includes('teacher')) {
     menu[1].dropdown.push({
       title: 'Расписание', link: SCHEDULE_ROUTE, id: menu[1].length,
     })
@@ -97,6 +97,12 @@ const Menu = () => {
   if (userStatus.includes('admin') || userStatus.includes('coursemaker')) {
     menu[1].dropdown.push({
       title: 'Добавить новый курс', link: ADD_NEW_COURSE_ROUTE, id: menu[1].length,
+    })
+  }
+
+  if (userStatus.includes('admin') || userStatus.includes('auditorymaker')) {
+    menu[1].dropdown.push({
+      title: 'Назначить аудитории', link: AUDITORY_ROUTE, id: menu[1].length,
     })
   }
 

@@ -23,7 +23,7 @@ import {
   EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
   EVENTS_RESIDENTIAL_SCHOOL_ROUTE,
   EVENTS_SUMMER_SCHOOL_ROUTE,
-  EVENTS_SUMMER_CAMP_ROUTE, TEACHERS_ROUTE,
+  EVENTS_SUMMER_CAMP_ROUTE, TEACHERS_ROUTE, AUDITORY_ROUTE,
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -40,7 +40,7 @@ import NewsItem from "../pages/news/newsItem/NewsItem.jsx";
 import CourseItem from "../pages/courses/courseItem/CourseItem.jsx";
 import About from "../pages/about/About.jsx";
 import AdminPanel from "../pages/adminPanel/AdminPanel.jsx";
-import Marks from "../pages/adminPanel/marks/Marks.jsx";
+import Marks from "../pages/marks/Marks.jsx";
 import ListOfPeople from "../pages/adminPanel/listsOf/ListOfPeople.jsx";
 import CoursesSelect from "../pages/courses/coursesSelect/CoursesSelect.jsx";
 import EventsTests from "../pages/events/tests/EventsTests.jsx";
@@ -50,6 +50,7 @@ import ResidentialSchool from "../pages/events/residentialSchool/ResidentialScho
 import SummerSchool from "../pages/events/summerSchool/SummerSchool.jsx";
 import SummerCamp from "../pages/events/summerCamp/SummerCamp.jsx";
 import Teachers from "../pages/teachers/Teachers.jsx";
+import Auditory from "../pages/auditory/Auditory.jsx";
 
 export const publicRoutes = [
   {
@@ -162,6 +163,13 @@ export const marksmakerRoutes = [
   {
     path: MARKS_ROUTE,
     Element: <Marks/>,
+  },
+]
+
+export const auditorymakerRoutes = [
+  {
+    path: AUDITORY_ROUTE,
+    Element: <Auditory/>,
   },
 ]
 

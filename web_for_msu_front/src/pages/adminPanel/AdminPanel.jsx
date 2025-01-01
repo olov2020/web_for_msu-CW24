@@ -1,7 +1,7 @@
 import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
 import {useNavigate} from "react-router-dom";
 import {closeRegistrationCourses, openRegistrationCourses} from "../../api/adminApi.js";
-import {HOME_ROUTE, MARKS_ROUTE} from "../../routing/consts.js";
+import {HOME_ROUTE} from "../../routing/consts.js";
 import {useDispatch} from "react-redux";
 import {setNotAuthAction} from "../../store/UserReducers.js";
 
@@ -66,7 +66,6 @@ const AdminPanel = () => {
       }}>
         <ButtonSubmit text='Список всех учеников' onClick={() => navigate('/admin/list/pupils')}/>
         <ButtonSubmit text='Список всех преподавателей' onClick={() => navigate('/admin/list/teachers')}/>
-        <ButtonSubmit text='Список всех ведомостей' onClick={() => navigate(MARKS_ROUTE)}/>
 
         <div>
           <ButtonSubmit text='Выйти из аккаунта' onClick={userLogout} type='delete'/>
