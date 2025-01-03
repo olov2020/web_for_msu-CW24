@@ -1,19 +1,26 @@
 import styleEvents from '../events.module.css';
 import {useEffect, useState} from "react";
-import {getEventsContestScientificWorksTeachers} from "../../../api/eventsApi.js";
-import TeachersSection from "../teachersSection/TeachersSection.jsx";
+import {
+  getEventsContestScientificWorksDate,
+  getEventsContestScientificWorksTeachers,
+} from "../../../api/eventsApi.js";
+import ContactsSection from "../contactsSection/ContactsSection.jsx";
 import subjectObjectImg from '../../../../public/knr/1.jpg';
 import diagram1 from '../../../../public/knr/2.jpg';
 import {Link} from "react-router-dom";
 import {EVENTS_RESIDENTIAL_SCHOOL_ROUTE} from "../../../routing/consts.js";
+import Form from "../../../generic/form/Form.jsx";
+import {useSelector} from "react-redux";
 
 const ContestScientificWorks = () => {
 
+  const authStatus = useSelector(state => state.user.authStatus);
   const [teachers, setTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
   ]);
+  const [dates, setDates] = useState(['уточняется', 'уточняется', 'уточняется']);
 
   useEffect(() => {
     const getEventsContestScientificWorksTeachersFunc = async () => {
@@ -22,6 +29,13 @@ const ContestScientificWorks = () => {
     }
 
     getEventsContestScientificWorksTeachersFunc();
+
+    const getEventsContestScientificWorksDateFunc = async () => {
+      const data = await getEventsContestScientificWorksDate();
+      setDates(data);
+    }
+
+    getEventsContestScientificWorksDateFunc();
   }, []);
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -84,13 +98,30 @@ const ContestScientificWorks = () => {
           </div>
         )}
 
-        {teachers && (
-          <aside className={styleEvents.asideRight}>
-            <TeachersSection header='Ответственные за Конкурс научных работ' teachers={teachers}/>
-          </aside>
-        )}
+        <aside className={`${styleEvents.asideRight} ${styleEvents.aside}`}>
+          <h3>Важные даты:</h3>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}>
+            {authStatus.includes('admin') ?
+              <Form inputs={['dateKnrFirst', 'dateKnrSecond', 'dateKnrThird']}
+                    values={{dateKnrFirst: dates[0], dateKnrSecond: dates[1], dateKnrThird: dates[2],}}
+                    type='setDateContestScientificWorks'
+                    buttonText='Сохранить даты'
+              /> :
+              <>
+                <p>Дата I тура: <strong>{dates[0]}</strong></p>
+                <p>Дата II тура: <strong>{dates[1]}</strong></p>
+                <p>Дата III тура: <strong>{dates[2]}</strong></p>
+              </>
+            }
+          </div>
+          <ContactsSection header='Ответственные за Конкурс научных работ' contacts={teachers}/>
+        </aside>
 
-        <aside className={styleEvents.asideLeft}>
+        <aside className={`${styleEvents.asideLeft} ${styleEvents.aside}`}>
           <h2>Правила оформления</h2>
 
           <ol>
@@ -154,7 +185,9 @@ const ContestScientificWorks = () => {
 
         </ol>
 
-        <aside className={styleEvents.asideRight}>
+        <aside className={`${styleEvents.asideRight} ${styleEvents.aside}`} style={{
+          border: 'none',
+        }}>
           <img src={subjectObjectImg} alt='Предмет входит в объект'/>
         </aside>
 

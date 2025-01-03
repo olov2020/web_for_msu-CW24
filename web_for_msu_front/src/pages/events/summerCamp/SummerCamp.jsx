@@ -1,7 +1,7 @@
 import styleEvents from '../events.module.css';
 import {useEffect, useState} from "react";
 import {getEventsSummerCampTeachers} from "../../../api/eventsApi.js";
-import TeachersSection from "../teachersSection/TeachersSection.jsx";
+import ContactsSection from "../contactsSection/ContactsSection.jsx";
 
 const SummerCamp = () => {
 
@@ -45,7 +45,7 @@ const SummerCamp = () => {
 
         <aside className={styleEvents.asideRight}>
           {teachers && (
-            <TeachersSection header='Ответственные за Летний лагерь' teachers={teachers}/>
+            <ContactsSection header='Ответственные за Летний лагерь' teachers={teachers}/>
           )}
         </aside>
       </section>

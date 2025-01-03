@@ -4,7 +4,7 @@ import {
   getEventsTestsOnlineTeachers,
 } from "../../../api/eventsApi.js";
 import styleEvents from '../events.module.css';
-import TeachersSection from "../teachersSection/TeachersSection.jsx";
+import ContactsSection from "../contactsSection/ContactsSection.jsx";
 
 const EventsTests = () => {
 
@@ -29,14 +29,14 @@ const EventsTests = () => {
   const examDate = getThirdSunday(year, month);
 
   const [testsOfflineTeachers, setTestsOfflineTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
   ]);
   const [testsOnlineTeachers, setTestsOnlineTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
   ]);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const EventsTests = () => {
       <h1>Как поступить?</h1>
 
       <section className={styleEvents.section}>
-        <p><strong>{examDate} сентября {year}</strong> года абитуриентам предстоит написать два теста: по математике и
+        <p><strong>{examDate} сентября {year}</strong> абитуриентам предстоит написать два теста: по математике и
           общеобразовательный (тест на общую эрудицию).</p>
         <p>При успешном прохождении тестов в следующее воскресенье, <strong>{examDate + 7} сентября</strong>, школьникам
           предстоит заключительная ступень Вступительных экзаменов — <strong>собеседование</strong>.</p>
@@ -81,12 +81,21 @@ const EventsTests = () => {
         <p>Мы всегда рады помочь!</p>
 
         {testsOfflineTeachers && (
-          <aside className={styleEvents.asideRight}>
-            <TeachersSection header='Ответственные за офлайн вступительные' teachers={testsOfflineTeachers}/>
+          <aside className={`${styleEvents.asideRight} ${styleEvents.aside}`}>
+            <h3>Важные даты вступительных:</h3>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}>
+              <p><strong>1 этап - {examDate} сентября</strong></p>
+              <p><strong>2 этап - {examDate + 7} сентября</strong></p>
+            </div>
+            <ContactsSection header='Ответственные за офлайн вступительные' contacts={testsOfflineTeachers}/>
           </aside>
         )}
 
-        <aside className={styleEvents.asideLeft}>
+        <aside className={`${styleEvents.asideLeft} ${styleEvents.aside}`}>
           <h2>Регистрация на вступительные</h2>
 
           <div>
@@ -113,8 +122,8 @@ const EventsTests = () => {
         <p>Если у вас остались какие-либо вопросы об обучении или поступлении в онлайн подразделение ЭМШ, пишите на
           почту <strong><a href='mailto:online@emsch.ru'>online@emsch.ru</a></strong>.</p>
         {testsOnlineTeachers && (
-          <aside className={styleEvents.asideRight}>
-            <TeachersSection header='Ответственные за онлайн вступительные' teachers={testsOnlineTeachers}/>
+          <aside className={`${styleEvents.asideRight} ${styleEvents.aside}`}>
+            <ContactsSection header='Ответственные за онлайн вступительные' contacts={testsOnlineTeachers}/>
           </aside>
         )}
       </section>

@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import Form from "../../generic/form/Form.jsx";
+import InputText from "../../generic/form/inputs/userInputs/InputText.jsx";
 
 const Auditory = () => {
 
@@ -19,24 +20,29 @@ const Auditory = () => {
     setAuditoriums(auditoriumsNews);
   }, []);
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+  }
+
   return (
     <article>
       <h1>Назначение аудиторий</h1>
 
-      <section>
-        <div>
+      <form onSubmit={onSubmit} style={{
+        width: '60%',
+      }}>
           {courses && courses.length > 0 && courses.map((course) => (
-            <div key={course.id}>
+            <div key={course.id} style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+            }}>
               <h3>{course.name}</h3>
               <p>{course.lesson_time}</p>
+              <InputText/>
             </div>
           ))}
-        </div>
-
-        <aside>
-          <Form inputs={auditoriums}/>
-        </aside>
-      </section>
+      </form>
     </article>
   );
 };

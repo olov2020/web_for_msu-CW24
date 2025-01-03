@@ -17,7 +17,7 @@ export const userChangePhoto = async ({photo}) => {
   }
 }
 
-export const pupilChangeData = async ({name, surname, lastname, email, phone, school}) => {
+export const pupilChangeData = async (name, surname, lastname, email, phone, school) => {
   const response = await $authHost.post('/api/account/data', {name, surname, lastname, email, phone, school}, {
     headers: {
       'content-type': 'application/json'
@@ -31,7 +31,7 @@ export const pupilChangeData = async ({name, surname, lastname, email, phone, sc
   }
 }
 
-export const teacherChangeData = async ({name, surname, lastname, email, phone, university, work}) => {
+export const teacherChangeData = async (name, surname, lastname, email, phone, university, work) => {
   const response = await $authHost.post('/api/account/data', {
     name,
     surname,

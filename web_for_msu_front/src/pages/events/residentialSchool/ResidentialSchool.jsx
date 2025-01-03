@@ -3,7 +3,7 @@ import professorImg from '../../../../public/vsh/1.jpg';
 import teachersImg from '../../../../public/vsh/2.jpg';
 import juryImg from '../../../../public/vsh/3.jpg';
 import winnersImg from '../../../../public/vsh/4.jpg';
-import TeachersSection from "../teachersSection/TeachersSection.jsx";
+import ContactsSection from "../contactsSection/ContactsSection.jsx";
 import {useEffect, useState} from "react";
 import {getEventsResidentialSchoolTeachers} from "../../../api/eventsApi.js";
 
@@ -84,7 +84,7 @@ const ResidentialSchool = () => {
           }}>Почта для общих вопросов: <a href='mailto:vsh@emsch.ru'>vsh@emsch.ru</a></p>
 
           {teachers && (
-              <TeachersSection header='Ответственные за Выездную школу' teachers={teachers}/>
+              <ContactsSection header='Ответственные за Выездную школу' teachers={teachers}/>
           )}
         </aside>
       </section>

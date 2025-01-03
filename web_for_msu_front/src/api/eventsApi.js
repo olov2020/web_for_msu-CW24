@@ -1,4 +1,4 @@
-import {$host} from "./axiosApi.js";
+import {$authHost, $host} from "./axiosApi.js";
 
 export const getEventsTestsOfflineTeachers = async () => {
   const response = await $host.get(`/api/events/tests/offline`)
@@ -69,3 +69,57 @@ export const getEventsSummerCampTeachers = async () => {
   }
 }
 
+export const setEventsOpenChampionshipDate = async (dateStart, dateEnd) => {
+  const formData = new FormData();
+  formData.append('date_start', dateStart);
+  formData.append('date_end', dateEnd);
+  const response = await $authHost.post('api/events/set-date/open-championship', formData, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const getEventsOpenChampionshipDate = async () => {
+  const response = await $host.get('api/events/get-date/open-championship');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const setEventsContestScientificWorksDate = async (dateFirst, dateSecond, dateThird) => {
+  const formData = new FormData();
+  formData.append('date_first', dateFirst);
+  formData.append('date_second', dateSecond);
+  formData.append('date_third', dateThird);
+  const response = await $authHost.post('api/events/set-date/contest-scientific-works', formData, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const getEventsContestScientificWorksDate = async () => {
+  const response = await $host.get('api/events/get-date/contest-scientific-works');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}

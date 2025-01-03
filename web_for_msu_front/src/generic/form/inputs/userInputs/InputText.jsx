@@ -23,7 +23,7 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue, formE
   }
 
   const validateInput = (inputValue) => {
-    if (inputValue.length === 0 && !name.includes('auditory')) {
+    if (inputValue.length === 0) {
       return errors.empty;
     }
 

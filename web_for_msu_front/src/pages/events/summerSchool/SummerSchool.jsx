@@ -1,5 +1,5 @@
 import styleEvents from '../events.module.css';
-import TeachersSection from "../teachersSection/TeachersSection.jsx";
+import ContactsSection from "../contactsSection/ContactsSection.jsx";
 import {useEffect, useState} from "react";
 import {getEventsSummerSchoolTeachers} from "../../../api/eventsApi.js";
 
@@ -53,7 +53,7 @@ const SummerSchool = () => {
           }}>Почта для общих вопросов: <a href='mailto:vsh@emsch.ru'>vsh@emsch.ru</a></p>
 
           {teachers && (
-            <TeachersSection header='Ответственные за Летнюю школу' teachers={teachers}/>
+            <ContactsSection header='Ответственные за Летнюю школу' teachers={teachers}/>
           )}
         </aside>
       </section>

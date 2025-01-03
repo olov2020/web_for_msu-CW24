@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line react/prop-types
-const TeachersSection = ({header, teachers = []}) => {
+const ContactsSection = ({header, contacts = []}) => {
   return (
     <>
       <h3>{header}</h3>
@@ -10,11 +10,11 @@ const TeachersSection = ({header, teachers = []}) => {
         alignItems: 'flex-start',
         gap: '.3rem 0',
       }}>
-        {teachers.map((teacher) => (
-          <li key={teacher.id} style={{
+        {contacts.map((contact) => (
+          <li key={contact.id} style={{
             listStyleType: 'none',
           }}>
-            <p>{teacher.name}: <a href={`tel:${teacher.phone}`}>{teacher.phone}</a></p>
+            <p>{contact.name}: <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
           </li>
         ))}
       </ul>
@@ -22,4 +22,4 @@ const TeachersSection = ({header, teachers = []}) => {
   );
 };
 
-export default TeachersSection;
+export default ContactsSection;

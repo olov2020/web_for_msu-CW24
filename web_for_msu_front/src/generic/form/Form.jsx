@@ -24,6 +24,7 @@ import {useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd, courseChange} from "../../api/coursesApi.js";
 import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
+import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}}) => {
@@ -38,6 +39,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
       courseAdd: ['courseFile'],
       courseChange: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription'],
+      setDateOpenChampionship: ['dateOchStart', 'dateOchEnd'],
+      setDateContestScientificWorks: ['dateKnrFirst', 'dateKnrSecond', 'dateKnrThird'],
     }
 
   const navigate = useNavigate();
@@ -48,27 +51,18 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (!checkFormErrors()) {
+      alert('Заполните все обязательные поля.');
+    }
     if (type === 'login') {
-      if (checkFormErrors()) {
-        await userLogin(formValues.email, formValues.password, dispatch);
-        navigate(HOME_ROUTE);
-      } else {
-        alert('Заполните все обязательные поля.');
-      }
+      await userLogin(formValues.email, formValues.password, dispatch);
+      navigate(HOME_ROUTE);
     } else if (type === 'pupilRegistration') {
-      if (checkFormErrors()) {
-        await pupilRegistration(formValues);
-        navigate(LOGIN_ROUTE);
-      } else {
-        alert('Заполните все обязательные поля.');
-      }
+      await pupilRegistration(formValues);
+      navigate(LOGIN_ROUTE);
     } else if (type === 'teacherRegistration') {
-      if (checkFormErrors()) {
-        await teacherRegistration(formValues);
-        navigate(LOGIN_ROUTE);
-      } else {
-        alert('Заполните все обязательные поля.');
-      }
+      await teacherRegistration(formValues);
+      navigate(LOGIN_ROUTE);
     } else if (type === 'userChangePhoto') {
       await userChangePhoto(formValues.photo);
     } else if (type === 'pupilChangeData') {
@@ -76,42 +70,45 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
     } else if (type === 'teacherChangeData') {
       await teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
     } else if (type === 'courseAdd') {
-      if (checkFormErrors()) {
-        try {
-          await courseAdd(formValues.courseFile);
-          alert('Новый курс успешно добавлен.');
-          navigate(ALL_COURSES_ROUTE);
-        } catch (error) {
-          alert(error.message);
-        }
-      } else {
-        alert('Заполните все обязательные поля.');
+      try {
+        await courseAdd(formValues.courseFile);
+        alert('Новый курс успешно добавлен.');
+        navigate(ALL_COURSES_ROUTE);
+      } catch (error) {
+        alert(`Упс... Что-то пошло не так: ${error.message}`);
       }
     } else if (type === 'courseChange') {
-      if (checkFormErrors()) {
-        try {
-          await courseChange(formValues.courseFile);
-          alert('Курс успешно изменен.');
-        } catch (error) {
-          alert(error.message);
-        }
-      } else {
-        alert('Заполните все обязательные поля.');
+      try {
+        await courseChange(formValues.courseFile);
+        alert('Курс успешно изменен.');
+      } catch (error) {
+        alert(`Упс... Что-то пошло не так: ${error.message}`);
       }
+
     } else if (type === 'newsAdd') {
-      if (checkFormErrors()) {
-        try {
-          await addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
-          alert('Новость успешно создана.');
-          navigate(NEWS_ROUTE);
-        } catch (error) {
-          alert(error.message);
-        }
-      } else {
-        alert('Заполните все обязательные поля.');
+      try {
+        await addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
+        alert('Новость успешно создана.');
+        navigate(NEWS_ROUTE);
+      } catch (error) {
+        alert(`Упс... Что-то пошло не так: ${error.message}`);
+      }
+    } else if (type === 'setDateOpenChampionship') {
+      try {
+        await setEventsOpenChampionshipDate(formValues.dateOchStart, formValues.dateOchEnd);
+        alert('Даты мероприятия успешно сохранены');
+      } catch (error) {
+        alert(`Упс... Что-то пошло не так: ${error.message}`);
+      }
+    } else if (type === 'setDateContestScientificWorks') {
+      try {
+        await setEventsContestScientificWorksDate(formValues.dateKnrFirst, formValues.dateKnrSecond, formValues.dateKnrThird);
+        alert('Даты мероприятия успешно сохранены');
+      } catch (error) {
+        alert(`Упс... Что-то пошло не так: ${error.message}`);
       }
     } else {
-      console.error('Invalid type:', type);
+      alert(`Invalid type: ${type}`);
     }
   }
 
@@ -607,18 +604,61 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
                               setValue={setAgreementAb} formErrors={setError} required={true}/>
       }
 
-      case /^auditory .* .*/: {
+      case 'dateOchStart': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        var [auditory, setAuditory] = useState([]);
-        auditory.push(name);
+        const [dateOchStart, setDateOchStart] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.auditory = auditory;
-        formErrors.auditory = error;
-        return <InputText name={input} placeholder='Введите номер аудитории' formErrors={setError}
-                          fieldName='Номер аудитории'
-                          value={auditory}
-                          setValue={setAuditory}/>
+        formValues.dateOchStart = dateOchStart;
+        formErrors.dateOchStart = error;
+        return <InputText name={input} placeholder='Введите дату мероприятия' fieldName='Дата мероприятия'
+                          value={dateOchStart} setValue={setDateOchStart} formErrors={setError}
+        />
+      }
+      case 'dateOchEnd': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [dateOchEnd, setDateOchEnd] = useState(values[input]);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [error, setError] = useState(false);
+        formValues.dateOchEnd = dateOchEnd;
+        formErrors.dateOchEnd = error;
+        return <InputText name={input} placeholder='Введите дату церемонии награждения' fieldName='Дата награждения'
+                          value={dateOchEnd} setValue={setDateOchEnd} formErrors={setError}
+        />
+      }
+
+      case 'dateKnrFirst': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [dateKnrFirst, setDateKnrFirst] = useState(values[input]);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [error, setError] = useState(false);
+        formValues.dateKnrFirst = dateKnrFirst;
+        formErrors.dateKnrFirst = error;
+        return <InputText name={input} placeholder='Введите дату 1 тура' fieldName='Дата 1 тура'
+                          value={dateKnrFirst} setValue={setDateKnrFirst} formErrors={setError}
+        />
+      }
+      case 'dateKnrSecond': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [dateKnrSecond, setDateKnrSecond] = useState(values[input]);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [error, setError] = useState(false);
+        formValues.dateKnrSecond = dateKnrSecond;
+        formErrors.dateKnrSecond = error;
+        return <InputText name={input} placeholder='Введите дату 2 тура' fieldName='Дата 2 тура'
+                          value={dateKnrSecond} setValue={setDateKnrSecond} formErrors={setError}
+        />
+      }
+      case 'dateKnrThird': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [dateKnrThird, setDateKnrThird] = useState(values[input]);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [error, setError] = useState(false);
+        formValues.dateKnrThird = dateKnrThird;
+        formErrors.dateKnrThird = error;
+        return <InputText name={input} placeholder='Введите дату 3 тура' fieldName='Дата 3 тура'
+                          value={dateKnrThird} setValue={setDateKnrThird} formErrors={setError}
+        />
       }
 
       default:
@@ -626,11 +666,13 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
     }
   }
 
-  return (<form className={style.form} onSubmit={onSubmit}>
+  return (
+    <form className={style.form} onSubmit={onSubmit}>
     {inputs.map((input) => (showInput(input)))}
 
     <ButtonSubmit text={buttonText}/>
-  </form>);
+  </form>
+  );
 };
 
 export default Form;
