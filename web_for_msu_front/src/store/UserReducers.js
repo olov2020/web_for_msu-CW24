@@ -15,7 +15,7 @@ const authStatus = {
 
 const defaultState = {
     id: 0,
-    authStatus: authStatus.newsmaker,
+    authStatus: authStatus.none,
 }
 
 const SET_AUTH = "SET_AUTH"

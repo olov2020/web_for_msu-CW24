@@ -17,7 +17,6 @@ import InputCheckbox from "./inputs/userInputs/InputCheckbox.jsx";
 import {useState} from "react";
 import InputPhoto from "./inputs/userInputs/InputPhoto.jsx";
 import InputNewsTitle from "./inputs/newsInputs/InputNewsTitle.jsx";
-import InputNewsPhoto from "./inputs/newsInputs/InputNewsPhoto.jsx";
 import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {useNavigate} from "react-router-dom";
@@ -529,7 +528,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsPhoto, setNewsPhoto] = useState(undefined);
         formValues.newsPhoto = newsPhoto;
-        return <InputNewsPhoto name={input}
+        return <InputPhoto name={input}
                                fieldName='Фотография новости'
                                value={newsPhoto}
                                setValue={setNewsPhoto}

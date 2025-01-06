@@ -1,13 +1,15 @@
-import styleInput from "./input.module.css";
-import styleFileInput from './inputFile.module.css'
-import {useState} from "react";
-import defaultUserImage from '../../../../../public/generic/default_user.svg'
+import styleFileInput from "../userInputs/inputFile.module.css";
+import styleInput from "../userInputs/input.module.css";
+import {useState, useRef} from "react";
+import defaultNewsImage from "../../../../../public/msu_logo.png";
+import defaultUserImage from '../../../../../public/generic/default_user.svg';
 
 // eslint-disable-next-line react/prop-types
-const InputPhoto = ({name = '', fieldName, accept = '', required = false, setValue, formErrors}) => {
+const InputPhoto = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
 
-  const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
+  const [imageUrl, setImageUrl] = useState(name.includes('news') ? defaultNewsImage : defaultUserImage);
+  const fileInputRef = useRef(null);
   const errors = {
     empty: 'Данное поле не может быть пустым',
   }
@@ -16,15 +18,18 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
     e.preventDefault();
     const file = e.target.files[0];
     const error = validateInput(file);
-    setValue(file);
 
     if (error) {
-      setIsValid(false);
-      formErrors(error);
-      setValue(defaultUserImage);
-
+      setValue(undefined);
+      setImageUrl(name.includes('news') ? defaultNewsImage : defaultUserImage);
+    } else {
+      const reader = new FileReader();
+      setValue(file);
+      reader.onloadend = () => {
+        setImageUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
-
   })
 
   const validateInput = (value) => {
@@ -32,15 +37,17 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
       return errors.empty;
     }
 
-    setIsValid(true);
     setError('');
-    formErrors(false);
     return '';
+  }
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
   }
 
   return (
     <div className={styleFileInput.container}>
-      <label className={`${styleFileInput.label} ${styleInput.label}`}>
+      <label className={styleInput.label}>
         <h3 style={{
           alignSelf: 'flex-start',
         }}>
@@ -51,16 +58,12 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
           type='file'
           required={required}
           name={name}
-          multiple={false}
+          multiple={multiple}
           accept={accept}
-          className={
-            `${isValid ?
-              `${styleInput.valid}` :
-              `${styleInput.invalid}`}
-          ${styleInput.input}
-          ${styleFileInput.input}`
-          }
+          className={styleInput.input}
           onChange={handleInputChange}
+          ref={fileInputRef}
+          style={{ display: 'none' }} // Hide the file input
         />
 
         <p className={styleInput.errorMessage}>
@@ -69,10 +72,15 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
       </label>
 
       <img
-       /* onClick={() => imageUploader.current.click()}
-        ref={uploadedImage}*/
-        className={styleFileInput.photo}
-        alt='Фото пользователя'
+        src={imageUrl}
+        alt='Фото новости'
+        onClick={handleImageClick}
+        style={{
+          cursor: 'pointer',
+          alignSelf: 'center',
+          width: '30%',
+          objectFit: 'contain',
+      }} // Make the image clickable
       />
     </div>
   );

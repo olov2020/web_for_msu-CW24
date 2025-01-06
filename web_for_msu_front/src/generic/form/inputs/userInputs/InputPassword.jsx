@@ -72,6 +72,9 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue, formError
   }
 
   return (
+    <div style={{
+      width: '100%',
+    }}>
     <label className={styleInput.label}>
       <h3 style={{
         alignSelf: 'flex-start',
@@ -94,11 +97,12 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue, formError
       />
 
       <FiEye className={styleInputPassword.showPassword} onClick={() => setShowPassword(!showPassword)}/>
+    </label>
 
       <p className={styleInput.errorMessage}>
         {error}
       </p>
-    </label>
+    </div>
   );
 };
 
