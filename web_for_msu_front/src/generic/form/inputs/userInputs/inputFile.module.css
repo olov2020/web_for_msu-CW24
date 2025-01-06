@@ -1,32 +1,30 @@
 .container {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
+    align-items: flex-start;
 }
 
-.label {
-    > p {
-        color: black;
-    }
+.fileInput {
+    display: none;
 }
 
-.input {
-
-}
-
-.photo {
-    width: 20rem;
-    height: 20rem;
-    border-radius: 50%;
-    object-fit: cover;
+.customFileInput {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #9F1A59;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-.photoNews {
-    width: 30rem;
-    object-fit: contain;
-    cursor: pointer;
+.customFileInput:hover {
+    background-color: #951953;
+}
+
+.successMessage {
+    color: #419741;
 }
