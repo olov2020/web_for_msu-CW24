@@ -551,55 +551,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
         />
       }
 
-      case 'classOver': {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [classOver, setClassOver] = useState(undefined);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [error, setError] = useState(false);
-        formValues.classOver = classOver;
-        formErrors.classOver = error;
-        return <InputClass name={input} placeholder='Введите номер класса, который вы заканчиваете в этом году'
-                           fieldName='Номер класса*' formErrors={setError}
-                           value={classOver}
-                           setValue={setClassOver}
-        />
-      }
-      case 'city': {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [city, setCity] = useState(undefined);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [error, setError] = useState(false);
-        formValues.city = city;
-        formErrors.city = error;
-        return <InputText name={input} placeholder='Введите название города' formErrors={setError}
-                          fieldName='Название города*'
-                          value={city}
-                          setValue={setCity}
-        />
-      }
-      case 'format': {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [format, setFormat] = useState(undefined);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [error, setError] = useState(false);
-        formValues.format = format;
-        formErrors.format = error;
-        return <InputDropdown name={input} placeholder='Выберете формат обучения в ЭМШ' formErrors={setError}
-                              fieldName='Формат обучения в ЭМШ*'
-                              values={['Очный', 'Онлайн (я не из Москвы)']}
-                              setValue={setFormat}/>
-      }
-      case 'agreementAb': {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [agreementAb, setAgreementAb] = useState(true);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [error, setError] = useState(false);
-        formValues.agreementAb = agreementAb;
-        formErrors.agreementAb = error;
-        return <InputCheckbox name={input} fieldName='Согласие на обработку персональных данных*' value={agreementAb}
-                              setValue={setAgreementAb} formErrors={setError} required={true}/>
-      }
-
       case 'dateOchStart': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchStart, setDateOchStart] = useState(values[input]);

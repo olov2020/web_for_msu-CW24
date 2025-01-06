@@ -5,7 +5,6 @@ import styleInput from "./input.module.css";
 // eslint-disable-next-line react/prop-types
 const InputCheckbox = ({name, required = false, fieldName, setValue, value, formErrors}) => {
 
-  const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
@@ -17,11 +16,9 @@ const InputCheckbox = ({name, required = false, fieldName, setValue, value, form
     const error = validateInput(isChecked);
 
     if (error) {
-      setIsValid(false);
       formErrors(error);
       setError(error);
     } else {
-      setIsValid(true);
       formErrors(false);
       setError('');
     }
@@ -29,7 +26,6 @@ const InputCheckbox = ({name, required = false, fieldName, setValue, value, form
 
   const validateInput = (value) => {
     if (!required) {
-      setIsValid(true);
       setError('');
       return '';
     }
@@ -38,7 +34,6 @@ const InputCheckbox = ({name, required = false, fieldName, setValue, value, form
       return errors.empty;
     }
 
-    setIsValid(true);
     formErrors(false)
     setError('');
     return '';

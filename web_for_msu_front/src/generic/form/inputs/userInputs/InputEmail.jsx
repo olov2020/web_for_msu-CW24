@@ -5,7 +5,7 @@ import Input from "../Input.jsx";
 const InputEmail = ({name = '', placeholder = '', fieldName = '', value, setValue, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
-  const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailValidationRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [error, setError] = useState('');
   const errors = {
     empty: (name.includes('parent') ?

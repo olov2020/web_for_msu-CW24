@@ -45,7 +45,7 @@ const CoursesSelect = () => {
   const [coursesSelected, setCoursesSelected] = useState([
     'Зачетный',
     'Незачетный',
-    '',
+    'Не выбран',
   ]);
 
   const handleCourseChange = (value, index) => {
@@ -123,7 +123,7 @@ const CoursesSelect = () => {
                 width: '15%',
               }}>
                 <InputDropdown name={`course${course.id}`} placeholder='Зачетный / незачетный'
-                               values={['Зачетный', 'Незачетный']}
+                               values={['Зачетный', 'Незачетный', 'Не выбран']}
                                value={coursesSelected[index]}
                                setValue={(value) => handleCourseChange(value, index)}
                 />
