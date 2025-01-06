@@ -1,69 +1,63 @@
 import axios from "axios";
-import {LOGIN_ROUTE} from "../routing/consts.js";
-import {setAuthFromToken, setNotAuthAction} from "../store/UserReducers.js";
+import { LOGIN_ROUTE } from "../routing/consts.js";
+import { setNotAuthAction } from "../store/UserReducers.js";
 import store from "../store/index.js";
 
 export const $host = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_BASE_URL,
+  baseURL: '/api',
 });
 
 export const $authHost = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_BASE_URL,
+  baseURL: '/api',
 });
 
 const authInterceptor = config => {
   const token = localStorage.getItem("token");
-  config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 };
 
-$authHost.interceptors.request.use(authInterceptor, error => {
-  return Promise.reject(error);
-});
+const refreshToken = async () => {
+  try {
+    const response = await $authHost.post('/home/refresh', {
+      refresh_token: localStorage.getItem("refreshToken")
+    });
+    const { access_token } = response.data;
+    localStorage.setItem("token", access_token);
+    return access_token;
+  } catch (error) {
+    console.error("Refresh token failed:", error);
+    throw error;
+  }
+};
 
-// Interceptor to handle token refresh
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  store.dispatch(setNotAuthAction());
+  window.location.href = LOGIN_ROUTE;
+};
+
+$authHost.interceptors.request.use(authInterceptor);
+
 $authHost.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
-
-    // Check if the error is due to token expiration
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
-
-        const formData = new FormData();
-        formData.append("refresh_token", refreshToken);
-        const response = await $host.post("/api/home/refresh", formData, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        const newAccessToken = response.data.access_token;
-
-        // Update the token in local storage
-        localStorage.setItem("token", newAccessToken);
-
-        // Update the Redux state with the new token
-        store.dispatch(setAuthFromToken(newAccessToken));
-
-        // Update the authorization header with the new token
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-        // Retry the original request
+        const newToken = await refreshToken();
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return $authHost(originalRequest);
       } catch (refreshError) {
-        // Handle refresh token error (e.g., redirect to login)
         console.error("Refresh token error:", refreshError);
-        store.dispatch(setNotAuthAction());
-        // Optionally, you can redirect the user to the login page
-        window.location.href = LOGIN_ROUTE;
+        handleLogout();
         return Promise.reject(refreshError);
       }
     }
-
     return Promise.reject(error);
   }
 );

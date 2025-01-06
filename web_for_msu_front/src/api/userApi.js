@@ -1,10 +1,18 @@
 import {$authHost, $host} from "./axiosApi.js";
 import {setAuthFromToken} from "../store/UserReducers.js";
 
+export const getUserData = async () => {
+  try {
+    const response = await $authHost.get('/home/user_info');
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch user data: ${error}`);
+  }
+};
+
+
 export const userChangePhoto = async ({photo}) => {
-  const formData = new FormData();
-  formData.append('photo', photo);
-  const response = await $authHost.post('/api/account/photo', formData, {
+  const response = await $authHost.post('/account/photo', {photo}, {
     headers: {
       'content-type': 'multipart/form-data',
     }
@@ -18,7 +26,7 @@ export const userChangePhoto = async ({photo}) => {
 }
 
 export const pupilChangeData = async (name, surname, lastname, email, phone, school) => {
-  const response = await $authHost.post('/api/account/data', {name, surname, lastname, email, phone, school}, {
+  const response = await $authHost.post('/account/data', {name, surname, lastname, email, phone, school}, {
     headers: {
       'content-type': 'application/json'
     }
@@ -32,7 +40,7 @@ export const pupilChangeData = async (name, surname, lastname, email, phone, sch
 }
 
 export const teacherChangeData = async (name, surname, lastname, email, phone, university, work) => {
-  const response = await $authHost.post('/api/account/data', {
+  const response = await $authHost.post('/account/data', {
     name,
     surname,
     lastname,
@@ -54,7 +62,7 @@ export const teacherChangeData = async (name, surname, lastname, email, phone, u
 }
 
 export const userLogin = async (email, password, dispatch) => {
-  const response = await $host.post('/api/home/login', {email, password}, {
+  const response = await $host.post('/home/login', {email, password}, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -103,7 +111,7 @@ export const pupilRegistration = async (formValues) => {
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
 
-  const response = await $host.post(`/api/pupil/add_pupil`, formData, {
+  const response = await $host.post(`/pupil/add_pupil`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -140,7 +148,7 @@ export const teacherRegistration = async (formValues) => {
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
 
-  const response = await $host.post(`/api/teacher/add_teacher`, formData, {
+  const response = await $host.post(`/teacher/add_teacher`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -154,7 +162,7 @@ export const teacherRegistration = async (formValues) => {
 }
 
 export const getDirectoryTeachers = async () => {
-  const response = await $host.get('/api/teachers');
+  const response = await $host.get('/teachers');
 
   try {
     return response.data;

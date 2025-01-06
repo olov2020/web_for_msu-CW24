@@ -1,7 +1,7 @@
 import {$authHost, $host} from "./axiosApi.js";
 
 export const getAllNews = async () => {
-  const response = await $host.get(`/api/news`)
+  const response = await $host.get(`/news`)
 
   try {
     return response.data;
@@ -22,7 +22,7 @@ export const addNewsItem = async (title, description, photo) => {
     console.log(value)
   })
 
-  const response = await $authHost.post('/api/news/create', formData, {
+  const response = await $authHost.post('/news/create', formData, {
     headers: {
       "Content-Type": 'multipart/form-data',
     }
@@ -35,7 +35,7 @@ export const addNewsItem = async (title, description, photo) => {
 };
 
 export const deleteNewsItem = async ({newsId}) => {
-  const response = await $authHost.delete(`/api/news/${newsId}`);
+  const response = await $authHost.delete(`/news/${newsId}`);
 
   try {
     return response.data;
