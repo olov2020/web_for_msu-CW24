@@ -27,7 +27,10 @@ import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 
 // eslint-disable-next-line react/prop-types
-const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}}) => {
+const Form = ({
+                inputs = [], values = {}, buttonText, type, dispatch = () => {
+  }
+              }) => {
 
   const formValues = useState({});
   const formErrors = useState({});
@@ -668,10 +671,10 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
 
   return (
     <form className={style.form} onSubmit={onSubmit}>
-    {inputs.map((input) => (showInput(input)))}
+      {inputs.map((input) => (showInput(input)))}
 
-    <ButtonSubmit text={buttonText}/>
-  </form>
+      <ButtonSubmit text={buttonText}/>
+    </form>
   );
 };
 

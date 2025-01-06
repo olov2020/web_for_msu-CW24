@@ -1,24 +1,6 @@
 import styleEvents from '../events.module.css';
-import {useEffect, useState} from "react";
-import {getEventsSummerCampTeachers} from "../../../api/eventsApi.js";
-import ContactsSection from "../contactsSection/ContactsSection.jsx";
 
 const SummerCamp = () => {
-
-  const [teachers, setTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-  ]);
-
-  useEffect(() => {
-    const getEventsSummerCampTeachersFunc = async () => {
-      const data = await getEventsSummerCampTeachers();
-      setTeachers(data);
-    }
-
-    getEventsSummerCampTeachersFunc();
-  }, []);
 
   return (
     <article>
@@ -43,10 +25,14 @@ const SummerCamp = () => {
         <p>Мы докажем вам, что учиться летом — это весело и интересно, ведь учеба — это не только школьные уроки. До
           встречи на Летнем лагере!</p>
 
-        <aside className={styleEvents.asideRight}>
-          {teachers && (
-            <ContactsSection header='Ответственные за Летний лагерь' teachers={teachers}/>
-          )}
+        <aside className={`${styleEvents.aside} ${styleEvents.asideRight}`}>
+          <h3>Контакты:</h3>
+          <p style={{
+            textAlign: 'left',
+          }}>Почта для общих вопросов: <a href='mailto:summer@emsch.ru'>summer@emsch.ru</a></p>
+          <p style={{
+            textAlign: 'left',
+          }}>Telegram-канал: <a href='https://t.me/summermsu'>Летний лагерь ЭМШ и ЭФ МГУ</a></p>
         </aside>
       </section>
     </article>

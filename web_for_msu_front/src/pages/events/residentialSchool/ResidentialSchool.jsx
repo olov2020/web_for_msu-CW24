@@ -10,9 +10,9 @@ import {getEventsResidentialSchoolTeachers} from "../../../api/eventsApi.js";
 const ResidentialSchool = () => {
 
   const [teachers, setTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
   ]);
 
   useEffect(() => {
@@ -45,13 +45,6 @@ const ResidentialSchool = () => {
             Mathematical Economics Ш. Вебер; зав. кафедры энергетических и сырьевых рынков факультета мировой экономики
             и мировой политики НИУ-ВШЭ, к.э.н. Л.М. Григорьев; профессор географического факультета МГУ, руководитель
             программы Независимого института социальной политики, д.геогр.н. Н.В. Зубаревич и многие другие.</p></li>
-
-          <p>Обычно Выездная школа приходится на конец февраля, поэтому исторически также называется «Зимней», и длится
-            5 дней. За это время все участники успевают прослушать более 30 лекций как по экономическим дисциплинам, так
-            и по различным разделам математики и других наук. Кроме этого на ВШ проводятся круглые столы, во время
-            которых обсуждаются актуальные проблемы. Стоит отметить, что на лекциях слушатели сидят не за партами в три
-            ряда, а полукругом, что создает дружественную атмосферу обмена знаниями и опытом. Любой слушатель может
-            задать вопрос лектору и принять участие в обсуждении в перерыве или после лекции.</p>
         </ul>
 
         <img src={professorImg} alt='Фото профессора с ВШ'/>
@@ -77,14 +70,14 @@ const ResidentialSchool = () => {
 
         <img src={winnersImg} alt='Фото победителей с ВШ'/>
 
-        <aside className={styleEvents.asideRight}>
-          <h2>Контакты:</h2>
+        <aside className={`${styleEvents.aside} ${styleEvents.asideRight}`}>
+          <h3>Контакты:</h3>
           <p style={{
             textAlign: 'left',
           }}>Почта для общих вопросов: <a href='mailto:vsh@emsch.ru'>vsh@emsch.ru</a></p>
 
           {teachers && (
-              <ContactsSection header='Ответственные за Выездную школу' teachers={teachers}/>
+              <ContactsSection header='Ответственные за Выездную школу' contacts={teachers}/>
           )}
         </aside>
       </section>

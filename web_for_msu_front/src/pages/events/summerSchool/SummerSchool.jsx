@@ -6,9 +6,9 @@ import {getEventsSummerSchoolTeachers} from "../../../api/eventsApi.js";
 const SummerSchool = () => {
 
   const [teachers, setTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', phone: '+79888800884'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
+    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
   ]);
 
   useEffect(() => {
@@ -42,18 +42,18 @@ const SummerSchool = () => {
           общение, переписка и т.д.).</p>
         <p><strong>Объем учебной нагрузки</strong> – около 6 часов в день, не считая времени, отводимого для выполнения
           самостоятельных заданий. Занятия ведут преподаватели ЭМШ.</p>
-        <p>К участию в Летней школе 2022 приглашаются учащиеся ЭМШ, которые в 2021-2022 учебном году проходят обучение в
+        <p>К участию в Летней школе приглашаются учащиеся ЭМШ, которые в текущем учебном году проходят обучение в
           8-11 классах. Слушатели Летней школы оплачивают проживание в пансионате, аренду лекционных залов, поездку в
-          автобусе до пансионата и обратно. Даты и место проведения ЛШ-2022 уточняются.</p>
+          автобусе до пансионата и обратно. Даты и место проведения ЛШ уточняются.</p>
 
-        <aside className={styleEvents.asideRight}>
-          <h2>Контакты:</h2>
+        <aside className={`${styleEvents.aside} ${styleEvents.asideRight}`}>
+          <h3>Контакты:</h3>
           <p style={{
             textAlign: 'left',
-          }}>Почта для общих вопросов: <a href='mailto:vsh@emsch.ru'>vsh@emsch.ru</a></p>
+          }}>Почта для общих вопросов: <a href='mailto:lsh@emsch.ru'>lsh@emsch.ru</a></p>
 
           {teachers && (
-            <ContactsSection header='Ответственные за Летнюю школу' teachers={teachers}/>
+            <ContactsSection header='Ответственные за Летнюю школу' contacts={teachers}/>
           )}
         </aside>
       </section>
