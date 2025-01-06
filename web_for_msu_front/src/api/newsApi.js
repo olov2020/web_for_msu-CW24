@@ -18,6 +18,9 @@ export const addNewsItem = async (title, description, photo) => {
   };
   formData.append('data', JSON.stringify(value));
   formData.append('photo', photo);
+  formData.forEach((value) => {
+    console.log(value)
+  })
 
   const response = await $authHost.post('/api/news/create', formData, {
     headers: {

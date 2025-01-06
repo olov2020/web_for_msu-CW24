@@ -27,10 +27,7 @@ import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 
 // eslint-disable-next-line react/prop-types
-const Form = ({
-                inputs = [], values = {}, buttonText, type, dispatch = () => {
-  }
-              }) => {
+const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}}) => {
 
   const formValues = useState({});
   const formErrors = useState({});
@@ -531,13 +528,10 @@ const Form = ({
       }
       case 'newsPhoto': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsPhoto, setNewsPhoto] = useState();
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [error, setError] = useState(false);
+        const [newsPhoto, setNewsPhoto] = useState(undefined);
         formValues.newsPhoto = newsPhoto;
-        formErrors.newsPhoto = error;
         return <InputNewsPhoto name={input}
-                               fieldName='Фотография новости' formErrors={setError}
+                               fieldName='Фотография новости'
                                value={newsPhoto}
                                setValue={setNewsPhoto}
                                accept='image/png, image/gif, image/jpeg, image/jpg'

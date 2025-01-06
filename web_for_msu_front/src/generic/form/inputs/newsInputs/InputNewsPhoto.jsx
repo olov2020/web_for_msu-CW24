@@ -1,34 +1,34 @@
 import styleFileInput from "../userInputs/inputFile.module.css";
 import styleInput from "../userInputs/input.module.css";
-import {useState} from "react";
+import {useState, useRef} from "react";
 import defaultNewsImage from "../../../../../public/msu_logo.png";
 
 // eslint-disable-next-line react/prop-types
-const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue, formErrors}) => {
+const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
 
-  const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
+  const [imageUrl, setImageUrl] = useState(defaultNewsImage);
+  const fileInputRef = useRef(null);
   const errors = {
     empty: 'Данное поле не может быть пустым',
   }
-
-
 
   const handleInputChange = ((e) => {
     e.preventDefault();
     const file = e.target.files[0];
     const error = validateInput(file);
-    setValue(file);
 
     if (error) {
-      setIsValid(false);
-      formErrors(error);
-
-      setValue(defaultNewsImage);
-
-      return;
+      setValue(undefined);
+      setImageUrl(defaultNewsImage);
+    } else {
+      const reader = new FileReader();
+      setValue(file);
+      reader.onloadend = () => {
+        setImageUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
-
   })
 
   const validateInput = (value) => {
@@ -36,10 +36,12 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
       return errors.empty;
     }
 
-    setIsValid(true);
-    formErrors(false);
     setError('');
     return '';
+  }
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
   }
 
   return (
@@ -58,13 +60,12 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
           multiple={multiple}
           accept={accept}
           className={
-            `${isValid ?
-              `${styleInput.valid}` :
-              `${styleInput.invalid}`}
-          ${styleInput.input}
+            `${styleInput.input}
           ${styleFileInput.input}`
           }
           onChange={handleInputChange}
+          ref={fileInputRef}
+          style={{ display: 'none' }} // Hide the file input
         />
 
         <p className={styleInput.errorMessage}>
@@ -74,7 +75,10 @@ const InputNewsPhoto = ({name = '', fieldName, accept = '', multiple = false, re
 
       <img
         className={styleFileInput.photoNews}
+        src={imageUrl}
         alt='Фото новости'
+        onClick={handleImageClick}
+        style={{ cursor: 'pointer' }} // Make the image clickable
       />
     </div>
   );
