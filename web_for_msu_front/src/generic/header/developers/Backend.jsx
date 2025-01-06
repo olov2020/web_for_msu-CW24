@@ -2,16 +2,17 @@ import style from './developers.module.css';
 import closeIcon from '../../../../public/generic/closeIcon.svg'
 
 // eslint-disable-next-line react/prop-types
-const Backend = ({setShowFrontend}) => {
+const Backend = ({setShowContext}) => {
   return (
-    <section className={style.section}>
-      <h3>Привет, уважаемый посетитель сайта!</h3>
+    <article className={style.article}>
+      <section className={style.section}>
+        <h3>Привет, уважаемый посетитель сайта!</h3>
 
-      <p>Меня зовут Виноградов Владимир, я frontend разработчик данного сайта. Был преподавателем ЭМШ на протяжении 2
-        лет и посетил 5 Летних школ - от 8 класса до преподавателя</p>
+        <p>Меня зовут Мухин Дмитрий</p>
 
-      <img src={closeIcon} alt='Закрыть окно' onClick={() => setShowFrontend(false)}/>
-    </section>
+        <img src={closeIcon} alt='Закрыть окно' onClick={() => setShowContext(0)}/>
+      </section>
+    </article>
   );
 };
 

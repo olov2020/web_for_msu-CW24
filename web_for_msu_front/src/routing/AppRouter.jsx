@@ -11,7 +11,8 @@ import {
 import {NOT_FOUND_ROUTE} from "./consts.js";
 import {useEffect} from "react";
 
-const AppRouter = () => {
+// eslint-disable-next-line react/prop-types
+const AppRouter = ({setShowContext}) => {
   const authStatus = useSelector(state => state.user.authStatus);
 
   const { pathname } = useLocation();
@@ -19,6 +20,7 @@ const AppRouter = () => {
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {
     window.scrollTo(0, 0);
+    setShowContext(0);
   }, [pathname]);
 
   return (

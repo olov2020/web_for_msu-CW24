@@ -1,9 +1,16 @@
-.section {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin: 0 auto;
+.article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
+    margin-bottom: 2rem;
+
+    z-index: 100;
+}
+
+.section {
+    position: relative;
     display: flex;
     flex-direction: column;
 
@@ -20,14 +27,22 @@
 
     > h3 {
         align-self: center;
+        margin-bottom: 2rem;
+    }
+
+    > * {
+        color: #3c3c3c;
+        font-weight: bold;
     }
 
     > img {
         position: absolute;
-        top: .2rem;
-        right: .2rem;
+        top: .5rem;
+        right: .5rem;
 
-        width: 1.5rem;
+        width: 2rem;
         object-fit: contain;
+
+        cursor: pointer;
     }
 }
