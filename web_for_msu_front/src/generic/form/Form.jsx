@@ -23,7 +23,6 @@ import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd, courseChange} from "../../api/coursesApi.js";
-import InputClass from "./inputs/testsRegistrationInputs/InputClass.jsx";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 
 // eslint-disable-next-line react/prop-types
@@ -483,7 +482,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
         const [error, setError] = useState(false);
         formValues.mailing = mailing;
         formErrors.mailing = error;
-        return <InputCheckbox name={input} fieldName='Согласие на получение рассылки' initialChecked={true}
+        return <InputCheckbox name={input} fieldName='Согласие на получение рассылки' value={mailing}
                               formErrors={setError}
                               setValue={setMailing}/>
       }
@@ -494,7 +493,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
         const [error, setError] = useState(false);
         formValues.wasPupil = wasPupil;
         formErrors.wasPupil = error;
-        return <InputCheckbox name={input} fieldName='Был ли учеником ЭМШ' initialChecked={true}
+        return <InputCheckbox name={input} fieldName='Был ли учеником ЭМШ' value={wasPupil}
                               formErrors={setError}
                               setValue={setWasPupil}/>
       }
@@ -592,12 +591,12 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
       }
       case 'agreementAb': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [agreementAb, setAgreementAb] = useState(undefined);
+        const [agreementAb, setAgreementAb] = useState(true);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.agreementAb = agreementAb;
         formErrors.agreementAb = error;
-        return <InputCheckbox name={input} fieldName='Согласие на обработку персональных данных*' initialChecked={true}
+        return <InputCheckbox name={input} fieldName='Согласие на обработку персональных данных*' value={agreementAb}
                               setValue={setAgreementAb} formErrors={setError} required={true}/>
       }
 

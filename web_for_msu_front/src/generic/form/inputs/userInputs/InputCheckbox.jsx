@@ -1,26 +1,29 @@
 import {useState} from "react";
-import Input from "../Input.jsx";
+import styleCheckboxInput from './inputCheckbox.module.css';
+import styleInput from "./input.module.css";
 
 // eslint-disable-next-line react/prop-types
-const InputCheckbox = ({name, initialChecked = false, required = false, fieldName, setValue, formErrors}) => {
+const InputCheckbox = ({name, required = false, fieldName, setValue, value, formErrors}) => {
 
   const [isValid, setIsValid] = useState(true);
-  const [checked, setChecked] = useState(initialChecked);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
   }
 
   const handleInputChange = ((e) => {
-    e.preventDefault();
-    setChecked(e.target.value);
-    setValue(e.target.value);
-    const error = validateInput(e.target.value);
+    const isChecked = e.target.checked;
+    setValue(isChecked);
+    const error = validateInput(isChecked);
 
     if (error) {
       setIsValid(false);
       formErrors(error);
       setError(error);
+    } else {
+      setIsValid(true);
+      formErrors(false);
+      setError('');
     }
   })
 
@@ -42,14 +45,25 @@ const InputCheckbox = ({name, initialChecked = false, required = false, fieldNam
   }
 
   return (
-    <Input type='checkbox'
-           name={name}
-           value={checked}
-           fieldName={fieldName}
-           onChange={handleInputChange}
-           error={error}
-           isValid={isValid}
-    />
+
+    <label className={styleCheckboxInput.checkboxContainer}>
+      <h3 style={{
+        alignSelf: 'flex-start',
+      }}>
+        {fieldName}
+      </h3>
+
+      <input type='checkbox'
+             name={name}
+             checked={value}
+             onChange={handleInputChange}
+      />
+      <span className={styleCheckboxInput.checkmark}></span>
+
+      <p className={styleInput.errorMessage}>
+        {error}
+      </p>
+    </label>
   );
 };
 
