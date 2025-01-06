@@ -1,4 +1,3 @@
-import styleInput from "./input.module.css";
 import {useState} from "react";
 import Input from "../Input.jsx";
 

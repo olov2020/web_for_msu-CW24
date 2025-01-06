@@ -1,7 +1,6 @@
 import styleInput from "./input.module.css";
 import InputMask from 'react-input-mask';
 import {useState} from "react";
-import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
 const InputPhone = ({name = '', placeholder = '', fieldName, value, setValue, formErrors}) => {

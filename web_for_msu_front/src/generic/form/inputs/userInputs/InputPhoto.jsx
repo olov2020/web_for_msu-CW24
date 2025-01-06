@@ -1,25 +1,16 @@
 import styleInput from "./input.module.css";
 import styleFileInput from './inputFile.module.css'
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import defaultUserImage from '../../../../../public/generic/default_user.svg'
 
 // eslint-disable-next-line react/prop-types
 const InputPhoto = ({name = '', fieldName, accept = '', required = false, setValue, formErrors}) => {
 
-  /*const uploadedImage = useRef(null);
-  const imageUploader = useRef(null);*/
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
   }
-
-  /*useEffect(() => {
-    if (uploadedImage.current) {
-      uploadedImage.current.src = defaultUserImage;
-      setValue(uploadedImage.current.src);
-    }
-  }, []);*/
 
   const handleInputChange = ((e) => {
     e.preventDefault();
@@ -30,21 +21,10 @@ const InputPhoto = ({name = '', fieldName, accept = '', required = false, setVal
     if (error) {
       setIsValid(false);
       formErrors(error);
-      /*const {current} = uploadedImage;
-      current.src = defaultUserImage;
-      setValue(current.src);*/
       setValue(defaultUserImage);
 
-      return;
     }
 
-    /*const reader = new FileReader();
-    const {current} = uploadedImage;
-    current.file = file;
-    reader.onload = e => {
-      current.src = e.target.result;
-    };
-    reader.readAsDataURL(file);*/
   })
 
   const validateInput = (value) => {

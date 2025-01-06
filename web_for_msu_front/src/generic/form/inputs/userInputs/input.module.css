@@ -23,12 +23,6 @@
     background-color: #f4dae4;
     border: none;
     border-radius: .5rem;
-
-    /*&:focus {
-        border: .2rem solid #F7B7CE;
-        color: white;
-        background-color: #F7B7CE;
-    }*/
 }
 
 .textarea {

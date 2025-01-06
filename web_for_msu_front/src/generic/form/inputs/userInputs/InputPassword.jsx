@@ -51,18 +51,6 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue, formError
       return errors.notNumber;
     }
 
-    /*// 5. Special character check: At least one special character
-    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-      return errors.notSpecial;
-    }
-
-    // 6. No consecutive characters (e.g., "aaa" or "123")
-    if (/([a-zA-Z0-9])\1{2,}/.test(password)) {
-      return errors.notConsecutive;
-    }*/
-
-    // 7. No common patterns (e.g., "password", "12345678")
-    // You can add more common patterns to this array
     const commonPatterns = [
       "password",
       "12345678",
