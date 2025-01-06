@@ -1,5 +1,6 @@
 import {useState} from "react";
 import Input from "../Input.jsx";
+import style from './inputYear.module.css'
 
 // eslint-disable-next-line react/prop-types
 const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, formErrors}) => {
@@ -8,7 +9,7 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
-    notValid: 'Данный год не допустен для выбора',
+    notValid: 'Данный год не доступен для выбора',
   }
 
   const handleInputChange = ((e) => {
@@ -24,15 +25,21 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
   })
 
   const validateInput = (inputValue) => {
+    const currentYear = new Date().getFullYear();
+    console.log(inputValue)
+    console.log(currentYear)
+
     if (inputValue.length === 0) {
       return errors.empty;
     }
 
-    // TODO check for year of end of school and university for pupil and teacher
-    /*const year = new Date().getFullYear();
-    if (inputValue > year + 4 || inputValue < year) {
+    if (name.includes('school') && (Number(inputValue) > currentYear + 4 || Number(inputValue) < currentYear)) {
       return errors.notValid;
-    }*/
+    }
+
+    if (name.includes('university') && (Number(inputValue) > currentYear || Number(inputValue) < 1950)) {
+      return errors.notValid;
+    }
 
     setIsValid(true);
     formErrors(false);
@@ -49,6 +56,7 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
            onChange={handleInputChange}
            error={error}
            isValid={isValid}
+           className={style.numberInput}
     />
   );
 };
