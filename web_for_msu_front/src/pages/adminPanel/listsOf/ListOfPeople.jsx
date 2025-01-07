@@ -191,10 +191,10 @@ const ListOfPeople = () => {
               }}>
                 {person.authorized ?
                   <>
-                    <ButtonSubmit text='Добавить ученика' onClick={() => {
+                    <ButtonSubmit text='Добавить' onClick={() => {
                       addPupilFunc(person.id)
                     }}/>
-                    <ButtonSubmit text='Удалить ученика' type='delete' onClick={() => {
+                    <ButtonSubmit text='Удалить' type='delete' onClick={() => {
                       deletePupilFunc(person.id)
                     }}/>
                   </> :
@@ -212,12 +212,12 @@ const ListOfPeople = () => {
                       gap: '0 .5rem',
                     }}>
                       <h3>Ученик добавлен</h3>
-                      <img src={checkMarkIcon} alt='Ученик добавлен' style={{
+                      <img src={checkMarkIcon} alt='Добавлен' style={{
                         width: '2rem',
                         objectFit: 'contain',
                       }}/>
                     </div>
-                    <ButtonSubmit text='Отчислить ученика' type='delete' onClick={() => {
+                    <ButtonSubmit text='Отчислить' type='delete' onClick={() => {
                       makePupilRetiredFunc(person.id)
                     }}
                                   style={{
@@ -239,7 +239,7 @@ const ListOfPeople = () => {
               width: '15%',
             }}>ФИО</h2>
             <h2 className={style.itemTeacher} style={{
-              width: '15%',
+              width: '10%',
             }}>Почта</h2>
             <div className={style.itemTeacher} style={{
               width: '20%',
@@ -258,7 +258,7 @@ const ListOfPeople = () => {
               </div>
             </div>
             <div className={style.itemTeacher} style={{
-              width: '30%',
+              width: '35%',
             }}>
               <h2>Статус организатора</h2>
 
@@ -286,37 +286,37 @@ const ListOfPeople = () => {
                 width: '15%',
               }}>{person.name}</h3>
               <p className={style.itemTeacher} style={{
-                width: '15%',
-              }}><span>{person.email}</span></p>
+                width: '10%',
+              }}><a href={`mailto:${person.email}`}>{person.email}</a></p>
               <div className={style.itemTeacher} style={{
                 display: 'flex',
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 width: '20%',
               }}>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setNewsAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setCourseAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setMarksAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
                 display: 'flex',
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                width: '30%',
+                width: '35%',
               }}>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setKNRAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setVSHAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setLSHAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setTestsOfflineAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
-                <ToggleSwitch funcOn={() => addAdminRole(person.id, 'setTestsOnlineAdmin')}
-                              funcOff={() => deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
                 display: 'flex',
@@ -327,16 +327,16 @@ const ListOfPeople = () => {
               }}>
                 {person.authorized ?
                   <>
-                    <ButtonSubmit text='Добавить преподавателя' onClick={() => {
+                    <ButtonSubmit text='Добавить' onClick={() => {
                       addTeacherFunc(person.id)
                     }}/>
-                    <ButtonSubmit text='Удалить преподавателя' type='delete' onClick={() => {
+                    <ButtonSubmit text='Удалить' type='delete' onClick={() => {
                       deleteTeacherFunc(person.id)
                     }}/>
                   </> :
                   <>
                     <h3>Преподаватель добавлен</h3>
-                    <img src={checkMarkIcon} alt='Преподаватель добавлен' style={{
+                    <img src={checkMarkIcon} alt='Добавлен' style={{
                       width: '2rem',
                       objectFit: 'contain',
                     }}/>
