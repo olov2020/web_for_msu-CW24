@@ -1,6 +1,11 @@
 import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
 import {useNavigate} from "react-router-dom";
-import {closeRegistrationCourses, openRegistrationCourses} from "../../api/adminApi.js";
+import {
+  closeRegistrationCourses, downloadAllMarks,
+  downloadAllPupils,
+  downloadAllTeachers,
+  openRegistrationCourses
+} from "../../api/adminApi.js";
 import {ADD_NEW_COURSE_ROUTE, AUDITORY_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE} from "../../routing/consts.js";
 
 const AdminPanel = () => {
@@ -24,6 +29,33 @@ const AdminPanel = () => {
   }
 
   const navigate = useNavigate();
+
+  const downloadAllPupilsFunc = async () => {
+    const data = await downloadAllPupils();
+    if (data) {
+      alert('Файл успешно сохранен');
+    } else {
+      alert('Что-то пошло не так... Файл не был сохранен');
+    }
+  }
+
+  const downloadAllTeachersFunc = async () => {
+    const data = await downloadAllTeachers();
+    if (data) {
+      alert('Файл успешно сохранен');
+    } else {
+      alert('Что-то пошло не так... Файл не был сохранен');
+    }
+  }
+
+  const downloadAllMarksFunc = async () => {
+    const data = await downloadAllMarks();
+    if (data) {
+      alert('Файл успешно сохранен');
+    } else {
+      alert('Что-то пошло не так... Файл не был сохранен');
+    }
+  }
 
   return (
     <article>
@@ -68,6 +100,21 @@ const AdminPanel = () => {
         <ButtonSubmit text='Создать новость' onClick={() => navigate(CREATE_NEWS_ROUTE)}/>
         <ButtonSubmit text='Список всех ведомостей' onClick={() => navigate(MARKS_ROUTE)}/>
         <ButtonSubmit text='Назначение аудиторий' onClick={() => navigate(AUDITORY_ROUTE)}/>
+      </section>
+
+      <h1 style={{
+        marginTop: '5rem',
+      }}>Выгрузка базы данных</h1>
+
+      <section style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '30%',
+        gap: '1rem 0',
+      }}>
+        <ButtonSubmit text='Все ученики' onClick={downloadAllPupilsFunc}/>
+        <ButtonSubmit text='Все преподаватели' onClick={downloadAllTeachersFunc}/>
+        <ButtonSubmit text='Все ведомости курсов' onClick={downloadAllMarksFunc}/>
       </section>
     </article>
   );

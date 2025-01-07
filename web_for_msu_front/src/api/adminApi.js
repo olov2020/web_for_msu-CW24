@@ -120,6 +120,16 @@ export const setMarksAdmin = async (userId) => {
   }
 }
 
+export const setAuditoryAdmin = async (userId) => {
+  const response = await $authHost.post(`/admin/role/add/auditory/${userId}`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 export const deleteNewsAdmin = async (userId) => {
   const response = await $authHost.post(`/admin/role/delete/news/${userId}`);
 
@@ -142,6 +152,16 @@ export const deleteCourseAdmin = async (userId) => {
 
 export const deleteMarksAdmin = async (userId) => {
   const response = await $authHost.post(`/admin/role/delete/marks/${userId}`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const deleteAuditoryAdmin = async (userId) => {
+  const response = await $authHost.post(`/admin/role/delete/auditory/${userId}`);
 
   try {
     return response.data;
@@ -250,6 +270,38 @@ export const deleteTestsOnlineAdmin = async (userId) => {
     return new Error(error);
   }
 }
+
+
+export const downloadAllPupils = async () => {
+  const response = await $authHost.get('/admin/download/pupils');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const downloadAllTeachers = async () => {
+  const response = await $authHost.get('/admin/download/teachers');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const downloadAllMarks = async () => {
+  const response = await $authHost.get('/admin/download/marks');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 
 export const getAllCoursesIds = async () => {
   const response = await $authHost.get('/admin/courses-ids');

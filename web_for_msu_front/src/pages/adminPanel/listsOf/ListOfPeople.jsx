@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
 import {
   addPupil,
-  addTeacher,
+  addTeacher, deleteAuditoryAdmin,
   deleteCourseAdmin, deleteKNRAdmin, deleteLSHAdmin,
   deleteMarksAdmin,
   deleteNewsAdmin,
   deletePupil, deleteTeacher, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
   getAllPupils,
-  getAllTeachers, makePupilRetired,
+  getAllTeachers, makePupilRetired, setAuditoryAdmin,
   setCourseAdmin,
   setKNRAdmin,
   setLSHAdmin,
@@ -121,6 +121,8 @@ const ListOfPeople = () => {
         return await setCourseAdmin(userId);
       case 'setMarksAdmin':
         return await setMarksAdmin(userId);
+      case 'setAuditoryAdmin':
+        return await setAuditoryAdmin(userId);
       case 'setKNRAdmin':
         return await setKNRAdmin(userId);
       case 'setVSHAdmin':
@@ -144,6 +146,8 @@ const ListOfPeople = () => {
         return await deleteCourseAdmin(userId);
       case 'deleteMarksAdmin':
         return await deleteMarksAdmin(userId);
+      case 'deleteAuditoryAdmin':
+        return await deleteAuditoryAdmin(userId);
       case 'deleteKNRAdmin':
         return await deleteKNRAdmin(userId);
       case 'deleteVSHAdmin':
@@ -242,7 +246,7 @@ const ListOfPeople = () => {
               width: '10%',
             }}>Почта</h2>
             <div className={style.itemTeacher} style={{
-              width: '20%',
+              width: '25%',
             }}>
               <h2>Функциональная роль</h2>
 
@@ -255,10 +259,11 @@ const ListOfPeople = () => {
                 <p>Добавление новостей</p>
                 <p>Добавление курсов</p>
                 <p>Просмотр ведомостей</p>
+                <p>Назначение аудиторий</p>
               </div>
             </div>
             <div className={style.itemTeacher} style={{
-              width: '35%',
+              width: '30%',
             }}>
               <h2>Статус организатора</h2>
 
@@ -292,7 +297,7 @@ const ListOfPeople = () => {
                 display: 'flex',
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                width: '20%',
+                width: '25%',
               }}>
                 <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
@@ -300,12 +305,14 @@ const ListOfPeople = () => {
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
                 <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
+                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
+                              funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
                 display: 'flex',
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                width: '35%',
+                width: '30%',
               }}>
                 <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
