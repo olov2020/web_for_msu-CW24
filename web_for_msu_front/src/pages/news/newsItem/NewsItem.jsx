@@ -28,32 +28,34 @@ const NewsItem = () => {
         </h3>
 
         {(authStatus.includes('admin') || authStatus.includes('newsmaker')) &&
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative',
-        }}
-        >
-          <img src={deleteIcon} alt='Удалить новость'
-               style={{
-                 width: '2rem',
-                 objectFit: 'contain',
-               }}
-               onClick={() => {
-                 setShowDeleteWindow(!showDeleteWindow)
-               }}
-          />
-          {showDeleteWindow && <DeleteWindow setShowDeleteWindow={setShowDeleteWindow} newsId={state.key}/>}
-        </div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'relative',
+          }}
+          >
+            <img src={deleteIcon} alt='Удалить новость'
+                 style={{
+                   width: '2rem',
+                   objectFit: 'contain',
+                 }}
+                 onClick={() => {
+                   setShowDeleteWindow(!showDeleteWindow)
+                 }}
+            />
+            {showDeleteWindow && <DeleteWindow setShowDeleteWindow={setShowDeleteWindow} newsId={state.key}/>}
+          </div>
         }
       </section>
 
-      <img src={state.photo} alt={state.title}
-           style={{
-             width: "30vw",
-             objectFit: 'contain',
-           }}
-      />
+      {state.photo &&
+        <img src={state.photo} alt={state.title}
+             style={{
+               width: "30vw",
+               objectFit: 'contain',
+             }}
+        />
+      }
 
       <p style={{
         margin: '0 2rem',

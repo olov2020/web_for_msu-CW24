@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import style from '../news.module.css'
 
 // eslint-disable-next-line react/prop-types
-const NewsCard = ({photo, title, date, description, id}) => {
+const NewsCard = ({photo = null, title, date, description, id}) => {
 
   return (
     <Link to={`/news/${title}/${date}`} state={{id, photo, title, description, date}}
@@ -10,6 +10,7 @@ const NewsCard = ({photo, title, date, description, id}) => {
           key={id}
     >
       <h3>{title}</h3>
+      {photo &&
       <img src={photo} alt={title}
           style={{
             width: '100%',
@@ -17,6 +18,7 @@ const NewsCard = ({photo, title, date, description, id}) => {
             objectFit: 'cover',
           }}
       />
+      }
 
       <p
         style={{

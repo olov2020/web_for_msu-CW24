@@ -23,9 +23,7 @@ const ApprovePupils = ({courseId}) => {
 
   return (
     <section style={{
-      justifyContent: 'space-between',
       width: '100%',
-      gap: '10rem 0',
     }}>
       <h2 style={{
         texAlign: 'center',

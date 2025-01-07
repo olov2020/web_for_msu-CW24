@@ -41,9 +41,8 @@ export const getSchedule = async () => {
 
   try {
     return response.data;
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    return {};
+    return new Error(error);
   }
 }
 
@@ -52,9 +51,8 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
 
   try {
     return response.data;
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    return {};
+    return new Error(error);
   }
 }
 
@@ -63,9 +61,8 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
 
   try {
     return response.data;
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    return {};
+    return new Error(error);
   }
 }
 
@@ -75,9 +72,8 @@ export const updateTeacherMarksByCourseId = async (courseId, marks) => {
 
   try {
     return response.data;
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    return {};
+    return new Error(error);
   }
 }
 
@@ -90,11 +86,11 @@ export const courseAdd = async (file) => {
     }
   })
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Курс не создан, произошла ошибка ${error}`);
   }
-
-  return new Error(`Курс не создан, произошла ошибка ${response.data.message}`);
 }
 
 export const courseChange = async (id, file) => {
