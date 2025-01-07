@@ -239,17 +239,17 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
                           value={school} setValue={setSchool}
         />
       }
-      case 'schoolEndDate': {
+      case 'schoolClass': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [schoolEndDate, setSchoolEndDate] = useState(values[input]);
+        const [schoolClass, setSchoolClass] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.schoolEndDate = schoolEndDate;
-        formErrors.schoolEndDate = error;
-        return <InputYear name={input} placeholder='Введите год окончания школы' formErrors={setError}
-                          fieldName='Год окончания школы*'
-                          value={schoolEndDate}
-                          setValue={setSchoolEndDate}
+        formValues.schoolClass = schoolClass;
+        formErrors.schoolClass = error;
+        return <InputYear name={input} placeholder='Введите номер класса' formErrors={setError}
+                          fieldName='Номер класса*'
+                          value={schoolClass}
+                          setValue={setSchoolClass}
         />
       }
       case 'university': {

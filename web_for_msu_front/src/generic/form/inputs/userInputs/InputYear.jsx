@@ -9,7 +9,8 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
-    notValid: 'Данный год не доступен для выбора',
+    notValidYear: 'Данный год не доступен для выбора',
+    notValidClass: 'Данный класс не доступен для выбора',
   }
 
   const handleInputChange = ((e) => {
@@ -31,12 +32,12 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
       return errors.empty;
     }
 
-    if (name.includes('school') && (Number(inputValue) > currentYear + 4 || Number(inputValue) < currentYear)) {
-      return errors.notValid;
+    if (name.includes('school') && (Number(inputValue) > 11 || Number(inputValue) < 8)) {
+      return errors.notValidClass;
     }
 
-    if (name.includes('university') && (Number(inputValue) > currentYear || Number(inputValue) < 1950)) {
-      return errors.notValid;
+    if (name.includes('university') && (Number(inputValue) > currentYear + 6 || Number(inputValue) < 1950)) {
+      return errors.notValidYear;
     }
 
     setIsValid(true);

@@ -92,7 +92,7 @@ export const pupilRegistration = async (formValues) => {
     "email": formValues.email,
     "password": formValues.password,
     "phone": formValues.phone,
-    "school_grade": 11 - formValues.schoolEndDate + new Date().getFullYear(),
+    "school_grade": formValues.schoolClass,
     "school": formValues.school,
     "registration_address": formValues.registrationAddress,
     "telegram": formValues.telegram,

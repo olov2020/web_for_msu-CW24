@@ -12,7 +12,7 @@ const RegistrationPupil = () => {
         <Form inputs={
           ['photo', 'name', 'surname', 'lastname',
             'birthDate', 'email', 'password', 'phone',
-            'school', 'schoolEndDate', 'registrationAddress',
+            'school', 'schoolClass', 'registrationAddress',
             'telegram', 'vk',
             'parent1Name', 'parent1Surname', 'parent1Lastname', 'parent1Phone', 'parent1Email',
             'parent2Name', 'parent2Surname', 'parent2Lastname', 'parent2Phone', 'parent2Email',
