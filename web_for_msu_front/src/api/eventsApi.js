@@ -20,16 +20,6 @@ export const getEventsTestsOnlineTeachers = async () => {
   }
 }
 
-export const getEventsOpenChampionshipTeachers = async () => {
-  const response = await $host.get(`/events/open-championship`)
-
-  try {
-    return response.data;
-  } catch (error) {
-    return new Error(error);
-  }
-}
-
 export const getEventsContestScientificWorksTeachers = async () => {
   const response = await $host.get(`/events/contest-of-scientific-works`)
 
@@ -52,15 +42,6 @@ export const getEventsResidentialSchoolTeachers = async () => {
 
 export const getEventsSummerSchoolTeachers = async () => {
   const response = await $host.get(`/events/summer-school`)
-
-  try {
-    return response.data;
-  } catch (error) {
-    return new Error(error);
-  }
-}
-export const getEventsSummerCampTeachers = async () => {
-  const response = await $host.get(`/events/summer-camp`)
 
   try {
     return response.data;
