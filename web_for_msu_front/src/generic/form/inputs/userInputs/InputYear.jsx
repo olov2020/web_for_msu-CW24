@@ -26,8 +26,6 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
 
   const validateInput = (inputValue) => {
     const currentYear = new Date().getFullYear();
-    console.log(inputValue)
-    console.log(currentYear)
 
     if (inputValue.length === 0) {
       return errors.empty;

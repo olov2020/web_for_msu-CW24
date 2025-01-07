@@ -42,6 +42,7 @@ const handleLogout = () => {
 
 $authHost.interceptors.request.use(authInterceptor);
 
+/*
 $authHost.interceptors.response.use(
   response => response,
   async error => {
@@ -60,4 +61,4 @@ $authHost.interceptors.response.use(
     }
     return Promise.reject(error);
   }
-);
+);*/

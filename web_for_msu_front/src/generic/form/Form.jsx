@@ -23,10 +23,13 @@ import {useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd, courseChange} from "../../api/coursesApi.js";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
+import {useDispatch} from "react-redux";
+import {setAuthFromToken} from "../../store/UserReducers.js";
 
 // eslint-disable-next-line react/prop-types
-const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}}) => {
+const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
+  const dispatch = useDispatch();
   const formValues = useState({});
   const formErrors = useState({});
   const requiredValues =
@@ -53,8 +56,13 @@ const Form = ({inputs = [], values = {}, buttonText, type, dispatch = () => {}})
       alert('Заполните все обязательные поля.');
     }
     if (type === 'login') {
-      await userLogin(formValues.email, formValues.password, dispatch);
-      navigate(HOME_ROUTE);
+      try {
+        const accessToken = await userLogin(formValues.email, formValues.password);
+        dispatch(setAuthFromToken(accessToken));
+        navigate(HOME_ROUTE);
+      } catch (error) {
+        alert(`Возникла ошибка во время входа в аккаунт: ${error}`);
+      }
     } else if (type === 'pupilRegistration') {
       await pupilRegistration(formValues);
       navigate(LOGIN_ROUTE);

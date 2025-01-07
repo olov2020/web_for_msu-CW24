@@ -1,15 +1,36 @@
 import {$authHost, $host} from "./axiosApi.js";
-import {setAuthFromToken} from "../store/UserReducers.js";
+import axios from "axios";
 
 export const getUserData = async () => {
   try {
-    const response = await $authHost.get('/home/user_info');
+    const response = await axios.get('/home/user_info', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }
+    });
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch user data: ${error}`);
   }
 };
 
+export const userLogin = async (email, password) => {
+  try {
+    const response = await $host.post('/home/login', {email, password}, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+
+    const { access_token, refresh_token } = response.data;
+    localStorage.setItem('token', access_token)
+    localStorage.setItem('refreshToken', refresh_token)
+
+    return access_token;
+  } catch (error) {
+    throw new Error(`Login failed: ${error}`);
+  }
+}
 
 export const userChangePhoto = async ({photo}) => {
   const response = await $authHost.post('/account/photo', {photo}, {
@@ -56,24 +77,6 @@ export const teacherChangeData = async (name, surname, lastname, email, phone, u
 
   try {
     return response.data
-  } catch (error) {
-    return new Error(error);
-  }
-}
-
-export const userLogin = async (email, password, dispatch) => {
-  const response = await $host.post('/home/login', {email, password}, {
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-
-  try {
-    localStorage.setItem('token', response.data.access_token)
-    localStorage.setItem('refreshToken', response.data.refresh_token)
-
-    dispatch(setAuthFromToken(response.data.access_token));
-    return true;
   } catch (error) {
     return new Error(error);
   }
