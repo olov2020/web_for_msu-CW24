@@ -8,6 +8,7 @@ const InputDate = ({name = '', fieldName, value, setValue, formErrors}) => {
   const [error, setError] = useState('');
   const errors = {
     empty: 'Данное поле не может быть пустым',
+    notValid: 'Данная дата не доступна для выбора',
   }
 
   const handleInputChange = ((e) => {
@@ -25,6 +26,12 @@ const InputDate = ({name = '', fieldName, value, setValue, formErrors}) => {
   const validateInput = (inputValue) => {
     if (inputValue.length === 0) {
       return errors.empty;
+    }
+
+    const inputDate = new Date(inputValue);
+    const prevDate = new Date('1930-01-01');
+    if (inputDate.getTime() < prevDate.getTime() || inputDate.getTime() > new Date().getTime()) {
+      return errors.notValid;
     }
 
     setIsValid(true);

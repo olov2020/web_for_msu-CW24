@@ -27,8 +27,6 @@ const Profile = () => {
     }
   }, [location.pathname]);
 
-  console.log(location.pathname)
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userLogout = () => {
