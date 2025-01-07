@@ -5,9 +5,9 @@ import {
   deleteCourseAdmin, deleteKNRAdmin, deleteLSHAdmin,
   deleteMarksAdmin,
   deleteNewsAdmin,
-  deletePupil, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
+  deletePupil, deleteTeacher, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
   getAllPupils,
-  getAllTeachers,
+  getAllTeachers, makePupilRetired,
   setCourseAdmin,
   setKNRAdmin,
   setLSHAdmin,
@@ -58,10 +58,10 @@ const ListOfPeople = () => {
   useEffect(() => {
     const getPeople = async () => {
       const data = url.includes('pupils') ?
-          await getAllPupils() :
-          url.includes('teachers') ?
-            await getAllTeachers() :
-            null;
+        await getAllPupils() :
+        url.includes('teachers') ?
+          await getAllTeachers() :
+          null;
       setPeople(data);
     }
 
@@ -86,12 +86,30 @@ const ListOfPeople = () => {
     }
   }
 
+  const makePupilRetiredFunc = async (pupilId) => {
+    const data = await makePupilRetired({pupilId});
+    if (data) {
+      alert('Ученик успешно отчислен!');
+    } else {
+      alert('Упс, что-то пошло не так... Ученик не был отчислен');
+    }
+  }
+
   const addTeacherFunc = async (teacherId) => {
     const data = await addTeacher({teacherId});
     if (data) {
       alert('Преподаватель успешно добавлен!');
     } else {
       alert('Упс, что-то пошло не так... Преподаватель не был добавлен');
+    }
+  }
+
+  const deleteTeacherFunc = async (teacherId) => {
+    const data = await deleteTeacher({teacherId});
+    if (data) {
+      alert('Преподаватель успешно исключен!');
+    } else {
+      alert('Упс, что-то пошло не так... Преподаватель не был исключен');
     }
   }
 
@@ -144,10 +162,10 @@ const ListOfPeople = () => {
   return (
     <article>
       {url.includes('pupils') ?
-          <h1>Список учеников</h1> :
-          url.includes('teachers') ?
-            <h1>Список преподавателей</h1> :
-            null
+        <h1>Список учеников</h1> :
+        url.includes('teachers') ?
+          <h1>Список преподавателей</h1> :
+          null
       }
 
       {url.includes('pupils') && (
@@ -180,13 +198,33 @@ const ListOfPeople = () => {
                       deletePupilFunc(person.id)
                     }}/>
                   </> :
-                  <>
-                    <h3>Ученик добавлен</h3>
-                    <img src={checkMarkIcon} alt='Ученик добавлен' style={{
-                      width: '2rem',
-                      objectFit: 'contain',
-                    }}/>
-                  </>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    gap: '0 1rem',
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '50%',
+                      gap: '0 .5rem',
+                    }}>
+                      <h3>Ученик добавлен</h3>
+                      <img src={checkMarkIcon} alt='Ученик добавлен' style={{
+                        width: '2rem',
+                        objectFit: 'contain',
+                      }}/>
+                    </div>
+                    <ButtonSubmit text='Отчислить ученика' type='delete' onClick={() => {
+                      makePupilRetiredFunc(person.id)
+                    }}
+                                  style={{
+                                    width: '50%',
+                                  }}
+                    />
+                  </div>
                 }
               </div>
             </div>
@@ -288,9 +326,14 @@ const ListOfPeople = () => {
                 gap: '0 1rem',
               }}>
                 {person.authorized ?
-                  <ButtonSubmit text='Добавить учителя' onClick={() => {
-                    addTeacherFunc(person.id)
-                  }}/> :
+                  <>
+                    <ButtonSubmit text='Добавить преподавателя' onClick={() => {
+                      addTeacherFunc(person.id)
+                    }}/>
+                    <ButtonSubmit text='Удалить преподавателя' type='delete' onClick={() => {
+                      deleteTeacherFunc(person.id)
+                    }}/>
+                  </> :
                   <>
                     <h3>Преподаватель добавлен</h3>
                     <img src={checkMarkIcon} alt='Преподаватель добавлен' style={{

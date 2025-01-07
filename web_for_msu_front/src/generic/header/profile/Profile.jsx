@@ -41,7 +41,7 @@ const Profile = () => {
     }
   }
 
-  if (location.pathname === '/account') {
+  if (location.pathname === '/account' || location.pathname === '/admin') {
     return (
       <ButtonSubmit text='Выйти из аккаунта' onClick={userLogout} type='delete'
         style={{

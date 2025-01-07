@@ -1,23 +1,23 @@
 import {$authHost} from "./axiosApi.js";
 
 export const openRegistrationCourses = async () => {
-  const response = await $authHost.post(`/admin/courses/open`);
+  const response = await $authHost.post(`/admin/open_courses_registration`);
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Запись не открыта, произошла ошибка ${error}`);
   }
-
-  return new Error(`Запись не открыта, произошла ошибка ${response.data.message}`);
 }
 
 export const closeRegistrationCourses = async () => {
-  const response = await $authHost.post(`/admin/courses/close`);
+  const response = await $authHost.post(`/admin/close_courses_registration`);
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Запись не закрыта, произошла ошибка ${error}`);
   }
-
-  return new Error(`Запись не закрыта, произошла ошибка ${response.data.message}`);
 }
 
 export const getAllPupils = async () => {
@@ -43,41 +43,51 @@ export const getAllTeachers = async () => {
 export const addPupil = async ({pupilId}) => {
   const response = await $authHost.post(`/admin/add/pupil/${pupilId}`);
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Ученик не был добавлен, произошла ошибка ${error}`);
   }
-
-  return new Error(`Ученик не был добавлен, произошла ошибка ${response.data.message}`);
 }
 
 export const deletePupil = async ({pupilId}) => {
-  const response = await $authHost.post(`/admin/delete/pupil/${pupilId}`);
+  const response = await $authHost.delete(`/admin/delete/pupil/${pupilId}`);
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Ученик не был удален, произошла ошибка ${error}`);
   }
-
-  return new Error(`Ученик не был удален, произошла ошибка ${response.data.message}`);
 }
 
 export const addTeacher = async ({teacherId}) => {
   const response = await $authHost.post(`/admin/add/teacher/${teacherId}`);
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Преподаватель не был добавлен, произошла ошибка ${error}`);
   }
-
-  return new Error(`Преподаватель не был добавлен, произошла ошибка ${response.data.message}`);
 }
 
 export const deleteTeacher = async ({teacherId}) => {
-  const response = await $authHost.post(`/admin/delete/teacher/${teacherId}`);
+  const response = await $authHost.delete(`/admin/delete/teacher/${teacherId}`);
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Преподаватель не был добавлен, произошла ошибка ${error}`);
   }
+}
 
-  return new Error(`Преподаватель не был добавлен, произошла ошибка ${response.data.message}`);
+export const makePupilRetired = async ({pupilId}) => {
+  const response = await $authHost.post(`/admin/retire/pupil/${pupilId}`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(`Ученик не был отчислен, произошла ошибка ${error}`);
+  }
 }
 
 export const setNewsAdmin = async (userId) => {

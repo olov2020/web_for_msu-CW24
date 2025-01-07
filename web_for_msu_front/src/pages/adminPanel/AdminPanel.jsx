@@ -1,9 +1,7 @@
 import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
 import {useNavigate} from "react-router-dom";
 import {closeRegistrationCourses, openRegistrationCourses} from "../../api/adminApi.js";
-import {HOME_ROUTE} from "../../routing/consts.js";
-import {useDispatch} from "react-redux";
-import {setNotAuthAction} from "../../store/UserReducers.js";
+import {ADD_NEW_COURSE_ROUTE, AUDITORY_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE} from "../../routing/consts.js";
 
 const AdminPanel = () => {
 
@@ -25,19 +23,7 @@ const AdminPanel = () => {
     }
   }
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userLogout = () => {
-    try {
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
-      dispatch(setNotAuthAction());
-      navigate(HOME_ROUTE);
-      return true;
-    } catch (error) {
-      alert(`Выход из аккаунта не выполнен, повторите попытку позже.\nОшибка: ${error}`)
-    }
-  }
 
   return (
     <article>
@@ -66,10 +52,22 @@ const AdminPanel = () => {
       }}>
         <ButtonSubmit text='Список всех учеников' onClick={() => navigate('/admin/list/pupils')}/>
         <ButtonSubmit text='Список всех преподавателей' onClick={() => navigate('/admin/list/teachers')}/>
+      </section>
 
-        <div>
-          <ButtonSubmit text='Выйти из аккаунта' onClick={userLogout} type='delete'/>
-        </div>
+      <h1 style={{
+        marginTop: '5rem',
+      }}>Дополнительный функционал</h1>
+
+      <section style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '30%',
+        gap: '1rem 0',
+      }}>
+        <ButtonSubmit text='Добавить новый курс' onClick={() => navigate(ADD_NEW_COURSE_ROUTE)}/>
+        <ButtonSubmit text='Создать новость' onClick={() => navigate(CREATE_NEWS_ROUTE)}/>
+        <ButtonSubmit text='Список всех ведомостей' onClick={() => navigate(MARKS_ROUTE)}/>
+        <ButtonSubmit text='Назначение аудиторий' onClick={() => navigate(AUDITORY_ROUTE)}/>
       </section>
     </article>
   );
