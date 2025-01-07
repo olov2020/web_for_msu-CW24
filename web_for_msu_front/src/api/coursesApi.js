@@ -96,13 +96,17 @@ export const courseAdd = async (file) => {
 export const courseChange = async (id, file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await $authHost.put(`/admin/update_course/${id}`, formData)
+  const response = await $authHost.put(`/admin/update_course/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
+  })
 
-  if (response.status === 200) {
+  try {
     return response.data;
+  } catch (error) {
+    return new Error(`Курс не изменен, произошла ошибка ${error}`);
   }
-
-  return new Error(`Курс не изменен, произошла ошибка ${response.data.message}`);
 }
 
 export const approvePupilsOnCourse = async (courseId, pupilId) => {
