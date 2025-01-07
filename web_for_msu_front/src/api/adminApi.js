@@ -312,8 +312,12 @@ export const getCoursesAuditoriums = async () => {
   }
 }
 
-export const setCoursesAuditoriums = async ({courseId, auditory}) => {
-  const response = await $authHost.put(`/admin/auditoriums/${courseId}/${auditory}`);
+export const setCoursesAuditoriums = async (formValues) => {
+  const response = await $authHost.put(`/admin/auditoriums`, formValues, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
   try {
     return response.data;
   } catch (error) {

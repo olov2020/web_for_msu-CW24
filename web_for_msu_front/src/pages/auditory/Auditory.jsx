@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
-import InputText from "../../generic/form/inputs/userInputs/InputText.jsx";
 import {getCoursesAuditoriums} from "../../api/adminApi.js";
-import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
+import Form from "../../generic/form/Form.jsx";
 
 const Auditory = () => {
 
@@ -13,6 +12,7 @@ const Auditory = () => {
   ]);
 
   const [auditoriums, setAuditoriums] = useState({});
+  const [inputs, setInputs] = useState([]);
 
   const getCoursesAuditoriumsFunc = async () => {
     const data = await getCoursesAuditoriums();
@@ -25,30 +25,28 @@ const Auditory = () => {
 
   useEffect(() => {
     const auditoriumsNew = courses.reduce((acc, course) => {
-      acc[course.id] = [`auditory ${course.id}`, course.auditory];
+      acc[`auditory ${course.id}`] = course.auditory;
       return acc;
     }, {});
     setAuditoriums(auditoriumsNew);
-    console.log(auditoriumsNew);
+
+    const inputsNew = courses.map((course) => {
+      return `auditory ${course.id}`;
+    });
+    setInputs(inputsNew);
   }, [courses]);
-
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-  }
 
   return (
     <article>
       <h1>Назначение аудиторий</h1>
 
-      <form onSubmit={onSubmit} style={{
+      <section style={{
         display: 'flex',
         flexDirection: 'column',
         width: '90%',
         gap: '1rem 0',
       }}>
-        <div style={{
+        <section style={{
           display: 'flex',
           width: '100%',
           justifyContent: 'space-between',
@@ -69,38 +67,41 @@ const Auditory = () => {
           }}>
             Аудитория / zoom
           </h2>
-        </div>
-        {courses && courses.length > 0 && courses.map((course) => (
-          <div key={course.id} style={{
-            display: 'flex',
-            width: '100%',
-            justifyContent: 'space-between',
+        </section>
+        <section style={{
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{
+            width: '36%',
           }}>
-            <h3 style={{
-              width: '18%',
-              alignSelf: 'center',
-            }}>{course.name}</h3>
-            <p style={{
-              width: '18%',
-              alignSelf: 'center',
-              textAlign: 'center',
-            }}>{course.lesson_time}</p>
-            <div style={{
-              width: '60%',
-            }}>
-              {auditoriums[course.id] && auditoriums[course.id].length >= 2 &&
-                <InputText
-                  name={auditoriums[course.id][0]}
-                  value={auditoriums[course.id][1]}
-                  placeholder=''
-                />
-              }
-            </div>
+            {courses && courses.length > 0 && courses.map((course) => (
+              <div key={course.id} style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between',
+              }}>
+                <h3 style={{
+                  width: '40%',
+                  alignSelf: 'center',
+                }}>{course.name}</h3>
+                <p style={{
+                  width: '40%',
+                  alignSelf: 'center',
+                  textAlign: 'center',
+                }}>{course.lesson_time}</p>
+              </div>
+            ))}
           </div>
-        ))}
 
-        <ButtonSubmit text='Сохранить выбор'/>
-      </form>
+          <div style={{
+            width: '60%',
+          }}>
+            <Form inputs={inputs} values={auditoriums} buttonText='Сохранить выбор' type='setCoursesAuditoriums'/>
+          </div>
+        </section>
+
+      </section>
     </article>
   );
 };

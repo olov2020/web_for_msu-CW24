@@ -14,17 +14,18 @@ import InputYear from "./inputs/userInputs/InputYear.jsx";
 import InputMessenger from "./inputs/userInputs/InputMessenger.jsx";
 import InputDropdown from "./inputs/userInputs/InputDropdown.jsx";
 import InputCheckbox from "./inputs/userInputs/InputCheckbox.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import InputPhoto from "./inputs/userInputs/InputPhoto.jsx";
 import InputNewsTitle from "./inputs/newsInputs/InputNewsTitle.jsx";
 import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
 import {courseAdd, courseChange} from "../../api/coursesApi.js";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 import {useDispatch} from "react-redux";
 import {setAuthFromToken} from "../../store/UserReducers.js";
+import {setCoursesAuditoriums} from "../../api/adminApi.js";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type}) => {
@@ -46,6 +47,27 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       teacherChangeData: ['email', 'phone', 'university'],
     }
 
+  const [auditoriums, setAuditoriums] = useState({});
+  const [errors, setErrors] = useState({});
+  const location = useLocation();
+  useEffect(() => {
+    setAuditoriums(values);
+  }, [location, values]);
+
+  const handleAuditoryChange = (auditoryId, value) => {
+    setAuditoriums(prev => ({
+      ...prev,
+      [auditoryId]: value,
+    }));
+  };
+
+  const handleErrorChange = (auditoryId, error) => {
+    setErrors(prev => ({
+      ...prev,
+      [auditoryId]: error,
+    }));
+  };
+
   const navigate = useNavigate();
 
   const checkFormErrors = () => {
@@ -54,7 +76,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!checkFormErrors()) {
+    if (type in requiredValues && !checkFormErrors()) {
       alert('Заполните все обязательные поля.');
     }
     if (type === 'login') {
@@ -118,6 +140,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       try {
         await setEventsContestScientificWorksDate(formValues.dateKnrFirst, formValues.dateKnrSecond, formValues.dateKnrThird);
         alert('Даты мероприятия успешно сохранены');
+      } catch (error) {
+        alert(`Упс... Что-то пошло не так: ${error.message}`);
+      }
+    } else if (type === 'setCoursesAuditoriums') {
+      try {
+        await setCoursesAuditoriums(formValues);
+        alert('Аудитории сохранены');
       } catch (error) {
         alert(`Упс... Что-то пошло не так: ${error.message}`);
       }
@@ -636,8 +665,26 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         />
       }
 
-      default:
+      default: {
+        const match = input.match(/^auditory (\d+)/);
+        if (match) {
+          const auditoryId = `auditory ${match[1]}`;
+          formValues[auditoryId] = auditoriums[auditoryId];
+          formErrors[auditoryId] = errors[auditoryId];
+
+          return (
+            <InputText
+              name={input}
+              placeholder='Введите аудиторию / zoom'
+              value={auditoriums[auditoryId]}
+              setValue={(value) => handleAuditoryChange(auditoryId, value)}
+              formErrors={(error) => handleErrorChange(auditoryId, error)}
+            />
+          );
+        }
+
         return <input value={input}/>
+      }
     }
   }
 
