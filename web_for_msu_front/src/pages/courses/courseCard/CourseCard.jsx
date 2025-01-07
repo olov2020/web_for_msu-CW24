@@ -5,13 +5,11 @@ import {useSelector} from "react-redux";
 // eslint-disable-next-line react/prop-types
 const CourseCard = ({key, year, courseData, isMyCourses}) => {
 
-  // isMyCourses = true
-
   const userStatus = useSelector(state => state.user.authStatus)
 
   return (
     <Link to={`/courses/${year}/${courseData.name}`}
-          state={{key, year, courseData}}
+          state={{key, year, courseData, isMyCourses}}
           key={key}
           className={style.courseCard}
     >

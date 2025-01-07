@@ -22,16 +22,37 @@ const CourseItem = () => {
         {state.year}
       </h3>
 
-      {(userStatus.includes('pupil') || userStatus.includes('teacher')) &&
-        <h2>Ведомость оценок</h2>
+      {state.isMyCourses &&
+        ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
+          <>
+            <h2>Ведомость оценок</h2>
+            {userStatus.includes('pupil') ? (
+              <PupilMarks courseId={state.key}/>
+            ) : userStatus.includes('teacher') ? (
+              <TeacherMarks courseId={state.key}/>
+            ) : (
+              <></>
+            )}
+          </>
+        ))
       }
 
-      {
-        userStatus.includes('pupil') ?
-          <PupilMarks courseId={state.key}/> :
-          userStatus.includes('teacher') ?
-            <TeacherMarks courseId={state.key}/> :
-            <></>
+      {userStatus.includes('admin') &&
+        <section style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '90%',
+        }}>
+          <ChangeCourse/>
+        </section>
+      }
+
+      {state.isMyCourses && userStatus.includes('teacher') &&
+        <section style={{
+          width: '90%',
+        }}>
+          <ApprovePupils courseId={state.courseId}/>
+        </section>
       }
 
       <section style={{
@@ -109,24 +130,6 @@ const CourseItem = () => {
           </div>
         </div>
       </section>
-
-      {userStatus.includes('admin') &&
-        <section style={{
-          display: 'flex',
-          justifyContent: 'center',
-          width: '90%',
-        }}>
-          <ChangeCourse/>
-        </section>
-      }
-
-      {userStatus.includes('teacher') &&
-        <section style={{
-          width: '90%',
-        }}>
-          <ApprovePupils courseId={state.courseId}/>
-        </section>
-      }
 
       <section style={{
         display: 'flex',

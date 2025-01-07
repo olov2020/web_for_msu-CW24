@@ -1,17 +1,15 @@
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {getCoursesSelectStatus} from "../../../api/coursesApi.js";
-import styleCourse from "../course.module.css";
+import {getCoursesSelect, getCoursesSelectStatus} from "../../../api/coursesApi.js";
 import Form from "../../../generic/form/Form.jsx";
-
 
 const CoursesSelect = () => {
 
   const userStatus = useSelector(state => state.user.authStatus);
 
-  const [selectCoursesStatus, setSelectCoursesStatus] = useState(true);
+  const [selectCoursesStatus, setSelectCoursesStatus] = useState(false);
   const [courses, setCourses] = useState([
-    {
+    /*{
       name: 'Приручение python\'а',
       id: 0,
       lesson_time: "Вторник 17:20 - 18:40",
@@ -37,7 +35,7 @@ const CoursesSelect = () => {
       direction: "Третий Путь",
       emsh_grades: "9 - 11",
       selected: '',
-    },
+    },*/
   ]);
 
   const [inputs, setInputs] = useState([]);
@@ -50,6 +48,13 @@ const CoursesSelect = () => {
     }
 
     getCoursesSelectStatusFunc();
+
+    const getCoursesSelectFunc = async () => {
+      const data = await getCoursesSelect();
+      setCourses(data);
+    }
+
+    getCoursesSelectFunc();
   }, []);
 
   useEffect(() => {

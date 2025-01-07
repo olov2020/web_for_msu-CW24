@@ -112,7 +112,7 @@ const PupilMarks = ({courseId}) => {
     skips: 2
   });
 
-  useEffect(() => {
+  /*useEffect(() => {
     const getMarks = async () => {
       try {
         const data = await getPupilMarksByCourseId({courseId});
@@ -124,7 +124,7 @@ const PupilMarks = ({courseId}) => {
     }
 
     getMarks();
-  }, [])
+  }, [])*/
 
   if (!marks) {
     return <></>;

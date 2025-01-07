@@ -108,7 +108,11 @@ export const getCoursesSelect = async () => {
 export const getCoursesSelectStatus = async () => {
   const response = await $authHost.get(`/pupil/available_courses/status`)
 
-  return response.status === 200;
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
 }
 
 export const selectCourses = async (formValues) => {
