@@ -36,7 +36,7 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
       return errors.notValidClass;
     }
 
-    if (name.includes('schoolEndDate') && Number(inputValue) > currentYear) {
+    if (name.includes('schoolEndDate') && (Number(inputValue) > currentYear || Number(inputValue) < 1950)) {
       return errors.notValidYear;
     }
 
