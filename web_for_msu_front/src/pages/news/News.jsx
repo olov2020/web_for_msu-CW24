@@ -9,16 +9,7 @@ const News = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3); // State for items per page
   const listRef = useRef(null); // Reference to the list
-  const [news, setNews] = useState([
-   /* {id: 1, title: 'Title', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet, consectetur'},
-    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
-    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
-    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
-    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
-    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
-    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
-    {id: 2, title: 'Title2', photo: 'https://avatars.mds.yandex.net/i?id=49186f06e917afba928a97aa048bc067_l-5234693-images-thumbs&n=13', date: '2024-11-20', description: 'Lorem ipsum dolor sit amet, consectetur'},
- */ ]);
+  const [news, setNews] = useState([]);
 
   const [displayedNews, setDisplayedNews] = useState(
     news.slice(0, Math.min(itemsPerPage, news.length))

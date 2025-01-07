@@ -4,69 +4,16 @@ import {getSchedule} from "../../api/coursesApi.js";
 
 const Schedule = () => {
 
-  const [schedule, setSchedule] = useState({
-    lessons_in_week: [
-      {
-        course_name: "Приручение python'а",
-        course_type: "Зачётный",
-        auditory: null,
-        date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15",
-        plan: "Регулярные выражения",
-      },
-      {
-        course_name: "Приручение python'а",
-        course_type: "Не зачетный",
-        auditory: null,
-        date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15",
-        plan: "Регулярные выражения",
-      },
-      {
-        course_name: "Приручение python'а",
-        course_type: "Не зачетный",
-        auditory: null,
-        date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15",
-        plan: "Регулярные выражения",
-      },
-    ],
-    lessons_in_two_weeks: [
-      {
-        course_name: "Приручение python'Приручение python'а",
-        course_type: 'Зачётный',
-        auditory: null,
-        date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15",
-        plan: "Регулярные выражения",
-      },
-      {
-        course_name: "Приручение python'а",
-        course_type: "Зачётный",
-        auditory: null,
-        date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15",
-        plan: "Регулярные выражения",
-      },
-      {
-        course_name: "Приручение python'а",
-        course_type: "Не зачетный",
-        auditory: null,
-        date: "24.11",
-        lesson_time: "Пятница 18:55 - 20:15",
-        plan: "Регулярные выражения",
-      },
-    ]
-  });
+  const [schedule, setSchedule] = useState({});
 
-  /*useEffect(() => {
+  useEffect(() => {
     const getScheduleData = async () => {
       const data = await getSchedule();
-      setSchedule({data});
+      setSchedule(data);
     }
 
     getScheduleData();
-  }, []);*/
+  }, []);
 
   return (
     <article>
