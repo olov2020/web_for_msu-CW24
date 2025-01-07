@@ -24,7 +24,8 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
   })
 
   const validateInput = (inputValue) => {
-    if (inputValue.length === 0) {
+    // eslint-disable-next-line react/prop-types
+    if (inputValue.length === 0 && !name.includes('course')) {
       return errors.empty;
     }
 

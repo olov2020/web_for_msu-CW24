@@ -21,7 +21,7 @@ import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
-import {courseAdd, courseChange} from "../../api/coursesApi.js";
+import {courseAdd, courseChange, selectCourses} from "../../api/coursesApi.js";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 import {useDispatch} from "react-redux";
 import {setAuthFromToken} from "../../store/UserReducers.js";
@@ -48,11 +48,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     }
 
   const [auditoriums, setAuditoriums] = useState({});
+  const [coursesSelect, setCoursesSelect] = useState({});
   const [errors, setErrors] = useState({});
   const location = useLocation();
   useEffect(() => {
     setAuditoriums(values);
-  }, [location, values]);
+    setCoursesSelect(values);
+  }, [location.pathname, values]);
 
   const handleAuditoryChange = (auditoryId, value) => {
     setAuditoriums(prev => ({
@@ -61,10 +63,17 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     }));
   };
 
-  const handleErrorChange = (auditoryId, error) => {
+  const handleCoursesSelectChange = (courseId, value) => {
+    setCoursesSelect(prev => ({
+      ...prev,
+      [courseId]: value,
+    }));
+  };
+
+  const handleErrorChange = (id, error) => {
     setErrors(prev => ({
       ...prev,
-      [auditoryId]: error,
+      [id]: error,
     }));
   };
 
@@ -149,6 +158,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         alert('Аудитории сохранены');
       } catch (error) {
         alert(`Упс... Что-то пошло не так: ${error.message}`);
+      }
+    } else if (type === 'selectCourses') {
+      try {
+        await selectCourses(formValues);
+        alert('Курсы выбраны успешно');
+      } catch {
+        alert(`Упс... Что-то пошло не так. Выберете ровно 2 зачетных курса из разных категорий`);
       }
     } else {
       alert(`Invalid type: ${type}`);
@@ -666,9 +682,11 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       }
 
       default: {
-        const match = input.match(/^auditory (\d+)/);
-        if (match) {
-          const auditoryId = `auditory ${match[1]}`;
+        const matchAuditory = input.match(/^auditory (\d+)/);
+        const matchCourse = input.match(/^course (\d+)/);
+
+        if (matchAuditory) {
+          const auditoryId = `auditory ${matchAuditory[1]}`;
           formValues[auditoryId] = auditoriums[auditoryId];
           formErrors[auditoryId] = errors[auditoryId];
 
@@ -679,6 +697,23 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
               value={auditoriums[auditoryId]}
               setValue={(value) => handleAuditoryChange(auditoryId, value)}
               formErrors={(error) => handleErrorChange(auditoryId, error)}
+            />
+          );
+        }
+
+        if (matchCourse) {
+          const courseId = `course ${matchCourse[1]}`;
+          formValues[courseId] = coursesSelect[courseId];
+          formErrors[courseId] = errors[courseId];
+
+          return (
+            <InputDropdown
+              name={input}
+              placeholder='Зачетный / незачетный'
+              value={coursesSelect[courseId]}
+              values={['Зачетный', 'Незачетный', '']}
+              setValue={(value) => handleCoursesSelectChange(courseId, value)}
+              formErrors={(error) => handleErrorChange(courseId, error)}
             />
           );
         }

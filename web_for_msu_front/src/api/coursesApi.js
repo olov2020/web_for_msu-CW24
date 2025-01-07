@@ -10,22 +10,6 @@ export const getAllCourses = async () => {
   }
 }
 
-export const getCoursesSelect = async () => {
-  const response = await $authHost.get(`/home/select_courses`)
-
-  try {
-    return response.data;
-  } catch (error) {
-    return new Error(error);
-  }
-}
-
-export const getCoursesSelectStatus = async () => {
-  const response = await $authHost.get(`/home/select_courses/status`)
-
-  return response.status === 200;
-}
-
 export const getMyCourses = async () => {
   const response = await $authHost.get(`/pupil/my_courses`)
 
@@ -77,6 +61,7 @@ export const updateTeacherMarksByCourseId = async (courseId, marks) => {
   }
 }
 
+
 export const courseAdd = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
@@ -108,6 +93,38 @@ export const courseChange = async (id, file) => {
     return new Error(`Курс не изменен, произошла ошибка ${error}`);
   }
 }
+
+
+export const getCoursesSelect = async () => {
+  const response = await $authHost.get(`/pupil/available_courses`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const getCoursesSelectStatus = async () => {
+  const response = await $authHost.get(`/pupil/available_courses/status`)
+
+  return response.status === 200;
+}
+
+export const selectCourses = async (formValues) => {
+  const response = await $authHost.post(`/pupil/select_courses`, formValues, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 
 export const approvePupilsOnCourse = async (courseId, pupilId) => {
   const response = await $authHost.put(`/teacher/approve_pupils/${courseId}/${pupilId}`);
