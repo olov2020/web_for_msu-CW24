@@ -32,11 +32,15 @@ const InputYear = ({name = '', placeholder = '', fieldName, value, setValue, for
       return errors.empty;
     }
 
-    if (name.includes('school') && (Number(inputValue) > 11 || Number(inputValue) < 8)) {
+    if (name.includes('schoolClass') && (Number(inputValue) > 11 || Number(inputValue) < 8)) {
       return errors.notValidClass;
     }
 
-    if (name.includes('university') && (Number(inputValue) > currentYear + 6 || Number(inputValue) < 1950)) {
+    if (name.includes('schoolEndDate') && Number(inputValue) > currentYear) {
+      return errors.notValidYear;
+    }
+
+    if (name.includes('universityEndDate') && (Number(inputValue) > currentYear + 6 || Number(inputValue) < 1950)) {
       return errors.notValidYear;
     }
 
