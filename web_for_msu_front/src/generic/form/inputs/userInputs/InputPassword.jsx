@@ -37,12 +37,12 @@ const InputPassword = ({name, placeholder, fieldName, value, setValue, formError
     }
 
     // 2. Uppercase check: At least one uppercase letter
-    if (!/[A-Z]/.test(password)) {
+    if (!/[A-ZА-Я]/.test(password)) {
       return errors.notUpperCase;
     }
 
     // 3. Lowercase check: At least one lowercase letter
-    if (!/[a-z]/.test(password)) {
+    if (!/[a-zа-я]/.test(password)) {
       return errors.notLowerCase;
     }
 

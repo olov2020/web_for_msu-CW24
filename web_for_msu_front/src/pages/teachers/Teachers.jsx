@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react";
 import {getDirectoryTeachers} from "../../api/userApi.js";
-import textarea from "../../generic/form/inputs/Textarea.jsx";
-
 
 const Teachers = () => {
 

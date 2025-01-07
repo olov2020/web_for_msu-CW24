@@ -4,7 +4,7 @@ import {getCoursesSelectStatus} from "../../../api/coursesApi.js";
 import styleCourse from "../course.module.css";
 import InputDropdown from "../../../generic/form/inputs/userInputs/InputDropdown.jsx";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
-import axios from "axios";
+import {$authHost} from "../../../api/axiosApi.js";
 
 
 const CoursesSelect = () => {
@@ -63,19 +63,6 @@ const CoursesSelect = () => {
     getCoursesSelectStatusFunc();
   }, []);
 
-  /*useEffect(() => {
-    const getAllCoursesFunc = async () => {
-      try {
-        const data = await getCoursesSelect();
-        setCourses(data);
-      } catch (error) {
-        setCourses(null);
-      }
-    }
-
-    getAllCoursesFunc();
-  }, []);*/
-
   if (!selectCoursesStatus) {
     return (
       <article>
@@ -90,7 +77,7 @@ const CoursesSelect = () => {
       coursesCopy[i].selected = coursesSelected[i];
     }
     setCourses(coursesCopy);
-    const response = await axios.post('api/courses_select', courses);
+    const response = await $authHost.post('/pupil/select_courses', courses);
     try {
       if (response.status === 200) {
         alert('Курсы успешно выбраны!');
