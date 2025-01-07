@@ -303,6 +303,25 @@ export const downloadAllMarks = async () => {
 }
 
 
+export const getCoursesAuditoriums = async () => {
+  const response = await $authHost.get('/admin/auditoriums/get');
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const setCoursesAuditoriums = async ({courseId, auditory}) => {
+  const response = await $authHost.put(`/admin/auditoriums/${courseId}/${auditory}`);
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+
 export const getAllCoursesIds = async () => {
   const response = await $authHost.get('/admin/courses-ids');
 
