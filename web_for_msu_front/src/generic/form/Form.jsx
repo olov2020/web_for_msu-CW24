@@ -3,7 +3,7 @@ import InputEmail from "./inputs/userInputs/InputEmail.jsx";
 import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
-  pupilChangeData, pupilRegistration, teacherChangeData, teacherRegistration, userChangePhoto, userLogin
+  pupilChangeData, pupilRegistration, teacherChangeData, teacherRegistration, userLogin
 } from "../../api/userApi.js";
 import InputFile from "./inputs/userInputs/InputFile.jsx";
 import InputName from "./inputs/userInputs/InputName.jsx";
@@ -35,13 +35,15 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   const requiredValues =
     {
       login: ['email', 'password'],
-      pupilRegistration: ['email', 'password', 'name', 'surname', 'birthDate', 'phone', 'school', 'schoolEndDate', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
+      pupilRegistration: ['email', 'password', 'name', 'surname', 'birthDate', 'phone', 'school', 'schoolClass', 'registrationAddress', 'parent1Name', 'parent1Surname', 'parent1Phone', 'parent1Email', 'agreement'],
       teacherRegistration: ['email', 'password', 'name', 'surname', 'birthDate', 'phone', 'school', 'schoolEndDate', 'university', 'universityEndDate', 'registrationAddress', 'agreement'],
       courseAdd: ['courseFile'],
       courseChange: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription'],
       setDateOpenChampionship: ['dateOchStart', 'dateOchEnd'],
       setDateContestScientificWorks: ['dateKnrFirst', 'dateKnrSecond', 'dateKnrThird'],
+      pupilChangeData: ['email', 'phone', 'school'],
+      teacherChangeData: ['email', 'phone', 'university'],
     }
 
   const navigate = useNavigate();
@@ -69,12 +71,18 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     } else if (type === 'teacherRegistration') {
       await teacherRegistration(formValues);
       navigate(LOGIN_ROUTE);
-    } else if (type === 'userChangePhoto') {
-      await userChangePhoto(formValues.photo);
     } else if (type === 'pupilChangeData') {
-      await pupilChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.school);
+      try {
+        await pupilChangeData(formValues.photo, formValues.email, formValues.phone, formValues.school);
+      } catch (error) {
+        alert(`Упс, что-то пошло не так...\nОшибка: ${error}`)
+      }
     } else if (type === 'teacherChangeData') {
-      await teacherChangeData(formValues.name, formValues.surname, formValues.lastname, formValues.email, formValues.phone, formValues.university, formValues.work);
+      try {
+        await teacherChangeData(formValues.photo, formValues.email, formValues.phone, formValues.university, formValues.work);
+      } catch (error) {
+        alert(`Упс, что-то пошло не так...\nОшибка: ${error}`)
+      }
     } else if (type === 'courseAdd') {
       try {
         await courseAdd(formValues.courseFile);
@@ -537,10 +545,10 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         const [newsPhoto, setNewsPhoto] = useState(undefined);
         formValues.newsPhoto = newsPhoto;
         return <InputPhoto name={input}
-                               fieldName='Фотография новости'
-                               value={newsPhoto}
-                               setValue={setNewsPhoto}
-                               accept='image/png, image/gif, image/jpeg, image/jpg'
+                           fieldName='Фотография новости'
+                           value={newsPhoto}
+                           setValue={setNewsPhoto}
+                           accept='image/png, image/gif, image/jpeg, image/jpg'
         />
       }
       case 'newsDescription': {

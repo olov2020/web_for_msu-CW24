@@ -22,7 +22,7 @@ export const userLogin = async (email, password) => {
       }
     })
 
-    const { access_token, refresh_token } = response.data;
+    const {access_token, refresh_token} = response.data;
     localStorage.setItem('token', access_token)
     localStorage.setItem('refreshToken', refresh_token)
 
@@ -32,24 +32,18 @@ export const userLogin = async (email, password) => {
   }
 }
 
-export const userChangePhoto = async ({photo}) => {
-  const response = await $authHost.post('/account/photo', {photo}, {
+export const pupilChangeData = async (photo, email, phone, school) => {
+  const formData = new FormData();
+  const value = {
+    email: email,
+    phone: phone,
+    school: school
+  };
+  formData.append('data', value);
+  formData.append('image', photo);
+  const response = await $authHost.put('/pupil/change_account_data', formData, {
     headers: {
-      'content-type': 'multipart/form-data',
-    }
-  })
-
-  try {
-    return response.data;
-  } catch (error) {
-    return new Error(error);
-  }
-}
-
-export const pupilChangeData = async (name, surname, lastname, email, phone, school) => {
-  const response = await $authHost.post('/account/data', {name, surname, lastname, email, phone, school}, {
-    headers: {
-      'content-type': 'application/json'
+      'Content-Type': 'multipart/form-data'
     }
   })
 
@@ -60,18 +54,19 @@ export const pupilChangeData = async (name, surname, lastname, email, phone, sch
   }
 }
 
-export const teacherChangeData = async (name, surname, lastname, email, phone, university, work) => {
-  const response = await $authHost.post('/account/data', {
-    name,
-    surname,
-    lastname,
-    email,
-    phone,
-    university,
-    work
-  }, {
+export const teacherChangeData = async (photo, email, phone, university, work) => {
+  const formData = new FormData();
+  const value = {
+    email: email,
+    phone: phone,
+    university: university,
+    work: work,
+  };
+  formData.append('data', value);
+  formData.append('image', photo);
+  const response = await $authHost.put('/teacher/change_account_data', formData, {
     headers: {
-      'content-type': 'application/json'
+      'Content-Type': 'multipart/form-data'
     }
   })
 
