@@ -7,7 +7,7 @@ import {getAllCourses, getMyCourses} from "../../api/coursesApi.js";
 const Courses = () => {
 
   const url = window.location.pathname;
-  const [isMyCourses, setIsMyCourses] = useState(false);
+  const [isMyCourses, setIsMyCourses] = useState(true);
   const [coursesAll, setCoursesAll] = useState({
     "2023": [
       {

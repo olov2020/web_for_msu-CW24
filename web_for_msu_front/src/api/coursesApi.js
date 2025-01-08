@@ -134,14 +134,25 @@ export const approvePupilsOnCourse = async (courseId, pupilId) => {
   const response = await $authHost.put(`/teacher/approve_pupils/${courseId}/${pupilId}`);
 
   try {
-    return response.status === 200;
+    return response.data;
   } catch (error) {
     return new Error(error);
   }
 }
 
+export const deletePupilsFromCourse = async (courseId, pupilId) => {
+  const response = await $authHost.delete(`/teacher/delete_pupils/${courseId}/${pupilId}`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+
 export const getAllPupilsOnCourse = async ({courseId}) => {
-  const response = await $authHost.get(`/courses/get_pupils/${courseId}`);
+  const response = await $authHost.get(`/teacher/pupils_list/${courseId}`);
 
   try {
     return response.data;
