@@ -72,14 +72,19 @@ const Auditory = () => {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-          <div style={{
+          <section style={{
+            display: 'flex',
+            flexDirection: 'column',
             width: '36%',
+            gap: '.56rem 0',
           }}>
             {courses && courses.length > 0 && courses.map((course) => (
               <div key={course.id} style={{
                 display: 'flex',
                 width: '100%',
                 justifyContent: 'space-between',
+                borderBottom: '1px dashed #9F1A59',
+                padding: '.7rem 0',
               }}>
                 <h3 style={{
                   width: '40%',
@@ -92,7 +97,7 @@ const Auditory = () => {
                 }}>{course.lesson_time}</p>
               </div>
             ))}
-          </div>
+          </section>
 
           <div style={{
             width: '60%',

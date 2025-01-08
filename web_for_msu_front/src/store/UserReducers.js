@@ -15,7 +15,7 @@ const authStatus = {
 
 const defaultState = {
     id: 0,
-    authStatus: authStatus.teacher,
+    authStatus: authStatus.admin,
 }
 
 const SET_AUTH = "SET_AUTH"
