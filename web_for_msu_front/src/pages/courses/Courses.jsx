@@ -7,9 +7,9 @@ import {getAllCourses, getMyCourses} from "../../api/coursesApi.js";
 const Courses = () => {
 
   const url = window.location.pathname;
-  const [isMyCourses, setIsMyCourses] = useState(false);
+  const [isMyCourses, setIsMyCourses] = useState(true);
   const [coursesAll, setCoursesAll] = useState({
-    /*"2023": [
+    "2023": [
       {
         "additional_info": "Желательно наличие у школьников своих ноутбуков",
         "additional_info_for_auditory": "Необходима компьютерная аудитория",
@@ -442,10 +442,10 @@ const Courses = () => {
           "Иванов Иван Иванович"
         ]
       }
-    ],*/
+    ],
   });
 
-  useEffect(() => {
+  /*useEffect(() => {
     const getCourses = async () => {
       const data = url === '/courses/my' ?
         await getMyCourses() :
@@ -457,7 +457,7 @@ const Courses = () => {
     }
 
     getCourses();
-  }, [url]);
+  }, [url]);*/
 
   const currentYear = new Date().getFullYear();
   const years = [];

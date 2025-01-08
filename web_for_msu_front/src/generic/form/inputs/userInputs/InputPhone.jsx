@@ -9,9 +9,7 @@ const InputPhone = ({name = '', placeholder = '', fieldName, value, setValue, fo
   const [error, setError] = useState('');
   const phoneMask = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
   const errors = {
-    empty: (name.includes('parent') ?
-      'Данное поле не может быть пустым. При отсутствии телефона начните вводить нули' :
-      'Данное поле не может быть пустым'),
+    empty: 'Данное поле не может быть пустым',
     errorLength: 'Введите номер телефона полностью',
   }
 
@@ -28,13 +26,14 @@ const InputPhone = ({name = '', placeholder = '', fieldName, value, setValue, fo
   })
 
   const validateInput = (inputValue) => {
-    if (inputValue.includes('000')) {
+    if (name.includes('parent2')) {
       setIsValid(true);
+      formErrors(false);
       setError('');
       return '';
     }
 
-    if (inputValue.length === 0) {
+    if (inputValue.length === 0 && !name.includes('parent2')) {
       return errors.empty;
     }
 

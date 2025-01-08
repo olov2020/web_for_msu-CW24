@@ -37,6 +37,14 @@ const CourseItem = () => {
         ))
       }
 
+      {state.isMyCourses && userStatus.includes('teacher') &&
+        <section style={{
+          width: '90%',
+        }}>
+          <ApprovePupils courseId={state.courseId}/>
+        </section>
+      }
+
       {userStatus.includes('admin') &&
         <section style={{
           display: 'flex',
@@ -44,14 +52,6 @@ const CourseItem = () => {
           width: '90%',
         }}>
           <ChangeCourse/>
-        </section>
-      }
-
-      {state.isMyCourses && userStatus.includes('teacher') &&
-        <section style={{
-          width: '90%',
-        }}>
-          <ApprovePupils courseId={state.courseId}/>
         </section>
       }
 

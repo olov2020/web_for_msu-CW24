@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {approvePupilsOnCourse, deletePupilsFromCourse, getAllPupilsOnCourse} from "../../../api/coursesApi.js";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
 
-
 // eslint-disable-next-line react/prop-types
 const ApprovePupils = ({courseId}) => {
 

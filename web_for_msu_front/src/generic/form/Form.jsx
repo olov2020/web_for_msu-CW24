@@ -54,7 +54,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
   useEffect(() => {
     setAuditoriums(values);
     setCoursesSelect(values);
-  }, [location.pathname, values]);
+  }, [location.pathname, JSON.stringify(values)]);
 
   const handleAuditoryChange = (auditoryId, value) => {
     setAuditoriums(prev => ({
@@ -87,6 +87,7 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     e.preventDefault();
     if (type in requiredValues && !checkFormErrors()) {
       alert('Заполните все обязательные поля.');
+      return;
     }
     if (type === 'login') {
       try {
@@ -94,14 +95,30 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         dispatch(setAuthFromToken(accessToken));
         navigate(HOME_ROUTE);
       } catch (error) {
-        alert(`Возникла ошибка во время входа в аккаунт: ${error}`);
+        if (error.message.includes('401')) {
+          alert(`Вы ввели неверные данные или администратор еще не рассмотрел вашу регистрацию. Подождите немного и попробуйте позже`);
+        } else {
+          alert(`Возникла ошибка во время входа в аккаунт: ${error.message}`);
+        }
       }
     } else if (type === 'pupilRegistration') {
-      await pupilRegistration(formValues);
-      navigate(LOGIN_ROUTE);
+      try {
+        await pupilRegistration(formValues);
+        navigate(LOGIN_ROUTE);
+      } catch (error) {
+        if (error.message.includes(400)) {
+          alert('Пользователь с такой почтой уже существует');
+        }
+      }
     } else if (type === 'teacherRegistration') {
-      await teacherRegistration(formValues);
-      navigate(LOGIN_ROUTE);
+      try {
+        await teacherRegistration(formValues);
+        navigate(LOGIN_ROUTE);
+      } catch (error) {
+        if (error.message.includes(400)) {
+          alert('Пользователь с такой почтой уже существует');
+        }
+      }
     } else if (type === 'pupilChangeData') {
       try {
         await pupilChangeData(formValues.photo, formValues.email, formValues.phone, formValues.school);
