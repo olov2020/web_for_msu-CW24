@@ -7,9 +7,12 @@ WORKDIR /web_for_msu-CW24/web_for_msu_back
 COPY wait-for-it.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wait-for-it.sh
 
+# TODO --no-cache-dir при деплое
+COPY requirements.txt /web_for_msu-CW24/web_for_msu_back/requirements.txt
+RUN pip install -r requirements.txt
+
 # Копируем все файлы проекта в контейнер, включая Dockerfile
 COPY . /web_for_msu-CW24/web_for_msu_back
-RUN pip install --no-cache-dir -r requirements.txt
 
 # Устанавливаем переменные окружения для Flask
 ENV FLASK_APP=runner.py
