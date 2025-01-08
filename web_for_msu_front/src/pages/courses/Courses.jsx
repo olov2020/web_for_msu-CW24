@@ -36,7 +36,7 @@ const Courses = () => {
             "name": "Баллы"
           }
         ],
-        "id": 1,
+        "id": 0,
         "lesson_time": "Вторник 17:20 - 18:40",
         "lessons": [
           {

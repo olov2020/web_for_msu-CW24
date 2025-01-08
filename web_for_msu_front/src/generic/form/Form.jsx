@@ -21,14 +21,14 @@ import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
-import {courseAdd, courseChange, selectCourses} from "../../api/coursesApi.js";
+import {courseAdd, courseChange, selectCourses, updateTeacherMarksByCourseId} from "../../api/coursesApi.js";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 import {useDispatch} from "react-redux";
 import {setAuthFromToken} from "../../store/UserReducers.js";
 import {setCoursesAuditoriums} from "../../api/adminApi.js";
 
 // eslint-disable-next-line react/prop-types
-const Form = ({inputs = [], values = {}, buttonText, type}) => {
+const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
   const dispatch = useDispatch();
   const formValues = useState({});
@@ -49,11 +49,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
 
   const [auditoriums, setAuditoriums] = useState({});
   const [coursesSelect, setCoursesSelect] = useState({});
+  const [teacherMarks, setTeacherMarks] = useState({});
   const [errors, setErrors] = useState({});
   const location = useLocation();
   useEffect(() => {
     setAuditoriums(values);
     setCoursesSelect(values);
+    setTeacherMarks(values);
   }, [location.pathname, JSON.stringify(values)]);
 
   const handleAuditoryChange = (auditoryId, value) => {
@@ -67,6 +69,14 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
     setCoursesSelect(prev => ({
       ...prev,
       [courseId]: value,
+    }));
+  };
+
+
+  const handleTeacherMarksChange = (markId, value) => {
+    setTeacherMarks(prev => ({
+      ...prev,
+      [markId]: value,
     }));
   };
 
@@ -182,6 +192,13 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
         alert('Курсы выбраны успешно');
       } catch {
         alert(`Упс... Что-то пошло не так. Выберете ровно 2 зачетных курса из разных категорий`);
+      }
+    } else if (type === 'saveTeacherMarks') {
+      try {
+        await updateTeacherMarksByCourseId(id, formValues);
+        alert('Оценки успешно сохранены');
+      } catch {
+        alert(`Упс... Что-то пошло не так`);
       }
     } else {
       alert(`Invalid type: ${type}`);
@@ -699,8 +716,9 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
       }
 
       default: {
-        const matchAuditory = input.match(/^auditory (\d+)/);
-        const matchCourse = input.match(/^course (\d+)/);
+        const matchAuditory = input.match(/^auditory (\d+)/);  // for selecting auditory for admin
+        const matchCourse = input.match(/^course (\d+)/);  // for selecting courses for pupils
+        const matchMarks = input.match(/^\d+\s\d{2}\.\d{2}\.\d{4}\s([A-Za-zА-Яа-я]+\s?)+$/);  // for filling marks for teachers
 
         if (matchAuditory) {
           const auditoryId = `auditory ${matchAuditory[1]}`;
@@ -731,6 +749,21 @@ const Form = ({inputs = [], values = {}, buttonText, type}) => {
               values={['Зачетный', 'Незачетный', '']}
               setValue={(value) => handleCoursesSelectChange(courseId, value)}
               formErrors={(error) => handleErrorChange(courseId, error)}
+            />
+          );
+        }
+
+        if (matchMarks) {
+          const markId = matchMarks[0];
+          formValues[markId] = teacherMarks[markId];
+          formErrors[markId] = errors[markId];
+
+          return (
+            <InputText
+              name={input}
+              value={teacherMarks[markId]}
+              setValue={(value) => handleTeacherMarksChange(markId, value)}
+              formErrors={(error) => handleErrorChange(markId, error)}
             />
           );
         }

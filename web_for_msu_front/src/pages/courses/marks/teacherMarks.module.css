@@ -1,0 +1,23 @@
+.datesSection {
+    display: flex;
+
+    gap: 0 2rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: auto;
+}
+
+
+.markTypes {
+    display: flex;
+    gap: 0 1rem;
+
+    > p {
+        text-align: center;
+    }
+}

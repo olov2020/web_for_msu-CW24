@@ -9,7 +9,7 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
 
   return (
     <Link to={`/courses/${year}/${courseData.name}`}
-          state={{key, year, courseData, isMyCourses}}
+          state={{year, courseData, isMyCourses}}
           key={key}
           className={style.courseCard}
     >

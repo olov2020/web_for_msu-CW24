@@ -1,10 +1,7 @@
 import {useEffect, useState} from 'react';
-import {
-  getTeacherMarksByCourseId,
-  updateTeacherMarksByCourseId
-} from "../../../api/coursesApi.js";
-import Input from "../../../generic/form/inputs/Input.jsx";
-import InputDropdown from "../../../generic/form/inputs/userInputs/InputDropdown.jsx";
+import {getTeacherMarksByCourseId} from "../../../api/coursesApi.js";
+import style from './teacherMarks.module.css';
+import Form from "../../../generic/form/Form.jsx";
 
 // eslint-disable-next-line react/prop-types
 const TeacherMarks = ({courseId}) => {
@@ -40,65 +37,37 @@ const TeacherMarks = ({courseId}) => {
     "mark_type_choices": [
       "домашняя работа",
       "экзамен",
-      "Баллы",
-    ],
-    "mark_types": [
-      "Присутствие",
-      "домашняя работа",
-      "Баллы",
-      "Баллы",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие",
-      "Присутствие"
     ],
     "pupils": [
       {
         "id": 1,
         "name": "Doe John Ivanovich",
         "marks": [
-          "Н",
-          "4",
-          "Н",
-          "10",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          ""
+          ["Н", 10],
+          ["Н", 4],
+          ["Н", 4],
+          ["Н", 4],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
         ],
         "result": 12.6
       }
@@ -161,96 +130,64 @@ const TeacherMarks = ({courseId}) => {
 
   /*useEffect(() => {
     const getMarks = async () => {
-      try {
-        const data = await getTeacherMarksByCourseId({courseId});
-        setMarks(data.pupils.marks);
-        // eslint-disable-next-line no-unused-vars
-      } catch (error) {
-        setMarks(null);
-      }
+      const data = await getTeacherMarksByCourseId({courseId});
+      setMarks(data);
     }
 
     getMarks();
-  }, [marks])*/
+  }, [])*/
 
-  const setPupilMark = async (e, pupilIndex, index) => {
-    marks.pupils[pupilIndex].marks[index] = e.target.value;
-    const data = await updateTeacherMarksByCourseId(courseId, marks);
-    setMarks(data);
-  }
+  const [inputs, setInputs] = useState([]);
+  const [values, setValues] = useState({});
 
-  const setMarkTypes = async (e, index) => {
-    marks.mark_types[index] = e.target.value;
-    const data = await updateTeacherMarksByCourseId(courseId, marks);
-    setMarks(data);
-  }
+  useEffect(() => {
+    const inputsNew = marks.dates.flatMap((date) =>
+      marks.pupils.flatMap((pupil) =>
+        marks.mark_type_choices.map((markType) =>
+          `${pupil.id} ${date} ${markType}`
+        )
+      )
+    );
+    setInputs(inputsNew);
+
+    const valuesNew = marks.dates.reduce((acc, date, index) => {
+      marks.pupils.forEach((pupil) => {
+        marks.mark_type_choices.forEach((markType, index2) => {
+          acc[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
+        });
+      });
+      return acc;
+    }, {});
+
+    setValues(valuesNew);
+  }, [marks]);
 
   if (!marks) {
     return <></>;
   }
 
   return (
-    <div style={{
+    <section style={{
       maxWidth: "90%",
       overflow: 'auto',
+      paddingBottom: '1rem',
     }}>
-      <table key={courseId}>
+      <section className={style.datesSection}>
+        {marks.dates.map((date, index) => (
+          <div key={index} className={style.column}>
+            <h3 key={index} className={style.date}>{date}</h3>
 
-        <thead>
-        <tr>
-          <span></span>
-          {marks.dates.map((date, index) => (
-            <th key={index}>{date}</th>
-          ))}
-        </tr>
-        <tr>
-          <span></span>
-          {marks.mark_types.map((markType, index) => (
-            <td key={index}>
-              <InputDropdown value={markType} setValue={(e) => setMarkTypes(e, index)} values={marks.mark_type_choices}
-                             style={{
-                               textAlign: 'center',
-                             }}/>
-            </td>
-          ))}
-        </tr>
-        </thead>
-
-        <tbody>
-        {marks.pupils.map((pupil, pupilIndex) => (
-          <tr key={pupil.id}>
-            <th scope="row"><span style={{
-              fontSize: '1.2rem',
-              color: 'black',
-            }}>{pupil.name}</span></th>
-            {pupil.marks.map((mark, index) => (
-              <td key={index}>
-                <Input value={mark} type='text' name={`markAt${pupil.id}${index}`}
-                       onChange={(e) => setPupilMark(e, pupilIndex)} style={{
-                  textAlign: 'center',
-                }}/>
-              </td>
-            ))}
-          </tr>
+            <div className={style.markTypes}>
+              {marks.mark_type_choices.map((mark_type, index) => (
+                <p key={index}>{mark_type}</p>
+              ))}
+            </div>
+          </div>
         ))}
-        </tbody>
+      </section>
 
-        <tfoot>
-        <tr>
-          <th scope="row"><span>Средняя оценка</span></th>
-          {marks.averages.map((average, index) => (
-            <td key={index}>{average}</td>
-          ))}
-        </tr>
-        <tr>
-          <th scope="row"><span>Общее количество посещений</span></th>
-          {marks.visits.map((visit, index) => (
-            <td key={index}>{visit}</td>
-          ))}
-        </tr>
-        </tfoot>
-      </table>
-    </div>
+      <Form buttonText='Сохранить оценки' inputs={inputs} values={values} type='saveTeacherMarks' id={courseId}/>
+    </section>
   );
 };
 

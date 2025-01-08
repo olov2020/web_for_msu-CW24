@@ -12,7 +12,7 @@ const CourseItem = () => {
   const {state} = useLocation();
 
   return (
-    <article key={state.key}>
+    <article key={state.courseData.id}>
       <h1>{state.courseData.name}</h1>
       <h3 style={{
         alignSelf: 'flex-end',
@@ -27,9 +27,9 @@ const CourseItem = () => {
           <>
             <h2>Ведомость оценок</h2>
             {userStatus.includes('pupil') ? (
-              <PupilMarks courseId={state.key}/>
+              <PupilMarks courseId={state.courseData.id}/>
             ) : userStatus.includes('teacher') ? (
-              <TeacherMarks courseId={state.key}/>
+              <TeacherMarks courseId={state.courseData.id}/>
             ) : (
               <></>
             )}
