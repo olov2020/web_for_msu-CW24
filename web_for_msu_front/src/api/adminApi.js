@@ -90,6 +90,16 @@ export const makePupilRetired = async ({pupilId}) => {
   }
 }
 
+export const recoverPupil = async ({pupilId}) => {
+  const response = await $authHost.post(`/admin/recover/pupil/${pupilId}`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(`Ученик не был восстановлен, произошла ошибка ${error}`);
+  }
+}
+
 export const setNewsAdmin = async (userId) => {
   const response = await $authHost.post(`/admin/role/add/news/${userId}`);
 

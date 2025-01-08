@@ -7,7 +7,7 @@ import {
   deleteNewsAdmin,
   deletePupil, deleteTeacher, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
   getAllPupils,
-  getAllTeachers, makePupilRetired, setAuditoryAdmin,
+  getAllTeachers, makePupilRetired, recoverPupil, setAuditoryAdmin,
   setCourseAdmin,
   setKNRAdmin,
   setLSHAdmin,
@@ -92,6 +92,15 @@ const ListOfPeople = () => {
       alert('Ученик успешно отчислен!');
     } else {
       alert('Упс, что-то пошло не так... Ученик не был отчислен');
+    }
+  }
+
+  const recoverPupilFunc = async (pupilId) => {
+    const data = await recoverPupil({pupilId});
+    if (data) {
+      alert('Ученик успешно восстановлен!');
+    } else {
+      alert('Упс, что-то пошло не так... Ученик не был восстановлен');
     }
   }
 
@@ -193,7 +202,7 @@ const ListOfPeople = () => {
                 width: '25%',
                 gap: '0 1rem',
               }}>
-                {person.authorized ?
+                {!person.authorized ?
                   <>
                     <ButtonSubmit text='Добавить' onClick={() => {
                       addPupilFunc(person.id)
@@ -202,33 +211,58 @@ const ListOfPeople = () => {
                       deletePupilFunc(person.id)
                     }}/>
                   </> :
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    gap: '0 1rem',
-                  }}>
+                  person.status === 'Ученик' ?
                     <div style={{
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '50%',
-                      gap: '0 .5rem',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      gap: '0 1rem',
                     }}>
-                      <h3>Ученик добавлен</h3>
-                      <img src={checkMarkIcon} alt='Добавлен' style={{
-                        width: '2rem',
-                        objectFit: 'contain',
-                      }}/>
-                    </div>
-                    <ButtonSubmit text='Отчислить' type='delete' onClick={() => {
-                      makePupilRetiredFunc(person.id)
-                    }}
-                                  style={{
-                                    width: '50%',
-                                  }}
-                    />
-                  </div>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '50%',
+                        gap: '0 .5rem',
+                      }}>
+                        <h3>Ученик добавлен</h3>
+                        <img src={checkMarkIcon} alt='Добавлен' style={{
+                          width: '2rem',
+                          objectFit: 'contain',
+                        }}/>
+                      </div>
+                      <ButtonSubmit text='Отчислить' type='delete' onClick={() => {
+                        makePupilRetiredFunc(person.id)
+                      }}
+                                    style={{
+                                      width: '50%',
+                                    }}
+                      />
+                    </div> :
+                    person.status === 'Бывший ученик' ?
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      gap: '0 1rem',
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '50%',
+                      }}>
+                        <h3>Ученик отчислен</h3>
+                      </div>
+                      <ButtonSubmit text='Восстановить' type='submit' onClick={() => {
+                        recoverPupilFunc(person.id)
+                      }}
+                                    style={{
+                                      width: '50%',
+                                    }}
+                      />
+                    </div> :
+                      <h3>Никаких действий нет</h3>
                 }
               </div>
             </div>
