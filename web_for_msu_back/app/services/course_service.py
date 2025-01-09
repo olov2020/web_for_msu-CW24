@@ -622,11 +622,13 @@ class CourseService:
             return {"error": "Нет такого курса"}, 404
         data = []
         for pupil_course in course.pupils:
+            if pupil_course.approved:
+                continue
             pupil = pupil_course.pupil
             pupil_data = {
                 "id": pupil.id,
                 "name": f'{pupil.surname} {pupil.name} {pupil.patronymic}',
-                "approved": pupil_course.approved,
+                "grade": pupil.school_grade,
             }
             data.append(pupil_data)
 
