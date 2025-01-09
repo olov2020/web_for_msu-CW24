@@ -42,7 +42,7 @@ class CourseService:
         course = Course.query.get(course_id)
         if not course:
             return []
-        return [assoc.pupil for assoc in course.pupils]
+        return [pupil_course.pupil for pupil_course in course.pupils if pupil_course.approved]
 
     def get_teachers(self, course_id: int) -> list[Teacher]:
         course = Course.query.get(course_id)
