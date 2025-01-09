@@ -1,0 +1,41 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav {
+    position: absolute;
+    top: 3rem;
+
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+
+.burger {
+    display: flex;
+    flex-direction: column;
+    gap: 4px 0;
+}
+
+.line {
+    display: block;
+    width: 2rem;
+    height: 4px;
+    border-radius: 10px;
+    background-color: #9F1A59;
+    transition: all .4s;
+}
+
+.line1 {
+    transform: rotate(405deg) translate(1px, 5px);
+}
+.line2 {
+    display: none;
+}
+.line3 {
+    transform: rotate(-405deg) translate(0, -5px);
+}
+

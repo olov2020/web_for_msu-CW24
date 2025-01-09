@@ -775,7 +775,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
   return (
     <form className={style.form} onSubmit={onSubmit}>
-      {inputs.map((input) => (showInput(input)))}
+      {inputs.map((input) => showInput(input))}
 
       <ButtonSubmit text={buttonText}/>
     </form>

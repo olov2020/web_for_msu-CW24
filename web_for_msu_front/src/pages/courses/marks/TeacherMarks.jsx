@@ -37,10 +37,44 @@ const TeacherMarks = ({courseId}) => {
     "mark_type_choices": [
       "домашняя работа",
       "экзамен",
+      "контрольная работа",
+      "летучка",
     ],
     "pupils": [
       {
         "id": 1,
+        "name": "Doe John Ivanovich",
+        "marks": [
+          ["Н", 10],
+          ["Н", 4],
+          ["Н", 4],
+          ["Н", 4],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+          ["", ''],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 2,
         "name": "Doe John Ivanovich",
         "marks": [
           ["Н", 10],
@@ -168,25 +202,36 @@ const TeacherMarks = ({courseId}) => {
 
   return (
     <section style={{
-      maxWidth: "90%",
-      overflow: 'auto',
+      width: "90%",
       paddingBottom: '1rem',
     }}>
-      <section className={style.datesSection}>
-        {marks.dates.map((date, index) => (
-          <div key={index} className={style.column}>
-            <h3 key={index} className={style.date}>{date}</h3>
-
-            <div className={style.markTypes}>
-              {marks.mark_type_choices.map((mark_type, index) => (
-                <p key={index}>{mark_type}</p>
-              ))}
-            </div>
-          </div>
+      <div>
+        {marks.pupils.map((pupil) => (
+          <h3 key={pupil.id}>{pupil.name}</h3>
         ))}
-      </section>
+      </div>
+      <section style={{
+        display: 'flex',
+      }}>
+        <section className={style.datesSection}>
+          {marks.dates.map((date, index) => (
+            <div key={index} className={style.column}>
+              <h3 className={style.date}>{date}</h3>
 
-      <Form buttonText='Сохранить оценки' inputs={inputs} values={values} type='saveTeacherMarks' id={courseId}/>
+              <div className={style.markTypes}>
+                {marks.mark_type_choices.map((mark_type, index2) => (
+                  <p key={index2}>{mark_type}</p>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+        <div>
+          <Form buttonText='Сохранить оценки' inputs={inputs} values={values}
+                type='saveTeacherMarks' id={courseId}
+          />
+        </div>
+      </section>
     </section>
   );
 };
