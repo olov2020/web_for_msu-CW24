@@ -616,6 +616,23 @@ class CourseService:
         self.db.session.commit()
         return {"msg": "Ученик успешно добавлен на курс"}, 200
 
+    def delete_pupil_course(self, course_id: int, pupil_id: int) -> (dict, int):
+        course = Course.query.get(course_id)
+        pupil = Pupil.query.get(pupil_id)
+        if not course:
+            return {"error": "Нет такого курса"}, 404
+        if not pupil:
+            return {"error": "Нет такого ученика"}, 404
+        pupil_course = PupilCourse.query.filter(PupilCourse.pupil_id == pupil_id,
+                                                PupilCourse.course_id == course_id).first()
+        if not pupil_course:
+            return {"error": "Этот ученик не подавал заявку на этот курс"}, 404
+        if pupil_course.approved:
+            return {"error": "Этот ученик уже записан на курс"}, 404
+        self.db.session.delete(pupil_course)
+        self.db.session.commit()
+        return {"msg": "Ученику отказано в зачислении на курс"}, 200
+
     def get_pupils_list(self, course_id: int) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
