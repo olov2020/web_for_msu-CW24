@@ -77,9 +77,6 @@ class TeacherService:
         if data["email"] != user.email and User.query.filter_by(email=data["email"]).first():
             return {"error": "Пользователь с такой почтой уже существует"}, 404
         user.email = teacher.email = data["email"]
-        teacher.name = data["name"]
-        teacher.surname = data["surname"]
-        teacher.patronymic = data["lastname"]
         teacher.phone = data["phone"]
         teacher.university = data["university"]
         teacher.workplace = data["work"]
@@ -96,9 +93,6 @@ class TeacherService:
         if not teacher:
             return {"error": "Пользователь не найден"}, 404
         data = {
-            "name": teacher.name,
-            "surname": teacher.surname,
-            "lastname": teacher.patronymic,
             "email": teacher.email,
             "phone": teacher.phone,
             "university": teacher.university,

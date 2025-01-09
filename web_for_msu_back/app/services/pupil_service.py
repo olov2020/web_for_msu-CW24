@@ -116,9 +116,6 @@ class PupilService:
         if data["email"] != user.email and User.query.filter_by(email=data["email"]).first():
             return {"error": "Пользователь с такой почтой уже существует"}, 404
         user.email = pupil.email = data["email"]
-        pupil.name = data["name"]
-        pupil.surname = data["surname"]
-        pupil.patronymic = data["lastname"]
         pupil.phone = data["phone"]
         pupil.school = data["school"]
         self.db.session.commit()
@@ -134,9 +131,6 @@ class PupilService:
         if not pupil:
             return {"error": "Пользователь не найден"}, 404
         data = {
-            "name": pupil.name,
-            "surname": pupil.surname,
-            "lastname": pupil.patronymic,
             "email": pupil.email,
             "phone": pupil.phone,
             "school": pupil.school,
