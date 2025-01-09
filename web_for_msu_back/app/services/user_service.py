@@ -175,19 +175,17 @@ class UserService:
             Pupil.surname,
             Pupil.patronymic,
             Pupil.school_grade,
+            Pupil.graduated,
+            Pupil.former,
             User.authorized,
         ).join(User, Pupil.user_id == User.id)
 
         result = []
         for user in users:
-            roles = (Role.query
-                     .join(user_role, user_role.c.role_id == Role.id)
-                     .filter(user_role.c.user_id == user.id).all())
-            role_names = [role.name for role in roles]
             status = "Ученик"
-            if "former_pupil" in role_names:
+            if user.former:
                 status = "Бывший ученик"
-            elif "graduated_pupil" in role_names:
+            elif user.graduated:
                 status = "Выпускник"
             data = {
                 "id": user.id,
@@ -288,6 +286,8 @@ class UserService:
         user = User.query.get(user_id)
         if not user:
             return {"error": "Пользователь не найден"}, 404
+        if user.authorized:
+            return {"error": "Пользователь уже авторизован"}, 404
         match role:
             case "pupil":
                 model = Pupil

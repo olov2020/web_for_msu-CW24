@@ -1,5 +1,6 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
+from pydoc import resolve
 from typing import TYPE_CHECKING
 
 import flask
@@ -155,4 +156,13 @@ class AdminView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         response, code = user_service.delete_user(user_id, role)
+        return jsonify(response), code
+
+    @route('/retire/pupil/<pupil_id>/', methods=["POST"])
+    @auth_required
+    @roles_required('admin')
+    def retire_pupil(self, pupil_id: int):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.retire(pupil_id)
         return jsonify(response), code

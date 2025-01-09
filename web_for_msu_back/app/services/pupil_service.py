@@ -60,11 +60,11 @@ class PupilService:
     def increase_grade(self) -> (dict, int):
         pupils = Pupil.query.all()
         for pupil in pupils:
-            if pupil.former:
+            if pupil.graduated:
                 continue
             if pupil.graduating:
-                pupil.former = True
-                role = Role.query.filter_by(name='graduated_pupil').first()
+                pupil.graduated = True
+                role = Role.query.filter_by(name='retired').first()
                 pupil.user.roles.append(role)
                 continue
             pupil.school_grade = max(pupil.school_grade + 1, 11)
@@ -72,6 +72,18 @@ class PupilService:
                 pupil.graduating = True
         self.db.session.commit()
         return {"msg": "Все ученики перешли на следующий год"}, 200
+
+    def retire(self, pupil_id):
+        pupil = Pupil.query.get(pupil_id)
+        if not pupil:
+            return {"error": "Нет такого ученика"}, 404
+        if pupil.former:
+            return {"error": "Ученик уже отчислен"}, 404
+        pupil.former = True
+        role = Role.query.filter_by(name='retired').first()
+        pupil.user.roles.append(role)
+        self.db.session.commit()
+        return {"msg": "Ученик отчислен"}, 200
 
     def change_account(self, user_id: int, request: flask.Request) -> (dict, int):
         user = User.query.get(user_id)
