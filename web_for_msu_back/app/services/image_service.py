@@ -6,7 +6,7 @@ from os.path import splitext
 from typing import TYPE_CHECKING
 
 import boto3
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from dotenv import load_dotenv
 from flask import current_app
 
@@ -18,6 +18,7 @@ if TYPE_CHECKING:
 class ImageService:
 
     def __init__(self, user_service: UserService):
+        # for testing replace current_user.save() to self.db.session.commit()
         self.user_service = user_service
 
     def get_bucket(self, bucket):
@@ -93,7 +94,10 @@ class ImageService:
         return unique_filename + file_extension
 
     def reduce_image_size(self, image_path, output_path, quality=20):
-        image = Image.open(image_path)
+        try:
+            image = Image.open(image_path)
+        except UnidentifiedImageError:
+            return
         image.convert("RGB").save(output_path, "JPEG", quality=quality)
 
     def change_user_image(self, image, user_id):

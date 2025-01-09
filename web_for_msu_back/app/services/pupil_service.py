@@ -110,7 +110,7 @@ class PupilService:
         if not pupil:
             return {"error": "Пользователь не найден"}, 404
         try:
-            data = PupilAccountDTO().load(request.json)
+            data = PupilAccountDTO().load(json.loads(request.form.get("data")))
         except ValidationError as e:
             return e.messages, 400
         if data["email"] != user.email and User.query.filter_by(email=data["email"]).first():
@@ -118,6 +118,8 @@ class PupilService:
         user.email = pupil.email = data["email"]
         pupil.phone = data["phone"]
         pupil.school = data["school"]
+        if "image" in request.files:
+            self.image_service.change_user_image(request.files["image"], user_id)
         self.db.session.commit()
         identity = self.user_service.create_user_identity(user)
         access_token = create_access_token(identity=identity, fresh=False)
