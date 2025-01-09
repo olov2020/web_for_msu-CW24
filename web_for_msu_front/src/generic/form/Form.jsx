@@ -195,7 +195,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
     } else if (type === 'saveTeacherMarks') {
       try {
-        await updateTeacherMarksByCourseId(id, formValues);
+        await updateTeacherMarksByCourseId(id, teacherMarks);
         alert('Оценки успешно сохранены');
       } catch {
         alert(`Упс... Что-то пошло не так`);
@@ -773,9 +773,33 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
     }
   }
 
+  /*Object.entries(inputs).map(([key, input]) => {
+    console.log(input)
+  })*/
+
   return (
     <form className={style.form} onSubmit={onSubmit}>
-      {inputs.map((input) => showInput(input))}
+      {id ?
+        <section style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem 0',
+        }}>
+          {/* eslint-disable-next-line no-unused-vars */}
+          {Object.entries(inputs).map(([key, input]) => (
+            <div key={input} style={{
+              display: 'flex',
+              gap: '0 1rem',
+            }}>
+              {input.map((item) => (
+                showInput(item)
+              ))}
+
+            </div>
+          ))}
+        </section> :
+        (inputs.map((input) => showInput(input)))
+      }
 
       <ButtonSubmit text={buttonText}/>
     </form>

@@ -45,31 +45,31 @@ const TeacherMarks = ({courseId}) => {
         "id": 1,
         "name": "Doe John Ivanovich",
         "marks": [
-          ["Н", 10],
-          ["Н", 4],
-          ["Н", 4],
-          ["Н", 4],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
+          ["Н", 112312310, 1, 1],
+          ["Н", 3, 234, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
         ],
         "result": 12.6
       },
@@ -77,31 +77,63 @@ const TeacherMarks = ({courseId}) => {
         "id": 2,
         "name": "Doe John Ivanovich",
         "marks": [
-          ["Н", 10],
-          ["Н", 4],
-          ["Н", 4],
-          ["Н", 4],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
-          ["", ''],
+          ["Н", 10, 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 3,
+        "name": "Doe John Ivanovich",
+        "marks": [
+          ["Н", 10, 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
         ],
         "result": 12.6
       }
@@ -171,7 +203,7 @@ const TeacherMarks = ({courseId}) => {
     getMarks();
   }, [])*/
 
-  const [inputs, setInputs] = useState([]);
+  const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
 
   useEffect(() => {
@@ -182,7 +214,17 @@ const TeacherMarks = ({courseId}) => {
         )
       )
     );
-    setInputs(inputsNew);
+
+    const inputsDict = inputsNew.reduce((acc, input) => {
+      const [pupilId] = input.split(' ');
+      if (!acc[pupilId]) {
+        acc[pupilId] = [];
+      }
+      acc[pupilId].push(input);
+      return acc;
+    }, {});
+
+    setInputs(inputsDict);
 
     const valuesNew = marks.dates.reduce((acc, date, index) => {
       marks.pupils.forEach((pupil) => {
@@ -193,7 +235,9 @@ const TeacherMarks = ({courseId}) => {
       return acc;
     }, {});
 
+
     setValues(valuesNew);
+
   }, [marks]);
 
   if (!marks) {
@@ -202,17 +246,24 @@ const TeacherMarks = ({courseId}) => {
 
   return (
     <section style={{
-      width: "90%",
+      position: 'relative',
+      display: 'flex',
+      maxWidth: "90%",
+      overflow: 'auto',
       paddingBottom: '1rem',
     }}>
-      <div>
+      <section style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '2rem',
+        gap: '1rem 0',
+        marginTop: '5rem',
+      }}>
         {marks.pupils.map((pupil) => (
           <h3 key={pupil.id}>{pupil.name}</h3>
         ))}
-      </div>
-      <section style={{
-        display: 'flex',
-      }}>
+      </section>
+      <section>
         <section className={style.datesSection}>
           {marks.dates.map((date, index) => (
             <div key={index} className={style.column}>
@@ -226,10 +277,16 @@ const TeacherMarks = ({courseId}) => {
             </div>
           ))}
         </section>
-        <div>
-          <Form buttonText='Сохранить оценки' inputs={inputs} values={values}
-                type='saveTeacherMarks' id={courseId}
-          />
+        <div style={{
+          marginTop: '2rem',
+        }}>
+            <Form
+              buttonText='Сохранить оценки'
+              inputs={inputs}
+              values={values}
+              type='saveTeacherMarks'
+              id={courseId}
+            />
         </div>
       </section>
     </section>
