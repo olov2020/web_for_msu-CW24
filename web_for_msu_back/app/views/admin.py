@@ -166,3 +166,12 @@ class AdminView(FlaskView):
         pupil_service: PupilService = services["pupil_service"]
         response, code = pupil_service.retire(pupil_id)
         return jsonify(response), code
+
+    @route('/recover/pupil/<pupil_id>/', methods=["POST"])
+    @auth_required
+    @roles_required('admin')
+    def recover_pupil(self, pupil_id: int):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.recover(pupil_id)
+        return jsonify(response), code

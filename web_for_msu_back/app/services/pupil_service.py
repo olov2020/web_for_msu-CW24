@@ -1,13 +1,11 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import json
-from os import access
 from typing import TYPE_CHECKING  # Условный импорт для проверки типов
 
 import flask
 from flask_jwt_extended import create_access_token
 from marshmallow import ValidationError
-from numpy.ma.core import identity
 
 from web_for_msu_back.app.dto.pupil import PupilDTO
 from web_for_msu_back.app.dto.pupil_account import PupilAccountDTO
@@ -73,17 +71,36 @@ class PupilService:
         self.db.session.commit()
         return {"msg": "Все ученики перешли на следующий год"}, 200
 
-    def retire(self, pupil_id):
+    def retire(self, pupil_id: int) -> (dict, int):
         pupil = Pupil.query.get(pupil_id)
         if not pupil:
             return {"error": "Нет такого ученика"}, 404
         if pupil.former:
             return {"error": "Ученик уже отчислен"}, 404
+        if pupil.graduated:
+            return {"error": "Ученик уже выпустился из школы"}, 404
         pupil.former = True
         role = Role.query.filter_by(name='retired').first()
         pupil.user.roles.append(role)
         self.db.session.commit()
         return {"msg": "Ученик отчислен"}, 200
+
+    def recover(self, pupil_id: int) -> (dict, int):
+        pupil = Pupil.query.get(pupil_id)
+        if not pupil:
+            return {"error": "Нет такого ученика"}, 404
+        if not pupil.former:
+            return {"error": "Ученик не был отчислен"}, 404
+        if pupil.graduated:
+            return {"error": "Ученик уже выпустился из школы"}, 404
+        pupil.former = False
+        role = Role.query.filter_by(name='retired').first()
+        try:
+            pupil.user.roles.remove(role)
+        except ValueError:
+            pass
+        self.db.session.commit()
+        return {"msg": "Ученик восстановлен"}, 200
 
     def change_account(self, user_id: int, request: flask.Request) -> (dict, int):
         user = User.query.get(user_id)
