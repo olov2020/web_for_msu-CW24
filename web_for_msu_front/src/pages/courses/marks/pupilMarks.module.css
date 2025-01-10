@@ -1,0 +1,11 @@
+.row {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px dashed #9F1A59;
+    padding-bottom: .5rem;
+
+    > * {
+        width: 20%;
+        gap: 2rem 0;
+    }
+}

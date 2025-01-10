@@ -14,7 +14,7 @@ const authStatus = {
 
 const defaultState = {
     id: 0,
-    authStatus: `${authStatus.retired} ${authStatus.pupil}`,
+    authStatus: authStatus.none,
 }
 
 const SET_AUTH = "SET_AUTH"

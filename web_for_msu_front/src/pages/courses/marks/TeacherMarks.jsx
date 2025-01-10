@@ -317,7 +317,7 @@ const TeacherMarks = ({courseId}) => {
   }, [marks]);
 
   if (!marks) {
-    return <></>;
+    return <h3>Оценок пока нет</h3>;
   }
 
   return (
@@ -333,7 +333,7 @@ const TeacherMarks = ({courseId}) => {
         <section className={style.datesSection}>
           {marks.dates.map((date, index) => (
             <div key={index} className={style.column}>
-              <h3 className={style.date}>{date}</h3>
+              <h3>{date}</h3>
 
               <div className={style.markTypes}>
                 {marks.mark_type_choices.map((mark_type, index2) => (
