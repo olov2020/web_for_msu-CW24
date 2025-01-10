@@ -1,3 +1,11 @@
+.marksSection {
+    position: relative;
+    display: flex;
+    max-width: 90%;
+    overflow: auto;
+    padding-bottom: 1rem;
+}
+
 .datesSection {
     display: flex;
     gap: 0 2rem;
@@ -25,5 +33,18 @@
 
     > p {
         text-align: center;
+    }
+}
+
+.columnForTextData {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    gap: 2.2rem 0;
+    margin-top: 5.8rem;
+    white-space: nowrap;
+
+    > * {
+        text-align: right;
     }
 }

@@ -51,7 +51,7 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
 }
 
 export const updateTeacherMarksByCourseId = async (courseId, marks) => {
-  const response = await $authHost.put(`/teacher/update_journal/${courseId}`, marks, {
+  const response = await $authHost.patch(`/teacher/update_journal/${courseId}`, marks, {
     headers: {
       'Content-Type': 'application/json',
     }

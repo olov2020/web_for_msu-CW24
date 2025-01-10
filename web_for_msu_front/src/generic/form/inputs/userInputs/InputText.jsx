@@ -23,7 +23,7 @@ const InputText = ({name = '', placeholder='', fieldName, value, setValue, formE
   }
 
   const validateInput = (inputValue) => {
-    if (inputValue.length === 0 && !name.includes('auditory')) {
+    if (inputValue.length === 0 && !name.includes('auditory') && !name.match(/^\d+\s\d{2}\.\d{2}\.\d{4}\s([A-Za-zА-Яа-я]+\s?)+$/) && !name.includes('visits')) {
       return errors.empty;
     }
 

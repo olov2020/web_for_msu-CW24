@@ -43,7 +43,7 @@ const TeacherMarks = ({courseId}) => {
     "pupils": [
       {
         "id": 1,
-        "name": "Doe John Ivanovich",
+        "name": "Виноградов Владимир Андреевич",
         "marks": [
           ["Н", 112312310, 1, 1],
           ["Н", 3, 234, 1],
@@ -136,7 +136,103 @@ const TeacherMarks = ({courseId}) => {
           ["Н", 10, 1, 1],
         ],
         "result": 12.6
-      }
+      },
+      {
+        "id": 4,
+        "name": "Виноградов Владимир Андреевич",
+        "marks": [
+          ["Н", 112312310, 1, 1],
+          ["Н", 3, 234, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 5,
+        "name": "Doe John Ivanovich",
+        "marks": [
+          ["Н", 10, 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 6,
+        "name": "asda",
+        "marks": [
+          ["Н", 'asada', 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
     ],
     "visits": [
       "0",
@@ -165,33 +261,6 @@ const TeacherMarks = ({courseId}) => {
       "1",
       "1"
     ],
-    "averages": [
-      0,
-      4,
-      0,
-      10,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ]
   });
 
   /*useEffect(() => {
@@ -215,6 +284,10 @@ const TeacherMarks = ({courseId}) => {
       )
     );
 
+    marks.dates.forEach((date) => {
+      inputsNew.push(`visits ${date}`)
+    })
+
     const inputsDict = inputsNew.reduce((acc, input) => {
       const [pupilId] = input.split(' ');
       if (!acc[pupilId]) {
@@ -235,6 +308,9 @@ const TeacherMarks = ({courseId}) => {
       return acc;
     }, {});
 
+    marks.dates.forEach((date, index) => {
+      valuesNew[`visits ${date}`] = marks.visits[index];
+    })
 
     setValues(valuesNew);
 
@@ -245,24 +321,14 @@ const TeacherMarks = ({courseId}) => {
   }
 
   return (
-    <section style={{
-      position: 'relative',
-      display: 'flex',
-      maxWidth: "90%",
-      overflow: 'auto',
-      paddingBottom: '1rem',
-    }}>
-      <section style={{
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '2rem',
-        gap: '1rem 0',
-        marginTop: '5rem',
-      }}>
+    <section className={style.marksSection}>
+      <section className={style.columnForTextData}>
         {marks.pupils.map((pupil) => (
           <h3 key={pupil.id}>{pupil.name}</h3>
         ))}
+        <h3>Посещения</h3>
       </section>
+
       <section>
         <section className={style.datesSection}>
           {marks.dates.map((date, index) => (
@@ -277,17 +343,28 @@ const TeacherMarks = ({courseId}) => {
             </div>
           ))}
         </section>
+
         <div style={{
           marginTop: '2rem',
         }}>
-            <Form
-              buttonText='Сохранить оценки'
-              inputs={inputs}
-              values={values}
-              type='saveTeacherMarks'
-              id={courseId}
-            />
+          <Form
+            buttonText='Сохранить оценки'
+            inputs={inputs}
+            values={values}
+            type='saveTeacherMarks'
+            id={courseId}
+          />
         </div>
+      </section>
+
+      <section className={style.columnForTextData} style={{
+        margin: '2rem',
+        alignItems: 'flex-start',
+      }}>
+        <h3>Итог</h3>
+        {marks.pupils.map((pupil) => (
+          <h3 key={pupil.id}>{pupil.result}</h3>
+        ))}
       </section>
     </section>
   );
