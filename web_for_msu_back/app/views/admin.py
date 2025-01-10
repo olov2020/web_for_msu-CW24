@@ -1,6 +1,5 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
-from pydoc import resolve
 from typing import TYPE_CHECKING
 
 import flask
@@ -112,10 +111,10 @@ class AdminView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         roles, _ = user_service.get_all_roles()
-        roles = ["course", "news", "marks", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
+        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
-        if role in ["course", "news", "marks"]:
+        if role in ["course", "news", "marks", "auditory"]:
             role += "maker"
         response, code = user_service.add_role(user_id, role)
         return response, code
@@ -124,12 +123,12 @@ class AdminView(FlaskView):
     @auth_required
     @roles_required('admin')
     def delete_role(self, role: str, user_id: int):
-        roles = ["course", "news", "marks", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
+        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
         services = get_services()
         user_service: UserService = services["user_service"]
-        if role in ["course", "news", "marks"]:
+        if role in ["course", "news", "marks", "auditory"]:
             role += "maker"
         response, code = user_service.delete_role(user_id, role)
         return response, code
