@@ -4,6 +4,7 @@ import PupilMarks from "../marks/PupilMarks.jsx";
 import TeacherMarks from "../marks/TeacherMarks.jsx";
 import ChangeCourse from "../changeCourse/ChangeCourse.jsx";
 import ApprovePupils from "../approvePupils/ApprovePupils.jsx";
+import AddPupilOnCourse from "../addPupilOnCourse/AddPupilOnCourse.jsx";
 
 const CourseItem = () => {
 
@@ -42,6 +43,14 @@ const CourseItem = () => {
           width: '90%',
         }}>
           <ApprovePupils courseId={state.courseId}/>
+        </section>
+      }
+
+      {state.isMyCourses && userStatus.includes('teacher') &&
+        <section style={{
+          width: '90%',
+        }}>
+          <AddPupilOnCourse courseId={state.courseId}/>
         </section>
       }
 

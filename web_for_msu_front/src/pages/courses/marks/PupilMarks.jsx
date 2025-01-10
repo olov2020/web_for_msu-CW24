@@ -149,8 +149,8 @@ const PupilMarks = ({courseId}) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '4rem',
-        gap: '2.19rem 0',
+        marginTop: '5rem',
+        gap: '2.2rem 0',
         width: 'auto',
       }}>
         {marks.dates.map((date) => (
