@@ -5,9 +5,9 @@ from typing import TYPE_CHECKING
 import flask
 from marshmallow import ValidationError
 
-from web_for_msu_back.app.models.event_date import EventDate
 from web_for_msu_back.app.dto.contest_scientific_works_dates import ContestScientificWorksDatesDTO
 from web_for_msu_back.app.dto.open_championship_dates import OpenChampionshipDatesDTO
+from web_for_msu_back.app.models.event_date import EventDate
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -45,3 +45,15 @@ class EventService:
                 self.db.session.add(event_date)
         self.db.session.commit()
         return {"msg": "Даты обновлены"}, 200
+
+    def get_event_dates(self, event: str) -> (dict, int):
+        match event:
+            case "open-championship":
+                schema = OpenChampionshipDatesDTO
+            case "contest-scientific-works":
+                schema = ContestScientificWorksDatesDTO
+            case _:
+                return {"error": "Нет такого события"}, 404
+        dates = self.db.session.query(EventDate).filter(EventDate.date_name.like(f"%{event}%")).all()
+        data = {date.date_name.split()[-1]: date.date for date in dates}
+        return schema().dump(data), 200
