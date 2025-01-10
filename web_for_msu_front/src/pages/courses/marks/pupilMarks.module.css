@@ -3,9 +3,10 @@
     justify-content: center;
     border-bottom: 1px dashed #9F1A59;
     padding-bottom: .5rem;
+    /*white-space: nowrap;*/
 
     > * {
-        width: 20%;
+        width: 100%;
         gap: 2rem 0;
     }
 }
