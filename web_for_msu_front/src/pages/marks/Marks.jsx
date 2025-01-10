@@ -20,14 +20,14 @@ const Marks = () => {
     },
   ]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const getAllCoursesIdsFunc = async () => {
       const data = await getAllCoursesIds();
       setCoursesIds(data);
     }
 
     getAllCoursesIdsFunc();
-  }, []);*/
+  }, []);
 
   return (
     <article>

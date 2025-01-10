@@ -445,7 +445,7 @@ const Courses = () => {
     ],
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     const getCourses = async () => {
       const data = url === '/courses/my' ?
         await getMyCourses() :
@@ -457,7 +457,7 @@ const Courses = () => {
     }
 
     getCourses();
-  }, [url]);*/
+  }, [url]);
 
   const currentYear = new Date().getFullYear();
   const years = [];
