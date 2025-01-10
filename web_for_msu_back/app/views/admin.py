@@ -1,6 +1,5 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
-from crypt import methods
 from typing import TYPE_CHECKING
 
 from flask import jsonify, request
@@ -10,7 +9,7 @@ from web_for_msu_back.app.functions import get_services, auth_required, roles_re
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import CourseService, PupilService, UserService, EventService
+    from web_for_msu_back.app.services import CourseService, PupilService, UserService, EventService, BackupService
 
 
 class AdminView(FlaskView):
@@ -210,3 +209,11 @@ class AdminView(FlaskView):
         event_service: EventService = services["event_service"]
         response, code = event_service.set_event_dates(event, request)
         return jsonify(response), code
+
+    @method("GET")
+    @auth_required
+    @roles_required("admin")
+    def download(self):
+        services = get_services()
+        backup_service: BackupService = services["backup_service"]
+        return backup_service.export_db()

@@ -6,3 +6,4 @@ from .pupil_service import PupilService
 from .teacher_service import TeacherService
 from .user_service import UserService
 from .event_service import EventService
+from .backup_service import BackupService
