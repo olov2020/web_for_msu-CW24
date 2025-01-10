@@ -168,3 +168,13 @@ export const getDirectoryTeachers = async () => {
     return new Error(error);
   }
 }
+
+export const changePassword = async (email) => {
+  const response = await $host.post(`/home/change_password/${email}`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}

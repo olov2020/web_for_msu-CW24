@@ -3,6 +3,7 @@ import InputEmail from "./inputs/userInputs/InputEmail.jsx";
 import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
+  changePassword,
   pupilChangeData, pupilRegistration, teacherChangeData, teacherRegistration, userLogin
 } from "../../api/userApi.js";
 import InputFile from "./inputs/userInputs/InputFile.jsx";
@@ -213,6 +214,13 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       } catch {
         alert(`Упс... Что-то пошло не так`);
       }
+    } else if (type === 'forgetPassword') {
+      try {
+        await changePassword(formValues.forgetPassword);
+        alert('Пароль успешно изменен');
+      } catch {
+        alert(`Упс... Что-то пошло не так`);
+      }
     } else {
       alert(`Invalid type: ${type}`);
     }
@@ -220,6 +228,17 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
   const showInput = (input) => {
     switch (input) {
+      case 'forgetPassword': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [forgetPassword, setForgetPassword] = useState(values[input]);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [error, setError] = useState(false);
+        formValues.forgetPassword = forgetPassword;
+        formErrors.forgetPassword = error;
+        return <InputEmail name={input} value={forgetPassword} setValue={setForgetPassword} formErrors={setError}
+                           placeholder='Введите вашу почту' fieldName='Почта*'
+        />
+      }
       case 'email': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [email, setEmail] = useState(values[input]);

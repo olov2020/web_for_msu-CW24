@@ -4,6 +4,7 @@ export const REGISTRATION_PUPIL_ROUTE = '/registration/pupil';
 export const REGISTRATION_TEACHER_ROUTE = '/registration/teacher';
 
 export const LOGIN_ROUTE = '/login';
+export const FORGET_PASSWORD_ROUTE = '/forget-password';
 
 export const ACCOUNT_ROUTE = '/account';
 

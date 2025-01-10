@@ -1,7 +1,7 @@
 import style from './login.module.css'
 import Form from "../../generic/form/Form.jsx";
 import {Link} from "react-router-dom";
-import {REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../../routing/consts.js";
+import {FORGET_PASSWORD_ROUTE, REGISTRATION_PUPIL_ROUTE, REGISTRATION_TEACHER_ROUTE} from "../../routing/consts.js";
 
 const Login = () => {
 
@@ -23,8 +23,14 @@ const Login = () => {
           <p>Преподавателю</p>
         </Link>
       </div>
+
+      <div className={style.links}>
+        <Link to={FORGET_PASSWORD_ROUTE}>
+          <p>Забыли пароль?</p>
+        </Link>
+      </div>
     </article>
-  );
+);
 };
 
 export default Login;
