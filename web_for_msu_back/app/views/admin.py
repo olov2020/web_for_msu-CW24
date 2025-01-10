@@ -1,5 +1,6 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
+from crypt import methods
 from typing import TYPE_CHECKING
 
 import flask
@@ -111,10 +112,10 @@ class AdminView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         roles, _ = user_service.get_all_roles()
-        roles = ["course", "news", "marks", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
+        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
-        if role in ["course", "news", "marks"]:
+        if role in ["course", "news", "marks", "auditory"]:
             role += "maker"
         response, code = user_service.add_role(user_id, role)
         return response, code
@@ -123,12 +124,12 @@ class AdminView(FlaskView):
     @auth_required
     @roles_required('admin')
     def delete_role(self, role: str, user_id: int):
-        roles = ["course", "news", "marks", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
+        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
         services = get_services()
         user_service: UserService = services["user_service"]
-        if role in ["course", "news", "marks"]:
+        if role in ["course", "news", "marks", "auditory"]:
             role += "maker"
         response, code = user_service.delete_role(user_id, role)
         return response, code
@@ -155,4 +156,49 @@ class AdminView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         response, code = user_service.delete_user(user_id, role)
+        return jsonify(response), code
+
+    @route('/retire/pupil/<pupil_id>/', methods=["POST"])
+    @auth_required
+    @roles_required('admin')
+    def retire_pupil(self, pupil_id: int):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.retire(pupil_id)
+        return jsonify(response), code
+
+    @route('/recover/pupil/<pupil_id>/', methods=["POST"])
+    @auth_required
+    @roles_required('admin')
+    def recover_pupil(self, pupil_id: int):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.recover(pupil_id)
+        return jsonify(response), code
+
+    @method("PUT")
+    @auth_required
+    @roles_required("admin", "auditorymaker")
+    def auditoriums(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.change_auditoriums(flask.request)
+        return jsonify(response), code
+
+    @route("auditoriums/get/", methods=["GET"])
+    @auth_required
+    @roles_required("admin", "auditorymaker")
+    def get_auditoriums(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.get_auditoriums()
+        return jsonify(response), code
+
+    @route("courses-ids", methods=["GET"])
+    @auth_required
+    @roles_required("admin", "marksmaker")
+    def get_courses_ids(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.get_courses_ids()
         return jsonify(response), code

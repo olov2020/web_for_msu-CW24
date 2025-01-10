@@ -58,7 +58,7 @@ class TeacherService:
             data = {
                 "id": teacher.id,
                 "name": self.get_full_name(teacher),
-                "phone": teacher.phone
+                "email": teacher.phone
             }
             role_teachers.append(DutyTeacherInfoDTO().dump(data))
         return role_teachers, 200
@@ -71,18 +71,17 @@ class TeacherService:
         if not teacher:
             return {"error": "Пользователь не найден"}, 404
         try:
-            data = TeacherAccountDTO().load(request.json)
+            data = TeacherAccountDTO().load(json.loads(request.form.get("data")))
         except ValidationError as e:
             return e.messages, 400
         if data["email"] != user.email and User.query.filter_by(email=data["email"]).first():
             return {"error": "Пользователь с такой почтой уже существует"}, 404
         user.email = teacher.email = data["email"]
-        teacher.name = data["name"]
-        teacher.surname = data["surname"]
-        teacher.patronymic = data["lastname"]
         teacher.phone = data["phone"]
         teacher.university = data["university"]
         teacher.workplace = data["work"]
+        if "image" in request.files:
+            self.image_service.change_user_image(request.files["image"], user_id)
         self.db.session.commit()
         identity = self.user_service.create_user_identity(user)
         access_token = create_access_token(identity=identity, fresh=False)
@@ -96,9 +95,6 @@ class TeacherService:
         if not teacher:
             return {"error": "Пользователь не найден"}, 404
         data = {
-            "name": teacher.name,
-            "surname": teacher.surname,
-            "lastname": teacher.patronymic,
             "email": teacher.email,
             "phone": teacher.phone,
             "university": teacher.university,

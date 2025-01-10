@@ -61,6 +61,15 @@ class TeacherView(FlaskView):
         response, code = course_service.approve_pupil_course(course_id, pupil_id)
         return jsonify(response), code
 
+    @method("DELETE")
+    @auth_required
+    @roles_required("teacher")
+    def delete_pupils(self, course_id: int, pupil_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.delete_pupil_course(course_id, pupil_id)
+        return jsonify(response), code
+
     @method("GET")
     @auth_required
     @roles_required("teacher")

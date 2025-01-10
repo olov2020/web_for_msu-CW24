@@ -8,13 +8,15 @@ import pandas as pd
 import pytz
 from marshmallow import ValidationError
 
-from web_for_msu_back.app.dto.pupil_course_approval_list import PupilCourseApprovalListDTO
+from web_for_msu_back.app.dto.courses_ids import CoursesIdsDTO
+from web_for_msu_back.app.dto.auditoriums import AuditoriumsDTO
 from web_for_msu_back.app.dto.course import CourseDTO
 from web_for_msu_back.app.dto.course_info import CourseInfoDTO
 from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_selection import CourseInfoSelectionDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
+from web_for_msu_back.app.dto.pupil_course_approval_list import PupilCourseApprovalListDTO
 from web_for_msu_back.app.functions import get_next_monday
 from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
     CourseRegistrationPeriod
@@ -42,7 +44,7 @@ class CourseService:
         course = Course.query.get(course_id)
         if not course:
             return []
-        return [assoc.pupil for assoc in course.pupils]
+        return [pupil_course.pupil for pupil_course in course.pupils if pupil_course.approved]
 
     def get_teachers(self, course_id: int) -> list[Teacher]:
         course = Course.query.get(course_id)
@@ -59,6 +61,16 @@ class CourseService:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info(course))
         return grouped_courses, 200
+
+    def get_courses_ids(self) -> (dict[int, list[CoursesIdsDTO]], int):
+        courses = Course.query.all()
+        data = []
+        for course in courses:
+            data.append({
+                "id": course.id,
+                "name": course.name,
+            })
+        return CoursesIdsDTO().dump(data, many=True), 200
 
     def get_all_current_courses(self, pupil_id: int) -> (list[CourseInfoSelectionDTO], int):
         pupil = Pupil.query.get(pupil_id)
@@ -616,18 +628,61 @@ class CourseService:
         self.db.session.commit()
         return {"msg": "Ученик успешно добавлен на курс"}, 200
 
+    def delete_pupil_course(self, course_id: int, pupil_id: int) -> (dict, int):
+        course = Course.query.get(course_id)
+        pupil = Pupil.query.get(pupil_id)
+        if not course:
+            return {"error": "Нет такого курса"}, 404
+        if not pupil:
+            return {"error": "Нет такого ученика"}, 404
+        pupil_course = PupilCourse.query.filter(PupilCourse.pupil_id == pupil_id,
+                                                PupilCourse.course_id == course_id).first()
+        if not pupil_course:
+            return {"error": "Этот ученик не подавал заявку на этот курс"}, 404
+        if pupil_course.approved:
+            return {"error": "Этот ученик уже записан на курс"}, 404
+        self.db.session.delete(pupil_course)
+        self.db.session.commit()
+        return {"msg": "Ученику отказано в зачислении на курс"}, 200
+
     def get_pupils_list(self, course_id: int) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
             return {"error": "Нет такого курса"}, 404
         data = []
         for pupil_course in course.pupils:
+            if pupil_course.approved:
+                continue
             pupil = pupil_course.pupil
             pupil_data = {
                 "id": pupil.id,
                 "name": f'{pupil.surname} {pupil.name} {pupil.patronymic}',
-                "approved": pupil_course.approved,
+                "grade": pupil.school_grade,
             }
             data.append(pupil_data)
 
         return PupilCourseApprovalListDTO().dump(data, many=True), 200
+
+    def change_auditoriums(self, request: flask.Request) -> (dict, int):
+        data = request.json
+        for row in data:
+            course_id = int(list(row.keys())[0].split()[1])
+            auditory = list(row.values())[0]
+            course = Course.query.get(course_id)
+            if not course:
+                continue
+            course.auditory = auditory
+        self.db.session.commit()
+        return {"msg": "Аудитории обновлены"}, 200
+
+    def get_auditoriums(self) -> (list[AuditoriumsDTO], int):
+        courses = Course.query.all()
+        data = []
+        for course in courses:
+            data.append({
+                "id": course.id,
+                "name": course.name,
+                "lesson_time": course.lesson_time,
+                "auditory": course.auditory,
+            })
+        return AuditoriumsDTO().dump(data, many=True), 200

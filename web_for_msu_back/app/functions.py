@@ -34,6 +34,25 @@ def roles_required(*roles):
     return decorator
 
 
+def roles_prohibited(*roles):
+    def decorator(fn):
+        @jwt_required()
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            # Получаем данные о текущем пользователе из JWT
+            current_user = get_jwt_identity()
+
+            # Проверяем, есть ли у пользователя хотя бы одна из указанных ролей
+            if 'roles' in current_user and any(role in current_user['roles'] for role in roles):
+                return jsonify({"msg": f"Доступ с любой из ролей {roles} запрещен"}), 403
+
+            return fn(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
 # Функция для извлечения текущего пользователя из JWT токена
 def load_current_user():
     identity = get_jwt_identity()

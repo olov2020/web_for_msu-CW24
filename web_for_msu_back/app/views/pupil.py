@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from flask import request, g, jsonify
 from flask_classful import FlaskView, method
 
-from web_for_msu_back.app.functions import auth_required, roles_required, get_services, output_json
+from web_for_msu_back.app.functions import auth_required, roles_required, get_services, output_json, roles_prohibited
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -45,6 +45,7 @@ class PupilView(FlaskView):
     @method("GET")
     @auth_required
     @roles_required("pupil")
+    @roles_prohibited("retired")
     def available_courses(self):
         services = get_services()
         course_service: CourseService = services["course_service"]
@@ -56,6 +57,7 @@ class PupilView(FlaskView):
     @method("POST")
     @auth_required
     @roles_required('pupil')
+    @roles_prohibited("retired")
     def select_courses(self):
         services = get_services()
         pupil_service: PupilService = services["pupil_service"]
