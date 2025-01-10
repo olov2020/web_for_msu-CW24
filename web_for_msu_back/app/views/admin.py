@@ -1,17 +1,15 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
-from crypt import methods
 from typing import TYPE_CHECKING
 
-import flask
-from flask import jsonify
+from flask import jsonify, request
 from flask_classful import FlaskView, method, route
 
 from web_for_msu_back.app.functions import get_services, auth_required, roles_required, output_json
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import CourseService, PupilService, UserService
+    from web_for_msu_back.app.services import CourseService, PupilService, UserService, EventService, BackupService
 
 
 class AdminView(FlaskView):
@@ -23,7 +21,7 @@ class AdminView(FlaskView):
     def add_from_file(self):
         services = get_services()
         course_service: CourseService = services["course_service"]
-        response, code = course_service.load_from_file(flask.request)
+        response, code = course_service.load_from_file(request)
         return jsonify(response), code
 
     @method("POST")
@@ -32,7 +30,7 @@ class AdminView(FlaskView):
     def create_course(self):
         services = get_services()
         course_service: CourseService = services["course_service"]
-        response, code = course_service.create_course(flask.request)
+        response, code = course_service.create_course(request)
         return response, code
 
     @method("PUT")
@@ -41,7 +39,7 @@ class AdminView(FlaskView):
     def update_course(self, course_id: int):
         services = get_services()
         course_service: CourseService = services["course_service"]
-        response, code = course_service.update_course(course_id, flask.request)
+        response, code = course_service.update_course(course_id, request)
         return response, code
 
     @method("PATCH")
@@ -182,10 +180,10 @@ class AdminView(FlaskView):
     def auditoriums(self):
         services = get_services()
         course_service: CourseService = services["course_service"]
-        response, code = course_service.change_auditoriums(flask.request)
+        response, code = course_service.change_auditoriums(request)
         return jsonify(response), code
 
-    @route("auditoriums/get/", methods=["GET"])
+    @route("/auditoriums/get/", methods=["GET"])
     @auth_required
     @roles_required("admin", "auditorymaker")
     def get_auditoriums(self):
@@ -194,7 +192,7 @@ class AdminView(FlaskView):
         response, code = course_service.get_auditoriums()
         return jsonify(response), code
 
-    @route("courses-ids", methods=["GET"])
+    @route("/courses-ids", methods=["GET"])
     @auth_required
     @roles_required("admin", "marksmaker")
     def get_courses_ids(self):
@@ -202,3 +200,20 @@ class AdminView(FlaskView):
         course_service: CourseService = services["course_service"]
         response, code = course_service.get_courses_ids()
         return jsonify(response), code
+
+    @route("/events/set-date/<event>/", methods=["POST"])
+    @auth_required
+    @roles_required("admin")
+    def set_event_dates(self, event: str):
+        services = get_services()
+        event_service: EventService = services["event_service"]
+        response, code = event_service.set_event_dates(event, request)
+        return jsonify(response), code
+
+    @method("GET")
+    @auth_required
+    @roles_required("admin")
+    def download(self):
+        services = get_services()
+        backup_service: BackupService = services["backup_service"]
+        return backup_service.export_db()
