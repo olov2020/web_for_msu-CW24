@@ -8,13 +8,13 @@ import pandas as pd
 import pytz
 from marshmallow import ValidationError
 
-from web_for_msu_back.app.dto.pupil_course_approval_list import PupilCourseApprovalListDTO
 from web_for_msu_back.app.dto.course import CourseDTO
 from web_for_msu_back.app.dto.course_info import CourseInfoDTO
 from web_for_msu_back.app.dto.course_info_pupil import CourseInfoPupilDTO
 from web_for_msu_back.app.dto.course_info_selection import CourseInfoSelectionDTO
 from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
+from web_for_msu_back.app.dto.pupil_course_approval_list import PupilCourseApprovalListDTO
 from web_for_msu_back.app.functions import get_next_monday
 from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
     CourseRegistrationPeriod
@@ -650,3 +650,15 @@ class CourseService:
             data.append(pupil_data)
 
         return PupilCourseApprovalListDTO().dump(data, many=True), 200
+
+    def change_auditoriums(self, request: flask.Request) -> (dict, int):
+        data = request.json
+        for row in data:
+            course_id = int(list(row.keys())[0].split()[1])
+            auditory = list(row.values())[0]
+            course = Course.query.get(course_id)
+            if not course:
+                continue
+            course.auditory = auditory
+        self.db.session.commit()
+        return {"msg": "Аудитории обновлены"}, 200

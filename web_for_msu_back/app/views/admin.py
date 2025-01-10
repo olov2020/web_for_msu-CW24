@@ -174,3 +174,12 @@ class AdminView(FlaskView):
         pupil_service: PupilService = services["pupil_service"]
         response, code = pupil_service.recover(pupil_id)
         return jsonify(response), code
+
+    @method("PUT")
+    @auth_required
+    @roles_required("admin", "auditorymaker")
+    def auditoriums(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.change_auditoriums(flask.request)
+        return jsonify(response), code
