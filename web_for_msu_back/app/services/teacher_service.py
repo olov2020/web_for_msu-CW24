@@ -58,7 +58,7 @@ class TeacherService:
             data = {
                 "id": teacher.id,
                 "name": self.get_full_name(teacher),
-                "phone": teacher.phone
+                "email": teacher.phone
             }
             role_teachers.append(DutyTeacherInfoDTO().dump(data))
         return role_teachers, 200

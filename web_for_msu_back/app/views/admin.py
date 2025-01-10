@@ -1,6 +1,5 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
-from crypt import methods
 from typing import TYPE_CHECKING
 
 import flask

@@ -90,7 +90,7 @@ class HomeView(FlaskView):
         return jsonify(teachers), code
 
     @route("/events/<event_type>/", methods=["GET"])
-    def tests_teachers(self, event_type: str):
+    def events_teachers(self, event_type: str):
         event_types = {
             "contest-of-scientific-works": "knr",
             "residential-school": "vsh",
