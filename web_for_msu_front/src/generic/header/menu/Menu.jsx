@@ -144,10 +144,10 @@ const Menu = () => {
         /*<PhoneMenu menu={menu}/>*/
         :
         <nav className={style.menu}>
-    {menu.map(menuItem => (
-      // eslint-disable-next-line react/jsx-key
-      <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown}/>
-    ))}
+          {menu.map(menuItem => (
+            // eslint-disable-next-line react/jsx-key
+            <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown}/>
+          ))}
         </nav>
       }
     </>

@@ -41,7 +41,7 @@ const AppRouter = ({setShowContext}) => {
         return <Route key={path} path={path} element={Element}/>
       })}
 
-      {authStatus.includes('pupil') && pupilRoutes.map(({path, Element}) => {
+      {authStatus.includes('pupil') && !authStatus.includes('retired') && pupilRoutes.map(({path, Element}) => {
         return <Route key={path} path={path} element={Element}/>
       })}
 

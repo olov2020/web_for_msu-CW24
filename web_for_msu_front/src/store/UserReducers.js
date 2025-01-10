@@ -2,7 +2,6 @@ import {jwtDecode} from "jwt-decode";
 
 const authStatus = {
     none: 'none',
-    applicant: 'applicant',
     pupil: 'pupil',
     teacher: 'teacher',
     retired: 'retired',
@@ -15,7 +14,7 @@ const authStatus = {
 
 const defaultState = {
     id: 0,
-    authStatus: authStatus.none,
+    authStatus: `${authStatus.retired} ${authStatus.pupil}`,
 }
 
 const SET_AUTH = "SET_AUTH"
