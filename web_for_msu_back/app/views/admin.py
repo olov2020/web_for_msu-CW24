@@ -1,5 +1,6 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
+from crypt import methods
 from typing import TYPE_CHECKING
 
 import flask
@@ -191,4 +192,13 @@ class AdminView(FlaskView):
         services = get_services()
         course_service: CourseService = services["course_service"]
         response, code = course_service.get_auditoriums()
+        return jsonify(response), code
+
+    @route("courses-ids", methods=["GET"])
+    @auth_required
+    @roles_required("admin", "marksmaker")
+    def get_courses_ids(self):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.get_courses_ids()
         return jsonify(response), code

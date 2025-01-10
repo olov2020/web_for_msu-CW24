@@ -8,6 +8,7 @@ import pandas as pd
 import pytz
 from marshmallow import ValidationError
 
+from web_for_msu_back.app.dto.courses_ids import CoursesIdsDTO
 from web_for_msu_back.app.dto.auditoriums import AuditoriumsDTO
 from web_for_msu_back.app.dto.course import CourseDTO
 from web_for_msu_back.app.dto.course_info import CourseInfoDTO
@@ -60,6 +61,16 @@ class CourseService:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info(course))
         return grouped_courses, 200
+
+    def get_courses_ids(self) -> (dict[int, list[CoursesIdsDTO]], int):
+        courses = Course.query.all()
+        data = []
+        for course in courses:
+            data.append({
+                "id": course.id,
+                "name": course.name,
+            })
+        return CoursesIdsDTO().dump(data, many=True), 200
 
     def get_all_current_courses(self, pupil_id: int) -> (list[CourseInfoSelectionDTO], int):
         pupil = Pupil.query.get(pupil_id)
