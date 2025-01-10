@@ -1,9 +1,7 @@
 import ButtonSubmit from "../../generic/form/submit/ButtonSubmit.jsx";
 import {useNavigate} from "react-router-dom";
 import {
-  closeRegistrationCourses, downloadAllMarks,
-  downloadAllPupils,
-  downloadAllTeachers,
+  closeRegistrationCourses, downloadDatabase,
   openRegistrationCourses
 } from "../../api/adminApi.js";
 import {ADD_NEW_COURSE_ROUTE, AUDITORY_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE} from "../../routing/consts.js";
@@ -30,26 +28,8 @@ const AdminPanel = () => {
 
   const navigate = useNavigate();
 
-  const downloadAllPupilsFunc = async () => {
-    const data = await downloadAllPupils();
-    if (data) {
-      alert('Файл успешно сохранен');
-    } else {
-      alert('Что-то пошло не так... Файл не был сохранен');
-    }
-  }
-
-  const downloadAllTeachersFunc = async () => {
-    const data = await downloadAllTeachers();
-    if (data) {
-      alert('Файл успешно сохранен');
-    } else {
-      alert('Что-то пошло не так... Файл не был сохранен');
-    }
-  }
-
-  const downloadAllMarksFunc = async () => {
-    const data = await downloadAllMarks();
+  const downloadDatabaseFunc = async () => {
+    const data = await downloadDatabase();
     if (data) {
       alert('Файл успешно сохранен');
     } else {
@@ -112,9 +92,7 @@ const AdminPanel = () => {
         width: '30%',
         gap: '1rem 0',
       }}>
-        <ButtonSubmit text='Все ученики' onClick={downloadAllPupilsFunc}/>
-        <ButtonSubmit text='Все преподаватели' onClick={downloadAllTeachersFunc}/>
-        <ButtonSubmit text='Все ведомости курсов' onClick={downloadAllMarksFunc}/>
+        <ButtonSubmit text='Сделать выгрузку' onClick={downloadDatabaseFunc}/>
       </section>
     </article>
   );

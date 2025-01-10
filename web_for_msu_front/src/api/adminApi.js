@@ -282,8 +282,8 @@ export const deleteTestsOnlineAdmin = async (userId) => {
 }
 
 
-export const downloadAllPupils = async () => {
-  const response = await $authHost.get('/admin/download/pupils');
+export const downloadDatabase = async () => {
+  const response = await $authHost.get('/admin/download/');
 
   try {
     return response.data;
@@ -291,27 +291,6 @@ export const downloadAllPupils = async () => {
     return new Error(error);
   }
 }
-
-export const downloadAllTeachers = async () => {
-  const response = await $authHost.get('/admin/download/teachers');
-
-  try {
-    return response.data;
-  } catch (error) {
-    return new Error(error);
-  }
-}
-
-export const downloadAllMarks = async () => {
-  const response = await $authHost.get('/admin/download/marks');
-
-  try {
-    return response.data;
-  } catch (error) {
-    return new Error(error);
-  }
-}
-
 
 export const getCoursesAuditoriums = async () => {
   const response = await $authHost.get('/admin/auditoriums/get');
