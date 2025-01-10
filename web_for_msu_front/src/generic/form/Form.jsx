@@ -21,7 +21,13 @@ import {addNewsItem} from "../../api/newsApi.js";
 import InputNewsDescription from "./inputs/newsInputs/InputNewsDescription.jsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../routing/consts.js";
-import {courseAdd, courseChange, selectCourses, updateTeacherMarksByCourseId} from "../../api/coursesApi.js";
+import {
+  courseAdd,
+  courseChange,
+  selectCourses,
+  updateTeacherMarksByCourseId,
+  updateTeacherMarksByCourseId2
+} from "../../api/coursesApi.js";
 import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from "../../api/eventsApi.js";
 import {useDispatch} from "react-redux";
 import {setAuthFromToken} from "../../store/UserReducers.js";
@@ -196,6 +202,13 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
     } else if (type === 'saveTeacherMarks') {
       try {
         await updateTeacherMarksByCourseId(id, teacherMarks);
+        alert('Оценки успешно сохранены');
+      } catch {
+        alert(`Упс... Что-то пошло не так`);
+      }
+    } else if (type === 'saveTeacherMarks2') {
+      try {
+        await updateTeacherMarksByCourseId2(id, teacherMarks);
         alert('Оценки успешно сохранены');
       } catch {
         alert(`Упс... Что-то пошло не так`);

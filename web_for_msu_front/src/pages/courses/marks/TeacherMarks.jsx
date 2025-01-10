@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {getTeacherMarksByCourseId} from "../../../api/coursesApi.js";
+import {getTeacherMarksByCourseId, getTeacherMarksByCourseId2} from "../../../api/coursesApi.js";
 import style from './teacherMarks.module.css';
 import Form from "../../../generic/form/Form.jsx";
 
@@ -263,6 +263,263 @@ const TeacherMarks = ({courseId}) => {
     ],
   });
 
+  const [marks2, setMarks2] = useState({
+    "dates": [
+      "03.10.2024",
+      "10.10.2024",
+      "17.10.2024",
+      "24.10.2024",
+      "31.10.2024",
+      "07.11.2024",
+      "14.11.2024",
+      "21.11.2024",
+      "28.11.2024",
+      "05.12.2024",
+      "12.12.2024",
+      "19.12.2024",
+      "26.12.2024",
+      "30.01.2025",
+      "06.02.2025",
+      "13.02.2025",
+      "20.02.2025",
+      "27.02.2025",
+      "06.03.2025",
+      "13.03.2025",
+      "20.03.2025",
+      "27.03.2025",
+      "03.04.2025",
+      "10.04.2025",
+      "17.04.2025"
+    ],
+    "mark_type_choices": [
+      "домашняя работа",
+      "экзамен",
+      "контрольная работа",
+      "летучка",
+    ],
+    "pupils": [
+      {
+        "id": 1,
+        "name": "Виноградов Владимир Андреевич",
+        "marks": [
+          ["Н", 112312310, 1, 1],
+          ["Н", 3, 234, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 2,
+        "name": "Doe John Ivanovich",
+        "marks": [
+          ["Н", 10, 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 3,
+        "name": "Doe John Ivanovich",
+        "marks": [
+          ["Н", 10, 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 4,
+        "name": "Виноградов Владимир Андреевич",
+        "marks": [
+          ["Н", 112312310, 1, 1],
+          ["Н", 3, 234, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 5,
+        "name": "Doe John Ivanovich",
+        "marks": [
+          ["Н", 10, 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+      {
+        "id": 6,
+        "name": "asda",
+        "marks": [
+          ["Н", 'asada', 3, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+          ["Н", 10, 1, 1],
+        ],
+        "result": 12.6
+      },
+    ],
+    "visits": [
+      "0",
+      "1",
+      "0",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+  });
+
   /*useEffect(() => {
     const getMarks = async () => {
       const data = await getTeacherMarksByCourseId({courseId});
@@ -270,10 +527,23 @@ const TeacherMarks = ({courseId}) => {
     }
 
     getMarks();
-  }, [])*/
+
+    const getMarks2 = async () => {
+      try {
+        const data = await getTeacherMarksByCourseId2({courseId});
+        setMarks2(data);
+      } catch {
+        setMarks2(null);
+      }
+    }
+
+    getMarks2();
+  }, [courseId])*/
 
   const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
+  const [inputs2, setInputs2] = useState({});
+  const [values2, setValues2] = useState({});
 
   useEffect(() => {
     const inputsNew = marks.dates.flatMap((date) =>
@@ -316,57 +586,148 @@ const TeacherMarks = ({courseId}) => {
 
   }, [marks]);
 
+  useEffect(() => {
+    const inputsNew = marks2.dates.flatMap((date) =>
+      marks2.pupils.flatMap((pupil) =>
+        marks2.mark_type_choices.map((markType) =>
+          `${pupil.id} ${date} ${markType}`
+        )
+      )
+    );
+
+    marks2.dates.forEach((date) => {
+      inputsNew.push(`visits ${date}`)
+    })
+
+    const inputsDict = inputsNew.reduce((acc, input) => {
+      const [pupilId] = input.split(' ');
+      if (!acc[pupilId]) {
+        acc[pupilId] = [];
+      }
+      acc[pupilId].push(input);
+      return acc;
+    }, {});
+
+    setInputs2(inputsDict);
+
+    const valuesNew = marks2.dates.reduce((acc, date, index) => {
+      marks2.pupils.forEach((pupil) => {
+        marks2.mark_type_choices.forEach((markType, index2) => {
+          acc[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
+        });
+      });
+      return acc;
+    }, {});
+
+    marks2.dates.forEach((date, index) => {
+      valuesNew[`visits ${date}`] = marks2.visits[index];
+    })
+
+    setValues2(valuesNew);
+
+  }, [marks2]);
+
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
   }
 
   return (
-    <section className={style.marksSection}>
-      <section className={style.columnForTextData}>
-        {marks.pupils.map((pupil) => (
-          <h3 key={pupil.id}>{pupil.name}</h3>
-        ))}
-        <h3>Посещения</h3>
-      </section>
+    <>
+      {marks2 &&
+        <section className={style.marksSection}>
+          <section className={style.columnForTextData}>
+            {marks2.pupils.map((pupil) => (
+              <h3 key={pupil.id}>{pupil.name}</h3>
+            ))}
+            <h3>Посещения</h3>
+          </section>
 
-      <section>
-        <section className={style.datesSection}>
-          {marks.dates.map((date, index) => (
-            <div key={index} className={style.column}>
-              <h3>{date}</h3>
+          <section>
+            <section className={style.datesSection}>
+              {marks2.dates.map((date, index) => (
+                <div key={index} className={style.column}>
+                  <h3>{date}</h3>
 
-              <div className={style.markTypes}>
-                {marks.mark_type_choices.map((mark_type, index2) => (
-                  <p key={index2}>{mark_type}</p>
-                ))}
-              </div>
+                  <div className={style.markTypes}>
+                    {marks2.mark_type_choices.map((mark_type, index2) => (
+                      <p key={index2}>{mark_type}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </section>
+
+            <div style={{
+              marginTop: '2rem',
+            }}>
+              <Form
+                buttonText='Сохранить оценки'
+                inputs={inputs2}
+                values={values2}
+                type='saveTeacherMarks2'
+                id={courseId}
+              />
             </div>
+          </section>
+
+          <section className={style.columnForTextData} style={{
+            margin: '2rem',
+            alignItems: 'flex-start',
+          }}>
+            <h3>Итог</h3>
+            {marks2.pupils.map((pupil) => (
+              <h3 key={pupil.id}>{pupil.result}</h3>
+            ))}
+          </section>
+        </section>
+      }
+      <section className={style.marksSection}>
+        <section className={style.columnForTextData}>
+          {marks.pupils.map((pupil) => (
+            <h3 key={pupil.id}>{pupil.name}</h3>
           ))}
+          <h3>Посещения</h3>
         </section>
 
-        <div style={{
-          marginTop: '2rem',
-        }}>
-          <Form
-            buttonText='Сохранить оценки'
-            inputs={inputs}
-            values={values}
-            type='saveTeacherMarks'
-            id={courseId}
-          />
-        </div>
-      </section>
+        <section>
+          <section className={style.datesSection}>
+            {marks.dates.map((date, index) => (
+              <div key={index} className={style.column}>
+                <h3>{date}</h3>
 
-      <section className={style.columnForTextData} style={{
-        margin: '2rem',
-        alignItems: 'flex-start',
-      }}>
-        <h3>Итог</h3>
-        {marks.pupils.map((pupil) => (
-          <h3 key={pupil.id}>{pupil.result}</h3>
-        ))}
+                <div className={style.markTypes}>
+                  {marks.mark_type_choices.map((mark_type, index2) => (
+                    <p key={index2}>{mark_type}</p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+
+          <div style={{
+            marginTop: '2rem',
+          }}>
+            <Form
+              buttonText='Сохранить оценки'
+              inputs={inputs}
+              values={values}
+              type='saveTeacherMarks'
+              id={courseId}
+            />
+          </div>
+        </section>
+
+        <section className={style.columnForTextData} style={{
+          margin: '2rem',
+          alignItems: 'flex-start',
+        }}>
+          <h3>Итог</h3>
+          {marks.pupils.map((pupil) => (
+            <h3 key={pupil.id}>{pupil.result}</h3>
+          ))}
+        </section>
       </section>
-    </section>
+  </>
   );
 };
 

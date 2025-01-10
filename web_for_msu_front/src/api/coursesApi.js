@@ -40,6 +40,16 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
   }
 }
 
+export const getPupilMarksByCourseId2 = async ({courseId}) => {
+  const response = await $authHost.get(`/pupil/marks2/${courseId}`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 export const getTeacherMarksByCourseId = async ({courseId}) => {
   const response = await $authHost.get(`/teacher/get_journal/${courseId}`)
 
@@ -50,8 +60,32 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
   }
 }
 
+export const getTeacherMarksByCourseId2 = async ({courseId}) => {
+  const response = await $authHost.get(`/teacher/get_journal2/${courseId}`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 export const updateTeacherMarksByCourseId = async (courseId, marks) => {
   const response = await $authHost.patch(`/teacher/update_journal/${courseId}`, marks, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const updateTeacherMarksByCourseId2 = async (courseId, marks) => {
+  const response = await $authHost.patch(`/teacher/update_journal2/${courseId}`, marks, {
     headers: {
       'Content-Type': 'application/json',
     }
