@@ -34,10 +34,10 @@ def create_app(config):
     from web_for_msu_back.app.views.teacher import TeacherView
     from web_for_msu_back.app.views.news import NewsView
 
-    HomeView.register(app, base_url="/api")
-    AdminView.register(app, base_url="/api")
-    PupilView.register(app, base_url="/api")
-    TeacherView.register(app, base_url="/api")
-    NewsView.register(app, base_url="/api")
+    HomeView.register(app, route_base="/api")
+    AdminView.register(app, route_base="/api")
+    PupilView.register(app, route_base="/api")
+    TeacherView.register(app, route_base="/api")
+    NewsView.register(app, route_base="/api")
 
     return app
