@@ -16,7 +16,7 @@ const NewsCard = ({photo = null, title, date, description, id}) => {
           style={{
             width: '100%',
             height: '20rem',
-            objectFit: 'cover',
+            objectFit: 'contain',
           }}
       />
       }
