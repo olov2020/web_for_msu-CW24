@@ -16,7 +16,7 @@ const ContestScientificWorks = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
   const [teachers, setTeachers] = useState([]);
-  const [dates, setDates] = useState([]);
+  const [dates, setDates] = useState();
 
   useEffect(() => {
     const getEventsContestScientificWorksTeachersFunc = async () => {
@@ -108,9 +108,9 @@ const ContestScientificWorks = () => {
                     buttonText='Сохранить даты'
               /> :
               <>
-                <p>Дата I тура: <strong>{dates[0]}</strong></p>
-                <p>Дата II тура: <strong>{dates[1]}</strong></p>
-                <p>Дата III тура: <strong>{dates[2]}</strong></p>
+                <p>Дата I тура: <strong>{dates.date_first}</strong></p>
+                <p>Дата II тура: <strong>{dates.date_second}</strong></p>
+                <p>Дата III тура: <strong>{dates.date_third}</strong></p>
               </>
             }
           </div>

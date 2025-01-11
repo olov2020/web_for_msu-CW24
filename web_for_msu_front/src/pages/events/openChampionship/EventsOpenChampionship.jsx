@@ -12,7 +12,7 @@ const EventsOpenChampionship = () => {
   ];
 
   const authStatus = useSelector(state => state.user.authStatus);
-  const [dates, setDates] = useState([]);
+  const [dates, setDates] = useState({});
   const numOfChampionships = new Date().getFullYear() - 2010;
 
   useEffect(() => {
@@ -54,8 +54,8 @@ const EventsOpenChampionship = () => {
                     buttonText='Сохранить даты'
               /> :
               <>
-                <p>Дата мероприятия: <strong>{dates[0]}</strong></p>
-                <p>Дата церемонии награждения: <strong>{dates[1]}</strong></p>
+                <p>Дата мероприятия: <strong>{dates.date_start}</strong></p>
+                <p>Дата церемонии награждения: <strong>{dates.date_end}</strong></p>
               </>
             }
           </div>
