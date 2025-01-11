@@ -7,6 +7,7 @@ import {useEffect, useRef, useState} from "react";
 import {getUserData} from "../../../api/userApi.js";
 import ButtonSubmit from "../../form/submit/ButtonSubmit.jsx";
 import {setNotAuthAction} from "../../../store/UserReducers.js";
+import defaultUserImage from '../../../../public/generic/default_user.svg';
 
 const Profile = () => {
 
@@ -77,10 +78,16 @@ const Profile = () => {
             <h3>{userInfo.surname}</h3>
           </div>
 
-          <img className={style.profile__photo}
-               alt='Фотография профиля'
-               src={userInfo.photo}
-          />
+          {userInfo.photo ?
+            <img className={style.profile__photo}
+                 alt='Фотография профиля'
+                 src={userInfo.photo}
+            /> :
+            <img className={style.profile__photo}
+                 alt='Фотография профиля'
+                 src={defaultUserImage}
+            />
+          }
         </Link>) :
       (
         <div className={styleHeader.menu__item}>

@@ -3,5 +3,6 @@
 }
 
 .profile__photo {
-
+    width: 50%;
+    object-fit: contain;
 }
