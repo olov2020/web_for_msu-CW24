@@ -7,7 +7,7 @@ import {getUserData} from "../../api/userApi.js";
 const Account = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const getUserDataFunc = async () => {
@@ -25,10 +25,10 @@ const Account = () => {
       <section>
         {authStatus.includes('pupil') ?
           <Form inputs={['photo', 'email', 'phone', 'school']}
-                values={[{'photo': user.photo}, {'email': user.email}, {'phone': user.phone} ,{'school': user.school}]}
+                values={user}
                 buttonText='Обновить данные' type='pupilChangeData'/> :
           <Form inputs={['photo', 'email', 'phone', 'university', 'work']}
-                values={[{'photo': user.photo}, {'email': user.email}, {'university': user.university} ,{'work': user.work}]}
+                values={user}
                 buttonText='Обновить данные' type='teacherChangeData'/>
         }
       </section>

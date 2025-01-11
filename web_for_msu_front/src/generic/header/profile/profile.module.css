@@ -1,5 +1,5 @@
 .profile__info {
-
+    display: flex;
 }
 
 .profile__photo {
