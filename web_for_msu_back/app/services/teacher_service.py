@@ -41,7 +41,7 @@ class TeacherService:
         return {'msg': 'Преподаватель успешно добавлен'}, 201
 
     def get_full_name(self, teacher):
-        return teacher.surname + ' ' + teacher.name + ' ' + teacher.patronymic
+        return teacher.surname + ' ' + teacher.name + ((' ' + teacher.patronymic) if teacher.patronymic else "")
 
     def get_teacher_by_email(self, email):
         return Teacher.query.filter_by(email=email).first()
@@ -58,7 +58,7 @@ class TeacherService:
             data = {
                 "id": teacher.id,
                 "name": self.get_full_name(teacher),
-                "email": teacher.phone
+                "email": teacher.email
             }
             role_teachers.append(DutyTeacherInfoDTO().dump(data))
         return role_teachers, 200
