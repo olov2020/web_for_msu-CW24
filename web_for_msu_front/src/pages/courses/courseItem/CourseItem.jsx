@@ -42,7 +42,7 @@ const CourseItem = () => {
         <section style={{
           width: '90%',
         }}>
-          <ApprovePupils courseId={state.courseId}/>
+          <ApprovePupils courseId={state.courseData.id}/>
         </section>
       }
 
@@ -50,7 +50,7 @@ const CourseItem = () => {
         <section style={{
           width: '90%',
         }}>
-          <AddPupilOnCourse courseId={state.courseId}/>
+          <AddPupilOnCourse courseId={state.courseData.id}/>
         </section>
       }
 
@@ -60,7 +60,7 @@ const CourseItem = () => {
           justifyContent: 'center',
           width: '90%',
         }}>
-          <ChangeCourse courseId={state.courseId}/>
+          <ChangeCourse courseId={state.courseData.id}/>
         </section>
       }
 

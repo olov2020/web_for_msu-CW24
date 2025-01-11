@@ -635,7 +635,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.courseFile = courseFile;
         formErrors.courseFile = error;
         return <InputFile name={input} accept='.xls, .xlsx, .csv'
-                          fieldName='Добавить курс*'
                           formErrors={setError}
                           setValue={setCourseFile}
         />

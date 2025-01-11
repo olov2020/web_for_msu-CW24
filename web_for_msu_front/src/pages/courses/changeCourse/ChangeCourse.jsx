@@ -1,5 +1,6 @@
 import Form from "../../../generic/form/Form.jsx";
 
+// eslint-disable-next-line react/prop-types
 const ChangeCourse = ({courseId}) => {
   return (
     <section style={{
