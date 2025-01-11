@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_DB: emsh_db
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - "db_data:/var/lib/postgresql/data"
 #    healthcheck:
 #      test: [ "CMD-SHELL", "pg_isready -U user" ]
 #      interval: 10s
