@@ -60,7 +60,7 @@ const CourseItem = () => {
           justifyContent: 'center',
           width: '90%',
         }}>
-          <ChangeCourse/>
+          <ChangeCourse courseId={state.courseId}/>
         </section>
       }
 

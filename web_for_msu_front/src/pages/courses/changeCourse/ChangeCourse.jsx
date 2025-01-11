@@ -1,6 +1,6 @@
 import Form from "../../../generic/form/Form.jsx";
 
-const ChangeCourse = () => {
+const ChangeCourse = ({courseId}) => {
   return (
     <section style={{
       display: "flex",
@@ -16,7 +16,7 @@ const ChangeCourse = () => {
         width: '100%',
       }}
       >
-        <Form inputs={['courseFile']} buttonText='Изменить курс' type='courseChange'></Form>
+        <Form inputs={['courseFile']} buttonText='Изменить курс' type='courseChange' id={courseId}/>
       </div>
     </section>
   );

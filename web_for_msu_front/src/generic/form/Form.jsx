@@ -160,7 +160,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
     } else if (type === 'courseChange') {
       try {
-        await courseChange(formValues.courseFile);
+        await courseChange(id, formValues.courseFile);
         alert('Курс успешно изменен.');
       } catch (error) {
         alert(`Упс... Что-то пошло не так: ${error.message}`);
