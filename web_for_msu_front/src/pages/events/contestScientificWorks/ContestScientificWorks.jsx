@@ -16,7 +16,7 @@ const ContestScientificWorks = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
   const [teachers, setTeachers] = useState([]);
-  const [dates, setDates] = useState();
+  const [dates, setDates] = useState({});
 
   useEffect(() => {
     const getEventsContestScientificWorksTeachersFunc = async () => {
