@@ -305,7 +305,7 @@ export const getCoursesAuditoriums = async () => {
 
 export const setCoursesAuditoriums = async (formValues) => {
 
-  const response = await $authHost.put(`/admin/auditoriums/`, formValues, {
+  const response = await $authHost.put(`/admin/auditoriums/`, JSON.stringify(formValues), {
     headers: {
       'Content-Type': 'application/json',
     }

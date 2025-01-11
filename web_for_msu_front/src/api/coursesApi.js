@@ -153,7 +153,7 @@ export const getCoursesSelectStatus = async () => {
 }
 
 export const selectCourses = async (formValues) => {
-  const response = await $authHost.post(`/pupil/select_courses/`, formValues, {
+  const response = await $authHost.post(`/pupil/select_courses/`, JSON.stringify(formValues), {
     headers: {
       'Content-Type': 'application/json',
     }
