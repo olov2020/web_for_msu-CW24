@@ -1,4 +1,5 @@
 import style from './form.module.css'
+import defaultNewsPhoto from '../../../public/msu_logo.png'
 import InputEmail from "./inputs/userInputs/InputEmail.jsx";
 import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
@@ -656,7 +657,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'newsPhoto': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsPhoto, setNewsPhoto] = useState(undefined);
+        const [newsPhoto, setNewsPhoto] = useState(defaultNewsPhoto);
         formValues.newsPhoto = newsPhoto;
         return <InputPhoto name={input}
                            fieldName='Фотография новости'
