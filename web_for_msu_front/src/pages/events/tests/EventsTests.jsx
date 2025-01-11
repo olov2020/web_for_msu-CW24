@@ -28,16 +28,8 @@ const EventsTests = () => {
   const month = 8;
   const examDate = getThirdSunday(year, month);
 
-  const [testsOfflineTeachers, setTestsOfflineTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-  ]);
-  const [testsOnlineTeachers, setTestsOnlineTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-  ]);
+  const [testsOfflineTeachers, setTestsOfflineTeachers] = useState([]);
+  const [testsOnlineTeachers, setTestsOnlineTeachers] = useState([]);
 
   useEffect(() => {
     const getEventsTestsOfflineTeachersFunc = async () => {
