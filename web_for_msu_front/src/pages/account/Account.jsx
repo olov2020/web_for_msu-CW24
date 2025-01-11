@@ -16,7 +16,7 @@ const Account = () => {
     }
 
     getUserDataFunc();
-  }, []);
+  }, [JSON.stringify(user)]);
 
   return (
     <article className={style.account}>
@@ -25,10 +25,16 @@ const Account = () => {
       <section>
         {authStatus.includes('pupil') ?
           <Form inputs={['photo', 'email', 'phone', 'school']}
-                values={user}
+                values={{'photo': user.photo, 'email': user.email, 'phone': user.phone, 'school': user.school}}
                 buttonText='Обновить данные' type='pupilChangeData'/> :
           <Form inputs={['photo', 'email', 'phone', 'university', 'work']}
-                values={user}
+                values={{
+                  'photo': user.photo,
+                  'email': user.email,
+                  'phone': user.phone,
+                  'university': user.university,
+                  'work': user.work
+                }}
                 buttonText='Обновить данные' type='teacherChangeData'/>
         }
       </section>

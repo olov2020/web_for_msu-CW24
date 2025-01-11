@@ -264,18 +264,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
                               value={password} setValue={setPassword}
         />
       }
-      case 'newPassword': {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newPassword, setNewPassword] = useState(undefined);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [error, setError] = useState(false);
-        formValues.newPassword = newPassword;
-        formErrors.newPassword = error;
-        return <InputPassword name={input} placeholder='Введите новый пароль'
-                              fieldName='Новый пароль' formErrors={setError}
-                              value={newPassword} setValue={setNewPassword}
-        />
-      }
       case 'photo': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [photo, setPhoto] = useState(values[input]);
