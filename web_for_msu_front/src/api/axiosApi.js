@@ -4,11 +4,11 @@ import { setNotAuthAction } from "../store/UserReducers.js";
 import store from "../store/index.js";
 
 export const $host = axios.create({
-  baseURL: 'https://91.105.196.82/api',
+  baseURL: '/api',
 });
 
 export const $authHost = axios.create({
-  baseURL: 'https://91.105.196.82/api',
+  baseURL: '/api',
 });
 
 const authInterceptor = config => {
@@ -42,7 +42,6 @@ const handleLogout = () => {
 
 $authHost.interceptors.request.use(authInterceptor);
 
-/*
 $authHost.interceptors.response.use(
   response => response,
   async error => {
@@ -61,4 +60,4 @@ $authHost.interceptors.response.use(
     }
     return Promise.reject(error);
   }
-);*/
+);
