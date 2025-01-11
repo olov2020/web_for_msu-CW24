@@ -1,4 +1,3 @@
-/*
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -10,7 +9,7 @@ export default defineConfig({
     assetsDir: 'static',
     outDir: 'dist',
   },
-  server: {
+  /*server: {
     port: 5173,
     cors: true,
     proxy: {
@@ -21,6 +20,5 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
-  },
+  },*/
 })
-*/
