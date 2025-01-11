@@ -34,11 +34,11 @@ def create_app(config):
     from web_for_msu_back.app.views.teacher import TeacherView
     from web_for_msu_back.app.views.news import NewsView
 
-    HomeView.register(app, route_base="/api/home")
-    AdminView.register(app, route_base="/api/admin")
-    PupilView.register(app, route_base="/api/pupil")
-    TeacherView.register(app, route_base="/api/teacher")
-    NewsView.register(app, route_base="/api/news")
+    HomeView.register(app)
+    AdminView.register(app)
+    PupilView.register(app)
+    TeacherView.register(app)
+    NewsView.register(app)
 
 
     # with app.test_request_context():  # Необходимо для доступа к url_map вне контекста запроса
