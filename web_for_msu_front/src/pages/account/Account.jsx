@@ -16,7 +16,7 @@ const Account = () => {
     }
 
     getUserDataFunc();
-  });
+  }, []);
 
   return (
     <article className={style.account}>
