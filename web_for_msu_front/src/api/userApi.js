@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getUserData = async () => {
   try {
-    const response = await axios.get('/home/user_info/', {
+    const response = await axios.get('/api/home/user_info/', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }
