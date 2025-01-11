@@ -371,6 +371,7 @@ class CourseService:
                     if len(data["formulas"]) == k:
                         while j < len(formulas):
                             if formulas[j].name == "Баллы":
+                                j += 1
                                 continue
                             self.db.session.delete(formulas[j])
                             j += 1
