@@ -23,6 +23,7 @@ import checkMarkIcon from "../../../../public/generic/checkMarkIcon.svg";
 
 const ListOfPeople = () => {
 
+  const [updateList, setUpdateList] = useState(false);
   const url = window.location.pathname;
 
   const [people, setPeople] = useState([]);
@@ -38,12 +39,13 @@ const ListOfPeople = () => {
     }
 
     getPeople();
-  }, [url]);
+  }, [updateList]);
 
   const addPupilFunc = async (pupilId) => {
     const data = await addPupil({pupilId});
     if (data) {
       alert('Ученик успешно добавлен!');
+      setUpdateList(!updateList);
     } else {
       alert('Упс, что-то пошло не так... Ученик не был добавлен');
     }
@@ -53,6 +55,7 @@ const ListOfPeople = () => {
     const data = await deletePupil({pupilId});
     if (data) {
       alert('Ученик успешно исключен!');
+      setUpdateList(!updateList);
     } else {
       alert('Упс, что-то пошло не так... Ученик не был исключен');
     }
@@ -62,6 +65,7 @@ const ListOfPeople = () => {
     const data = await makePupilRetired({pupilId});
     if (data) {
       alert('Ученик успешно отчислен!');
+      setUpdateList(!updateList);
     } else {
       alert('Упс, что-то пошло не так... Ученик не был отчислен');
     }
@@ -71,6 +75,7 @@ const ListOfPeople = () => {
     const data = await recoverPupil({pupilId});
     if (data) {
       alert('Ученик успешно восстановлен!');
+      setUpdateList(!updateList);
     } else {
       alert('Упс, что-то пошло не так... Ученик не был восстановлен');
     }
@@ -80,6 +85,7 @@ const ListOfPeople = () => {
     const data = await addTeacher({teacherId});
     if (data) {
       alert('Преподаватель успешно добавлен!');
+      setUpdateList(!updateList);
     } else {
       alert('Упс, что-то пошло не так... Преподаватель не был добавлен');
     }
@@ -89,6 +95,7 @@ const ListOfPeople = () => {
     const data = await deleteTeacher({teacherId});
     if (data) {
       alert('Преподаватель успешно исключен!');
+      setUpdateList(!updateList);
     } else {
       alert('Упс, что-то пошло не так... Преподаватель не был исключен');
     }
@@ -96,24 +103,69 @@ const ListOfPeople = () => {
 
   const addAdminRole = async (userId, funcName) => {
     switch (funcName) {
-      case 'setNewsAdmin':
-        return await setNewsAdmin(userId);
-      case 'setCourseAdmin':
-        return await setCourseAdmin(userId);
-      case 'setMarksAdmin':
-        return await setMarksAdmin(userId);
-      case 'setAuditoryAdmin':
-        return await setAuditoryAdmin(userId);
-      case 'setKNRAdmin':
-        return await setKNRAdmin(userId);
-      case 'setVSHAdmin':
-        return await setVSHAdmin(userId);
-      case 'setLSHAdmin':
-        return await setLSHAdmin(userId);
-      case 'setTestsOfflineAdmin':
-        return await setTestsOfflineAdmin(userId);
-      case 'setTestsOnlineAdmin':
-        return await setTestsOnlineAdmin(userId);
+      case 'setNewsAdmin': {
+        const data = await setNewsAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setCourseAdmin': {
+        const data = await setCourseAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setMarksAdmin': {
+        const data = await setMarksAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setAuditoryAdmin': {
+        const data = await setAuditoryAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setKNRAdmin': {
+        const data = await setKNRAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setVSHAdmin': {
+        const data = await setVSHAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setLSHAdmin': {
+        const data = await setLSHAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setTestsOfflineAdmin': {
+        const data = await setTestsOfflineAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setTestsOnlineAdmin': {
+        const data = await setTestsOnlineAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
       default:
         return Promise.reject(new Error('Invalid function name'));
     }
@@ -121,24 +173,69 @@ const ListOfPeople = () => {
 
   const deleteAdminRole = async (userId, funcName) => {
     switch (funcName) {
-      case 'deleteNewsAdmin':
-        return await deleteNewsAdmin(userId);
-      case 'deleteCourseAdmin':
-        return await deleteCourseAdmin(userId);
-      case 'deleteMarksAdmin':
-        return await deleteMarksAdmin(userId);
-      case 'deleteAuditoryAdmin':
-        return await deleteAuditoryAdmin(userId);
-      case 'deleteKNRAdmin':
-        return await deleteKNRAdmin(userId);
-      case 'deleteVSHAdmin':
-        return await deleteVSHAdmin(userId);
-      case 'deleteLSHAdmin':
-        return await deleteLSHAdmin(userId);
-      case 'deleteTestsOfflineAdmin':
-        return await deleteTestsOfflineAdmin(userId);
-      case 'deleteTestsOnlineAdmin':
-        return await deleteTestsOnlineAdmin(userId);
+      case 'deleteNewsAdmin': {
+        const data = await deleteNewsAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteCourseAdmin': {
+        const data = await deleteCourseAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteMarksAdmin': {
+        const data = await deleteMarksAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteAuditoryAdmin': {
+        const data = await deleteAuditoryAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteKNRAdmin': {
+        const data = await deleteKNRAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteVSHAdmin': {
+        const data = await deleteVSHAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteLSHAdmin': {
+        const data = await deleteLSHAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteTestsOfflineAdmin': {
+        const data = await deleteTestsOfflineAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteTestsOnlineAdmin': {
+        const data = await deleteTestsOnlineAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
       default:
         return Promise.reject(new Error('Invalid function name'));
     }
