@@ -29,10 +29,25 @@ const AdminPanel = () => {
   const navigate = useNavigate();
 
   const downloadDatabaseFunc = async () => {
-    const data = await downloadDatabase();
-    if (data) {
-      alert('Файл успешно сохранен');
-    } else {
+    try {
+      const fileUrl = await downloadDatabase();
+      if (fileUrl) {
+        // Create an anchor element to trigger the download
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = 'database.zip'; // Specify the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Revoke the blob URL to free up memory
+        window.URL.revokeObjectURL(fileUrl);
+
+        alert('Файл успешно сохранен');
+      } else {
+        alert('Что-то пошло не так... Файл не был сохранен');
+      }
+    } catch {
       alert('Что-то пошло не так... Файл не был сохранен');
     }
   }

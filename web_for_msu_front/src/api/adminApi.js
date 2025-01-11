@@ -283,10 +283,12 @@ export const deleteTestsOnlineAdmin = async (userId) => {
 
 
 export const downloadDatabase = async () => {
-  const response = await $authHost.get('/admin/download/');
+  const response = await $authHost.get('/admin/download/', {
+    responseType: 'blob',
+  });
 
   try {
-    return response.data;
+    return window.URL.createObjectURL(new Blob([response.data]));
   } catch (error) {
     return new Error(error);
   }
