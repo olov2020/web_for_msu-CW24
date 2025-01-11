@@ -7,7 +7,6 @@ const NewsCard = ({photo = null, title, date, description, id}) => {
   return (
     <Link to={`/news/${title}/${date}`} state={{id, photo, title, description, date}}
           className={style.newsCard}
-          key={id}
     >
       <h3>{title}</h3>
       {photo &&

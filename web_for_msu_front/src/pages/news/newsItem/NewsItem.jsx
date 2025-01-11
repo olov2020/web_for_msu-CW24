@@ -11,7 +11,7 @@ const NewsItem = () => {
   const authStatus = useSelector(state => state.user.authStatus);
 
   return (
-    <article key={state.key}>
+    <article key={state.id}>
       <h1>{state.title}</h1>
 
       <section
@@ -43,7 +43,7 @@ const NewsItem = () => {
                    setShowDeleteWindow(!showDeleteWindow)
                  }}
             />
-            {showDeleteWindow && <DeleteWindow setShowDeleteWindow={setShowDeleteWindow} newsId={state.key}/>}
+            {showDeleteWindow && <DeleteWindow setShowDeleteWindow={setShowDeleteWindow} newsId={state.id}/>}
           </div>
         }
       </section>
