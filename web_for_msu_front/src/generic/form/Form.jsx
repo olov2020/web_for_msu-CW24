@@ -176,14 +176,14 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
     } else if (type === 'setDateOpenChampionship') {
       try {
-        await setEventsOpenChampionshipDate(formValues.dateOchStart, formValues.dateOchEnd);
+        await setEventsOpenChampionshipDate(formValues.dateOchStartEvents, formValues.dateOchEndEvents);
         alert('Даты мероприятия успешно сохранены');
       } catch (error) {
         alert(`Упс... Что-то пошло не так: ${error.message}`);
       }
     } else if (type === 'setDateContestScientificWorks') {
       try {
-        await setEventsContestScientificWorksDate(formValues.dateKnrFirst, formValues.dateKnrSecond, formValues.dateKnrThird);
+        await setEventsContestScientificWorksDate(formValues.dateKnrFirstEvents, formValues.dateKnrSecondEvents, formValues.dateKnrThirdEvents);
         alert('Даты мероприятия успешно сохранены');
       } catch (error) {
         alert(`Упс... Что-то пошло не так: ${error.message}`);
