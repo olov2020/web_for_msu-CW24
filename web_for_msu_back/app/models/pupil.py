@@ -22,7 +22,7 @@ class Pupil(db.Model):
     registration_address = db.Column(db.String(), nullable=False)
     parent1_name = db.Column(db.String(), nullable=False)
     parent1_surname = db.Column(db.String(), nullable=False)
-    parent1_patronymic = db.Column(db.String(), nullable=False)
+    parent1_patronymic = db.Column(db.String())
     parent1_phone = db.Column(db.String(), nullable=False)
     parent1_email = db.Column(db.String(), nullable=False)
     parent2_name = db.Column(db.String())
@@ -50,9 +50,9 @@ class Pupil(db.Model):
 
     def __init__(self, user_id, email, name, surname, birth_date, nickname, phone,
                  registration_address, parent1_name, parent1_surname,
-                 parent1_patronymic, parent1_phone, parent1_email, school, school_grade, enroll_way,
+                 parent1_phone, parent1_email, school, school_grade, enroll_way,
                  agreement, organization_fee, present_FA, security_key_card, graduating, achievements, mailing=False,
-                 patronymic=None, telegram=None, vk=None, parent2_name=None, parent2_surname=None,
+                 parent1_patronymic=None, patronymic=None, telegram=None, vk=None, parent2_name=None, parent2_surname=None,
                  parent2_patronymic=None, parent2_phone=None, parent2_email=None, how_know=None):
         self.user_id = user_id
         self.email = email

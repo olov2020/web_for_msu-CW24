@@ -24,7 +24,7 @@ class PupilDTO(Schema):
 
     parent1_name = fields.Str(required=True, error_messages={"required": "Поле имя родителя 1 обязательно."})
     parent1_surname = fields.Str(required=True, error_messages={"required": "Поле фамилия родителя 1 обязательно."})
-    parent1_patronymic = fields.Str(required=True, error_messages={})
+    parent1_patronymic = fields.Str(error_messages={})
     parent1_phone = fields.Str(required=True, error_messages={"required": "Поле телефон родителя 1 обязательно."})
     parent1_email = fields.Email(required=True, error_messages={"required": "Поле email родителя 1 обязательно."})
 
