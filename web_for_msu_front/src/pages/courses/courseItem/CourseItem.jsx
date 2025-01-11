@@ -110,11 +110,7 @@ const CourseItem = () => {
 
             <div>
               {state.courseData.teachers.map((teacher, index) => (
-                <>
-                  <p key={index}>{teacher}</p>
-                  <p key={index}>{teacher}</p>
-                  <p key={index}>{teacher}</p>
-                </>
+                <p key={index}>{teacher}</p>
               ))}
             </div>
           </div>

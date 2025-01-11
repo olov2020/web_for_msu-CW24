@@ -11,7 +11,7 @@ export const getAllCourses = async () => {
 }
 
 export const getMyCourses = async () => {
-  const response = await $authHost.get(`/pupil/my_courses/`)
+  const response = await $authHost.get(`/teacher/my_courses/`)
 
   try {
     return response.data;
