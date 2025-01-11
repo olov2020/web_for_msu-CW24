@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from './toggleSwitch.module.css';
 
 // eslint-disable-next-line react/prop-types
-const ToggleSwitch = ({ funcOn, funcOff, value}) => {
+const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
   const [isToggled, setIsToggled] = useState(value);
 
   const onToggle = async () => {
@@ -20,6 +20,7 @@ const ToggleSwitch = ({ funcOn, funcOff, value}) => {
           setIsToggled(false);
         }
       }
+      onClick();
     } catch (error) {
       console.error('Error toggling admin role:', error);
     }

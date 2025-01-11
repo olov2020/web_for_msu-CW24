@@ -407,15 +407,19 @@ const ListOfPeople = () => {
                 width: '25%',
               }}>
                 <ToggleSwitch value={person.roles.includes('newsmaker')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
                 <ToggleSwitch value={person.roles.includes('coursemaker')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
                 <ToggleSwitch value={person.roles.includes('marksmaker')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
                 <ToggleSwitch value={person.roles.includes('auditorymaker')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
               </div>
@@ -426,18 +430,23 @@ const ListOfPeople = () => {
                 width: '30%',
               }}>
                 <ToggleSwitch value={person.roles.includes('knr')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
                 <ToggleSwitch value={person.roles.includes('vsh')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
                 <ToggleSwitch value={person.roles.includes('lsh')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
                 <ToggleSwitch value={person.roles.includes('tests_offline')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
                 <ToggleSwitch value={person.roles.includes('tests_online')}
+                              onClick={() => setUpdateList(!updateList)}
                               funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
               </div>
