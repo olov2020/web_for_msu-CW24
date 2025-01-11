@@ -12,7 +12,7 @@ const EventsOpenChampionship = () => {
   ];
 
   const authStatus = useSelector(state => state.user.authStatus);
-  const [dates, setDates] = useState(['уточняется', 'уточняется']);
+  const [dates, setDates] = useState([]);
   const numOfChampionships = new Date().getFullYear() - 2010;
 
   useEffect(() => {

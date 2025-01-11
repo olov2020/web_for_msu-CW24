@@ -5,12 +5,7 @@ import style from './addPupilOnCourse.module.css';
 
 // eslint-disable-next-line react/prop-types
 const AddPupilOnCourse = ({courseId}) => {
-  const [pupils, setPupils] = useState([
-    {id: 0, name: 'Виноградов Владимир Андреевич', grade: 11},
-    {id: 0, name: 'Виноградов Владимир Андреевич', grade: 11},
-    {id: 0, name: 'Виноградов Владимир Андреевич', grade: 11},
-    {id: 0, name: 'Виноградов Владимир Андреевич', grade: 11},
-  ]);
+  const [pupils, setPupils] = useState([]);
 
   const [value, setValue] = useState('');
 

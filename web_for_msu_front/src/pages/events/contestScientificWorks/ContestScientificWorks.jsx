@@ -15,12 +15,8 @@ import {useSelector} from "react-redux";
 const ContestScientificWorks = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
-  const [teachers, setTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-  ]);
-  const [dates, setDates] = useState(['уточняется', 'уточняется', 'уточняется']);
+  const [teachers, setTeachers] = useState([]);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     const getEventsContestScientificWorksTeachersFunc = async () => {

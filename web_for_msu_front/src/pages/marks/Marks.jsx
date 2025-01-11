@@ -5,20 +5,7 @@ import TeacherMarks from "../courses/marks/TeacherMarks.jsx";
 
 const Marks = () => {
 
-  const [coursesIds, setCoursesIds] = useState([
-    {
-      id: 0,
-      name: 'Course1',
-    },
-    {
-      id: 0,
-      name: 'Course1',
-    },
-    {
-      id: 0,
-      name: 'Course1',
-    },
-  ]);
+  const [coursesIds, setCoursesIds] = useState([]);
 
   useEffect(() => {
     const getAllCoursesIdsFunc = async () => {

@@ -25,35 +25,7 @@ const ListOfPeople = () => {
 
   const url = window.location.pathname;
 
-  const [people, setPeople] = useState([
-    {
-      id: 0,
-      name: 'Иванов Иван Иванович',
-      email: 'ivan@mail.ru',
-      grade: 8,
-      status: 'Ученик',
-      date: '2024-11-10',
-      authorized: false,
-    },
-    {
-      id: 0,
-      name: 'Иванов Станислав Иванович',
-      email: 'ivanivan@mail.ru',
-      grade: 11,
-      status: 'Выпускник',
-      date: '2024-11-10',
-      authorized: true,
-    },
-    {
-      id: 0,
-      name: 'Иванов Иван Иванович',
-      email: 'ivan@mail.ru',
-      grade: 8,
-      status: 'Бывший ученик',
-      date: '2024-11-10',
-      authorized: true,
-    },
-  ]);
+  const [people, setPeople] = useState([]);
 
   useEffect(() => {
     const getPeople = async () => {
@@ -194,7 +166,11 @@ const ListOfPeople = () => {
             <div key={person.id} className={style.container}>
               <h3 className={style.item}>{person.name}</h3>
               <p className={style.item}>{person.grade}</p>
-              <h3 className={style.item}><span>{person.status}</span></h3>
+              {!person.authorized ?
+
+                <h3 className={style.item}><span>Ожидает действие</span></h3> :
+                <h3 className={style.item}><span>{person.status}</span></h3>
+              }
               <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -240,28 +216,28 @@ const ListOfPeople = () => {
                       />
                     </div> :
                     person.status === 'Бывший ученик' ?
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      gap: '0 1rem',
-                    }}>
                       <div style={{
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '50%',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        gap: '0 1rem',
                       }}>
-                        <h3>Ученик отчислен</h3>
-                      </div>
-                      <ButtonSubmit text='Восстановить' type='submit' onClick={() => {
-                        recoverPupilFunc(person.id)
-                      }}
-                                    style={{
-                                      width: '50%',
-                                    }}
-                      />
-                    </div> :
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '50%',
+                        }}>
+                          <h3>Ученик отчислен</h3>
+                        </div>
+                        <ButtonSubmit text='Восстановить' type='submit' onClick={() => {
+                          recoverPupilFunc(person.id)
+                        }}
+                                      style={{
+                                        width: '50%',
+                                      }}
+                        />
+                      </div> :
                       <h3>Никаких действий нет</h3>
                 }
               </div>
@@ -366,7 +342,7 @@ const ListOfPeople = () => {
                 width: '20%',
                 gap: '0 1rem',
               }}>
-                {person.authorized ?
+                {!person.authorized ?
                   <>
                     <ButtonSubmit text='Добавить' onClick={() => {
                       addTeacherFunc(person.id)

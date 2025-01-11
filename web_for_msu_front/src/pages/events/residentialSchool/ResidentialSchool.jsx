@@ -9,11 +9,7 @@ import {getEventsResidentialSchoolTeachers} from "../../../api/eventsApi.js";
 
 const ResidentialSchool = () => {
 
-  const [teachers, setTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-  ]);
+  const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
     const getEventsResidentialSchoolTeachersFunc = async () => {

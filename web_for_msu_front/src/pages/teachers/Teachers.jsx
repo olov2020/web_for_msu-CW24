@@ -3,28 +3,7 @@ import {getDirectoryTeachers} from "../../api/userApi.js";
 
 const Teachers = () => {
 
-  const [teachers, setTeachers] = useState({
-    'directory': [
-      {id: 0, name: 'Ivanov Ivan Ivanovich'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich'},
-    ],
-    'council': [
-      {id: 0, name: 'Ivanov Ivan Ivanovich'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich'},
-    ],
-    'teachers': [
-      {id: 0, name: 'Ivanov Ivan Ivanovich', subjects: '1 subject, 2 subject'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich', subjects: '1 subject, 2 subject'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich', subjects: '1 subject, 2 subject'},
-    ],
-    'organizers': [
-      {id: 0, name: 'Ivanov Ivan Ivanovich', email: 'example@mail.com', what: 'Летняя Школа, Вступы'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich', email: 'example@mail.com', what: 'Летняя Школа, Вступы'},
-      {id: 0, name: 'Ivanov Ivan Ivanovich', email: 'example@mail.com', what: 'Летняя Школа, Вступы'},
-    ],
-  });
+  const [teachers, setTeachers] = useState({});
 
   const teachersList = Object.entries(teachers);
 

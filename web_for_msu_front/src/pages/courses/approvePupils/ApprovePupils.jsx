@@ -5,12 +5,7 @@ import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
 // eslint-disable-next-line react/prop-types
 const ApprovePupils = ({courseId}) => {
 
-  const [pupils, setPupils] = useState([
-    {id: 0, name: 'Ivanov Ivan Ivanovich', grade: 8},
-    {id: 0, name: 'Ivanov Ivan Ivanovich', grade: 8},
-    {id: 0, name: 'Ivanov Ivan Ivanovich', grade: 8},
-    {id: 0, name: 'Ivanov Ivan Ivanovich', grade: 8},
-  ])
+  const [pupils, setPupils] = useState([])
 
   useEffect(() => {
     const getAllPupilsOnCourseFunc = async () => {

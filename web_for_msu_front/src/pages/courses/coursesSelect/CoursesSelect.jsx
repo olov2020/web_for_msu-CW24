@@ -8,35 +8,7 @@ const CoursesSelect = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const [selectCoursesStatus, setSelectCoursesStatus] = useState(false);
-  const [courses, setCourses] = useState([
-    /*{
-      name: 'Приручение python\'а',
-      id: 0,
-      lesson_time: "Вторник 17:20 - 18:40",
-      crediting: "зачётный для всех классов",
-      direction: "Третий Путь",
-      emsh_grades: "9 - 11",
-      selected: 'Зачетный',
-    },
-    {
-      name: 'Приручение python\'а',
-      id: 1,
-      lesson_time: "Вторник 17:20 - 18:40",
-      crediting: "зачётный для всех классов",
-      direction: "Третий Путь",
-      emsh_grades: "9 - 11",
-      selected: 'Незачетный',
-    },
-    {
-      name: 'Приручение python\'а',
-      id: 2,
-      lesson_time: "Вторник 17:20 - 18:40",
-      crediting: "зачётный для всех классов",
-      direction: "Третий Путь",
-      emsh_grades: "9 - 11",
-      selected: '',
-    },*/
-  ]);
+  const [courses, setCourses] = useState([]);
 
   const [inputs, setInputs] = useState([]);
   const [values, setValues] = useState({});

@@ -5,11 +5,7 @@ import {getEventsSummerSchoolTeachers} from "../../../api/eventsApi.js";
 
 const SummerSchool = () => {
 
-  const [teachers, setTeachers] = useState([
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-    {id: 0, name: 'Asdadads asdkjalskdj alskdalskd', email: 'example@mail.com'},
-  ]);
+  const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
     const getEventsSummerSchoolTeachersFunc = async () => {

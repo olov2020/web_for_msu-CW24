@@ -4,12 +4,7 @@ import Form from "../../generic/form/Form.jsx";
 
 const Auditory = () => {
 
-  const [courses, setCourses] = useState([
-    {id: 0, name: 'Приручение питона', lesson_time: 'alskdalsdk', auditory: ''},
-    {id: 1, name: 'Приручение питона', lesson_time: 'alskdalsdk', auditory: 4},
-    {id: 2, name: 'Приручение питона', lesson_time: 'alskdalsdk', auditory: 123},
-    {id: 3, name: 'Приручение питона', lesson_time: 'alskdalsdk', auditory: 'lkajslawhfwioeunf2wieiufh2938rhreonjco2'},
-  ]);
+  const [courses, setCourses] = useState([]);
 
   const [auditoriums, setAuditoriums] = useState({});
   const [inputs, setInputs] = useState([]);
