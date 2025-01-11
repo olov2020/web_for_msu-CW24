@@ -28,7 +28,7 @@ const InputDate = ({name = '', fieldName, value, setValue, formErrors, required}
       setIsValid(true);
       formErrors(false);
       setError('');
-      return '';g
+      return '';
     }
 
     if (inputValue.length === 0) {
