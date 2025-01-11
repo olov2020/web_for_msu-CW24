@@ -48,8 +48,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       courseAdd: ['courseFile'],
       courseChange: ['courseFile'],
       newsAdd: ['newsTitle', 'newsDescription'],
-      setDateOpenChampionship: ['dateOchStart', 'dateOchEnd'],
-      setDateContestScientificWorks: ['dateKnrFirst', 'dateKnrSecond', 'dateKnrThird'],
+      setDateOpenChampionship: ['dateOchStartEvents', 'dateOchEndEvents'],
+      setDateContestScientificWorks: ['dateKnrFirstEvents', 'dateKnrSecondEvents', 'dateKnrThirdEvents'],
       pupilChangeData: ['email', 'phone', 'school'],
       teacherChangeData: ['email', 'phone', 'university'],
     }

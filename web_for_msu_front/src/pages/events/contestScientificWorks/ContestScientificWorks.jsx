@@ -102,7 +102,7 @@ const ContestScientificWorks = () => {
             alignItems: 'flex-start',
           }}>
             {authStatus.includes('admin') ?
-              <Form inputs={['dateKnrFirst', 'dateKnrSecond', 'dateKnrThird']}
+              <Form inputs={['dateKnrFirstEvents', 'dateKnrSecondEvents', 'dateKnrThirdEvents']}
                     values={{dateKnrFirst: dates[0], dateKnrSecond: dates[1], dateKnrThird: dates[2],}}
                     type='setDateContestScientificWorks'
                     buttonText='Сохранить даты'
