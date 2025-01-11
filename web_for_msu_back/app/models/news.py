@@ -13,8 +13,7 @@ class News(db.Model):
     date = db.Column(db.Date, default=lambda: datetime.now(tz=pytz.timezone('Europe/Moscow')).date())
     photo = db.Column(db.String(255))
 
-    def __init__(self, title, description, date, photo):
+    def __init__(self, title, description, photo):
         self.title = title
         self.description = description
-        self.date = date
         self.photo = photo
