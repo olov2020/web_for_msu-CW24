@@ -680,7 +680,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
 
-      case 'dateOchStart': {
+      case 'dateOchStartEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchStart, setDateOchStart] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -688,10 +688,10 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.dateOchStart = dateOchStart;
         formErrors.dateOchStart = error;
         return <InputDate name={input} placeholder='Введите дату мероприятия' fieldName='Дата мероприятия'
-                          value={dateOchStart} setValue={setDateOchStart} formErrors={setError} required={false}
+                          value={dateOchStart} setValue={setDateOchStart} formErrors={setError}
         />
       }
-      case 'dateOchEnd': {
+      case 'dateOchEndEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchEnd, setDateOchEnd] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -699,11 +699,11 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.dateOchEnd = dateOchEnd;
         formErrors.dateOchEnd = error;
         return <InputDate name={input} placeholder='Введите дату церемонии награждения' fieldName='Дата награждения'
-                          value={dateOchEnd} setValue={setDateOchEnd} formErrors={setError} required={false}
+                          value={dateOchEnd} setValue={setDateOchEnd} formErrors={setError}
         />
       }
 
-      case 'dateKnrFirst': {
+      case 'dateKnrFirstEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrFirst, setDateKnrFirst] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -711,10 +711,10 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.dateKnrFirst = dateKnrFirst;
         formErrors.dateKnrFirst = error;
         return <InputDate name={input} placeholder='Введите дату 1 тура' fieldName='Дата 1 тура'
-                          value={dateKnrFirst} setValue={setDateKnrFirst} formErrors={setError} required={false}
+                          value={dateKnrFirst} setValue={setDateKnrFirst} formErrors={setError}
         />
       }
-      case 'dateKnrSecond': {
+      case 'dateKnrSecondEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrSecond, setDateKnrSecond] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -722,10 +722,10 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.dateKnrSecond = dateKnrSecond;
         formErrors.dateKnrSecond = error;
         return <InputDate name={input} placeholder='Введите дату 2 тура' fieldName='Дата 2 тура'
-                          value={dateKnrSecond} setValue={setDateKnrSecond} formErrors={setError} required={false}
+                          value={dateKnrSecond} setValue={setDateKnrSecond} formErrors={setError}
         />
       }
-      case 'dateKnrThird': {
+      case 'dateKnrThirdEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrThird, setDateKnrThird] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -733,7 +733,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.dateKnrThird = dateKnrThird;
         formErrors.dateKnrThird = error;
         return <InputDate name={input} placeholder='Введите дату 3 тура' fieldName='Дата 3 тура'
-                          value={dateKnrThird} setValue={setDateKnrThird} formErrors={setError} required={false}
+                          value={dateKnrThird} setValue={setDateKnrThird} formErrors={setError}
         />
       }
 
