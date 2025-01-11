@@ -8,8 +8,10 @@ services:
       - "5436:5432"
     environment:
       POSTGRES_DB: emsh_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - "db_data:/var/lib/postgresql/data"
 #    healthcheck:
 #      test: [ "CMD-SHELL", "pg_isready -U user" ]
 #      interval: 10s
