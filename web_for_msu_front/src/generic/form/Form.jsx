@@ -812,7 +812,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
   return (
     <form className={style.form} onSubmit={onSubmit}>
-      {id ?
+      {id && !inputs.includes('courseFile') ?
         <section style={{
           display: 'flex',
           flexDirection: 'column',
