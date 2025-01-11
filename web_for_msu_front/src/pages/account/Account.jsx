@@ -2,7 +2,7 @@ import style from './account.module.css'
 import {useSelector} from "react-redux";
 import Form from "../../generic/form/Form.jsx";
 import {useEffect, useState} from "react";
-import {getUserData} from "../../api/userApi.js";
+import {getPupilInfo, getTeacherInfo} from "../../api/userApi.js";
 
 const Account = () => {
 
@@ -11,12 +11,12 @@ const Account = () => {
 
   useEffect(() => {
     const getUserDataFunc = async () => {
-      const data = await getUserData();
+      const data = authStatus.includes('pupil') ? await getPupilInfo() : await getTeacherInfo();
       setUser(data);
     }
 
     getUserDataFunc();
-  }, []);
+  });
 
   return (
     <article className={style.account}>

@@ -72,7 +72,9 @@ const Profile = () => {
   return (
     (!user.authStatus.includes('none')) ?
       (
-        <Link to={ACCOUNT_ROUTE}>
+        <Link to={ACCOUNT_ROUTE} style={{
+          display: 'flex',
+        }}>
           <div className={style.profile__info}>
             <h3>{userInfo.name}</h3>
             <h3>{userInfo.surname}</h3>

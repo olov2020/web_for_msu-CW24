@@ -14,6 +14,26 @@ export const getUserData = async () => {
   }
 };
 
+export const getPupilInfo = async () => {
+  const response = await $authHost.get('/api/pupil/get_account_data/');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(`Failed to fetch user data: ${error}`);
+  }
+}
+
+export const getTeacherInfo = async () => {
+  const response = await $authHost.get('/api/teacher/get_account_data/');
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(`Failed to fetch user data: ${error}`);
+  }
+}
+
 export const userLogin = async (email, password) => {
   try {
     const response = await $host.post('/home/login/', {email, password}, {
