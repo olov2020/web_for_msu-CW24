@@ -20,7 +20,7 @@ const InputPhoto = ({name = '', fieldName, accept = '', multiple = false, requir
     const error = validateInput(file);
 
     if (error) {
-      setValue(undefined);
+      setValue(name.includes('news') ? defaultNewsImage : undefined);
       setImageUrl(name.includes('news') ? defaultNewsImage : defaultUserImage);
     } else {
       const reader = new FileReader();

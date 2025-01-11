@@ -34,6 +34,7 @@ import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from
 import {useDispatch} from "react-redux";
 import {setAuthFromToken} from "../../store/UserReducers.js";
 import {setCoursesAuditoriums} from "../../api/adminApi.js";
+import {meta as blob} from "eslint-plugin-react/lib/rules/hook-use-state.js";
 
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
@@ -657,7 +658,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'newsPhoto': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsPhoto, setNewsPhoto] = useState(defaultNewsPhoto);
+        const [newsPhoto, setNewsPhoto] = useState(new File([blob], defaultNewsPhoto, { type: blob.type }));
         formValues.newsPhoto = newsPhoto;
         return <InputPhoto name={input}
                            fieldName='Фотография новости'
