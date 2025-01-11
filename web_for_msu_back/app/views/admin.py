@@ -156,22 +156,22 @@ class AdminView(FlaskView):
         response, code = user_service.delete_user(user_id, role)
         return jsonify(response), code
 
-    @route('/retire/pupil/<pupil_id>/', methods=["POST"])
+    @route('/retire/pupil/<user_id>/', methods=["POST"])
     @auth_required
     @roles_required('admin')
-    def retire_pupil(self, pupil_id: int):
+    def retire_pupil(self, user_id: int):
         services = get_services()
         pupil_service: PupilService = services["pupil_service"]
-        response, code = pupil_service.retire(pupil_id)
+        response, code = pupil_service.retire(user_id)
         return jsonify(response), code
 
-    @route('/recover/pupil/<pupil_id>/', methods=["POST"])
+    @route('/recover/pupil/<user_id>/', methods=["POST"])
     @auth_required
     @roles_required('admin')
-    def recover_pupil(self, pupil_id: int):
+    def recover_pupil(self, user_id: int):
         services = get_services()
         pupil_service: PupilService = services["pupil_service"]
-        response, code = pupil_service.recover(pupil_id)
+        response, code = pupil_service.recover(user_id)
         return jsonify(response), code
 
     @method("PUT")

@@ -71,8 +71,8 @@ class PupilService:
         self.db.session.commit()
         return {"msg": "Все ученики перешли на следующий год"}, 200
 
-    def retire(self, pupil_id: int) -> (dict, int):
-        pupil = Pupil.query.get(pupil_id)
+    def retire(self, user_id: int) -> (dict, int):
+        pupil = Pupil.query.filter(Pupil.user_id == user_id).first()
         if not pupil:
             return {"error": "Нет такого ученика"}, 404
         if pupil.former:
@@ -85,8 +85,8 @@ class PupilService:
         self.db.session.commit()
         return {"msg": "Ученик отчислен"}, 200
 
-    def recover(self, pupil_id: int) -> (dict, int):
-        pupil = Pupil.query.get(pupil_id)
+    def recover(self, user_id: int) -> (dict, int):
+        pupil = Pupil.query.filter(Pupil.user_id == user_id).first()
         if not pupil:
             return {"error": "Нет такого ученика"}, 404
         if not pupil.former:
