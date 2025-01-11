@@ -190,14 +190,14 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
     } else if (type === 'setCoursesAuditoriums') {
       try {
-        await setCoursesAuditoriums(formValues);
+        await setCoursesAuditoriums(auditoriums);
         alert('Аудитории сохранены');
       } catch (error) {
         alert(`Упс... Что-то пошло не так: ${error.message}`);
       }
     } else if (type === 'selectCourses') {
       try {
-        await selectCourses(formValues);
+        await selectCourses(coursesSelect);
         alert('Курсы выбраны успешно');
       } catch {
         alert(`Упс... Что-то пошло не так. Выберете ровно 2 зачетных курса из разных категорий`);
