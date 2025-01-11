@@ -406,13 +406,17 @@ const ListOfPeople = () => {
                 alignItems: 'center',
                 width: '25%',
               }}>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
+                <ToggleSwitch value={person.roles.includes('newsmaker')}
+                              funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
+                <ToggleSwitch value={person.roles.includes('coursemaker')}
+                              funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
+                <ToggleSwitch value={person.roles.includes('marksmaker')}
+                              funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
+                <ToggleSwitch value={person.roles.includes('auditorymaker')}
+                              funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{
@@ -421,15 +425,20 @@ const ListOfPeople = () => {
                 alignItems: 'center',
                 width: '30%',
               }}>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
+                <ToggleSwitch value={person.roles.includes('knr')}
+                              funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
+                <ToggleSwitch value={person.roles.includes('vsh')}
+                              funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
+                <ToggleSwitch value={person.roles.includes('lsh')}
+                              funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
+                <ToggleSwitch value={person.roles.includes('tests_offline')}
+                              funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
-                <ToggleSwitch funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
+                <ToggleSwitch value={person.roles.includes('tests_online')}
+                              funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
                               funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
               </div>
               <div className={style.itemTeacher} style={{

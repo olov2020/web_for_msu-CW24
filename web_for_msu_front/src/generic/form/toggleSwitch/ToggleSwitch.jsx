@@ -2,8 +2,8 @@ import { useState } from "react";
 import style from './toggleSwitch.module.css';
 
 // eslint-disable-next-line react/prop-types
-const ToggleSwitch = ({ funcOn, funcOff }) => {
-  const [isToggled, setIsToggled] = useState(false);
+const ToggleSwitch = ({ funcOn, funcOff, value}) => {
+  const [isToggled, setIsToggled] = useState(value);
 
   const onToggle = async () => {
     try {
