@@ -687,8 +687,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [error, setError] = useState(false);
         formValues.dateOchStart = dateOchStart;
         formErrors.dateOchStart = error;
-        return <InputText name={input} placeholder='Введите дату мероприятия' fieldName='Дата мероприятия'
-                          value={dateOchStart} setValue={setDateOchStart} formErrors={setError}
+        return <InputDate name={input} placeholder='Введите дату мероприятия' fieldName='Дата мероприятия'
+                          value={dateOchStart} setValue={setDateOchStart} formErrors={setError} required={false}
         />
       }
       case 'dateOchEnd': {
@@ -698,8 +698,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [error, setError] = useState(false);
         formValues.dateOchEnd = dateOchEnd;
         formErrors.dateOchEnd = error;
-        return <InputText name={input} placeholder='Введите дату церемонии награждения' fieldName='Дата награждения'
-                          value={dateOchEnd} setValue={setDateOchEnd} formErrors={setError}
+        return <InputDate name={input} placeholder='Введите дату церемонии награждения' fieldName='Дата награждения'
+                          value={dateOchEnd} setValue={setDateOchEnd} formErrors={setError} required={false}
         />
       }
 
@@ -710,8 +710,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [error, setError] = useState(false);
         formValues.dateKnrFirst = dateKnrFirst;
         formErrors.dateKnrFirst = error;
-        return <InputText name={input} placeholder='Введите дату 1 тура' fieldName='Дата 1 тура'
-                          value={dateKnrFirst} setValue={setDateKnrFirst} formErrors={setError}
+        return <InputDate name={input} placeholder='Введите дату 1 тура' fieldName='Дата 1 тура'
+                          value={dateKnrFirst} setValue={setDateKnrFirst} formErrors={setError} required={false}
         />
       }
       case 'dateKnrSecond': {
@@ -721,8 +721,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [error, setError] = useState(false);
         formValues.dateKnrSecond = dateKnrSecond;
         formErrors.dateKnrSecond = error;
-        return <InputText name={input} placeholder='Введите дату 2 тура' fieldName='Дата 2 тура'
-                          value={dateKnrSecond} setValue={setDateKnrSecond} formErrors={setError}
+        return <InputDate name={input} placeholder='Введите дату 2 тура' fieldName='Дата 2 тура'
+                          value={dateKnrSecond} setValue={setDateKnrSecond} formErrors={setError} required={false}
         />
       }
       case 'dateKnrThird': {
@@ -732,8 +732,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [error, setError] = useState(false);
         formValues.dateKnrThird = dateKnrThird;
         formErrors.dateKnrThird = error;
-        return <InputText name={input} placeholder='Введите дату 3 тура' fieldName='Дата 3 тура'
-                          value={dateKnrThird} setValue={setDateKnrThird} formErrors={setError}
+        return <InputDate name={input} placeholder='Введите дату 3 тура' fieldName='Дата 3 тура'
+                          value={dateKnrThird} setValue={setDateKnrThird} formErrors={setError} required={false}
         />
       }
 
