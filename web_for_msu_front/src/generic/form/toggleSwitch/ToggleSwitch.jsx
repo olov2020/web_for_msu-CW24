@@ -9,18 +9,17 @@ const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
     try {
       if (!isToggled) {
         const response = await funcOn();
-        alert(response);
         if (response) {
           setIsToggled(true);
+          onClick();
         }
       } else {
         const response = await funcOff();
-        alert(response);
         if (response) {
           setIsToggled(false);
+          onClick();
         }
       }
-      onClick();
     } catch (error) {
       console.error('Error toggling admin role:', error);
     }
