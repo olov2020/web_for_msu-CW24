@@ -39,7 +39,7 @@ export const pupilChangeData = async (photo, email, phone, school) => {
     phone: phone,
     school: school
   };
-  formData.append('data', value);
+  formData.append('data', JSON.stringify(value));
   formData.append('image', photo);
   const response = await $authHost.put('/pupil/change_account_data/', formData, {
     headers: {
@@ -62,7 +62,7 @@ export const teacherChangeData = async (photo, email, phone, university, work) =
     university: university,
     work: work,
   };
-  formData.append('data', value);
+  formData.append('data', JSON.stringify(value));
   formData.append('image', photo);
   const response = await $authHost.put('/teacher/change_account_data/', formData, {
     headers: {
