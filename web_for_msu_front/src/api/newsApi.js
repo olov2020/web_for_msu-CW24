@@ -19,7 +19,7 @@ export const addNewsItem = async (title, description, photo) => {
   formData.append('data', JSON.stringify(value));
   formData.append('photo', photo);
 
-  const response = await $authHost.post('/news/create', formData, {
+  const response = await $authHost.post('/news/create/', formData, {
     headers: {
       "Content-Type": 'multipart/form-data',
     }
@@ -32,7 +32,7 @@ export const addNewsItem = async (title, description, photo) => {
 };
 
 export const deleteNewsItem = async ({newsId}) => {
-  const response = await $authHost.delete(`/news/${newsId}`);
+  const response = await $authHost.delete(`/news/${newsId}/`);
 
   try {
     return response.data;

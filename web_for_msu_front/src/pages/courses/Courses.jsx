@@ -9,7 +9,7 @@ const Courses = () => {
   const url = window.location.pathname;
   const [isMyCourses, setIsMyCourses] = useState(true);
   const [coursesAll, setCoursesAll] = useState({
-    "2023": [
+    /*"2023": [
       {
         "additional_info": "Желательно наличие у школьников своих ноутбуков",
         "additional_info_for_auditory": "Необходима компьютерная аудитория",
@@ -442,7 +442,7 @@ const Courses = () => {
           "Иванов Иван Иванович"
         ]
       }
-    ],
+    ],*/
   });
 
   useEffect(() => {

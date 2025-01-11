@@ -1,7 +1,7 @@
 import {$authHost, $host} from "./axiosApi.js";
 
 export const getAllCourses = async () => {
-  const response = await $host.get(`/home/all_courses`)
+  const response = await $host.get(`/home/all_courses/`)
 
   try {
     return response.data;
@@ -11,7 +11,7 @@ export const getAllCourses = async () => {
 }
 
 export const getMyCourses = async () => {
-  const response = await $authHost.get(`/pupil/my_courses`)
+  const response = await $authHost.get(`/pupil/my_courses/`)
 
   try {
     return response.data;
@@ -21,7 +21,7 @@ export const getMyCourses = async () => {
 }
 
 export const getSchedule = async () => {
-  const response = await $authHost.get(`/home/schedule`)
+  const response = await $authHost.get(`/home/schedule/`)
 
   try {
     return response.data;
@@ -31,7 +31,7 @@ export const getSchedule = async () => {
 }
 
 export const getPupilMarksByCourseId = async ({courseId}) => {
-  const response = await $authHost.get(`/pupil/marks/${courseId}`)
+  const response = await $authHost.get(`/pupil/marks/${courseId}/`)
 
   try {
     return response.data;
@@ -41,7 +41,7 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
 }
 
 export const getPupilMarksByCourseId2 = async ({courseId}) => {
-  const response = await $authHost.get(`/pupil/marks2/${courseId}`)
+  const response = await $authHost.get(`/pupil/marks2/${courseId}/`)
 
   try {
     return response.data;
@@ -51,7 +51,7 @@ export const getPupilMarksByCourseId2 = async ({courseId}) => {
 }
 
 export const getTeacherMarksByCourseId = async ({courseId}) => {
-  const response = await $authHost.get(`/teacher/get_journal/${courseId}`)
+  const response = await $authHost.get(`/teacher/get_journal/${courseId}/`)
 
   try {
     return response.data;
@@ -61,7 +61,7 @@ export const getTeacherMarksByCourseId = async ({courseId}) => {
 }
 
 export const getTeacherMarksByCourseId2 = async ({courseId}) => {
-  const response = await $authHost.get(`/teacher/get_journal2/${courseId}`)
+  const response = await $authHost.get(`/teacher/get_journal2/${courseId}/`)
 
   try {
     return response.data;
@@ -71,7 +71,7 @@ export const getTeacherMarksByCourseId2 = async ({courseId}) => {
 }
 
 export const updateTeacherMarksByCourseId = async (courseId, marks) => {
-  const response = await $authHost.patch(`/teacher/update_journal/${courseId}`, marks, {
+  const response = await $authHost.patch(`/teacher/update_journal/${courseId}/`, marks, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -85,7 +85,7 @@ export const updateTeacherMarksByCourseId = async (courseId, marks) => {
 }
 
 export const updateTeacherMarksByCourseId2 = async (courseId, marks) => {
-  const response = await $authHost.patch(`/teacher/update_journal2/${courseId}`, marks, {
+  const response = await $authHost.patch(`/teacher/update_journal2/${courseId}/`, marks, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -102,7 +102,7 @@ export const updateTeacherMarksByCourseId2 = async (courseId, marks) => {
 export const courseAdd = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await $authHost.post(`/admin/create_course`, formData, {
+  const response = await $authHost.post(`/admin/create_course/`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     }
@@ -118,7 +118,7 @@ export const courseAdd = async (file) => {
 export const courseChange = async (id, file) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await $authHost.put(`/admin/update_course/${id}`, formData, {
+  const response = await $authHost.put(`/admin/update_course/${id}/`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     }
@@ -133,7 +133,7 @@ export const courseChange = async (id, file) => {
 
 
 export const getCoursesSelect = async () => {
-  const response = await $authHost.get(`/pupil/available_courses`)
+  const response = await $authHost.get(`/pupil/available_courses/`)
 
   try {
     return response.data;
@@ -143,7 +143,7 @@ export const getCoursesSelect = async () => {
 }
 
 export const getCoursesSelectStatus = async () => {
-  const response = await $authHost.get(`/pupil/available_courses/status`)
+  const response = await $authHost.get(`/pupil/available_courses/status/`)
 
   try {
     return response.data;
@@ -153,7 +153,7 @@ export const getCoursesSelectStatus = async () => {
 }
 
 export const selectCourses = async (formValues) => {
-  const response = await $authHost.post(`/pupil/select_courses`, formValues, {
+  const response = await $authHost.post(`/pupil/select_courses/`, formValues, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -168,7 +168,7 @@ export const selectCourses = async (formValues) => {
 
 
 export const approvePupilsOnCourse = async (courseId, pupilId) => {
-  const response = await $authHost.put(`/teacher/approve_pupils/${courseId}/${pupilId}`);
+  const response = await $authHost.put(`/teacher/approve_pupils/${courseId}/${pupilId}/`);
 
   try {
     return response.data;
@@ -178,7 +178,7 @@ export const approvePupilsOnCourse = async (courseId, pupilId) => {
 }
 
 export const deletePupilsFromCourse = async (courseId, pupilId) => {
-  const response = await $authHost.delete(`/teacher/delete_pupils/${courseId}/${pupilId}`);
+  const response = await $authHost.delete(`/teacher/delete_pupils/${courseId}/${pupilId}/`);
 
   try {
     return response.data;
@@ -189,7 +189,7 @@ export const deletePupilsFromCourse = async (courseId, pupilId) => {
 
 
 export const getAllPupilsOnCourse = async ({courseId}) => {
-  const response = await $authHost.get(`/teacher/pupils_list/${courseId}`);
+  const response = await $authHost.get(`/teacher/pupils_list/${courseId}/`);
 
   try {
     return response.data;
@@ -199,7 +199,7 @@ export const getAllPupilsOnCourse = async ({courseId}) => {
 }
 
 export const getPupilsOnCourse = async ({courseId}) => {
-  const response = await $authHost.get(`/teacher/get_pupil_on_course/${courseId}`);
+  const response = await $authHost.get(`/teacher/get_pupil_on_course/${courseId}/`);
 
   try {
     return response.data;
@@ -209,7 +209,7 @@ export const getPupilsOnCourse = async ({courseId}) => {
 }
 
 export const setPupilsOnCourse = async ({courseId, pupilId}) => {
-  const response = await $authHost.post(`/teacher/add_pupil_on_course/${courseId}/${pupilId}`);
+  const response = await $authHost.post(`/teacher/add_pupil_on_course/${courseId}/${pupilId}/`);
 
   try {
     return response.data;

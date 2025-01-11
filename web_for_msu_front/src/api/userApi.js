@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getUserData = async () => {
   try {
-    const response = await axios.get('/home/user_info', {
+    const response = await axios.get('/home/user_info/', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }
@@ -16,7 +16,7 @@ export const getUserData = async () => {
 
 export const userLogin = async (email, password) => {
   try {
-    const response = await $host.post('/home/login', {email, password}, {
+    const response = await $host.post('/home/login/', {email, password}, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -41,7 +41,7 @@ export const pupilChangeData = async (photo, email, phone, school) => {
   };
   formData.append('data', value);
   formData.append('image', photo);
-  const response = await $authHost.put('/pupil/change_account_data', formData, {
+  const response = await $authHost.put('/pupil/change_account_data/', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -64,7 +64,7 @@ export const teacherChangeData = async (photo, email, phone, university, work) =
   };
   formData.append('data', value);
   formData.append('image', photo);
-  const response = await $authHost.put('/teacher/change_account_data', formData, {
+  const response = await $authHost.put('/teacher/change_account_data/', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -109,7 +109,7 @@ export const pupilRegistration = async (formValues) => {
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
 
-  const response = await $host.post(`/pupil/add_pupil`, formData, {
+  const response = await $host.post(`/pupil/add_pupil/`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -146,7 +146,7 @@ export const teacherRegistration = async (formValues) => {
   formData.append('image', formValues.photo);
   formData.append('agreement', formValues.agreement);
 
-  const response = await $host.post(`/teacher/add_teacher`, formData, {
+  const response = await $host.post(`/teacher/add_teacher/`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -160,7 +160,7 @@ export const teacherRegistration = async (formValues) => {
 }
 
 export const getDirectoryTeachers = async () => {
-  const response = await $host.get('/teachers');
+  const response = await $host.get('/teachers/');
 
   try {
     return response.data;
@@ -170,7 +170,7 @@ export const getDirectoryTeachers = async () => {
 }
 
 export const changePassword = async (email) => {
-  const response = await $host.post(`/home/change_password/${email}`);
+  const response = await $host.post(`/home/change_password/${email}/`);
 
   try {
     return response.data;

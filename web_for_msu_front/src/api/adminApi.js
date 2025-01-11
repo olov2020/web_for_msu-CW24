@@ -1,7 +1,7 @@
 import {$authHost} from "./axiosApi.js";
 
 export const openRegistrationCourses = async () => {
-  const response = await $authHost.post(`/admin/open_courses_registration`);
+  const response = await $authHost.post(`/admin/open_courses_registration/`);
 
   try {
     return response.data;
@@ -11,7 +11,7 @@ export const openRegistrationCourses = async () => {
 }
 
 export const closeRegistrationCourses = async () => {
-  const response = await $authHost.post(`/admin/close_courses_registration`);
+  const response = await $authHost.post(`/admin/close_courses_registration/`);
 
   try {
     return response.data;
@@ -21,7 +21,7 @@ export const closeRegistrationCourses = async () => {
 }
 
 export const getAllPupils = async () => {
-  const response = await $authHost.get(`/admin/list/pupils`);
+  const response = await $authHost.get(`/admin/list/pupils/`);
 
   try {
     return response.data;
@@ -31,7 +31,7 @@ export const getAllPupils = async () => {
 }
 
 export const getAllTeachers = async () => {
-  const response = await $authHost.get(`/admin/list/teachers`);
+  const response = await $authHost.get(`/admin/list/teachers/`);
 
   try {
     return response.data;
@@ -41,7 +41,7 @@ export const getAllTeachers = async () => {
 }
 
 export const addPupil = async ({pupilId}) => {
-  const response = await $authHost.post(`/admin/add/pupil/${pupilId}`);
+  const response = await $authHost.post(`/admin/add/pupil/${pupilId}/`);
 
   try {
     return response.data;
@@ -51,7 +51,7 @@ export const addPupil = async ({pupilId}) => {
 }
 
 export const deletePupil = async ({pupilId}) => {
-  const response = await $authHost.delete(`/admin/delete/pupil/${pupilId}`);
+  const response = await $authHost.delete(`/admin/delete/pupil/${pupilId}/`);
 
   try {
     return response.data;
@@ -61,7 +61,7 @@ export const deletePupil = async ({pupilId}) => {
 }
 
 export const addTeacher = async ({teacherId}) => {
-  const response = await $authHost.post(`/admin/add/teacher/${teacherId}`);
+  const response = await $authHost.post(`/admin/add/teacher/${teacherId}/`);
 
   try {
     return response.data;
@@ -71,7 +71,7 @@ export const addTeacher = async ({teacherId}) => {
 }
 
 export const deleteTeacher = async ({teacherId}) => {
-  const response = await $authHost.delete(`/admin/delete/teacher/${teacherId}`);
+  const response = await $authHost.delete(`/admin/delete/teacher/${teacherId}/`);
 
   try {
     return response.data;
@@ -81,7 +81,7 @@ export const deleteTeacher = async ({teacherId}) => {
 }
 
 export const makePupilRetired = async ({pupilId}) => {
-  const response = await $authHost.post(`/admin/retire/pupil/${pupilId}`);
+  const response = await $authHost.post(`/admin/retire/pupil/${pupilId}/`);
 
   try {
     return response.data;
@@ -91,7 +91,7 @@ export const makePupilRetired = async ({pupilId}) => {
 }
 
 export const recoverPupil = async ({pupilId}) => {
-  const response = await $authHost.post(`/admin/recover/pupil/${pupilId}`);
+  const response = await $authHost.post(`/admin/recover/pupil/${pupilId}/`);
 
   try {
     return response.data;
@@ -101,7 +101,7 @@ export const recoverPupil = async ({pupilId}) => {
 }
 
 export const setNewsAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/news/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/news/${userId}/`);
 
   try {
     return response.data;
@@ -111,7 +111,7 @@ export const setNewsAdmin = async (userId) => {
 }
 
 export const setCourseAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/course/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/course/${userId}/`);
 
   try {
     return response.data;
@@ -121,7 +121,7 @@ export const setCourseAdmin = async (userId) => {
 }
 
 export const setMarksAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/marks/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/marks/${userId}/`);
 
   try {
     return response.data;
@@ -131,7 +131,7 @@ export const setMarksAdmin = async (userId) => {
 }
 
 export const setAuditoryAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/auditory/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/auditory/${userId}/`);
 
   try {
     return response.data;
@@ -141,7 +141,7 @@ export const setAuditoryAdmin = async (userId) => {
 }
 
 export const deleteNewsAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/news/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/news/${userId}/`);
 
   try {
     return response.data;
@@ -151,7 +151,7 @@ export const deleteNewsAdmin = async (userId) => {
 }
 
 export const deleteCourseAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/course/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/course/${userId}/`);
 
   try {
     return response.data;
@@ -161,7 +161,7 @@ export const deleteCourseAdmin = async (userId) => {
 }
 
 export const deleteMarksAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/marks/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/marks/${userId}/`);
 
   try {
     return response.data;
@@ -171,7 +171,7 @@ export const deleteMarksAdmin = async (userId) => {
 }
 
 export const deleteAuditoryAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/auditory/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/auditory/${userId}/`);
 
   try {
     return response.data;
@@ -182,7 +182,7 @@ export const deleteAuditoryAdmin = async (userId) => {
 
 
 export const setKNRAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/knr/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/knr/${userId}/`);
 
   try {
     return response.data;
@@ -192,7 +192,7 @@ export const setKNRAdmin = async (userId) => {
 }
 
 export const setVSHAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/vsh/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/vsh/${userId}/`);
 
   try {
     return response.data;
@@ -202,7 +202,7 @@ export const setVSHAdmin = async (userId) => {
 }
 
 export const setLSHAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/lsh/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/lsh/${userId}/`);
 
   try {
     return response.data;
@@ -212,7 +212,7 @@ export const setLSHAdmin = async (userId) => {
 }
 
 export const setTestsOfflineAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/tests_offline/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/tests_offline/${userId}/`);
 
   try {
     return response.data;
@@ -222,7 +222,7 @@ export const setTestsOfflineAdmin = async (userId) => {
 }
 
 export const setTestsOnlineAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/add/tests_online/${userId}`);
+  const response = await $authHost.post(`/admin/role/add/tests_online/${userId}/`);
 
   try {
     return response.data;
@@ -232,7 +232,7 @@ export const setTestsOnlineAdmin = async (userId) => {
 }
 
 export const deleteKNRAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/knr/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/knr/${userId}/`);
 
   try {
     return response.data;
@@ -242,7 +242,7 @@ export const deleteKNRAdmin = async (userId) => {
 }
 
 export const deleteVSHAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/vsh/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/vsh/${userId}/`);
 
   try {
     return response.data;
@@ -252,7 +252,7 @@ export const deleteVSHAdmin = async (userId) => {
 }
 
 export const deleteLSHAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/lsh/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/lsh/${userId}/`);
 
   try {
     return response.data;
@@ -262,7 +262,7 @@ export const deleteLSHAdmin = async (userId) => {
 }
 
 export const deleteTestsOfflineAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/tests_offline/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/tests_offline/${userId}/`);
 
   try {
     return response.data;
@@ -272,7 +272,7 @@ export const deleteTestsOfflineAdmin = async (userId) => {
 }
 
 export const deleteTestsOnlineAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/tests_online/${userId}`);
+  const response = await $authHost.post(`/admin/role/delete/tests_online/${userId}/`);
 
   try {
     return response.data;
@@ -293,7 +293,7 @@ export const downloadDatabase = async () => {
 }
 
 export const getCoursesAuditoriums = async () => {
-  const response = await $authHost.get('/admin/auditoriums/get');
+  const response = await $authHost.get('/admin/auditoriums/get/');
   try {
     return response.data;
   } catch (error) {
@@ -302,7 +302,7 @@ export const getCoursesAuditoriums = async () => {
 }
 
 export const setCoursesAuditoriums = async (formValues) => {
-  const response = await $authHost.put(`/admin/auditoriums`, formValues, {
+  const response = await $authHost.put(`/admin/auditoriums/`, formValues, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -316,7 +316,7 @@ export const setCoursesAuditoriums = async (formValues) => {
 
 
 export const getAllCoursesIds = async () => {
-  const response = await $authHost.get('/admin/courses-ids');
+  const response = await $authHost.get('/admin/courses-ids/');
 
   try {
     return response.data;
