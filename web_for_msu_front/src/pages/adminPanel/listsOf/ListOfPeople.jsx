@@ -254,6 +254,7 @@ const ListOfPeople = () => {
         <section className={style.section}>
           <div className={style.container}>
             <h2 className={style.item}>ФИО</h2>
+            <h2 className={style.item}>Почта</h2>
             <h2 className={style.item}>Класс</h2>
             <h2 className={style.item}>Статус</h2>
             <h2 className={style.item}>Статус ученика</h2>
@@ -262,6 +263,7 @@ const ListOfPeople = () => {
           {people.map((person) => (
             <div key={person.id} className={style.container}>
               <h3 className={style.item}>{person.name}</h3>
+              <p className={style.item}><a href={`mailto:${person.email}`}>{person.email}</a></p>
               <p className={style.item}>{person.grade}</p>
               {!person.authorized ?
 
