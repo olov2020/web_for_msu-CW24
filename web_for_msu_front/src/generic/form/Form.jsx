@@ -682,58 +682,58 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
       case 'dateOchStartEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateOchStart, setDateOchStart] = useState(values[input]);
+        const [dateOchStartEvents, setDateOchStartEvents] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateOchStart = dateOchStart;
-        formErrors.dateOchStart = error;
+        formValues.dateOchStartEvents = dateOchStartEvents;
+        formErrors.dateOchStartEvents = error;
         return <InputDate name={input} placeholder='Введите дату мероприятия' fieldName='Дата мероприятия'
-                          value={dateOchStart} setValue={setDateOchStart} formErrors={setError}
+                          value={dateOchStartEvents} setValue={setDateOchStartEvents} formErrors={setError}
         />
       }
       case 'dateOchEndEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateOchEnd, setDateOchEnd] = useState(values[input]);
+        const [dateOchEndEvents, setDateOchEndEvents] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateOchEnd = dateOchEnd;
-        formErrors.dateOchEnd = error;
+        formValues.dateOchEndEvents = dateOchEndEvents;
+        formErrors.dateOchEndEvents = error;
         return <InputDate name={input} placeholder='Введите дату церемонии награждения' fieldName='Дата награждения'
-                          value={dateOchEnd} setValue={setDateOchEnd} formErrors={setError}
+                          value={dateOchEndEvents} setValue={setDateOchEndEvents} formErrors={setError}
         />
       }
 
       case 'dateKnrFirstEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateKnrFirst, setDateKnrFirst] = useState(values[input]);
+        const [dateKnrFirstEvents, setDateKnrFirstEvents] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateKnrFirst = dateKnrFirst;
-        formErrors.dateKnrFirst = error;
+        formValues.dateKnrFirstEvents = dateKnrFirstEvents;
+        formErrors.dateKnrFirstEvents = error;
         return <InputDate name={input} placeholder='Введите дату 1 тура' fieldName='Дата 1 тура'
-                          value={dateKnrFirst} setValue={setDateKnrFirst} formErrors={setError}
+                          value={dateKnrFirstEvents} setValue={setDateKnrFirstEvents} formErrors={setError}
         />
       }
       case 'dateKnrSecondEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateKnrSecond, setDateKnrSecond] = useState(values[input]);
+        const [dateKnrSecondEvents, setDateKnrSecondEvents] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateKnrSecond = dateKnrSecond;
-        formErrors.dateKnrSecond = error;
+        formValues.dateKnrSecondEvents = dateKnrSecondEvents;
+        formErrors.dateKnrSecondEvents = error;
         return <InputDate name={input} placeholder='Введите дату 2 тура' fieldName='Дата 2 тура'
-                          value={dateKnrSecond} setValue={setDateKnrSecond} formErrors={setError}
+                          value={dateKnrSecondEvents} setValue={setDateKnrSecondEvents} formErrors={setError}
         />
       }
       case 'dateKnrThirdEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateKnrThird, setDateKnrThird] = useState(values[input]);
+        const [dateKnrThirdEvents, setDateKnrThirdEvents] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateKnrThird = dateKnrThird;
-        formErrors.dateKnrThird = error;
+        formValues.dateKnrThirdEvents = dateKnrThirdEvents;
+        formErrors.dateKnrThirdEvents = error;
         return <InputDate name={input} placeholder='Введите дату 3 тура' fieldName='Дата 3 тура'
-                          value={dateKnrThird} setValue={setDateKnrThird} formErrors={setError}
+                          value={dateKnrThirdEvents} setValue={setDateKnrThirdEvents} formErrors={setError}
         />
       }
 
