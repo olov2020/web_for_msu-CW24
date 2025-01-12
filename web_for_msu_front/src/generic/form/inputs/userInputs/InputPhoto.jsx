@@ -92,14 +92,12 @@ const InputPhoto = ({name = '', fieldName, accept = '', multiple = false, requir
         src={imageUrl}
         alt='Фото новости'
         onClick={handleImageClick}
-        style={`${{
+        style={{
           cursor: 'pointer',
           alignSelf: 'center',
           width: '30%',
           objectFit: 'contain',
-      }} ${name === 'photo' && {
-        borderRadius: '50%',
-        }}`}
+      }}
       />
     </div>
   );
