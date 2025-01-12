@@ -70,6 +70,7 @@ const Profile = () => {
       (
         <Link to={ACCOUNT_ROUTE} style={{
           display: 'flex',
+          alignItems: 'center',
         }}>
           <div className={style.profile__info}>
             <h3>{userInfo.name}</h3>

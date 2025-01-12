@@ -14,9 +14,10 @@ const Account = () => {
       const data = authStatus.includes('pupil') ? await getPupilInfo() : await getTeacherInfo();
       setUser(data);
     }
+    console.log(user);
 
     getUserDataFunc();
-  }, [JSON.stringify(user)]);
+  }, []);
 
   return (
     <article className={style.account}>
