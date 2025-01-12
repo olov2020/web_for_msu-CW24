@@ -1,13 +1,8 @@
 import {$authHost, $host} from "./axiosApi.js";
-import axios from "axios";
 
 export const getUserData = async () => {
   try {
-    const response = await axios.get('/api/home/user_info/', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
-    });
+    const response = await $authHost.get('/api/home/user_info/');
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch user data: ${error}`);
