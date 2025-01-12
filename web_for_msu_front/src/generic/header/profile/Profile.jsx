@@ -15,6 +15,7 @@ const Profile = () => {
   const user = useSelector(state => state.user);
   const [userInfo, setUserInfo] = useState({});
   const prevPathnameRef = useRef(location.pathname);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUserDataFunc = async () => {
@@ -26,9 +27,8 @@ const Profile = () => {
       getUserDataFunc();
       prevPathnameRef.current = location.pathname;
     }
-  }, [location.pathname]);
+  }, [dispatch]);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userLogout = () => {
     try {
