@@ -357,7 +357,7 @@ const ListOfPeople = () => {
 
             <section style={{
               display: 'flex',
-              width: '40%',
+              maxWidth: '40%',
               overflow: 'auto',
             }}>
               <div className={style.itemTeacher} style={{
