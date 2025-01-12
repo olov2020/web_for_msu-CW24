@@ -349,46 +349,71 @@ const ListOfPeople = () => {
         <section className={style.section}>
           <div className={style.container}>
             <h2 className={style.itemTeacher} style={{
-              width: '15%',
+              width: '20%',
             }}>ФИО</h2>
             <h2 className={style.itemTeacher} style={{
-              width: '10%',
+              width: '15%',
             }}>Почта</h2>
-            <div className={style.itemTeacher} style={{
-              width: '25%',
-            }}>
-              <h2>Функциональная роль</h2>
 
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: '100%',
-              }}>
-                <p>Добавление новостей</p>
-                <p>Добавление курсов</p>
-                <p>Просмотр ведомостей</p>
-                <p>Назначение аудиторий</p>
-              </div>
-            </div>
-            <div className={style.itemTeacher} style={{
-              width: '30%',
+            <section style={{
+              display: 'flex',
+              width: '40%',
+              overflow: 'auto',
             }}>
-              <h2>Статус организатора</h2>
-
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: '100%',
+              <div className={style.itemTeacher} style={{
+                width: '30%',
               }}>
-                <p className={style.itemTeacher}>Конкурс научных работ</p>
-                <p className={style.itemTeacher}>Выездная школа</p>
-                <p className={style.itemTeacher}>Летняя школа</p>
-                <p className={style.itemTeacher}>Вступительные очные</p>
-                <p className={style.itemTeacher}>Вступительные онлайн</p>
+                <h2>Функциональная роль</h2>
+
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                  width: '100%',
+                }}>
+                  <p className={style.itemTeacher}>Добавление новостей</p>
+                  <p className={style.itemTeacher}>Добавление курсов</p>
+                  <p className={style.itemTeacher}>Просмотр ведомостей</p>
+                  <p className={style.itemTeacher}>Назначение аудиторий</p>
+                </div>
               </div>
-            </div>
+
+              <div className={style.itemTeacher} style={{
+                width: '30%',
+              }}>
+                <h2>Статус организатора</h2>
+
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                  width: '100%',
+                }}>
+                  <p className={style.itemTeacher}>Конкурс научных работ</p>
+                  <p className={style.itemTeacher}>Выездная школа</p>
+                  <p className={style.itemTeacher}>Летняя школа</p>
+                  <p className={style.itemTeacher}>Вступительные очные</p>
+                  <p className={style.itemTeacher}>Вступительные онлайн</p>
+                </div>
+              </div>
+
+              <div className={style.itemTeacher} style={{
+                width: '30%',
+              }}>
+                <h2>Статус в ЭМШ</h2>
+
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                  width: '100%',
+                }}>
+                  <p className={style.itemTeacher}>Дирекция</p>
+                  <p className={style.itemTeacher}>Совет</p>
+                </div>
+              </div>
+            </section>
+
             <h2 className={style.itemTeacher} style={{
               width: '20%',
             }}>Статус преподавателя</h2>

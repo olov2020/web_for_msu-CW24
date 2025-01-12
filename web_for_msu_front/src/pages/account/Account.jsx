@@ -8,20 +8,17 @@ import {useLocation} from "react-router-dom";
 const Account = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
     const getUserDataFunc = async () => {
       const data = authStatus.includes('pupil') ? await getPupilInfo() : await getTeacherInfo();
-      console.log(data)
-      setUser(JSON.parse(data));
+      setUser(data);
     }
 
     getUserDataFunc();
   }, [location]);
-
-  console.log(user);
 
   return (
     <article className={style.account}>
