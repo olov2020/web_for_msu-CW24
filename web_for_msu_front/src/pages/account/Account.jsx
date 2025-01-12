@@ -1,14 +1,15 @@
 import style from './account.module.css'
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import Form from "../../generic/form/Form.jsx";
 import {useEffect, useState} from "react";
 import {getPupilInfo, getTeacherInfo} from "../../api/userApi.js";
+import {useLocation} from "react-router-dom";
 
 const Account = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
   const [user, setUser] = useState({});
-  const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     const getUserDataFunc = async () => {
@@ -17,7 +18,7 @@ const Account = () => {
     }
 
     getUserDataFunc();
-  }, [dispatch, user]);
+  }, [location]);
 
   console.log(user);
 

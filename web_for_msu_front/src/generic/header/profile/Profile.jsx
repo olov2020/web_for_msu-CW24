@@ -23,7 +23,7 @@ const Profile = () => {
     };
 
     getUserDataFunc();
-  }, [dispatch, user]);
+  }, [dispatch, location]);
 
   const navigate = useNavigate();
   const userLogout = () => {
