@@ -14,7 +14,6 @@ const Profile = () => {
   const location = useLocation();
   const user = useSelector(state => state.user);
   const [userInfo, setUserInfo] = useState({});
-  const prevPathnameRef = useRef(location.pathname);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,10 +22,7 @@ const Profile = () => {
       setUserInfo(data);
     };
 
-    if (prevPathnameRef.current !== location.pathname) {
-      getUserDataFunc();
-      prevPathnameRef.current = location.pathname;
-    }
+    getUserDataFunc();
   }, []);
 
   const navigate = useNavigate();
@@ -45,11 +41,11 @@ const Profile = () => {
   if (location.pathname === '/account' || location.pathname === '/admin') {
     return (
       <ButtonSubmit text='Выйти из аккаунта' onClick={userLogout} type='delete'
-        style={{
-          width: '90%',
-          padding: '1rem 2rem',
-          borderRadius: '1rem',
-        }}
+                    style={{
+                      width: '90%',
+                      padding: '1rem 2rem',
+                      borderRadius: '1rem',
+                    }}
       />
     )
   }
