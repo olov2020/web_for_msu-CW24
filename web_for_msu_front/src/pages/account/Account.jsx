@@ -1,5 +1,5 @@
 import style from './account.module.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Form from "../../generic/form/Form.jsx";
 import {useEffect, useState} from "react";
 import {getPupilInfo, getTeacherInfo} from "../../api/userApi.js";
@@ -8,6 +8,7 @@ const Account = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
   const [user, setUser] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUserDataFunc = async () => {
@@ -16,7 +17,7 @@ const Account = () => {
     }
 
     getUserDataFunc();
-  }, []);
+  }, [dispatch, user]);
 
   console.log(user);
 

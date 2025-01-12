@@ -3,7 +3,7 @@ import styleHeader from "../header.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADMIN_ROUTE, HOME_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {getUserData} from "../../../api/userApi.js";
 import ButtonSubmit from "../../form/submit/ButtonSubmit.jsx";
 import {setNotAuthAction} from "../../../store/UserReducers.js";
@@ -23,7 +23,7 @@ const Profile = () => {
     };
 
     getUserDataFunc();
-  }, []);
+  }, [dispatch, user]);
 
   const navigate = useNavigate();
   const userLogout = () => {

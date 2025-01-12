@@ -1,5 +1,4 @@
 import {$authHost, $host} from "./axiosApi.js";
-
 export const getUserData = async () => {
   try {
     const response = await $authHost.get('/api/home/user_info/');

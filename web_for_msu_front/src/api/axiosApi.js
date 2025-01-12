@@ -1,6 +1,6 @@
 import axios from "axios";
-import { LOGIN_ROUTE } from "../routing/consts.js";
-import { setNotAuthAction } from "../store/UserReducers.js";
+import {LOGIN_ROUTE} from "../routing/consts.js";
+import {setNotAuthAction} from "../store/UserReducers.js";
 import store from "../store/index.js";
 
 export const $host = axios.create({
@@ -12,10 +12,7 @@ export const $authHost = axios.create({
 });
 
 const authInterceptor = config => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
   return config;
 };
 
@@ -24,7 +21,7 @@ const refreshToken = async () => {
     const response = await $authHost.post('/home/refresh', {
       refresh_token: localStorage.getItem("refreshToken")
     });
-    const { access_token } = response.data;
+    const {access_token} = response.data;
     localStorage.setItem("token", access_token);
     return access_token;
   } catch (error) {
