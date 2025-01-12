@@ -18,7 +18,6 @@ const Input = ({fieldName = '', placeholder = '', isValid = true, error = '', ..
                  `${styleInput.invalid}`}
                   ${styleInput.input}`
              }
-             value={props.value}
       />
 
       <p className={styleInput.errorMessage}>

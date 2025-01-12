@@ -14,7 +14,7 @@ const Account = () => {
   useEffect(() => {
     const getUserDataFunc = async () => {
       const data = authStatus.includes('pupil') ? await getPupilInfo() : await getTeacherInfo();
-      setUser(data);
+      setUser(JSON.parse(data));
     }
 
     getUserDataFunc();
