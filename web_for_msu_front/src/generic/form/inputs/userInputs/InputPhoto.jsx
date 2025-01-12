@@ -80,7 +80,7 @@ const InputPhoto = ({name = '', fieldName, accept = '', multiple = false, requir
           className={styleInput.input}
           onChange={handleInputChange}
           ref={fileInputRef}
-          style={{ display: 'none' }} // Hide the file input
+          style={{ display: 'none' }}
         />
 
         <p className={styleInput.errorMessage}>
@@ -92,12 +92,14 @@ const InputPhoto = ({name = '', fieldName, accept = '', multiple = false, requir
         src={imageUrl}
         alt='Фото новости'
         onClick={handleImageClick}
-        style={{
+        style={`${{
           cursor: 'pointer',
           alignSelf: 'center',
           width: '30%',
           objectFit: 'contain',
-      }} // Make the image clickable
+      }} ${name === 'photo' && {
+        borderRadius: '50%',
+        }}`}
       />
     </div>
   );
