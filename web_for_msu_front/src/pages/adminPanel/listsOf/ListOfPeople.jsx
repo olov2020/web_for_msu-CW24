@@ -347,19 +347,24 @@ const ListOfPeople = () => {
 
       {url.includes('teachers') && (
         <section className={style.section}>
-          <div className={style.container}>
-            <h2 className={style.itemTeacher} style={{
-              width: '20%',
-            }}>ФИО</h2>
-            <h2 className={style.itemTeacher} style={{
-              width: '15%',
-            }}>Почта</h2>
+          <section className={style.teachers}>
+            <h2>ФИО</h2>
+            {/* eslint-disable-next-line react/prop-types */}
+            {people.map((person) => (
+              <h3 key={person.id}>{person.name}</h3>
+            ))}
+          </section>
 
-            <section style={{
-              display: 'flex',
-              maxWidth: '40%',
-              overflow: 'auto',
-            }}>
+          <section className={style.email}>
+            <h2>Почта</h2>
+            {/* eslint-disable-next-line react/prop-types */}
+            {people.map((person) => (
+              <p key={person.id}><a href={`mailto:${person.email}`}>{person.email}</a></p>
+            ))}
+          </section>
+
+          <section className={style.roles}>
+            <section className={style.admins}>
               <div className={style.itemTeacher}>
                 <h2>Функциональная роль</h2>
 
@@ -377,6 +382,36 @@ const ListOfPeople = () => {
                 </div>
               </div>
 
+              <div className={style.itemTeacher} style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '25%',
+              }}>
+                {people.map((person) => (
+                  <>
+                    <ToggleSwitch value={person.roles.includes('newsmaker')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
+                    <ToggleSwitch value={person.roles.includes('coursemaker')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
+                    <ToggleSwitch value={person.roles.includes('marksmaker')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
+                    <ToggleSwitch value={person.roles.includes('auditorymaker')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
+                  </>
+                ))}
+              </div>
+            </section>
+
+            <section className={style.organisators}>
               <div className={style.itemTeacher}>
                 <h2>Статус организатора</h2>
 
@@ -395,6 +430,40 @@ const ListOfPeople = () => {
                 </div>
               </div>
 
+              <div className={style.itemTeacher} style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: '30%',
+              }}>
+                {people.map((person) => (
+                  <>
+                    <ToggleSwitch value={person.roles.includes('knr')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
+                    <ToggleSwitch value={person.roles.includes('vsh')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
+                    <ToggleSwitch value={person.roles.includes('lsh')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
+                    <ToggleSwitch value={person.roles.includes('tests_offline')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
+                    <ToggleSwitch value={person.roles.includes('tests_online')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
+                  </>
+                ))}
+              </div>
+            </section>
+
+            <section className={style.emschRoles}>
               <div className={style.itemTeacher}>
                 <h2>Статус в ЭМШ</h2>
 
@@ -409,98 +478,56 @@ const ListOfPeople = () => {
                   <p className={style.itemTeacher}>Совет</p>
                 </div>
               </div>
+
+              {people.map((person) => (
+                <>
+                  <ToggleSwitch value={person.roles.includes('tests_offline')}
+                                onClick={() => setUpdateList(!updateList)}
+                                funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
+                                funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
+                  <ToggleSwitch value={person.roles.includes('tests_online')}
+                                onClick={() => setUpdateList(!updateList)}
+                                funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
+                                funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
+                </>
+              ))}
             </section>
+          </section>
 
-            <h2 className={style.itemTeacher} style={{
+          <section className={style.actions}>
+
+            <h2>Статус преподавателя</h2>
+            <div className={style.itemTeacher} style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
               width: '20%',
-            }}>Статус преподавателя</h2>
-          </div>
+              gap: '0 1rem',
+            }}>
 
-          {people.map((person) => (
-            <div key={person.id} className={style.container}>
-              <h3 className={style.itemTeacher} style={{
-                width: '15%',
-              }}>{person.name}</h3>
-              <p className={style.itemTeacher} style={{
-                width: '10%',
-              }}><a href={`mailto:${person.email}`}>{person.email}</a></p>
-              <div className={style.itemTeacher} style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: '25%',
-              }}>
-                <ToggleSwitch value={person.roles.includes('newsmaker')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
-                <ToggleSwitch value={person.roles.includes('coursemaker')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
-                <ToggleSwitch value={person.roles.includes('marksmaker')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
-                <ToggleSwitch value={person.roles.includes('auditorymaker')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
-              </div>
-              <div className={style.itemTeacher} style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: '30%',
-              }}>
-                <ToggleSwitch value={person.roles.includes('knr')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
-                <ToggleSwitch value={person.roles.includes('vsh')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
-                <ToggleSwitch value={person.roles.includes('lsh')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
-                <ToggleSwitch value={person.roles.includes('tests_offline')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
-                <ToggleSwitch value={person.roles.includes('tests_online')}
-                              onClick={() => setUpdateList(!updateList)}
-                              funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
-                              funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
-              </div>
-              <div className={style.itemTeacher} style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '20%',
-                gap: '0 1rem',
-              }}>
-                {!person.authorized ?
-                  <>
-                    <ButtonSubmit text='Добавить' onClick={() => {
-                      addTeacherFunc(person.id)
-                    }}/>
-                    <ButtonSubmit text='Удалить' type='delete' onClick={() => {
-                      deleteTeacherFunc(person.id)
-                    }}/>
-                  </> :
-                  <>
-                    <h3>Преподаватель добавлен</h3>
-                    <img src={checkMarkIcon} alt='Добавлен' style={{
-                      width: '2rem',
-                      objectFit: 'contain',
-                    }}/>
-                  </>
-                }
-              </div>
+              {people.map((person) => (
+                <>
+                  {!person.authorized ?
+                    <>
+                      <ButtonSubmit text='Добавить' onClick={() => {
+                        addTeacherFunc(person.id)
+                      }}/>
+                      <ButtonSubmit text='Удалить' type='delete' onClick={() => {
+                        deleteTeacherFunc(person.id)
+                      }}/>
+                    </> :
+                    <>
+                      <h3>Преподаватель добавлен</h3>
+                      <img src={checkMarkIcon} alt='Добавлен' style={{
+                        width: '2rem',
+                        objectFit: 'contain',
+                      }}/>
+                    </>
+                  }
+                </>
+              ))}
             </div>
-          ))}
+          </section>
         </section>
       )}
 
