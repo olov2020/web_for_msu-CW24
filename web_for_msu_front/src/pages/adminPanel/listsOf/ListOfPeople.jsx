@@ -360,9 +360,7 @@ const ListOfPeople = () => {
               maxWidth: '40%',
               overflow: 'auto',
             }}>
-              <div className={style.itemTeacher} style={{
-                width: '30%',
-              }}>
+              <div className={style.itemTeacher}>
                 <h2>Функциональная роль</h2>
 
                 <div style={{
@@ -370,6 +368,7 @@ const ListOfPeople = () => {
                   justifyContent: 'space-around',
                   alignItems: 'center',
                   width: '100%',
+                  whiteSpace: 'nowrap',
                 }}>
                   <p className={style.itemTeacher}>Добавление новостей</p>
                   <p className={style.itemTeacher}>Добавление курсов</p>
@@ -378,9 +377,7 @@ const ListOfPeople = () => {
                 </div>
               </div>
 
-              <div className={style.itemTeacher} style={{
-                width: '30%',
-              }}>
+              <div className={style.itemTeacher}>
                 <h2>Статус организатора</h2>
 
                 <div style={{
@@ -388,6 +385,7 @@ const ListOfPeople = () => {
                   justifyContent: 'space-around',
                   alignItems: 'center',
                   width: '100%',
+                  whiteSpace: 'nowrap',
                 }}>
                   <p className={style.itemTeacher}>Конкурс научных работ</p>
                   <p className={style.itemTeacher}>Выездная школа</p>
@@ -397,9 +395,7 @@ const ListOfPeople = () => {
                 </div>
               </div>
 
-              <div className={style.itemTeacher} style={{
-                width: '30%',
-              }}>
+              <div className={style.itemTeacher}>
                 <h2>Статус в ЭМШ</h2>
 
                 <div style={{
@@ -407,6 +403,7 @@ const ListOfPeople = () => {
                   justifyContent: 'space-around',
                   alignItems: 'center',
                   width: '100%',
+                  whiteSpace: 'nowrap',
                 }}>
                   <p className={style.itemTeacher}>Дирекция</p>
                   <p className={style.itemTeacher}>Совет</p>
