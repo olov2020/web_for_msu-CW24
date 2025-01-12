@@ -27,7 +27,7 @@ const Profile = () => {
       getUserDataFunc();
       prevPathnameRef.current = location.pathname;
     }
-  }, [dispatch]);
+  }, []);
 
   const navigate = useNavigate();
   const userLogout = () => {
