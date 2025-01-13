@@ -679,7 +679,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.newsPhoto = newsPhoto;
         return <InputPhoto name={input}
                            fieldName='Фотография новости'
-                           value={newsPhoto}
                            setValue={setNewsPhoto}
                            accept='image/png, image/gif, image/jpeg, image/jpg'
         />
