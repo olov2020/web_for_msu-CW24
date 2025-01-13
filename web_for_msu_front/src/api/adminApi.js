@@ -252,7 +252,7 @@ export const setSovetTeacher = async (userId) => {
 }
 
 export const deleteKNRAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/knr/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/knr/${userId}/`);
 
   try {
     return response.data;
@@ -262,7 +262,7 @@ export const deleteKNRAdmin = async (userId) => {
 }
 
 export const deleteVSHAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/vsh/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/vsh/${userId}/`);
 
   try {
     return response.data;
@@ -272,7 +272,7 @@ export const deleteVSHAdmin = async (userId) => {
 }
 
 export const deleteLSHAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/lsh/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/lsh/${userId}/`);
 
   try {
     return response.data;
@@ -282,7 +282,7 @@ export const deleteLSHAdmin = async (userId) => {
 }
 
 export const deleteTestsOfflineAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/tests_offline/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/tests_offline/${userId}/`);
 
   try {
     return response.data;
@@ -292,7 +292,7 @@ export const deleteTestsOfflineAdmin = async (userId) => {
 }
 
 export const deleteTestsOnlineAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/tests_online/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/tests_online/${userId}/`);
 
   try {
     return response.data;
@@ -302,7 +302,7 @@ export const deleteTestsOnlineAdmin = async (userId) => {
 }
 
 export const deleteDirectoryTeacher = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/directory/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/directory/${userId}/`);
 
   try {
     return response.data;
@@ -312,7 +312,7 @@ export const deleteDirectoryTeacher = async (userId) => {
 }
 
 export const deleteSovetTeacher = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/sovet/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/sovet/${userId}/`);
 
   try {
     return response.data;
