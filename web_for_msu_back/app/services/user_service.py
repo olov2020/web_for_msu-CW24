@@ -8,6 +8,7 @@ import flask
 import pytz
 from flask_jwt_extended import get_jwt_identity, create_access_token, create_refresh_token, decode_token
 from marshmallow import ValidationError
+from sqlalchemy import desc
 from werkzeug.datastructures import FileStorage
 
 from web_for_msu_back.app.dto.login import LoginDTO
@@ -183,7 +184,7 @@ class UserService:
             Pupil.graduated,
             Pupil.former,
             User.authorized,
-        ).join(User, Pupil.user_id == User.id)
+        ).join(User, Pupil.user_id == User.id).order_by(desc(User.created_on), desc(User.id))
 
         result = []
         for user in users:
@@ -211,7 +212,7 @@ class UserService:
             Teacher.surname,
             Teacher.patronymic,
             User.authorized,
-        ).join(User, Teacher.user_id == User.id)
+        ).join(User, Teacher.user_id == User.id).order_by(desc(User.created_on), desc(User.id))
 
         result = []
         for user in users:
@@ -219,6 +220,8 @@ class UserService:
                      .join(user_role, user_role.c.role_id == Role.id)
                      .filter(user_role.c.user_id == user.id).all())
             role_names = [role.name for role in roles]
+            if "admin" in role_names:
+                continue
             data = {
                 "id": user.id,
                 "name": f"{user.surname} {user.name} {user.patronymic}",
