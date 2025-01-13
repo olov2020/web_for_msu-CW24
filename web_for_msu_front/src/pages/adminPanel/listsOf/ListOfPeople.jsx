@@ -490,36 +490,28 @@ const ListOfPeople = () => {
 
           <section className={style.actions}>
             <h2>Статус преподавателя</h2>
-            <div className={style.itemTeacher} style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '20%',
-              gap: '0 1rem',
-            }}>
 
-              {people.map((person) => (
-                <>
-                  {!person.authorized ?
-                    <>
-                      <ButtonSubmit text='Добавить' onClick={() => {
-                        addTeacherFunc(person.id)
-                      }}/>
-                      <ButtonSubmit text='Удалить' type='delete' onClick={() => {
-                        deleteTeacherFunc(person.id)
-                      }}/>
-                    </> :
-                    <>
-                      <h3>Преподаватель добавлен</h3>
-                      <img src={checkMarkIcon} alt='Добавлен' style={{
-                        width: '2rem',
-                        objectFit: 'contain',
-                      }}/>
-                    </>
-                  }
-                </>
-              ))}
-            </div>
+            {people.map((person) => (
+              <>
+                {!person.authorized ?
+                  <>
+                    <ButtonSubmit text='Добавить' onClick={() => {
+                      addTeacherFunc(person.id)
+                    }}/>
+                    <ButtonSubmit text='Удалить' type='delete' onClick={() => {
+                      deleteTeacherFunc(person.id)
+                    }}/>
+                  </> :
+                  <>
+                    <h3>Преподаватель добавлен</h3>
+                    <img src={checkMarkIcon} alt='Добавлен' style={{
+                      width: '2rem',
+                      objectFit: 'contain',
+                    }}/>
+                  </>
+                }
+              </>
+            ))}
           </section>
         </section>
       )}

@@ -36,7 +36,6 @@
 
 .roles {
     display: flex;
-    flex-direction: column;
     max-width: 50%;
     overflow: auto;
 
