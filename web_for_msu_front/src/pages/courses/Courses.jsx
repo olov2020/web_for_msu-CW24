@@ -15,19 +15,19 @@ const Courses = () => {
 
   useEffect(() => {
     const getCourses = async () => {
-      const data = url === '/courses/my' ?
+      const data = url.include('/my') ?
         authStatus.include('pupil') ?
           await getMyCoursesPupil() :
           await getMyCoursesTeacher() :
-        url === '/courses/all' ?
+        url.include('/all') ?
           await getAllCourses() : undefined;
 
       setCoursesAll(data);
-      setIsMyCourses(url === '/courses/my');
+      setIsMyCourses(url.include('/my'));
     }
 
     getCourses();
-  }, []);
+  }, [url]);
 
   const currentYear = new Date().getFullYear();
   const years = [];
