@@ -14,9 +14,10 @@ class Mark(db.Model):
     comment = db.Column(db.String())
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
 
-    def __init__(self, schedule_id, pupil_id, mark, comment, course_id):
+    def __init__(self, schedule_id, pupil_id, mark, comment, course_id, formula_id):
         self.schedule_id = schedule_id
         self.pupil_id = pupil_id
         self.mark = mark
         self.comment = comment
         self.course_id = course_id
+        self.formula_id = formula_id

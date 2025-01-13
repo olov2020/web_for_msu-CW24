@@ -223,14 +223,31 @@ class MarkService:
         self.db.session.commit()
         return marks_dto, 200
 
-    def get_pupil_marks(self, course_id: int, pupil_id: int, lessons: list[Schedule]) -> list[Mark]:
+    def get_pupil_marks(self, course_id: int, pupil_id: int, lessons: list[Schedule]) -> list[list[Mark]]:
         marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
                  .order_by(Mark.schedule_id).all())
+        formulas = Formula.query.filter(Formula.course_id == course_id).order_by(Formula.id).all()
+        formulas_ids = [formula.id for formula in formulas]
         lessons_ids = [lesson.id for lesson in lessons]
-        pupil_marks = sorted([mark for mark in marks if mark.schedule_id in lessons_ids],
-                             key=lambda mark: lessons_ids.index(mark.schedule_id))
-
-        return pupil_marks
+        pupil_marks = {}
+        for mark in marks:
+            pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, []).append(mark)
+        pupil_marks_list = []
+        dates = sorted(list(pupil_marks.keys()), key=lambda mark: lessons_ids.index(mark.schedule_id))
+        for date in dates:
+            pupil_marks[date].sort(key=lambda mark: formulas_ids.index(mark.formula_id))
+            i = j = 0
+            marks_list = []
+            while i < len(formulas_ids) and j < len(formulas_ids):
+                if formulas_ids[i] == pupil_marks[date][j].formula_id:
+                    marks_list.append(pupil_marks[date][j])
+                    i += 1
+                    j += 1
+                elif formulas_ids[i] < pupil_marks_list[date][j].formula_id:
+                    marks_list.append(Mark(date, pupil_id, "", "", course_id, formulas_ids[i]))
+                    i += 1
+            pupil_marks_list.append(marks_list)
+        return pupil_marks_list
 
     def extend_pupil_marks(self, marks: list[Mark], lessons: list[Schedule]) -> list[str]:
         pupil_marks = marks
