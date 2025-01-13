@@ -254,7 +254,6 @@ class MarkService:
                                                 PupilCourse.pupil_id == pupil_id).first()
         if not pupil_course:
             return {'error': 'Ученик не записан на этот курс'}, 404
-        course_name = course.name
         formulas = course.formulas
         lessons = self.get_lessons_by_part(course, course_id, "current")
         marks = self.get_pupil_marks(course_id, pupil_id, lessons)
@@ -262,15 +261,12 @@ class MarkService:
         dates = [lesson.date.strftime('%d.%m.%Y') for lesson in lessons]
         mark_types = [lesson.formulas.name if lesson.formulas else 'Присутствие' for lesson in lessons]
         marks = [mark.mark for mark in marks]
-        skips = sum([mark.upper() in ["H", "Н"] for mark in marks])
         result = self.calculate_result(marks, mark_types, formulas)
         data = {
-            'course_name': course_name,
             'dates': dates,
             'mark_types': mark_types,
             'marks': marks,
-            'skips': skips,
-            'result': result
+            'result': result,
         }
         try:
             pupil_marks_dto = PupilMarksDTO().load(data)
