@@ -141,7 +141,7 @@ export const setAuditoryAdmin = async (userId) => {
 }
 
 export const deleteNewsAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/news/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/news/${userId}/`);
 
   try {
     return response.data;
@@ -151,7 +151,7 @@ export const deleteNewsAdmin = async (userId) => {
 }
 
 export const deleteCourseAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/course/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/course/${userId}/`);
 
   try {
     return response.data;
@@ -161,7 +161,7 @@ export const deleteCourseAdmin = async (userId) => {
 }
 
 export const deleteMarksAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/marks/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/marks/${userId}/`);
 
   try {
     return response.data;
@@ -171,7 +171,7 @@ export const deleteMarksAdmin = async (userId) => {
 }
 
 export const deleteAuditoryAdmin = async (userId) => {
-  const response = await $authHost.post(`/admin/role/delete/auditory/${userId}/`);
+  const response = await $authHost.delete(`/admin/role/delete/auditory/${userId}/`);
 
   try {
     return response.data;
