@@ -108,77 +108,77 @@ const ListOfPeople = () => {
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setCourseAdmin': {
         const data = await setCourseAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setMarksAdmin': {
         const data = await setMarksAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setAuditoryAdmin': {
         const data = await setAuditoryAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setKNRAdmin': {
         const data = await setKNRAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setVSHAdmin': {
         const data = await setVSHAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setLSHAdmin': {
         const data = await setLSHAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setTestsOfflineAdmin': {
         const data = await setTestsOfflineAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setTestsOnlineAdmin': {
         const data = await setTestsOnlineAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setDirectoryTeacher': {
         const data = await setDirectoryTeacher(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'setSovetTeacher': {
         const data = await setSovetTeacher(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       default:
         return Promise.reject(new Error('Invalid function name'));
@@ -192,77 +192,77 @@ const ListOfPeople = () => {
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteCourseAdmin': {
         const data = await deleteCourseAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteMarksAdmin': {
         const data = await deleteMarksAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteAuditoryAdmin': {
         const data = await deleteAuditoryAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteKNRAdmin': {
         const data = await deleteKNRAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteVSHAdmin': {
         const data = await deleteVSHAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteLSHAdmin': {
         const data = await deleteLSHAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteTestsOfflineAdmin': {
         const data = await deleteTestsOfflineAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteTestsOnlineAdmin': {
         const data = await deleteTestsOnlineAdmin(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteDirectoryTeacher': {
         const data = await deleteDirectoryTeacher(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       case 'deleteSovetTeacher': {
         const data = await deleteSovetTeacher(userId);
         if (data) {
           setUpdateList(!updateList);
         }
-        return;
+        return data;
       }
       default:
         return Promise.reject(new Error('Invalid function name'));
@@ -402,20 +402,22 @@ const ListOfPeople = () => {
 
               <div className={style.toggleswitch}>
                 {people.map((person) => (
-                  <div key={person.id} className={style.rolesSection}>
-                    <ToggleSwitch value={person.roles.includes('newsmaker')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
-                    <ToggleSwitch value={person.roles.includes('coursemaker')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
-                    <ToggleSwitch value={person.roles.includes('marksmaker')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
-                    <ToggleSwitch value={person.roles.includes('auditorymaker')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
-                  </div>
+                  person.authorized ?
+                    <div key={person.id} className={style.rolesSection}>
+                      <ToggleSwitch value={person.roles.includes('newsmaker')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
+                      <ToggleSwitch value={person.roles.includes('coursemaker')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setCourseAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteCourseAdmin')}/>
+                      <ToggleSwitch value={person.roles.includes('marksmaker')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setMarksAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteMarksAdmin')}/>
+                      <ToggleSwitch value={person.roles.includes('auditorymaker')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
+                    </div> :
+                    <h3 key={person.id}>Нет доступных действий</h3>
                 ))}
               </div>
             </section>
@@ -434,23 +436,25 @@ const ListOfPeople = () => {
 
               <div className={style.toggleswitch}>
                 {people.map((person) => (
-                  <div key={person.id} className={style.rolesSection}>
-                    <ToggleSwitch value={person.roles.includes('knr')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
-                    <ToggleSwitch value={person.roles.includes('vsh')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
-                    <ToggleSwitch value={person.roles.includes('lsh')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
-                    <ToggleSwitch value={person.roles.includes('tests_offline')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
-                    <ToggleSwitch value={person.roles.includes('tests_online')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
-                  </div>
+                  person.authorized ?
+                    <div key={person.id} className={style.rolesSection}>
+                      <ToggleSwitch value={person.roles.includes('knr')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
+                      <ToggleSwitch value={person.roles.includes('vsh')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setVSHAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteVSHAdmin')}/>
+                      <ToggleSwitch value={person.roles.includes('lsh')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setLSHAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteLSHAdmin')}/>
+                      <ToggleSwitch value={person.roles.includes('tests_offline')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
+                      <ToggleSwitch value={person.roles.includes('tests_online')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
+                    </div> :
+                    <h3 key={person.id}>Нет доступных действий</h3>
                 ))}
               </div>
             </section>
@@ -466,14 +470,16 @@ const ListOfPeople = () => {
 
               <div className={style.toggleswitch}>
                 {people.map((person) => (
-                  <div key={person.id} className={style.rolesSection}>
-                    <ToggleSwitch value={person.roles.includes('directory')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteDirectoryTeacher')}/>
-                    <ToggleSwitch value={person.roles.includes('sover')}
-                                  funcOn={async () => await addAdminRole(person.id, 'setSovetTeacher')}
-                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteSovetTeacher')}/>
-                  </div>
+                  person.authorized ?
+                    <div key={person.id} className={style.rolesSection}>
+                      <ToggleSwitch value={person.roles.includes('directory')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteDirectoryTeacher')}/>
+                      <ToggleSwitch value={person.roles.includes('sover')}
+                                    funcOn={async () => await addAdminRole(person.id, 'setSovetTeacher')}
+                                    funcOff={async () => await deleteAdminRole(person.id, 'deleteSovetTeacher')}/>
+                    </div> :
+                    <h3 key={person.id}>Нет доступных действий</h3>
                 ))}
               </div>
             </section>
@@ -483,7 +489,11 @@ const ListOfPeople = () => {
             <h2>Статус преподавателя</h2>
 
             {people.map((person) => (
-              <>
+              <div key={person.id} style={{
+                display: 'flex',
+                gap: '0 1rem',
+                alignItems: 'center',
+              }}>
                 {!person.authorized ?
                   <>
                     <ButtonSubmit text='Добавить' onClick={() => {
@@ -501,7 +511,7 @@ const ListOfPeople = () => {
                     }}/>
                   </>
                 }
-              </>
+              </div>
             ))}
           </section>
         </section>

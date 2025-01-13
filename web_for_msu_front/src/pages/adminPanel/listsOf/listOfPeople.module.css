@@ -36,13 +36,14 @@
 
 .roles {
     display: flex;
-    max-width: 50%;
+    max-width: 80%;
     overflow-x: auto;
     gap: 0 2rem;
 
     > section {
         display: flex;
         flex-direction: column;
+        align-items: center;
         width: 100%;
     }
 }
@@ -52,6 +53,7 @@
     justify-content: space-around;
     width: 100%;
     gap: 0 1rem;
+    white-space: nowrap;
 }
 
 .toggleswitch {
