@@ -37,6 +37,7 @@ import {setCoursesAuditoriums} from "../../api/adminApi.js";
 // eslint-disable-next-line react/prop-types
 const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
+  console.log(values)
   const dispatch = useDispatch();
   const formValues = useState({});
   const formErrors = useState({});
