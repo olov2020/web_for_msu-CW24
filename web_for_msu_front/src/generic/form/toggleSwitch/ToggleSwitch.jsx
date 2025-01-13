@@ -8,7 +8,7 @@ const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
     try {
       if (!toggled) {
         const response = await funcOn();
-        if (response) {
+        if (response.msg === 'Роль добавлена') {
           setToggled(!toggled);
           onClick();
         }
@@ -17,7 +17,7 @@ const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
         }
       } else {
         const response = await funcOff();
-        if (response) {
+        if (response.msg === 'Роль добавлена') {
           setToggled(!toggled);
           onClick();
         }
