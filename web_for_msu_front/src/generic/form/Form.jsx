@@ -1,4 +1,6 @@
 import style from './form.module.css'
+import defaultUserImage from '../../../public/generic/default_user.svg'
+import defaultNewsImage from '../../../public/msu_logo.png'
 import InputEmail from "./inputs/userInputs/InputEmail.jsx";
 import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
@@ -663,8 +665,17 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'newsPhoto': {
+        const defaultImageBlob = (dataURL, mimeType) => {
+          const byteString = atob(dataURL.split(',')[1]);
+          const ab = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(ab);
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+          return new Blob([ab], mimeType);
+        };
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsPhoto, setNewsPhoto] = useState(undefined);
+        const [newsPhoto, setNewsPhoto] = useState(defaultImageBlob(defaultNewsImage, 'image/svg'));
         formValues.newsPhoto = newsPhoto;
         return <InputPhoto name={input}
                            fieldName='Фотография новости'
