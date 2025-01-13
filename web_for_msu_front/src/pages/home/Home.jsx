@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <main className={style.home}>
       {(userStatus.includes('pupil') || userStatus.includes('teacher')) ?
-        <section className={style.left}>
+        <section>
           <Schedule/>
 
           <hr style={{
@@ -21,16 +21,12 @@ const Home = () => {
           <Courses/>
         </section> :
 
-        <section style={{
-          display: 'flex',
-          justifyContent: 'center',
-          width: '100%',
-        }}>
+        <section>
           <About/>
         </section>
       }
 
-      <section className={style.right}>
+      <section>
         <News/>
       </section>
     </main>

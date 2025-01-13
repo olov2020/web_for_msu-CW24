@@ -1,9 +1,8 @@
 import style from './menu.module.css';
 import {useState} from "react";
-import MenuItem from "./menuItem/MenuItem.jsx";
+import {Menu} from "antd";
 
-// eslint-disable-next-line react/prop-types
-const PhoneMenu = ({menu}) => {
+const PhoneMenu = () => {
 
   const [clicked, setClicked] = useState(false);
 
@@ -20,17 +19,7 @@ const PhoneMenu = ({menu}) => {
       </div>
 
       {clicked &&
-        <nav className={style.nav}>
-          {/* eslint-disable-next-line react/prop-types */}
-          {menu.map(menuItem => (
-            <MenuItem
-              key={menuItem.id}
-              id={menuItem.id}
-              title={menuItem.title}
-              dropdown={menuItem.dropdown}
-            />
-          ))}
-        </nav>
+        <Menu/>
       }
     </section>
   );

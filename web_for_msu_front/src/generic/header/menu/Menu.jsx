@@ -14,8 +14,6 @@ import {
   SCHEDULE_ROUTE, TEACHERS_ROUTE
 } from "../../../routing/consts.js";
 import {useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import PhoneMenu from "./PhoneMenu.jsx";
 
 const Menu = () => {
 
@@ -114,43 +112,14 @@ const Menu = () => {
     })
   }
 
-  const getDeviceType = () => {
-    const userAgent = window.navigator.userAgent;
-    if (/mobile/i.test(userAgent) || /android/i.test(userAgent)) {
-      return 'phone';
-    } else if (/tablet/i.test(userAgent) || /ipad/i.test(userAgent)) {
-      return 'tablet';
-    } else {
-      return 'computer';
-    }
-  };
-
-  const [deviceType, setDeviceType] = useState('');
-
-  useEffect(() => {
-    setDeviceType(getDeviceType());
-  }, []);
-
 
   return (
-    <>
-      {deviceType === 'phone' ?
-        <nav className={style.menu}>
-          {menu.map(menuItem => (
-            // eslint-disable-next-line react/jsx-key
-            <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown}/>
-          ))}
-        </nav>
-        /*<PhoneMenu menu={menu}/>*/
-        :
-        <nav className={style.menu}>
-          {menu.map(menuItem => (
-            // eslint-disable-next-line react/jsx-key
-            <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown}/>
-          ))}
-        </nav>
-      }
-    </>
+    <nav className={style.menu}>
+      {menu.map(menuItem => (
+        // eslint-disable-next-line react/jsx-key
+        <MenuItem id={menuItem.id} title={menuItem.title} dropdown={menuItem.dropdown}/>
+      ))}
+    </nav>
   );
 };
 
