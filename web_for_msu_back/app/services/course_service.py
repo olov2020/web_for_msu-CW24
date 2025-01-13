@@ -245,7 +245,7 @@ class CourseService:
         }
 
         schedules = []
-        for i in range(48, 87):
+        for i in range(62, 102):
             if data[i][0] is None:
                 continue
             lesson_number = data[i][0]
@@ -269,17 +269,18 @@ class CourseService:
             if flag:
                 break
             for j in range(len(data[ind])):
-                if data[ind][j] == 'Формула':
+                if data[ind][j] == 'Формула оценивания':
                     flag = True
                     break
             ind += 1
         ind += 2
         formulas = []
-        while ind < len(data) and flag:
-            if data[ind][1] is None:
+        p = 0
+        while p < 10 and flag:
+            if data[ind+p][1] is None:
                 break
-            name = data[ind][1]
-            coefficient = data[ind][3].replace(',', '.')
+            name = data[ind+p][1]
+            coefficient = data[ind+p][3].replace(',', '.')
             try:
                 coefficient = float(coefficient)
             except ValueError:
@@ -289,7 +290,7 @@ class CourseService:
                 "coefficient": coefficient
             }
             formulas.append(formula_data)
-            ind += 1
+            p += 1
         course_data["formulas"] = formulas
 
         teachers = Teacher.query.all()
@@ -365,18 +366,12 @@ class CourseService:
                     j = 0
                     k = 0
                     while j < len(formulas) and k < len(data["formulas"]):
-                        if formulas[j].name == "Баллы":
-                            j += 1
-                            continue
                         formulas[j].name = data["formulas"][k]["name"]
                         formulas[j].coefficient = data["formulas"][k]["coefficient"]
                         j += 1
                         k += 1
                     if len(data["formulas"]) == k:
                         while j < len(formulas):
-                            if formulas[j].name == "Баллы":
-                                j += 1
-                                continue
                             self.db.session.delete(formulas[j])
                             j += 1
                     elif j == len(formulas):
