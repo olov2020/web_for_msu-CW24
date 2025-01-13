@@ -279,7 +279,7 @@ const ListOfPeople = () => {
       }
 
       {url.includes('pupils') && (
-        <section className={style.section}>
+        <section className={style.sectionPupils}>
           <div className={style.container}>
             <h2 className={style.item}>ФИО</h2>
             <h2 className={style.item}>Почта</h2>
@@ -391,15 +391,13 @@ const ListOfPeople = () => {
 
           <section className={style.roles}>
             <section className={style.admins}>
-              <div>
-                <h2>Функциональная роль</h2>
+              <h2>Функциональная роль</h2>
 
-                <div className={style.rolesSection}>
-                  <p>Добавление новостей</p>
-                  <p>Добавление курсов</p>
-                  <p>Просмотр ведомостей</p>
-                  <p>Назначение аудиторий</p>
-                </div>
+              <div className={style.rolesSection}>
+                <p>Добавление новостей</p>
+                <p>Добавление курсов</p>
+                <p>Просмотр ведомостей</p>
+                <p>Назначение аудиторий</p>
               </div>
 
               <div className={style.rolesSection}>
@@ -427,16 +425,14 @@ const ListOfPeople = () => {
             </section>
 
             <section className={style.organisators}>
-              <div>
-                <h2>Статус организатора</h2>
+              <h2>Статус организатора</h2>
 
-                <div className={style.rolesSection}>
-                  <p>Конкурс научных работ</p>
-                  <p>Выездная школа</p>
-                  <p>Летняя школа</p>
-                  <p>Вступительные очные</p>
-                  <p>Вступительные онлайн</p>
-                </div>
+              <div className={style.rolesSection}>
+                <p>Конкурс научных работ</p>
+                <p>Выездная школа</p>
+                <p>Летняя школа</p>
+                <p>Вступительные очные</p>
+                <p>Вступительные онлайн</p>
               </div>
 
               <div className={style.rolesSection}>
@@ -468,13 +464,11 @@ const ListOfPeople = () => {
             </section>
 
             <section className={style.emschRoles}>
-              <div>
-                <h2>Статус в ЭМШ</h2>
+              <h2>Статус в ЭМШ</h2>
 
-                <div className={style.rolesSection}>
-                  <p>Дирекция</p>
-                  <p>Совет</p>
-                </div>
+              <div className={style.rolesSection}>
+                <p>Дирекция</p>
+                <p>Совет</p>
               </div>
 
               <div className={style.rolesSection}>
