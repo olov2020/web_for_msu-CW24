@@ -41,7 +41,7 @@ class TeacherService:
         return {'msg': 'Преподаватель успешно добавлен'}, 201
 
     def get_full_name(self, teacher):
-        return teacher.surname + ' ' + teacher.name + ((' ' + teacher.patronymic) if teacher.patronymic else "")
+        return teacher.surname + ' ' + teacher.name + ' ' + teacher.patronymic
 
     def get_teacher_by_email(self, email):
         return Teacher.query.filter_by(email=email).first()
