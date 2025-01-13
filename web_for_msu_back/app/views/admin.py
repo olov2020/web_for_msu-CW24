@@ -91,7 +91,7 @@ class AdminView(FlaskView):
     @route("/list/<role>/", methods=["GET"])
     @auth_required
     @roles_required('admin')
-    def pupil_admin_list(self, role: str):
+    def admin_list(self, role: str):
         services = get_services()
         user_service: UserService = services["user_service"]
         match role:
