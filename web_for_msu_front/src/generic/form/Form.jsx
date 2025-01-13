@@ -423,7 +423,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formErrors.work = error;
         return <InputText name={input} placeholder='Введите свое место работы' formErrors={setError}
                           fieldName='Место работы'
-                          value={'wjowienoweiw'} setValue={setWork}
+                          value={work} setValue={setWork}
         />
       }
       case 'telegram': {
