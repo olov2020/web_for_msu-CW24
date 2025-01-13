@@ -73,9 +73,10 @@ class ImageService:
             return False
 
     def delete_from_yandex_s3(self, bucket, object_name):
+        if "default" in object_name:
+            return
         load_dotenv()
-        if bucket == "images":
-            bucket = os.getenv("IMAGES_BUCKET")
+        bucket = self.get_bucket(bucket)
         s3_client = boto3.client('s3',
                                  endpoint_url='https://storage.yandexcloud.net',
                                  region_name='ru-central1',
