@@ -1,9 +1,10 @@
-.profile__info {
-
-}
-
 .profile__photo {
+    @media (min-width: 600px) {
         width: 30%;
+    }
+    @media (max-width: 600px) {
+        width: 20%;
+    }
     object-fit: contain;
 }
 

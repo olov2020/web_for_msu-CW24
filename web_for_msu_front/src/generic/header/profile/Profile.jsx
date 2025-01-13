@@ -69,7 +69,7 @@ const Profile = () => {
           alignItems: 'center',
           width: 'auto',
         }}>
-          <div className={style.profile__info}>
+          <div>
             <h3>{userInfo.name}</h3>
             <h3>{userInfo.surname}</h3>
           </div>
