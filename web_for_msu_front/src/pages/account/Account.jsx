@@ -18,7 +18,9 @@ const Account = () => {
     }
 
     getUserDataFunc();
-  }, [location]);
+  }, [location.pathname]);
+
+  console.log(user)
 
   return (
     <article className={style.account}>

@@ -232,7 +232,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
     switch (input) {
       case 'forgetPassword': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [forgetPassword, setForgetPassword] = useState(values[input]);
+        const [forgetPassword, setForgetPassword] = useState(undefined);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.forgetPassword = forgetPassword;
