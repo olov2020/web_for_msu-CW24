@@ -67,6 +67,7 @@ const Profile = () => {
         <Link to={ACCOUNT_ROUTE} style={{
           display: 'flex',
           alignItems: 'center',
+          width: 'auto',
         }}>
           <div className={style.profile__info}>
             <h3>{userInfo.name}</h3>
