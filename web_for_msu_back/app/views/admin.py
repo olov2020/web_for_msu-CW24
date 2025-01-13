@@ -110,7 +110,8 @@ class AdminView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         roles, _ = user_service.get_all_roles()
-        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
+        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh",
+                 "directory", "sovet"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
         if role in ["course", "news", "marks", "auditory"]:
@@ -122,7 +123,8 @@ class AdminView(FlaskView):
     @auth_required
     @roles_required('admin')
     def delete_role(self, role: str, user_id: int):
-        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh"]
+        roles = ["course", "news", "marks", "auditory", "tests_online", "tests_offline", "knr", "vsh", "lsh",
+                 "directory", "sovet"]
         if role not in roles:
             return {"error": "Нет такой роли"}, 404
         services = get_services()
