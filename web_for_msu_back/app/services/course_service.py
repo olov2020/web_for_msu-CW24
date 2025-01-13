@@ -667,9 +667,13 @@ class CourseService:
 
     def change_auditoriums(self, request: flask.Request) -> (dict, int):
         data = request.json
-        for row in data:
-            course_id = int(list(row.keys())[0].split()[1])
-            auditory = list(row.values())[0]
+        if not data:
+            return {"msg": "Аудитории для обновления не переданы"}, 200
+        for key in data.keys():
+            auditory = data[key]
+            if not auditory:
+                continue
+            course_id = int(key.split()[1])
             course = Course.query.get(course_id)
             if not course:
                 continue
