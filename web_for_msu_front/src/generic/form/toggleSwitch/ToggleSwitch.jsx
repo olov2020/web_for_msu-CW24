@@ -26,7 +26,7 @@ const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
 
   return (
     <label className={style.toggleSwitch}>
-      <input type="checkbox" value={value} onChange={onToggle} />
+      <input type="checkbox" checked={value} onChange={onToggle} />
       <span className={style.switch} />
     </label>
   );
