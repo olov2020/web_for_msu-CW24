@@ -1,6 +1,4 @@
 import style from './form.module.css'
-import defaultUserImage from '../../../public/generic/default_user.svg'
-import defaultNewsImage from '../../../public/msu_logo.png'
 import InputEmail from "./inputs/userInputs/InputEmail.jsx";
 import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
@@ -267,17 +265,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'photo': {
-        const defaultImageBlob = (dataURL, mimeType) => {
-          const byteString = atob(dataURL.split(',')[1]);
-          const ab = new ArrayBuffer(byteString.length);
-          const ia = new Uint8Array(ab);
-          for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-          }
-          return new Blob([ab], mimeType);
-        };
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [photo, setPhoto] = useState(defaultImageBlob(values[input], 'image/svg'));
+        const [photo, setPhoto] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.photo = photo;
@@ -665,21 +654,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'newsPhoto': {
-        let a = 0;
-        const fetchDefaultImage = async () => {
-          try {
-            const response = await fetch(defaultNewsImage);
-            const blob = await response.blob();
-            setNewsPhoto(blob);
-          } catch (error) {
-            console.error('Error fetching default image:', error);
-          }
-        };
-
-        if (a === 0) {
-          fetchDefaultImage();
-          ++a;
-        }
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsPhoto, setNewsPhoto] = useState(undefined);
         formValues.newsPhoto = newsPhoto;

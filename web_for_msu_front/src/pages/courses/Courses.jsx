@@ -2,18 +2,22 @@ import {useEffect, useState} from "react";
 import CourseCard from "./courseCard/CourseCard.jsx";
 import {NOT_FOUND_ROUTE} from "../../routing/consts.js";
 import {redirect} from "react-router-dom";
-import {getAllCourses, getMyCourses} from "../../api/coursesApi.js";
+import {getAllCourses, getMyCoursesPupil, getMyCoursesTeacher} from "../../api/coursesApi.js";
+import {useSelector} from "react-redux";
 
 const Courses = () => {
 
   const url = window.location.pathname;
+  const authStatus = useSelector(state => state.user.authStatus);
   const [isMyCourses, setIsMyCourses] = useState(true);
   const [coursesAll, setCoursesAll] = useState({});
 
   useEffect(() => {
     const getCourses = async () => {
       const data = url === '/courses/my' ?
-        await getMyCourses() :
+        authStatus.include('pupil') ?
+          await getMyCoursesPupil() :
+          await getMyCoursesTeacher() :
         url === '/courses/all' ?
           await getAllCourses() : undefined;
 

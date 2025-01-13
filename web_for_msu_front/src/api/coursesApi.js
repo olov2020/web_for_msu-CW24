@@ -10,7 +10,17 @@ export const getAllCourses = async () => {
   }
 }
 
-export const getMyCourses = async () => {
+export const getMyCoursesPupil = async () => {
+  const response = await $authHost.get(`/pupil/my_courses/`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const getMyCoursesTeacher = async () => {
   const response = await $authHost.get(`/teacher/my_courses/`)
 
   try {
