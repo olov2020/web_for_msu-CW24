@@ -78,7 +78,10 @@ class CourseService:
         if not pupil:
             return {"error": "Нет такого ученика"}, 404
         grade = pupil.school_grade
-        courses = Course.query.filter(Course.year == datetime.now(tz=pytz.timezone('Europe/Moscow')).year).all()
+        year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
+        if datetime.now(tz=pytz.timezone('Europe/Moscow')).month in range(7):
+            year -= 1
+        courses = Course.query.filter(Course.year == year).all()
         available_courses = []
         for course in courses:
             if str(grade) in course.emsh_grades or (
