@@ -266,7 +266,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'photo': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [photo, setPhoto] = useState(values[input]);
+        const [photo, setPhoto] = useState(values[input] ? values[input] : undefined);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.photo = photo;
@@ -338,7 +338,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'school': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [school, setSchool] = useState(undefined);
+        const [school, setSchool] = useState(values[input]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.school = school;

@@ -13,7 +13,7 @@ const Account = () => {
 
   useEffect(() => {
     const getUserDataFunc = async () => {
-      const data = authStatus.includes('pupil') ? await getPupilInfo() : await getTeacherInfo();
+      const data = authStatus.includes('teacher') ? await getTeacherInfo() : await getPupilInfo();
       setUser(data);
     }
 
