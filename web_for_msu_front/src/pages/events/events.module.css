@@ -1,7 +1,12 @@
 .section {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    @media (min-width: 600px) {
+        width: 50%;
+    }
+    @media (max-width: 600px) {
+        width: 90%;
+    }
     gap: 1rem 0;
 
     > ol, ul {
@@ -19,7 +24,12 @@
 }
 
 .aside {
-    width: 20%;
+    @media (min-width: 600px) {
+        width: 20%;
+    }
+    @media (max-width: 600px) {
+        width: 90%;
+    }
 
     display: flex;
     flex-direction: column;
