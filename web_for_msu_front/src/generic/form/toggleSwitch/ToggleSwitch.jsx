@@ -1,19 +1,19 @@
 import style from './toggleSwitch.module.css';
 
 // eslint-disable-next-line react/prop-types
-const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
+const ToggleSwitch = ({ funcOn, funcOff, value }) => {
 
   const onToggle = async () => {
     try {
       if (!value) {
         const response = await funcOn();
-        if (response) {
-          onClick();
+        if (!response) {
+          alert('Упс... что-то пошло не так');
         }
       } else {
         const response = await funcOff();
-        if (response) {
-          onClick();
+        if (!response) {
+          alert('Упс... что-то пошло не так');
         }
       }
     } catch (error) {
