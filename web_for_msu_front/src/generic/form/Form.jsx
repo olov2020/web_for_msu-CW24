@@ -665,6 +665,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'newsPhoto': {
+        let a = 0;
         const fetchDefaultImage = async () => {
           try {
             const response = await fetch(defaultNewsImage);
@@ -675,7 +676,10 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
           }
         };
 
-        fetchDefaultImage();
+        if (a === 0) {
+          fetchDefaultImage();
+          ++a;
+        }
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsPhoto, setNewsPhoto] = useState(undefined);
         formValues.newsPhoto = newsPhoto;
