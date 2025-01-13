@@ -265,8 +265,17 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'photo': {
+        const defaultImageBlob = (dataURL, mimeType) => {
+          const byteString = atob(dataURL.split(',')[1]);
+          const ab = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(ab);
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+          return new Blob([ab], mimeType);
+        };
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [photo, setPhoto] = useState(values[input]);
+        const [photo, setPhoto] = useState(defaultImageBlob(values[input], 'image/svg'));
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.photo = photo;
