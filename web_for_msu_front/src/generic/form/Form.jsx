@@ -675,7 +675,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
           return new Blob([ab], mimeType);
         };
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsPhoto, setNewsPhoto] = useState(defaultImageBlob(defaultNewsImage, 'image/svg'));
+        const [newsPhoto, setNewsPhoto] = useState(defaultImageBlob(defaultNewsImage, 'image/png'));
         formValues.newsPhoto = newsPhoto;
         return <InputPhoto name={input}
                            fieldName='Фотография новости'
