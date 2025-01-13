@@ -118,3 +118,10 @@ class HomeView(FlaskView):
         event_service: EventService = services["event_service"]
         response, code = event_service.get_event_dates(event)
         return jsonify(response), code
+
+    @method("GET")
+    def teachers(self):
+        services = get_services()
+        teacher_service: TeacherService = services["teacher_service"]
+        response, code = teacher_service.get_school_info()
+        return jsonify(response), code

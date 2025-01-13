@@ -1,16 +1,19 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import json
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import flask
+import pytz
 from flask_jwt_extended import create_access_token
 from marshmallow import ValidationError
 
 from web_for_msu_back.app.dto.duty_teacher_info import DutyTeacherInfoDTO
+from web_for_msu_back.app.dto.school_structre import SchoolStructureDTO
 from web_for_msu_back.app.dto.teacher import TeacherDTO
 from web_for_msu_back.app.dto.teacher_account import TeacherAccountDTO
-from web_for_msu_back.app.models import Teacher, User, user_role, Role
+from web_for_msu_back.app.models import Teacher, User, user_role, Role, Course, TeacherCourse
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -102,3 +105,52 @@ class TeacherService:
             "work": teacher.workplace,
         }
         return TeacherAccountDTO().dump(data), 200
+
+    def get_school_info(self):
+        directory = (Teacher.query.with_entities(User.id, Teacher.name, Teacher.surname, Teacher.patronymic)
+                     .join(User, User.id == Teacher.user_id)
+                     .join(user_role, user_role.c.user_id == User.id)
+                     .join(Role, Role.id == user_role.c.role_id)
+                     .filter(User.id != 1)  # for better speed, excluding admin
+                     .filter(Role.name == "directory").all())
+        directory_data = [{"id": member.id, "name": f"{member.name} {member.surname} {member.patronymic}"} for member in
+                          directory]
+        council = (Teacher.query.join(User, User.id == Teacher.user_id)
+                   .join(user_role, user_role.c.user_id == User.id)
+                   .join(Role, Role.id == user_role.c.role_id)
+                   .filter(User.id != 1)  # for better speed, excluding admin
+                   .filter(Role.name == "sovet").all())
+        council_data = [{"id": member.id, "name": self.get_full_name(member)} for member in
+                        council]
+        teachers = Teacher.query.all()
+        teachers_data = []
+        organizers_data = []
+        year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
+        if datetime.now(tz=pytz.timezone('Europe/Moscow')).month in range(9):
+            year -= 1
+        for teacher in teachers:
+            roles = [role.name for role in teacher.user.roles]
+            if "admin" in roles:
+                continue
+            subjects = (Course.query.with_entities(Course.name)
+                        .join(TeacherCourse, TeacherCourse.course_id == Course.id)
+                        .filter(TeacherCourse.teacher_id == teacher.id, Course.year == year).all())
+            events_roles = ["tests_online", "tests_offline", "knr", "vsh", "lsh"]
+            events_roles_names = ["Вступительные испытания очно", "Вступительные испытания онлайн",
+                                  "Конкурс начных работ", "Выездная школа", "Летняя школа"]
+            teacher_events_roles = set(roles).intersection(set(events_roles))
+            what = [events_roles_names[i] for i in range(len(events_roles)) if events_roles[i] in teacher_events_roles]
+            teachers_data.append(
+                {"id": teacher.user.id, "name": self.get_full_name(teacher), "subjects": ";".join(subjects)}
+            )
+
+            organizers_data.append(
+                {"id": teacher.user.id, "name": self.get_full_name(teacher), "what": ";".join(what)}
+            )
+        school_data = {
+            "directory": directory_data,
+            "council": council_data,
+            "teachers": teachers_data,
+            "organizers": organizers_data,
+        }
+        return SchoolStructureDTO().dump(school_data), 200
