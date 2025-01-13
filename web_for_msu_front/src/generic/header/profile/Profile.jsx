@@ -9,7 +9,8 @@ import ButtonSubmit from "../../form/submit/ButtonSubmit.jsx";
 import {setNotAuthAction} from "../../../store/UserReducers.js";
 import defaultUserImage from '../../../../public/generic/default_user.svg';
 
-const Profile = () => {
+// eslint-disable-next-line react/prop-types
+const Profile = ({deviceType}) => {
 
   const location = useLocation();
   const user = useSelector(state => state.user);
@@ -62,7 +63,7 @@ const Profile = () => {
   }
 
   return (
-    (!user.authStatus.includes('none')) ?
+    !user.authStatus.includes('none') ?
       (
         <Link to={ACCOUNT_ROUTE} style={{
           display: 'flex',
@@ -74,15 +75,17 @@ const Profile = () => {
             <h3>{userInfo.surname}</h3>
           </div>
 
-          {userInfo.photo ?
-            <img className={style.profile__photo}
-                 alt='Фотография профиля'
-                 src={userInfo.photo}
-            /> :
-            <img className={style.profile__photo}
-                 alt='Фотография профиля'
-                 src={defaultUserImage}
-            />
+          {deviceType !== 'mobile' ?
+            (userInfo.photo ?
+              <img className={style.profile__photo}
+                   alt='Фотография профиля'
+                   src={userInfo.photo}
+              /> :
+              <img className={style.profile__photo}
+                   alt='Фотография профиля'
+                   src={defaultUserImage}
+              />) :
+            <></>
           }
         </Link>) :
       (

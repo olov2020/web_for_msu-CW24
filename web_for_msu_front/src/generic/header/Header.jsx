@@ -63,7 +63,7 @@ const Header = ({setShowContext}) => {
       }
 
       <div className={style.profile}>
-        <Profile/>
+        <Profile deviceType={deviceType}/>
       </div>
 
     </header>
