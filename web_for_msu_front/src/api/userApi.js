@@ -174,7 +174,7 @@ export const teacherRegistration = async (formValues) => {
 }
 
 export const getDirectoryTeachers = async () => {
-  const response = await $host.get('/teachers/');
+  const response = await $host.get('/home/teachers/');
 
   try {
     return response.data;
