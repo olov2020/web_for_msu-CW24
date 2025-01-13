@@ -400,7 +400,7 @@ const ListOfPeople = () => {
                 <p>Назначение аудиторий</p>
               </div>
 
-              <div className={style.rolesSection}>
+              <div className={`${style.rolesSection} ${style.toggleswitch}`}>
                 {people.map((person) => (
                   <>
                     <ToggleSwitch value={person.roles.includes('newsmaker')}
@@ -435,7 +435,7 @@ const ListOfPeople = () => {
                 <p>Вступительные онлайн</p>
               </div>
 
-              <div className={style.rolesSection}>
+              <div className={`${style.rolesSection} ${style.toggleswitch}`}>
                 {people.map((person) => (
                   <>
                     <ToggleSwitch value={person.roles.includes('knr')}
@@ -471,7 +471,7 @@ const ListOfPeople = () => {
                 <p>Совет</p>
               </div>
 
-              <div className={style.rolesSection}>
+              <div className={`${style.rolesSection} ${style.toggleswitch}`}>
                 {people.map((person) => (
                   <>
                     <ToggleSwitch value={person.roles.includes('directory')}
