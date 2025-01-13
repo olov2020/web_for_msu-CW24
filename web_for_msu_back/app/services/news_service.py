@@ -21,10 +21,14 @@ class NewsService:
 
     def add_news(self, request: flask.Request) -> (dict, int):
         data = json.loads(request.form.get('data'))
-        if 'photo' not in request.files:
-            return {"error": "Нет изображения"}, 400
-        photo = request.files['photo']
-        data["photo"] = self.image_service.save_news_photo(photo)
+        if 'photo' in request.files:
+            photo = request.files['photo']
+            try:
+                data["photo"] = self.image_service.save_news_photo(photo)
+            except Exception:
+                data["photo"] = "default.jpg"
+        else:
+            data["photo"] = "default.jpg"
         try:
             news = NewsDTO().load(data)
         except ValidationError as e:
