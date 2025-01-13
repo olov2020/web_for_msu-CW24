@@ -15,11 +15,12 @@ const Courses = () => {
   useEffect(() => {
     const getCourses = async () => {
       const data = url.include('/my') ?
-        authStatus.include('pupil') ?
+        (
+          authStatus.include('pupil') ?
           await getMyCoursesPupil() :
-          await getMyCoursesTeacher() :
-        url.include('/all') ?
-          await getAllCourses() : undefined;
+          await getMyCoursesTeacher()
+        ) :
+        url.include('/all') && await getAllCourses();
 
       setCoursesAll(data);
       setIsMyCourses(url.include('/my'));
