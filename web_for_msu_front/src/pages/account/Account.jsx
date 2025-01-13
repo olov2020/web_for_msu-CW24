@@ -24,7 +24,9 @@ const Account = () => {
     <article>
       <h1>Данные пользователя</h1>
 
-      <section>
+      <section style={{
+        width: '90%',
+      }}>
         {authStatus.includes('pupil') ?
           <Form inputs={['photo', 'email', 'phone', 'school']}
                 values={user}
