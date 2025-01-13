@@ -75,7 +75,7 @@ const Profile = ({deviceType}) => {
             <h3>{userInfo.surname}</h3>
           </div>
 
-          {deviceType !== 'mobile' ?
+          {deviceType !== 'phone' ?
             (userInfo.photo ?
               <img className={style.profile__photo}
                    alt='Фотография профиля'
