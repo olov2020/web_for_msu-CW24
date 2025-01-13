@@ -19,6 +19,8 @@ def create_roles():
         Role(id=11, name='knr'),
         Role(id=12, name='vsh'),
         Role(id=13, name='lsh'),
+        Role(id=14, name='directory'),
+        Role(id=15, name='sovet'),
     ]
     for role in roles:
         db.session.add(role)
