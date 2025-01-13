@@ -16,7 +16,7 @@ const Courses = () => {
     const getCourses = async () => {
       const data = url.includes('/my') ?
         (
-          authStatus.include('pupil') ?
+          authStatus.includes('pupil') ?
           await getMyCoursesPupil() :
           await getMyCoursesTeacher()
         ) :
