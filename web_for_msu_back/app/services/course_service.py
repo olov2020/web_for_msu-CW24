@@ -671,8 +671,6 @@ class CourseService:
             return {"msg": "Аудитории для обновления не переданы"}, 200
         for key in data.keys():
             auditory = data[key]
-            if not auditory:
-                continue
             course_id = int(key.split()[1])
             course = Course.query.get(course_id)
             if not course:
