@@ -9,21 +9,21 @@ class Teacher(db.Model):
     email = db.Column(db.String(), nullable=False)
     name = db.Column(db.String(), nullable=False)
     surname = db.Column(db.String(), nullable=False)
-    patronymic = db.Column(db.String())
+    patronymic = db.Column(db.String(), default="")
     second_surname = db.Column(db.String())
     nickname = db.Column(db.String(), nullable=False, default="Преподаватель")
     birth_date = db.Column(db.Date(), nullable=False)
     date_of_death = db.Column(db.Date())
     phone = db.Column(db.String(), nullable=False)
-    telegram = db.Column(db.String())
-    vk = db.Column(db.String())
+    telegram = db.Column(db.String(), default="")
+    vk = db.Column(db.String(), default="")
     school = db.Column(db.String(), nullable=False)
     school_date_start = db.Column(db.Integer)
     school_date_end = db.Column(db.Integer, nullable=False)
     university = db.Column(db.String(), nullable=False)
     university_date_start = db.Column(db.Integer)
     university_date_end = db.Column(db.Integer)
-    workplace = db.Column(db.String())
+    workplace = db.Column(db.String(), default="")
     passport_number = db.Column(db.String())
     passport_series = db.Column(db.String())
     passport_date = db.Column(db.Date())
@@ -37,8 +37,8 @@ class Teacher(db.Model):
 
     def __init__(self, user_id, email, name, surname, birth_date, phone, school, school_date_end, university,
                  university_date_end, registration_address,
-                 was_pupil, patronymic=None, second_surname=None, nickname=None, telegram=None,
-                 vk=None, school_date_start=None, university_date_start=None, workplace=None):
+                 was_pupil, patronymic="", second_surname="", nickname="", telegram="",
+                 vk="", school_date_start="", university_date_start="", workplace=""):
         self.user_id = user_id
         self.email = email
         self.name = name
