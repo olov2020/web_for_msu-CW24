@@ -264,7 +264,7 @@ class MarkService:
         result = self.calculate_result(marks, mark_types, formulas)
         data = {
             'dates': dates,
-            'mark_types': mark_types,
+            'mark_type_choices': mark_types,
             'marks': marks,
             'result': result,
         }
