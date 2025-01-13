@@ -27,10 +27,10 @@ const CourseItem = () => {
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>
             <h2>Ведомость оценок</h2>
-            {userStatus.includes('pupil') ? (
-              <PupilMarks courseId={state.courseData.id}/>
-            ) : userStatus.includes('teacher') ? (
+            {userStatus.includes('teacher') ? (
               <TeacherMarks courseId={state.courseData.id}/>
+            ) : userStatus.includes('pupil') ?(
+              <PupilMarks courseId={state.courseData.id}/>
             ) : (
               <></>
             )}
