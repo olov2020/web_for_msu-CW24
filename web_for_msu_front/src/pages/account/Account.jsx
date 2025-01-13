@@ -8,7 +8,7 @@ import {useLocation} from "react-router-dom";
 const Account = () => {
 
   const authStatus = useSelector(state => state.user.authStatus);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const location = useLocation();
 
   useEffect(() => {
