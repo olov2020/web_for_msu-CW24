@@ -17,6 +17,37 @@
     text-align: center;
 }
 
-.itemTeacher {
-    text-align: center;
+
+.sectionTeachers {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 0 2rem;
+}
+
+.teachers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    white-space: nowrap;
+}
+
+.email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    white-space: nowrap;
+}
+
+.roles {
+    display: flex;
+    max-width: 40%;
+    overflow: auto;
+}
+
+.admins {
+    width: 100%;
+
 }

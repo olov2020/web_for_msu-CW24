@@ -374,7 +374,7 @@ const ListOfPeople = () => {
       )}
 
       {url.includes('teachers') && (
-        <section className={style.section}>
+        <section className={style.sectionTeachers}>
           <section className={style.teachers}>
             <h2>ФИО</h2>
             {people.map((person) => (
@@ -391,29 +391,18 @@ const ListOfPeople = () => {
 
           <section className={style.roles}>
             <section className={style.admins}>
-              <div className={style.itemTeacher}>
+              <div>
                 <h2>Функциональная роль</h2>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  width: '100%',
-                  whiteSpace: 'nowrap',
-                }}>
-                  <p className={style.itemTeacher}>Добавление новостей</p>
-                  <p className={style.itemTeacher}>Добавление курсов</p>
-                  <p className={style.itemTeacher}>Просмотр ведомостей</p>
-                  <p className={style.itemTeacher}>Назначение аудиторий</p>
+                <div className={style.rolesSection}>
+                  <p>Добавление новостей</p>
+                  <p>Добавление курсов</p>
+                  <p>Просмотр ведомостей</p>
+                  <p>Назначение аудиторий</p>
                 </div>
               </div>
 
-              <div className={style.itemTeacher} style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: '25%',
-              }}>
+              <div className={style.rolesSection}>
                 {people.map((person) => (
                   <>
                     <ToggleSwitch value={person.roles.includes('newsmaker')}
@@ -438,30 +427,19 @@ const ListOfPeople = () => {
             </section>
 
             <section className={style.organisators}>
-              <div className={style.itemTeacher}>
+              <div>
                 <h2>Статус организатора</h2>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  width: '100%',
-                  whiteSpace: 'nowrap',
-                }}>
-                  <p className={style.itemTeacher}>Конкурс научных работ</p>
-                  <p className={style.itemTeacher}>Выездная школа</p>
-                  <p className={style.itemTeacher}>Летняя школа</p>
-                  <p className={style.itemTeacher}>Вступительные очные</p>
-                  <p className={style.itemTeacher}>Вступительные онлайн</p>
+                <div className={style.rolesSection}>
+                  <p>Конкурс научных работ</p>
+                  <p>Выездная школа</p>
+                  <p>Летняя школа</p>
+                  <p>Вступительные очные</p>
+                  <p>Вступительные онлайн</p>
                 </div>
               </div>
 
-              <div className={style.itemTeacher} style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: '30%',
-              }}>
+              <div className={style.rolesSection}>
                 {people.map((person) => (
                   <>
                     <ToggleSwitch value={person.roles.includes('knr')}
@@ -490,38 +468,33 @@ const ListOfPeople = () => {
             </section>
 
             <section className={style.emschRoles}>
-              <div className={style.itemTeacher}>
+              <div>
                 <h2>Статус в ЭМШ</h2>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  width: '100%',
-                  whiteSpace: 'nowrap',
-                }}>
-                  <p className={style.itemTeacher}>Дирекция</p>
-                  <p className={style.itemTeacher}>Совет</p>
+                <div className={style.rolesSection}>
+                  <p>Дирекция</p>
+                  <p>Совет</p>
                 </div>
               </div>
 
-              {people.map((person) => (
-                <>
-                  <ToggleSwitch value={person.roles.includes('directory')}
-                                onClick={() => setUpdateList(!updateList)}
-                                funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
-                                funcOff={async () => await deleteAdminRole(person.id, 'deleteDirectoryTeacher')}/>
-                  <ToggleSwitch value={person.roles.includes('sover')}
-                                onClick={() => setUpdateList(!updateList)}
-                                funcOn={async () => await addAdminRole(person.id, 'setSovetTeacher')}
-                                funcOff={async () => await deleteAdminRole(person.id, 'deleteSovetTeacher')}/>
-                </>
-              ))}
+              <div className={style.rolesSection}>
+                {people.map((person) => (
+                  <>
+                    <ToggleSwitch value={person.roles.includes('directory')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteDirectoryTeacher')}/>
+                    <ToggleSwitch value={person.roles.includes('sover')}
+                                  onClick={() => setUpdateList(!updateList)}
+                                  funcOn={async () => await addAdminRole(person.id, 'setSovetTeacher')}
+                                  funcOff={async () => await deleteAdminRole(person.id, 'deleteSovetTeacher')}/>
+                  </>
+                ))}
+              </div>
             </section>
           </section>
 
           <section className={style.actions}>
-
             <h2>Статус преподавателя</h2>
             <div className={style.itemTeacher} style={{
               display: 'flex',
