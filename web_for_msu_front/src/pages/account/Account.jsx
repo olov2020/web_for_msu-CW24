@@ -1,4 +1,3 @@
-import style from './account.module.css'
 import {useSelector} from "react-redux";
 import Form from "../../generic/form/Form.jsx";
 import {useEffect, useState} from "react";
@@ -22,7 +21,7 @@ const Account = () => {
 
 
   return (
-    <article className={style.account}>
+    <article>
       <h1>Данные пользователя</h1>
 
       <section>
