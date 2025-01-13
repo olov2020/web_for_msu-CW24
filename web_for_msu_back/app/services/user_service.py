@@ -46,7 +46,7 @@ class UserService:
             if self.teacher_service.get_teacher_by_email(data['email']):
                 return {'error': 'Преподаватель с такой почтой уже существует'}, 400
             pupil = self.pupil_service.get_pupil_by_email(data['email'])
-            if pupil and pupil.name == data['name'] and pupil.surname == data['surname']:
+            if pupil and pupil.name == data['name'] and pupil.surname == data['surname'] and pupil.user.authorized:
                 user_exists = True
             else:
                 return {'error': 'Пользователь с такой почтой уже существует'}, 400
@@ -287,7 +287,6 @@ class UserService:
         return {"msg": "Пользователь успешно добавлен"}, 200
 
     def delete_user(self, user_id: int, role: str) -> (dict, int):
-        # TODO Add checks for role of user before deleting
         user = User.query.get(user_id)
         if not user:
             return {"error": "Пользователь не найден"}, 404
@@ -295,14 +294,27 @@ class UserService:
             return {"error": "Пользователь уже авторизован"}, 404
         match role:
             case "pupil":
+                if user.is_teacher():
+                    return {"error": "Пользователь уже подал заявку на роль учителя"}, 404
                 model = Pupil
             case _:
                 model = Teacher
         self.db.session.query(model).filter(model.user_id == user_id).delete()
-        # Удаляем пользователя
+        if model == Teacher:
+            pupil = self.db.session.query(Pupil).filter(Pupil.user_id == user_id).first()
+            if pupil:
+                role = Role.query.filter_by(name='pupil').first()
+                user.roles = [role]
+                user.authorized = True
+                self.db.session.commit()
+                return {"msg": "Заявка ученика на статус преподавателя успешно удалена"}, 200
+        self.image_service.delete_from_yandex_s3("images", user.image)
+        instance = model.query.filter(model.user_id == user_id).first()
+        if instance:
+            self.image_service.delete_from_yandex_s3("documents", instance.agreement)
         self.db.session.delete(user)
         self.db.session.commit()
-        return {"msg": "Пользователь успешно удален"}, 200
+        return {"msg": "Заявка успешно удалена"}, 200
 
     def change_photo(self, user_id: int, request: flask.Request) -> (dict, int):
         user = User.query.get(user_id)
