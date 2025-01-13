@@ -8,6 +8,8 @@ class Mark(db.Model):
     schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.id'), nullable=False)
     pupil = db.relationship('Pupil', back_populates='schedules')
     schedule = db.relationship('Schedule', back_populates='pupils')
+    formula_id = db.Column(db.Integer, db.ForeignKey('formula.id'), nullable=False)
+    formula = db.relationship('Formula', back_populates='marks')
     mark = db.Column(db.String(), nullable=False)
     comment = db.Column(db.String())
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
