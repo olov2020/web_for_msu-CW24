@@ -14,16 +14,16 @@ const Courses = () => {
 
   useEffect(() => {
     const getCourses = async () => {
-      const data = url.include('/my') ?
+      const data = url.includes('/my') ?
         (
           authStatus.include('pupil') ?
           await getMyCoursesPupil() :
           await getMyCoursesTeacher()
         ) :
-        url.include('/all') && await getAllCourses();
+        url.includes('/all') && await getAllCourses();
 
       setCoursesAll(data);
-      setIsMyCourses(url.include('/my'));
+      setIsMyCourses(url.includes('/my'));
     }
 
     getCourses();
