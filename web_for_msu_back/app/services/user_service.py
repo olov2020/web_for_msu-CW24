@@ -47,7 +47,6 @@ class UserService:
                 return {'error': 'Преподаватель с такой почтой уже существует'}, 400
             pupil = self.pupil_service.get_pupil_by_email(data['email'])
             if pupil and pupil.name == data['name'] and pupil.surname == data['surname']:
-                roles = [Role.query.filter_by(name='pupil').first()]
                 user_exists = True
             else:
                 return {'error': 'Пользователь с такой почтой уже существует'}, 400
@@ -61,7 +60,10 @@ class UserService:
         if user_image:
             image = self.image_service.save_user_image(user_image)
         else:
-            image = 'default.svg'
+            if user_exists:
+                image = None
+            else:
+                image = 'default.svg'
         if not user_exists:
             user = User(email=email, password=password, image=image)
             user.roles = roles
@@ -69,8 +71,11 @@ class UserService:
             self.db.session.commit()
         else:
             user = User.query.filter_by(email=email).first()
-            user.image = image
+            if image:
+                self.image_service.delete_from_yandex_s3("images", user.image)
+                user.image = image
             user.roles = roles
+            user.authorized = False
             self.db.session.commit()
         # if user.is_teacher():
         #     TeacherService.add_teacher(user_id=user.id, form=form)

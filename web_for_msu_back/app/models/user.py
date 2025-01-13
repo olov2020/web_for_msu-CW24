@@ -21,7 +21,7 @@ class User(db.Model):
 
     active = True
 
-    def __init__(self, email, password, image='default.jpg'):
+    def __init__(self, email, password, image='default.svg'):
         self.email = email
         self.password = generate_password_hash(password)
         self.image = image
