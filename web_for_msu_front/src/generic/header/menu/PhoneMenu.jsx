@@ -1,6 +1,7 @@
 import style from './menu.module.css';
-import {useState} from "react";
-import {Menu} from "antd";
+import {useEffect, useState} from "react";
+import Menu from "./Menu.jsx";
+import {useLocation} from "react-router-dom";
 
 const PhoneMenu = () => {
 
@@ -9,6 +10,12 @@ const PhoneMenu = () => {
   const handleClick = () => {
     setClicked(!clicked);
   }
+
+  const location = useLocation();
+
+  useEffect(() => {
+    setClicked(false);
+  }, [location.pathname]);
 
   return (
     <section className={style.menu}>
