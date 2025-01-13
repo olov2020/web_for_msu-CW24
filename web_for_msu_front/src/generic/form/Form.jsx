@@ -421,7 +421,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [error, setError] = useState(false);
         formValues.work = work;
         formErrors.work = error;
-        return <InputText name={input} placeholder='Введите свое место работы' formErrors={setError}
+        return <InputText name={input} placeholder='Введите место работы' formErrors={setError}
                           fieldName='Место работы'
                           value={work} setValue={setWork}
         />

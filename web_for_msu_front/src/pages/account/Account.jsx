@@ -20,7 +20,7 @@ const Account = () => {
     getUserDataFunc();
   }, [location.pathname, authStatus]);
 
-  console.log(user)
+  console.log(user.email);
 
   return (
     <article className={style.account}>
