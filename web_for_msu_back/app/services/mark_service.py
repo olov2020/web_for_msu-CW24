@@ -38,23 +38,20 @@ class MarkService:
             marks_grouped[key] = self.extend_pupil_marks(group, lessons)
         return marks_grouped
 
-    def calculate_result(self, pupil_marks: list[str], mark_types: list[str], formulas: list[Formula]) -> float:
+    def calculate_result(self, pupil_marks: list[list[Mark]]) -> float:
         result = 0
-        types = {}
-        for mark_type in mark_types:
-            if mark_type not in types:
-                types[mark_type] = 1
+        types = dict()
+        sums = dict()
+        for lesson_marks in pupil_marks:
+            for mark in lesson_marks:
+                types[mark.formula_id] = types.get(mark.formula_id, 0) + 1
+                sums[mark.formula_id] = sums.get(mark.formula_id, 0) + float(mark.mark)
+        for formula_id in types.keys():
+            formula = Formula.query.get(formula_id)
+            if formula.mark_type == "Баллы":
+                result += sums[formula_id]
             else:
-                types[mark_type] += 1
-        for i in range(len(pupil_marks)):
-            if mark_types[i] == 'Присутствие':
-                continue
-            if pupil_marks[i].isdigit():
-                if mark_types[i] == 'Баллы':
-                    result += float(pupil_marks[i])
-                else:
-                    formula = next(filter(lambda x: x.name == mark_types[i], formulas))
-                    result += float(pupil_marks[i]) * formula.coefficient / types[mark_types[i]]
+                result += sums[formula_id] * formula.coefficient / types[formula_id]
         return result
 
     def get_current_journal(self, course_id: int, current_user_id: int, is_admin: bool, part: str) -> (dict, int):
@@ -274,14 +271,14 @@ class MarkService:
         formulas = course.formulas
         lessons = self.get_lessons_by_part(course, course_id, "current")
         marks = self.get_pupil_marks(course_id, pupil_id, lessons)
-        lessons = [mark.schedule for mark in marks]
+        lessons = [lesson_marks[0].schedule for lesson_marks in marks]
         dates = [lesson.date.strftime('%d.%m.%Y') for lesson in lessons]
-        mark_types = [lesson.formulas.name if lesson.formulas else 'Присутствие' for lesson in lessons]
-        marks = [mark.mark for mark in marks]
-        result = self.calculate_result(marks, mark_types, formulas)
+        mark_type_choices = [formula.name for formula in sorted(formulas, key=lambda x: x.id)]
+        result = self.calculate_result(marks)
+        marks = [[mark.mark for mark in lesson_mark] for lesson_mark in marks]
         data = {
             'dates': dates,
-            'mark_type_choices': mark_types,
+            'mark_type_choices': mark_type_choices,
             'marks': marks,
             'result': result,
         }
