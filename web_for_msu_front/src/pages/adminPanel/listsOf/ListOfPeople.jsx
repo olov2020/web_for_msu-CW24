@@ -400,10 +400,10 @@ const ListOfPeople = () => {
                 <p>Назначение аудиторий</p>
               </div>
 
-              <div className={style.toggleswitch}>
+              <div className={style.toggleSwitchSection}>
                 {people.map((person) => (
                   person.authorized ?
-                    <div key={person.id} className={style.rolesSection}>
+                    <div key={person.id} className={style.switches}>
                       <ToggleSwitch value={person.roles.includes('newsmaker')}
                                     funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
                                     funcOff={async () => await deleteAdminRole(person.id, 'deleteNewsAdmin')}/>
@@ -434,10 +434,10 @@ const ListOfPeople = () => {
               </div>
 
 
-              <div className={style.toggleswitch}>
+              <div className={style.toggleSwitchSection}>
                 {people.map((person) => (
                   person.authorized ?
-                    <div key={person.id} className={style.rolesSection}>
+                    <div key={person.id} className={style.switches}>
                       <ToggleSwitch value={person.roles.includes('knr')}
                                     funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
                                     funcOff={async () => await deleteAdminRole(person.id, 'deleteKNRAdmin')}/>
@@ -468,10 +468,10 @@ const ListOfPeople = () => {
               </div>
 
 
-              <div className={style.toggleswitch}>
+              <div className={style.toggleSwitchSection}>
                 {people.map((person) => (
                   person.authorized ?
-                    <div key={person.id} className={style.rolesSection}>
+                    <div key={person.id} className={style.switches}>
                       <ToggleSwitch value={person.roles.includes('directory')}
                                     funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
                                     funcOff={async () => await deleteAdminRole(person.id, 'deleteDirectoryTeacher')}/>
