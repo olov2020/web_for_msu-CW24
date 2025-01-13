@@ -665,17 +665,19 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'newsPhoto': {
-        const defaultImageBlob = (dataURL, mimeType) => {
-          const byteString = atob(dataURL.split(',')[1]);
-          const ab = new ArrayBuffer(byteString.length);
-          const ia = new Uint8Array(ab);
-          for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
+        const fetchDefaultImage = async () => {
+          try {
+            const response = await fetch(defaultNewsImage);
+            const blob = await response.blob();
+            setNewsPhoto(blob);
+          } catch (error) {
+            console.error('Error fetching default image:', error);
           }
-          return new Blob([ab], mimeType);
         };
+
+        fetchDefaultImage();
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [newsPhoto, setNewsPhoto] = useState(defaultImageBlob(defaultNewsImage, 'image/png'));
+        const [newsPhoto, setNewsPhoto] = useState(undefined);
         formValues.newsPhoto = newsPhoto;
         return <InputPhoto name={input}
                            fieldName='Фотография новости'
