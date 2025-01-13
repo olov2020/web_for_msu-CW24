@@ -243,7 +243,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'email': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [email, setEmail] = useState(values[input]);
+        const [email, setEmail] = useState(values.email);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.email = email;
@@ -266,7 +266,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'photo': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [photo, setPhoto] = useState(values[input] ? values[input] : undefined);
+        const [photo, setPhoto] = useState(values.photo ? values.photo : undefined);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.photo = photo;
@@ -326,7 +326,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'phone': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [phone, setPhone] = useState(values[input]);
+        const [phone, setPhone] = useState(values.phone);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.phone = phone;
@@ -338,7 +338,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'school': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [school, setSchool] = useState(values[input]);
+        const [school, setSchool] = useState(values.school);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.school = school;
@@ -376,7 +376,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'university': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [university, setUniversity] = useState(values[input]);
+        const [university, setUniversity] = useState(values.university);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.university = university;
@@ -416,7 +416,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'work': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [work, setWork] = useState(values[input]);
+        const [work, setWork] = useState(values.work);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.work = work;
@@ -680,7 +680,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
       case 'dateOchStartEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateOchStartEvents, setDateOchStartEvents] = useState(values[input]);
+        const [dateOchStartEvents, setDateOchStartEvents] = useState(values.dateOchStartEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.dateOchStartEvents = dateOchStartEvents;
@@ -691,7 +691,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'dateOchEndEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateOchEndEvents, setDateOchEndEvents] = useState(values[input]);
+        const [dateOchEndEvents, setDateOchEndEvents] = useState(values.dateOchStartEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.dateOchEndEvents = dateOchEndEvents;
@@ -703,7 +703,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
       case 'dateKnrFirstEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateKnrFirstEvents, setDateKnrFirstEvents] = useState(values[input]);
+        const [dateKnrFirstEvents, setDateKnrFirstEvents] = useState(values.dateKnrFirstEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.dateKnrFirstEvents = dateKnrFirstEvents;
@@ -714,7 +714,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'dateKnrSecondEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateKnrSecondEvents, setDateKnrSecondEvents] = useState(values[input]);
+        const [dateKnrSecondEvents, setDateKnrSecondEvents] = useState(values.dateKnrSecondEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.dateKnrSecondEvents = dateKnrSecondEvents;
@@ -725,7 +725,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'dateKnrThirdEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateKnrThirdEvents, setDateKnrThirdEvents] = useState(values[input]);
+        const [dateKnrThirdEvents, setDateKnrThirdEvents] = useState(values.dateKnrThirdEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.dateKnrThirdEvents = dateKnrThirdEvents;

@@ -18,7 +18,7 @@ const Account = () => {
     }
 
     getUserDataFunc();
-  }, [location.pathname]);
+  }, [location.pathname, authStatus]);
 
   console.log(user)
 
