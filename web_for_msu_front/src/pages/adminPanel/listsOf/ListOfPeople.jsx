@@ -400,9 +400,9 @@ const ListOfPeople = () => {
                 <p>Назначение аудиторий</p>
               </div>
 
-              <div className={`${style.rolesSection} ${style.toggleswitch}`}>
+              <div className={style.rolesSection}>
                 {people.map((person) => (
-                  <>
+                  <div key={person.id} className={style.toggleswitch}>
                     <ToggleSwitch value={person.roles.includes('newsmaker')}
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
@@ -419,7 +419,7 @@ const ListOfPeople = () => {
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setAuditoryAdmin')}
                                   funcOff={async () => await deleteAdminRole(person.id, 'deleteAuditoryAdmin')}/>
-                  </>
+                  </div>
                 ))}
               </div>
             </section>
@@ -435,9 +435,10 @@ const ListOfPeople = () => {
                 <p>Вступительные онлайн</p>
               </div>
 
-              <div className={`${style.rolesSection} ${style.toggleswitch}`}>
+
+              <div className={style.rolesSection}>
                 {people.map((person) => (
-                  <>
+                  <div key={person.id} className={style.toggleswitch}>
                     <ToggleSwitch value={person.roles.includes('knr')}
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
@@ -458,7 +459,7 @@ const ListOfPeople = () => {
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
                                   funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
-                  </>
+                  </div>
                 ))}
               </div>
             </section>
@@ -471,9 +472,10 @@ const ListOfPeople = () => {
                 <p>Совет</p>
               </div>
 
-              <div className={`${style.rolesSection} ${style.toggleswitch}`}>
+
+              <div className={style.rolesSection}>
                 {people.map((person) => (
-                  <>
+                  <div key={person.id} className={style.toggleswitch}>
                     <ToggleSwitch value={person.roles.includes('directory')}
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
@@ -482,7 +484,7 @@ const ListOfPeople = () => {
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setSovetTeacher')}
                                   funcOff={async () => await deleteAdminRole(person.id, 'deleteSovetTeacher')}/>
-                  </>
+                  </div>
                 ))}
               </div>
             </section>
