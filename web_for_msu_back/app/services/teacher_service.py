@@ -95,6 +95,7 @@ class TeacherService:
         if not teacher:
             return {"error": "Пользователь не найден"}, 404
         data = {
+            "photo": user.image,
             "email": teacher.email,
             "phone": teacher.phone,
             "university": teacher.university,

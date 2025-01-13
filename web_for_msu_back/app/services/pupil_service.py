@@ -133,6 +133,7 @@ class PupilService:
         if not pupil:
             return {"error": "Пользователь не найден"}, 404
         data = {
+            "photo": user.image,
             "email": pupil.email,
             "phone": pupil.phone,
             "school": pupil.school,
