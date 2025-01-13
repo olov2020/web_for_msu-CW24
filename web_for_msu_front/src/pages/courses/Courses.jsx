@@ -27,7 +27,7 @@ const Courses = () => {
     }
 
     getCourses();
-  }, [location]);
+  }, []);
 
   const currentYear = new Date().getFullYear();
   const years = [];
