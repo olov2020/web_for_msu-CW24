@@ -400,9 +400,9 @@ const ListOfPeople = () => {
                 <p>Назначение аудиторий</p>
               </div>
 
-              <div className={style.rolesSection}>
+              <div className={style.toggleswitch}>
                 {people.map((person) => (
-                  <div key={person.id} className={style.toggleswitch}>
+                  <div key={person.id} className={style.rolesSection}>
                     <ToggleSwitch value={person.roles.includes('newsmaker')}
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setNewsAdmin')}
@@ -436,9 +436,9 @@ const ListOfPeople = () => {
               </div>
 
 
-              <div className={style.rolesSection}>
+              <div className={style.toggleswitch}>
                 {people.map((person) => (
-                  <div key={person.id} className={style.toggleswitch}>
+                  <div key={person.id} className={style.rolesSection}>
                     <ToggleSwitch value={person.roles.includes('knr')}
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setKNRAdmin')}
@@ -473,9 +473,9 @@ const ListOfPeople = () => {
               </div>
 
 
-              <div className={style.rolesSection}>
+              <div className={style.toggleswitch}>
                 {people.map((person) => (
-                  <div key={person.id} className={style.toggleswitch}>
+                  <div key={person.id} className={style.rolesSection}>
                     <ToggleSwitch value={person.roles.includes('directory')}
                                   onClick={() => setUpdateList(!updateList)}
                                   funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
