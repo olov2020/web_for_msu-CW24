@@ -1,27 +1,21 @@
 import style from './toggleSwitch.module.css';
-import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
 const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
-  const [toggled, setToggled] = useState(value);
   const onToggle = async () => {
     try {
-      if (!toggled) {
-        const response = await funcOn();
-        if (response.msg === 'Роль добавлена') {
-          setToggled(!toggled);
+      if (!value) {
+        try {
+          await funcOn();
           onClick();
-        }
-        else {
+        } catch {
           alert('Упс... что-то пошло не так');
         }
       } else {
-        const response = await funcOff();
-        if (response.msg === 'Роль добавлена') {
-          setToggled(!toggled);
+        try {
+          await funcOff();
           onClick();
-        }
-        else {
+        } catch {
           alert('Упс... что-то пошло не так');
         }
       }
@@ -32,7 +26,7 @@ const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
 
   return (
     <label className={style.toggleSwitch}>
-      <input type="checkbox" value={toggled} onChange={onToggle} />
+      <input type="checkbox" value={value} onChange={onToggle} />
       <span className={style.switch} />
     </label>
   );

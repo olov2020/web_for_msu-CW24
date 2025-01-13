@@ -41,6 +41,8 @@ const ListOfPeople = () => {
     getPeople();
   }, [updateList]);
 
+  console.log(people);
+
   const addPupilFunc = async (pupilId) => {
     const data = await addPupil({pupilId});
     if (data) {
