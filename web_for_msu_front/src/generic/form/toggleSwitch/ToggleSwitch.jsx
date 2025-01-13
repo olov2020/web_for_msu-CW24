@@ -1,22 +1,18 @@
-import { useState } from "react";
 import style from './toggleSwitch.module.css';
 
 // eslint-disable-next-line react/prop-types
 const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
-  const [isToggled, setIsToggled] = useState(value);
 
   const onToggle = async () => {
     try {
-      if (!isToggled) {
+      if (!value) {
         const response = await funcOn();
         if (response) {
-          setIsToggled(true);
           onClick();
         }
       } else {
         const response = await funcOff();
         if (response) {
-          setIsToggled(false);
           onClick();
         }
       }
@@ -27,7 +23,7 @@ const ToggleSwitch = ({ funcOn, funcOff, value, onClick }) => {
 
   return (
     <label className={style.toggleSwitch}>
-      <input type="checkbox" checked={isToggled} onChange={onToggle} />
+      <input type="checkbox" value={value} onChange={onToggle} />
       <span className={style.switch} />
     </label>
   );

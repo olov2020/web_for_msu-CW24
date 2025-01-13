@@ -9,6 +9,8 @@ const authStatus = {
     coursemaker: 'coursemaker',
     marksmaker: 'marksmaker',
     auditorymaker: 'auditorymaker',
+    directory: 'directory',
+    sovet: 'sovet',
     admin: 'admin',
 }
 

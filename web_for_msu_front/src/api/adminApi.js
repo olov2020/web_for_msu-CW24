@@ -231,6 +231,26 @@ export const setTestsOnlineAdmin = async (userId) => {
   }
 }
 
+export const setDirectoryTeacher = async (userId) => {
+  const response = await $authHost.post(`/admin/role/add/directory/${userId}/`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const setSovetTeacher = async (userId) => {
+  const response = await $authHost.post(`/admin/role/add/sovet/${userId}/`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 export const deleteKNRAdmin = async (userId) => {
   const response = await $authHost.post(`/admin/role/delete/knr/${userId}/`);
 
@@ -273,6 +293,26 @@ export const deleteTestsOfflineAdmin = async (userId) => {
 
 export const deleteTestsOnlineAdmin = async (userId) => {
   const response = await $authHost.post(`/admin/role/delete/tests_online/${userId}/`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const deleteDirectoryTeacher = async (userId) => {
+  const response = await $authHost.post(`/admin/role/delete/directory/${userId}/`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const deleteSovetTeacher = async (userId) => {
+  const response = await $authHost.post(`/admin/role/delete/sovet/${userId}/`);
 
   try {
     return response.data;

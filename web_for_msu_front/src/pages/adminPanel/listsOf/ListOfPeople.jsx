@@ -2,17 +2,17 @@ import {useEffect, useState} from "react";
 import {
   addPupil,
   addTeacher, deleteAuditoryAdmin,
-  deleteCourseAdmin, deleteKNRAdmin, deleteLSHAdmin,
+  deleteCourseAdmin, deleteDirectoryTeacher, deleteKNRAdmin, deleteLSHAdmin,
   deleteMarksAdmin,
   deleteNewsAdmin,
-  deletePupil, deleteTeacher, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
+  deletePupil, deleteSovetTeacher, deleteTeacher, deleteTestsOfflineAdmin, deleteTestsOnlineAdmin, deleteVSHAdmin,
   getAllPupils,
   getAllTeachers, makePupilRetired, recoverPupil, setAuditoryAdmin,
-  setCourseAdmin,
+  setCourseAdmin, setDirectoryTeacher,
   setKNRAdmin,
   setLSHAdmin,
   setMarksAdmin,
-  setNewsAdmin,
+  setNewsAdmin, setSovetTeacher,
   setTestsOfflineAdmin, setTestsOnlineAdmin,
   setVSHAdmin
 } from "../../../api/adminApi.js";
@@ -166,6 +166,20 @@ const ListOfPeople = () => {
         }
         return;
       }
+      case 'setDirectoryTeacher': {
+        const data = await setDirectoryTeacher(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'setSovetTeacher': {
+        const data = await setSovetTeacher(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
       default:
         return Promise.reject(new Error('Invalid function name'));
     }
@@ -231,6 +245,20 @@ const ListOfPeople = () => {
       }
       case 'deleteTestsOnlineAdmin': {
         const data = await deleteTestsOnlineAdmin(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteDirectoryTeacher': {
+        const data = await deleteDirectoryTeacher(userId);
+        if (data) {
+          setUpdateList(!updateList);
+        }
+        return;
+      }
+      case 'deleteSovetTeacher': {
+        const data = await deleteSovetTeacher(userId);
         if (data) {
           setUpdateList(!updateList);
         }
@@ -349,7 +377,6 @@ const ListOfPeople = () => {
         <section className={style.section}>
           <section className={style.teachers}>
             <h2>ФИО</h2>
-            {/* eslint-disable-next-line react/prop-types */}
             {people.map((person) => (
               <h3 key={person.id}>{person.name}</h3>
             ))}
@@ -357,7 +384,6 @@ const ListOfPeople = () => {
 
           <section className={style.email}>
             <h2>Почта</h2>
-            {/* eslint-disable-next-line react/prop-types */}
             {people.map((person) => (
               <p key={person.id}><a href={`mailto:${person.email}`}>{person.email}</a></p>
             ))}
@@ -481,14 +507,14 @@ const ListOfPeople = () => {
 
               {people.map((person) => (
                 <>
-                  <ToggleSwitch value={person.roles.includes('tests_offline')}
+                  <ToggleSwitch value={person.roles.includes('directory')}
                                 onClick={() => setUpdateList(!updateList)}
-                                funcOn={async () => await addAdminRole(person.id, 'setTestsOfflineAdmin')}
-                                funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOfflineAdmin')}/>
-                  <ToggleSwitch value={person.roles.includes('tests_online')}
+                                funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
+                                funcOff={async () => await deleteAdminRole(person.id, 'deleteDirectoryTeacher')}/>
+                  <ToggleSwitch value={person.roles.includes('sover')}
                                 onClick={() => setUpdateList(!updateList)}
-                                funcOn={async () => await addAdminRole(person.id, 'setTestsOnlineAdmin')}
-                                funcOff={async () => await deleteAdminRole(person.id, 'deleteTestsOnlineAdmin')}/>
+                                funcOn={async () => await addAdminRole(person.id, 'setSovetTeacher')}
+                                funcOff={async () => await deleteAdminRole(person.id, 'deleteSovetTeacher')}/>
                 </>
               ))}
             </section>
