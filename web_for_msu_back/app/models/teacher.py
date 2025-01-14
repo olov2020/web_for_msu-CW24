@@ -38,7 +38,7 @@ class Teacher(db.Model):
     def __init__(self, user_id, email, name, surname, birth_date, phone, school, school_date_end, university,
                  university_date_end, registration_address,
                  was_pupil, patronymic="", second_surname="", nickname="", telegram="",
-                 vk="", school_date_start="", university_date_start="", workplace=""):
+                 vk="", school_date_start=None, university_date_start=None, workplace=""):
         self.user_id = user_id
         self.email = email
         self.name = name
