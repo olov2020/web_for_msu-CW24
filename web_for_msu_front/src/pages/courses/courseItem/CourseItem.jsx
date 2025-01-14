@@ -23,7 +23,7 @@ const CourseItem = () => {
         {state.year}
       </h3>
 
-      {state.isMyCourses &&
+      {/*{state.isMyCourses &&
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>
             <h2>Ведомость оценок</h2>
@@ -52,7 +52,7 @@ const CourseItem = () => {
         }}>
           <AddPupilOnCourse courseId={state.courseData.id}/>
         </section>
-      }
+      }*/}
 
       {userStatus.includes('admin') &&
         <section style={{
