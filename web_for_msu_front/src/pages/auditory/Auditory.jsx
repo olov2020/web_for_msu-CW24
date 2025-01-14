@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {getCoursesAuditoriums} from "../../api/adminApi.js";
 import Form from "../../generic/form/Form.jsx";
 import style from './auditory.module.css'

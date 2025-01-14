@@ -1,9 +1,11 @@
 .section {
     display: flex;
     width: auto;
-    justify-content: center;
+    @media (min-width: 600px) {
+        justify-content: center;
+    }
     max-width: 90%;
-    min-width: 90%;
+    min-width: 80%;
     overflow-x: auto;
     gap: 0 1rem;
 
