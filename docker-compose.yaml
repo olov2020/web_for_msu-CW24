@@ -6,8 +6,6 @@ services:
     restart: always
     ports:
       - "5436:5432"
-    env_file:
-      - ./web_for_msu_back/app/.env
     environment:
       POSTGRES_DB: emsh_db
       POSTGRES_USER: ${DB_USER}
