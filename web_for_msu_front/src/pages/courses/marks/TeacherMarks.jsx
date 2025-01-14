@@ -38,7 +38,7 @@ const TeacherMarks = ({courseId}) => {
   const [values2, setValues2] = useState({});
 
   useEffect(() => {
-    const inputsNew = marks.dates.flatMap((date) =>
+    const inputsNew = marks['dates'].flatMap((date) =>
       marks.pupils.flatMap((pupil) =>
         marks.mark_type_choices.map((markType) =>
           `${pupil.id} ${date} ${markType}`
@@ -46,7 +46,7 @@ const TeacherMarks = ({courseId}) => {
       )
     );
 
-    marks.dates.forEach((date) => {
+    marks['dates'].forEach((date) => {
       inputsNew.push(`visits ${date}`)
     })
 
@@ -61,7 +61,7 @@ const TeacherMarks = ({courseId}) => {
 
     setInputs(inputsDict);
 
-    const valuesNew = marks.dates.reduce((acc, date, index) => {
+    const valuesNew = marks['dates'].reduce((acc, date, index) => {
       marks.pupils.forEach((pupil) => {
         marks.mark_type_choices.forEach((markType, index2) => {
           acc[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
@@ -70,7 +70,7 @@ const TeacherMarks = ({courseId}) => {
       return acc;
     }, {});
 
-    marks.dates.forEach((date, index) => {
+    marks['dates'].forEach((date, index) => {
       valuesNew[`visits ${date}`] = marks.visits[index];
     })
 
@@ -186,7 +186,7 @@ const TeacherMarks = ({courseId}) => {
 
         <section>
           <section className={style.datesSection}>
-            {marks.dates.map((date, index) => (
+            {marks['dates'].map((date, index) => (
               <div key={index} className={style.column}>
                 <h3>{date}</h3>
 
