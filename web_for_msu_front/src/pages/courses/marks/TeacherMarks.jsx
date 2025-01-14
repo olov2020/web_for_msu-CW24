@@ -39,8 +39,8 @@ const TeacherMarks = ({courseId}) => {
 
   useEffect(() => {
     const inputsNew = marks['dates'].flatMap((date) =>
-      marks.pupils.flatMap((pupil) =>
-        marks.mark_type_choices.map((markType) =>
+      marks['pupils'].flatMap((pupil) =>
+        marks['mark_type_choices'].map((markType) =>
           `${pupil.id} ${date} ${markType}`
         )
       )
@@ -62,8 +62,8 @@ const TeacherMarks = ({courseId}) => {
     setInputs(inputsDict);
 
     const valuesNew = marks['dates'].reduce((acc, date, index) => {
-      marks.pupils.forEach((pupil) => {
-        marks.mark_type_choices.forEach((markType, index2) => {
+      marks['pupils'].forEach((pupil) => {
+        marks['mark_type_choices'].forEach((markType, index2) => {
           acc[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
         });
       });
@@ -178,7 +178,7 @@ const TeacherMarks = ({courseId}) => {
       }
       <section className={style.marksSection}>
         <section className={style.columnForTextData}>
-          {marks.pupils.map((pupil) => (
+          {marks['pupils'].map((pupil) => (
             <h3 key={pupil.id}>{pupil.name}</h3>
           ))}
           <h3>Посещения</h3>
@@ -191,7 +191,7 @@ const TeacherMarks = ({courseId}) => {
                 <h3>{date}</h3>
 
                 <div className={style.markTypes}>
-                  {marks.mark_type_choices.map((mark_type, index2) => (
+                  {marks['mark_type_choices'].map((mark_type, index2) => (
                     <p key={index2}>{mark_type}</p>
                   ))}
                 </div>
@@ -217,7 +217,7 @@ const TeacherMarks = ({courseId}) => {
           alignItems: 'flex-start',
         }}>
           <h3>Итог</h3>
-          {marks.pupils.map((pupil) => (
+          {marks['pupils'].map((pupil) => (
             <h3 key={pupil.id}>{pupil.result}</h3>
           ))}
         </section>
