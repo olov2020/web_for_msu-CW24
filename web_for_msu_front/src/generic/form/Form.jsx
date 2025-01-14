@@ -244,6 +244,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       case 'email': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [email, setEmail] = useState(values.email);
+        console.log(values.email);
         console.log(email);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
