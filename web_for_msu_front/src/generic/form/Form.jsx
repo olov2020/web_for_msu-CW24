@@ -246,7 +246,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [email, setEmail] = useState(values.email);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues[email] = email;
+        formValues.email = email;
         formErrors.email = error;
         return <InputEmail name={input} value={email} setValue={setEmail} formErrors={setError}
                            placeholder='Введите вашу почту' fieldName='Почта*'
@@ -743,8 +743,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
         if (matchAuditory) {
           const auditoryId = `auditory ${matchAuditory[1]}`;
-          formValues[auditoryId] = auditoriums[auditoryId];
-          formErrors[auditoryId] = errors[auditoryId];
+          /*formValues[auditoryId] = auditoriums[auditoryId];
+          formErrors[auditoryId] = errors[auditoryId];*/
 
           return (
             <InputText
@@ -759,8 +759,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
         if (matchCourse) {
           const courseId = `course ${matchCourse[1]}`;
-          formValues[courseId] = coursesSelect[courseId];
-          formErrors[courseId] = errors[courseId];
+          /*formValues[courseId] = coursesSelect[courseId];
+          formErrors[courseId] = errors[courseId];*/
 
           return (
             <InputDropdown
@@ -776,8 +776,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
         if (matchMarks) {
           const markId = matchMarks[0];
-          formValues[markId] = teacherMarks[markId];
-          formErrors[markId] = errors[markId];
+          /*formValues[markId] = teacherMarks[markId];
+          formErrors[markId] = errors[markId];*/
 
           return (
             <InputText
