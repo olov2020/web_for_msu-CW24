@@ -153,7 +153,7 @@ export const getCoursesSelect = async () => {
 }
 
 export const getCoursesSelectStatus = async () => {
-  const response = await $authHost.get(`/pupil/available_courses/status/`)
+  const response = await $authHost.get(`/home/select_courses/status/`)
 
   try {
     return response.data;
