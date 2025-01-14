@@ -38,7 +38,10 @@ const Auditory = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '90%',
+        width: 'auto',
+        maxWidth: '90%',
+        minWidth: '90%',
+        overflowX: 'auto',
         gap: '1rem 0',
       }}>
         <section style={{
