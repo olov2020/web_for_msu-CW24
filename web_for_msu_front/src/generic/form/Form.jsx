@@ -689,7 +689,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
 
       case 'dateOchStartEvents': {
-        const dateArr = values.dateKnrSecondEvents.split('.');
+        const dateArr = values.dateOchStartEvents.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchStartEvents, setDateOchStartEvents] = useState(values.dateOchStartEvents);
@@ -703,7 +703,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'dateOchEndEvents': {
-        const dateArr = values.dateKnrSecondEvents.split('.');
+        const dateArr = values.dateOchEndEvents.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchEndEvents, setDateOchEndEvents] = useState(values.dateOchEndEvents);
@@ -718,7 +718,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
 
       case 'dateKnrFirstEvents': {
-        const dateArr = values.dateKnrSecondEvents.split('.');
+        const dateArr = values.dateKnrFirstEvents.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrFirstEvents, setDateKnrFirstEvents] = useState(values.dateKnrFirstEvents);
@@ -746,7 +746,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'dateKnrThirdEvents': {
-        const dateArr = values.dateKnrSecondEvents.split('.');
+        const dateArr = values.dateKnrThirdEvents.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrThirdEvents, setDateKnrThirdEvents] = useState(values.dateKnrThirdEvents);

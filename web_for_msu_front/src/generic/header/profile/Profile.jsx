@@ -3,8 +3,6 @@ import styleHeader from "../header.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADMIN_ROUTE, HOME_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
-import {useEffect, useState} from "react";
-import {getUserData} from "../../../api/userApi.js";
 import ButtonSubmit from "../../form/submit/ButtonSubmit.jsx";
 import {setNotAuthAction} from "../../../store/UserReducers.js";
 import defaultUserImage from '../../../../public/generic/default_user.svg';
@@ -14,17 +12,7 @@ const Profile = ({deviceType}) => {
 
   const location = useLocation();
   const user = useSelector(state => state.user);
-  const [userInfo, setUserInfo] = useState({});
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getUserDataFunc = async () => {
-      const data = await getUserData();
-      setUserInfo(data);
-    };
-
-    getUserDataFunc();
-  }, [dispatch, location]);
 
   const navigate = useNavigate();
   const userLogout = () => {
@@ -68,15 +56,15 @@ const Profile = ({deviceType}) => {
           width: 'auto',
         }}>
           <div>
-            <h3>{userInfo.name}</h3>
-            <h3>{userInfo.surname}</h3>
+            <h3>{user.name}</h3>
+            <h3>{user.surname}</h3>
           </div>
 
           {deviceType !== 'phone' ?
-            (userInfo.photo ?
+            (user.photo ?
               <img className={style.profile__photo}
                    alt='Фотография профиля'
-                   src={userInfo.photo}
+                   src={user.photo}
               /> :
               <img className={style.profile__photo}
                    alt='Фотография профиля'

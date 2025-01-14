@@ -1,12 +1,4 @@
 import {$authHost, $host} from "./axiosApi.js";
-export const getUserData = async () => {
-  try {
-    const response = await $authHost.get('/home/user_info/');
-    return response.data;
-  } catch (error) {
-    throw new Error(`Failed to fetch user data: ${error}`);
-  }
-};
 
 export const getPupilInfo = async () => {
   const response = await $authHost.get('/pupil/get_account_data/');
