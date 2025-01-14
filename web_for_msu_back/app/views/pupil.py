@@ -39,7 +39,18 @@ class PupilView(FlaskView):
         mark_service: MarkService = services["mark_service"]
         pupil_service: PupilService = services["pupil_service"]
         pupil_id = pupil_service.get_pupil_id(g.current_user.id)
-        response, code = mark_service.get_pupil_marks_model(course_id, pupil_id)
+        response, code = mark_service.get_pupil_marks_model(course_id, pupil_id, "first")
+        return jsonify(response), code
+
+    @method("GET")
+    @auth_required
+    @roles_required('pupil')
+    def marks2(self, course_id: int):
+        services = get_services()
+        mark_service: MarkService = services["mark_service"]
+        pupil_service: PupilService = services["pupil_service"]
+        pupil_id = pupil_service.get_pupil_id(g.current_user.id)
+        response, code = mark_service.get_pupil_marks_model(course_id, pupil_id, "second")
         return jsonify(response), code
 
     @method("GET")
