@@ -168,7 +168,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
     } else if (type === 'newsAdd') {
       try {
-        await addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto);
+        await addNewsItem(formValues.newsTitle, formValues.newsDescription, formValues.newsPhoto, formValues.newsFile);
         alert('Новость успешно создана.');
         navigate(NEWS_ROUTE);
       } catch (error) {
@@ -661,6 +661,15 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
                            fieldName='Фотография новости'
                            setValue={setNewsPhoto}
                            accept='image/png, image/gif, image/jpeg, image/jpg'
+        />
+      }
+      case 'newsFile': {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [newsFile, setNewsFile] = useState(undefined);
+        formValues.newsFile = newsFile;
+        return <InputFile name={input} accept='.pdf, .xls, .xlsx, .csv, .docx, .pptx'
+                          fieldName='Файл новости'
+                          setValue={setNewsFile}
         />
       }
       case 'newsDescription': {

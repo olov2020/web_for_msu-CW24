@@ -15,7 +15,7 @@ const AdminPanel = () => {
     const data = await openRegistrationCourses();
     if (data) {
       alert('Запись на курсы открыта!');
-      setRegistrationStatus(!registrationStatus);
+      setRegistrationStatus(true);
     } else {
       alert('Что-то пошло не так... Запись не открыта');
     }
@@ -25,7 +25,7 @@ const AdminPanel = () => {
     const data = await closeRegistrationCourses();
     if (data) {
       alert('Запись на курсы закрыта!');
-      setRegistrationStatus(!registrationStatus);
+      setRegistrationStatus(false);
     } else {
       alert('Что-то пошло не так... Запись не закрыта');
     }

@@ -10,7 +10,7 @@ const NewsCreate = () => {
       }}
       >
         <Form
-          inputs={['newsPhoto', 'newsTitle', 'newsDescription']}
+          inputs={['newsPhoto', 'newsTitle', 'newsDescription', 'newsFile']}
           buttonText='Добавить новость'
           type='newsAdd'
         />

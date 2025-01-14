@@ -10,7 +10,7 @@ export const getAllNews = async () => {
   }
 }
 
-export const addNewsItem = async (title, description, photo) => {
+export const addNewsItem = async (title, description, photo, file) => {
   const formData = new FormData();
   const value = {
     title: title,
@@ -19,6 +19,9 @@ export const addNewsItem = async (title, description, photo) => {
   formData.append('data', JSON.stringify(value));
   if (photo) {
     formData.append('photo', photo);
+  }
+  if (file) {
+    formData.append('file', file);
   }
 
   const response = await $authHost.post('/news/create/', formData, {

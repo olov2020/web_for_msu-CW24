@@ -69,6 +69,7 @@ const News = () => {
               id={item.id}
               title={item.title}
               date={item.date}
+              file={item.file}
               description={item.description}
             />
           </List.Item>

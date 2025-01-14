@@ -49,7 +49,8 @@ const EventsOpenChampionship = () => {
             alignItems: 'flex-start',
           }}>
             {authStatus.includes('admin') ?
-              <Form inputs={['dateOchStartEvents', 'dateOchEndEvents']} values={{dateOchStartEvents: dates.date_start, dateOchEndEvents: dates.date_end}}
+              <Form inputs={['dateOchStartEvents', 'dateOchEndEvents']}
+                    values={{dateOchStartEvents: dates.date_start, dateOchEndEvents: dates.date_end}}
                     type='setDateOpenChampionship'
                     buttonText='Сохранить даты'
               /> :

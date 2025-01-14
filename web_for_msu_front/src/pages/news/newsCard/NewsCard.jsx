@@ -2,11 +2,11 @@ import {Link} from "react-router-dom";
 import style from '../news.module.css'
 
 // eslint-disable-next-line react/prop-types
-const NewsCard = ({photo = null, title, date, description, id}) => {
+const NewsCard = ({photo = null, title, date, description, id, file}) => {
 
   return (
     <Link to={`/news/${title}/${date}`}
-          state={{id, photo, title, description, date}}
+          state={{id, photo, title, description, date, file}}
           className={style.newsCard}
           key={id}
     >
