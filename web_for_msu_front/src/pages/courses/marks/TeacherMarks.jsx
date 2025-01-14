@@ -18,7 +18,7 @@ const TeacherMarks = ({courseId}) => {
 
     getMarks();
 
-    const getMarks2 = async () => {
+    /*const getMarks2 = async () => {
       try {
         const data = await getTeacherMarksByCourseId2({courseId});
         setMarks2(data);
@@ -27,13 +27,13 @@ const TeacherMarks = ({courseId}) => {
       }
     }
 
-    getMarks2();
+    getMarks2();*/
   }, [courseId])
 
   const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
-  const [inputs2, setInputs2] = useState({});
-  const [values2, setValues2] = useState({});
+  /*const [inputs2, setInputs2] = useState({});
+  const [values2, setValues2] = useState({});*/
 
   useEffect(() => {
     const inputsNew = marks.dates.flatMap((date) =>
@@ -76,7 +76,7 @@ const TeacherMarks = ({courseId}) => {
 
   }, [marks]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const inputsNew = marks2.dates.flatMap((date) =>
       marks2.pupils.flatMap((pupil) =>
         marks2.mark_type_choices.map((markType) =>
@@ -115,7 +115,7 @@ const TeacherMarks = ({courseId}) => {
 
     setValues2(valuesNew);
 
-  }, [marks2]);
+  }, [marks2]);*/
 
   if (!marks || marks.pupils.length === 0 || !marks.pupil) {
     return <h3>Оценок пока нет</h3>;
