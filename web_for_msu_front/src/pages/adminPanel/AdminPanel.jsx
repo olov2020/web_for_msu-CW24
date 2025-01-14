@@ -15,6 +15,7 @@ const AdminPanel = () => {
     const data = await openRegistrationCourses();
     if (data) {
       alert('Запись на курсы открыта!');
+      setRegistrationStatus(!registrationStatus);
     } else {
       alert('Что-то пошло не так... Запись не открыта');
     }
@@ -24,6 +25,7 @@ const AdminPanel = () => {
     const data = await closeRegistrationCourses();
     if (data) {
       alert('Запись на курсы закрыта!');
+      setRegistrationStatus(!registrationStatus);
     } else {
       alert('Что-то пошло не так... Запись не закрыта');
     }
@@ -61,6 +63,7 @@ const AdminPanel = () => {
 
       <section style={{
         display: 'flex',
+        flexDirection: 'column',
         width: '90%',
         gap: '0 1rem',
       }}>

@@ -101,63 +101,63 @@ const ListOfPeople = () => {
     }
   }
 
-const addAdminRole = async (userId, funcName) => {
-  switch (funcName) {
-    case 'setNewsAdmin':
-      return await setNewsAdmin(userId);
-    case 'setCourseAdmin':
-      return await setCourseAdmin(userId);
-    case 'setMarksAdmin':
-      return await setMarksAdmin(userId);
-    case 'setAuditoryAdmin':
-      return await setAuditoryAdmin(userId);
-    case 'setKNRAdmin':
-      return await setKNRAdmin(userId);
-    case 'setVSHAdmin':
-      return await setVSHAdmin(userId);
-    case 'setLSHAdmin':
-      return await setLSHAdmin(userId);
-    case 'setTestsOfflineAdmin':
-      return await setTestsOfflineAdmin(userId);
-    case 'setTestsOnlineAdmin':
-      return await setTestsOnlineAdmin(userId);
-    case 'setDirectoryTeacher':
-      return await setDirectoryTeacher(userId);
-    case 'setSovetTeacher':
-      return await setSovetTeacher(userId);
-    default:
-      return Promise.reject(new Error('Invalid function name'));
+  const addAdminRole = async (userId, funcName) => {
+    switch (funcName) {
+      case 'setNewsAdmin':
+        return await setNewsAdmin(userId);
+      case 'setCourseAdmin':
+        return await setCourseAdmin(userId);
+      case 'setMarksAdmin':
+        return await setMarksAdmin(userId);
+      case 'setAuditoryAdmin':
+        return await setAuditoryAdmin(userId);
+      case 'setKNRAdmin':
+        return await setKNRAdmin(userId);
+      case 'setVSHAdmin':
+        return await setVSHAdmin(userId);
+      case 'setLSHAdmin':
+        return await setLSHAdmin(userId);
+      case 'setTestsOfflineAdmin':
+        return await setTestsOfflineAdmin(userId);
+      case 'setTestsOnlineAdmin':
+        return await setTestsOnlineAdmin(userId);
+      case 'setDirectoryTeacher':
+        return await setDirectoryTeacher(userId);
+      case 'setSovetTeacher':
+        return await setSovetTeacher(userId);
+      default:
+        return Promise.reject(new Error('Invalid function name'));
+    }
   }
-}
 
-const deleteAdminRole = async (userId, funcName) => {
-  switch (funcName) {
-    case 'deleteNewsAdmin':
-      return await deleteNewsAdmin(userId);
-    case 'deleteCourseAdmin':
-      return await deleteCourseAdmin(userId);
-    case 'deleteMarksAdmin':
-      return await deleteMarksAdmin(userId);
-    case 'deleteAuditoryAdmin':
-      return await deleteAuditoryAdmin(userId);
-    case 'deleteKNRAdmin':
-      return await deleteKNRAdmin(userId);
-    case 'deleteVSHAdmin':
-      return await deleteVSHAdmin(userId);
-    case 'deleteLSHAdmin':
-      return await deleteLSHAdmin(userId);
-    case 'deleteTestsOfflineAdmin':
-      return await deleteTestsOfflineAdmin(userId);
-    case 'deleteTestsOnlineAdmin':
-      return await deleteTestsOnlineAdmin(userId);
-    case 'deleteDirectoryTeacher':
-      return await deleteDirectoryTeacher(userId);
-    case 'deleteSovetTeacher':
-      return await deleteSovetTeacher(userId);
-    default:
-      return Promise.reject(new Error('Invalid function name'));
+  const deleteAdminRole = async (userId, funcName) => {
+    switch (funcName) {
+      case 'deleteNewsAdmin':
+        return await deleteNewsAdmin(userId);
+      case 'deleteCourseAdmin':
+        return await deleteCourseAdmin(userId);
+      case 'deleteMarksAdmin':
+        return await deleteMarksAdmin(userId);
+      case 'deleteAuditoryAdmin':
+        return await deleteAuditoryAdmin(userId);
+      case 'deleteKNRAdmin':
+        return await deleteKNRAdmin(userId);
+      case 'deleteVSHAdmin':
+        return await deleteVSHAdmin(userId);
+      case 'deleteLSHAdmin':
+        return await deleteLSHAdmin(userId);
+      case 'deleteTestsOfflineAdmin':
+        return await deleteTestsOfflineAdmin(userId);
+      case 'deleteTestsOnlineAdmin':
+        return await deleteTestsOnlineAdmin(userId);
+      case 'deleteDirectoryTeacher':
+        return await deleteDirectoryTeacher(userId);
+      case 'deleteSovetTeacher':
+        return await deleteSovetTeacher(userId);
+      default:
+        return Promise.reject(new Error('Invalid function name'));
+    }
   }
-}
 
   return (
     <article>
@@ -169,31 +169,43 @@ const deleteAdminRole = async (userId, funcName) => {
       }
 
       {url.includes('pupils') && (
-        <section className={style.sectionPupils}>
-          <div className={style.container}>
-            <h2 className={style.item}>ФИО</h2>
-            <h2 className={style.item}>Почта</h2>
-            <h2 className={style.item}>Класс</h2>
-            <h2 className={style.item}>Статус</h2>
-            <h2 className={style.item}>Статус ученика</h2>
-          </div>
+        <section className={style.sectionTeachers}>
+          <section className={style.teachers}>
+            <h2>ФИО</h2>
+            {people.map((person) => (
+              <h3 key={person.id}>{person.name}</h3>
+            ))}
+          </section>
 
-          {people.map((person) => (
-            <div key={person.id} className={style.container}>
-              <h3 className={style.item}>{person.name}</h3>
-              <p className={style.item}><a href={`mailto:${person.email}`}>{person.email}</a></p>
-              <p className={style.item}>{person.grade}</p>
-              {!person.authorized ?
+          <section className={style.email}>
+            <h2>Почта</h2>
+            {people.map((person) => (
+              <h3 key={person.id}><a href={`mailto:${person.email}`}>{person.email}</a></h3>
+            ))}
+          </section>
 
-                <h3 className={style.item}><span>Ожидает действие</span></h3> :
-                <h3 className={style.item}><span>{person.status}</span></h3>
-              }
-              <div style={{
+          <section className={style.grade}>
+            <h2>Класс</h2>
+            {people.map((person) => (
+              <h3 key={person.id}>{person.grade}</h3>
+            ))}
+          </section>
+
+          <section className={style.status}>
+            <h2>Статус</h2>
+            {people.map((person) => (
+              <h3 key={person.id}>{person.status}</h3>
+            ))}
+          </section>
+
+          <section className={style.actions}>
+            <h2>Статус ученика</h2>
+
+            {people.map((person) => (
+              <div key={person.id} style={{
                 display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '25%',
                 gap: '0 1rem',
+                alignItems: 'center',
               }}>
                 {!person.authorized ?
                   <>
@@ -204,35 +216,8 @@ const deleteAdminRole = async (userId, funcName) => {
                       deletePupilFunc(person.id)
                     }}/>
                   </> :
-                  person.status === 'Ученик' ?
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      gap: '0 1rem',
-                    }}>
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '50%',
-                        gap: '0 .5rem',
-                      }}>
-                        <h3>Ученик добавлен</h3>
-                        <img src={checkMarkIcon} alt='Добавлен' style={{
-                          width: '2rem',
-                          objectFit: 'contain',
-                        }}/>
-                      </div>
-                      <ButtonSubmit text='Отчислить' type='delete' onClick={() => {
-                        makePupilRetiredFunc(person.id)
-                      }}
-                                    style={{
-                                      width: '50%',
-                                    }}
-                      />
-                    </div> :
-                    person.status === 'Бывший ученик' ?
+                  <>
+                    {person.status === 'Ученик' ?
                       <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -244,22 +229,54 @@ const deleteAdminRole = async (userId, funcName) => {
                           alignItems: 'center',
                           justifyContent: 'center',
                           width: '50%',
+                          gap: '0 .5rem',
                         }}>
-                          <h3>Ученик отчислен</h3>
+                          <h3>Ученик добавлен</h3>
+                          <img src={checkMarkIcon} alt='Добавлен' style={{
+                            width: '2rem',
+                            objectFit: 'contain',
+                          }}/>
                         </div>
-                        <ButtonSubmit text='Восстановить' type='submit' onClick={() => {
-                          recoverPupilFunc(person.id)
+                        <ButtonSubmit text='Отчислить' type='delete' onClick={() => {
+                          makePupilRetiredFunc(person.id)
                         }}
                                       style={{
                                         width: '50%',
                                       }}
                         />
                       </div> :
-                      <h3>Никаких действий нет</h3>
+                      person.status === 'Бывший ученик' ?
+                        (
+                          <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            gap: '0 1rem',
+                          }}>
+                            <div style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              width: '50%',
+                            }}>
+                              <h3>Ученик отчислен</h3>
+                            </div>
+                            <ButtonSubmit text='Восстановить' type='submit' onClick={() => {
+                              recoverPupilFunc(person.id)
+                            }}
+                                          style={{
+                                            width: '50%',
+                                          }}
+                            />
+                          </div>
+                        ) :
+                        <h3>Никаких действий нет</h3>
+                    }
+                  </>
                 }
               </div>
-            </div>
-          ))}
+            ))}
+          </section>
         </section>
       )}
 

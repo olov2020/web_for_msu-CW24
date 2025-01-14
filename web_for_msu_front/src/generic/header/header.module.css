@@ -148,6 +148,6 @@
     }
 
     @media (max-width: 600px) {
-        width: 25%;
+        width: auto;
     }
 }
