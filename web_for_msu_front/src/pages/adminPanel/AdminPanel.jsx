@@ -91,6 +91,7 @@ const AdminPanel = () => {
 
       <h1 style={{
         marginTop: '5rem',
+        textAlign: 'center',
       }}>Дополнительный функционал</h1>
 
       <section style={{

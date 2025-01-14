@@ -1,0 +1,14 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    max-width: 90%;
+    overflow-x: auto;
+    gap: 1rem 0;
+
+    > section {
+        display: flex;
+        justify-content: space-between;
+        width: auto;
+    }
+}

@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {getCoursesAuditoriums} from "../../api/adminApi.js";
 import Form from "../../generic/form/Form.jsx";
+import style from './auditory.module.css'
 
 const Auditory = () => {
 
@@ -35,19 +36,8 @@ const Auditory = () => {
     <article>
       <h1>Назначение аудиторий</h1>
 
-      <section style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: 'auto',
-        maxWidth: '90%',
-        overflowX: 'auto',
-        gap: '1rem 0',
-      }}>
-        <section style={{
-          display: 'flex',
-          width: 'auto',
-          justifyContent: 'space-between',
-        }}>
+      <section className={style.section}>
+        <section>
           <h2 style={{
             width: '18%',
             alignSelf: 'center',
@@ -65,11 +55,7 @@ const Auditory = () => {
             Аудитория / zoom
           </h2>
         </section>
-        <section style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: 'auto',
-        }}>
+        <section>
           <section style={{
             display: 'flex',
             flexDirection: 'column',
