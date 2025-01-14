@@ -11,7 +11,7 @@
         flex-direction: column;
         @media (max-width: 600px) {
             width: auto;
-            gap: .5rem 0;
+            gap: 2.28rem 0;
         }
         @media (min-width: 600px) {
             min-width: 33%;
