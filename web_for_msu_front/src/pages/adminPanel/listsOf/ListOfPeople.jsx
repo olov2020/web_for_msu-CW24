@@ -221,14 +221,14 @@ const ListOfPeople = () => {
                       <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        width: '100%',
+                        width: 'auto',
                         gap: '0 1rem',
                       }}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          width: '50%',
+                          width: 'auto',
                           gap: '0 .5rem',
                         }}>
                           <h3>Ученик добавлен</h3>
@@ -250,14 +250,14 @@ const ListOfPeople = () => {
                           <div style={{
                             display: 'flex',
                             justifyContent: 'space-between',
-                            width: '100%',
+                            width: 'auto',
                             gap: '0 1rem',
                           }}>
                             <div style={{
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
-                              width: '50%',
+                              width: 'auto',
                             }}>
                               <h3>Ученик отчислен</h3>
                             </div>

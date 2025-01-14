@@ -1,31 +1,10 @@
-.sectionPupils {
-    display: flex;
-    flex-direction: column;
-    max-width: 90%;
-    overflow-x: auto;
-    gap: .5rem 0;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.item {
-    width: 25%;
-    text-align: center;
-}
-
-
 .sectionTeachers {
     display: flex;
     max-width: 90%;
     overflow-x: auto;
     gap: 0 2rem;
 
-    > .teachers, .email, .actions {
+    > .teachers, .email, .actions, .grade, .status {
         display: flex;
         flex-direction: column;
         align-items: center;
