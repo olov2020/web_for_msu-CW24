@@ -689,6 +689,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
 
       case 'dateOchStartEvents': {
+        const dateArr = values.dateKnrSecondEvents.split('.');
+        const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchStartEvents, setDateOchStartEvents] = useState(values.dateOchStartEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -696,11 +698,13 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.dateOchStartEvents = dateOchStartEvents || values.dateOchStartEvents;
         formErrors.dateOchStartEvents = error;
         return <InputDate name={input} placeholder='Введите дату мероприятия' fieldName='Дата мероприятия'
-                          value={dateOchStartEvents || values.dateOchStartEvents}
+                          value={dateOchStartEvents || date}
                           setValue={setDateOchStartEvents} formErrors={setError}
         />
       }
       case 'dateOchEndEvents': {
+        const dateArr = values.dateKnrSecondEvents.split('.');
+        const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchEndEvents, setDateOchEndEvents] = useState(values.dateOchEndEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -708,44 +712,50 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         formValues.dateOchEndEvents = dateOchEndEvents || values.dateOchEndEvents;
         formErrors.dateOchEndEvents = error;
         return <InputDate name={input} placeholder='Введите дату церемонии награждения' fieldName='Дата награждения'
-                          value={dateOchEndEvents || values.dateOchEndEvents}
+                          value={dateOchEndEvents || date}
                           setValue={setDateOchEndEvents} formErrors={setError}
         />
       }
 
       case 'dateKnrFirstEvents': {
+        const dateArr = values.dateKnrSecondEvents.split('.');
+        const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrFirstEvents, setDateKnrFirstEvents] = useState(values.dateKnrFirstEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateKnrFirstEvents = dateKnrFirstEvents || values.dateKnrFirstEvents;
+        formValues.dateKnrFirstEvents = dateKnrFirstEvents || date;
         formErrors.dateKnrFirstEvents = error;
         return <InputDate name={input} placeholder='Введите дату 1 тура' fieldName='Дата 1 тура'
-                          value={dateKnrFirstEvents || values.dateKnrFirstEvents}
+                          value={dateKnrFirstEvents || date}
                           setValue={setDateKnrFirstEvents} formErrors={setError}
         />
       }
       case 'dateKnrSecondEvents': {
+        const dateArr = values.dateKnrSecondEvents.split('.');
+        const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrSecondEvents, setDateKnrSecondEvents] = useState(values.dateKnrSecondEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateKnrSecondEvents = dateKnrSecondEvents || values.dateKnrSecondEvents;
+        formValues.dateKnrSecondEvents = dateKnrSecondEvents || date;
         formErrors.dateKnrSecondEvents = error;
         return <InputDate name={input} placeholder='Введите дату 2 тура' fieldName='Дата 2 тура'
-                          value={dateKnrSecondEvents || values.dateKnrSecondEvents}
+                          value={dateKnrSecondEvents || date}
                           setValue={setDateKnrSecondEvents} formErrors={setError}
         />
       }
       case 'dateKnrThirdEvents': {
+        const dateArr = values.dateKnrSecondEvents.split('.');
+        const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrThirdEvents, setDateKnrThirdEvents] = useState(values.dateKnrThirdEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.dateKnrThirdEvents = dateKnrThirdEvents || values.dateKnrThirdEvents;
+        formValues.dateKnrThirdEvents = dateKnrThirdEvents || date;
         formErrors.dateKnrThirdEvents = error;
         return <InputDate name={input} placeholder='Введите дату 3 тура' fieldName='Дата 3 тура'
-                          value={dateKnrThirdEvents || values.dateKnrThirdEvents}
+                          value={dateKnrThirdEvents || date}
                           setValue={setDateKnrThirdEvents} formErrors={setError}
         />
       }
