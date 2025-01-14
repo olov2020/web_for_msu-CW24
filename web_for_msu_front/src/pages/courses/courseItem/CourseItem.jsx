@@ -23,7 +23,7 @@ const CourseItem = () => {
         {state.year}
       </h3>
 
-      {/*{state.isMyCourses &&
+      {state.isMyCourses &&
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>
             <h2>Ведомость оценок</h2>
@@ -46,7 +46,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {state.isMyCourses && userStatus.includes('teacher') &&
+      {/*{state.isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
