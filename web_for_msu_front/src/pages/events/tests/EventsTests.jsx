@@ -91,7 +91,9 @@ const EventsTests = () => {
           <h2>Регистрация на вступительные</h2>
 
           <div>
-            Таймпад виджет
+            <iframe name="tpw__z6efy16sq1b_iframe" id="tpw__z6efy16sq1b_iframe"
+                    style="width: 100%; height: 252.8px; border: 0px; background: transparent; display: block; overflow: hidden;"
+                    seamless="seamless" scrolling="no"></iframe>
           </div>
         </aside>
       </section>

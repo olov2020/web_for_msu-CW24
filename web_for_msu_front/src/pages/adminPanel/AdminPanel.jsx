@@ -38,21 +38,16 @@ const AdminPanel = () => {
       const data = await downloadDatabase();
       const blob = new Blob([data], { type: data.type });
 
-      // Create a temporary anchor element
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.download = `emsch_db_${new Date()}.xlsx`; // Set the desired file name and extension
+      link.download = `emsch_db_${new Date()}.xlsx`;
 
-      // Append the anchor to the document body
       document.body.appendChild(link);
 
-      // Programmatically click the anchor to trigger the download
       link.click();
 
-      // Remove the anchor from the document body
       document.body.removeChild(link);
 
-      // Revoke the object URL to free up memory
       window.URL.revokeObjectURL(link.href);
       alert('Файл успешно скачан!')
     } catch {

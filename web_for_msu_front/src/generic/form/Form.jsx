@@ -691,7 +691,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
       case 'dateOchEndEvents': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [dateOchEndEvents, setDateOchEndEvents] = useState(values.dateOchStartEvents);
+        const [dateOchEndEvents, setDateOchEndEvents] = useState(values.dateOchEndEvents);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.dateOchEndEvents = dateOchEndEvents;
