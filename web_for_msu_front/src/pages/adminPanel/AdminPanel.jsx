@@ -35,25 +35,28 @@ const AdminPanel = () => {
 
   const downloadDatabaseFunc = async () => {
     try {
-      const fileUrl = await downloadDatabase();
-      if (fileUrl) {
-        // Create an anchor element to trigger the download
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = 'database.zip'; // Specify the filename
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+      const data = await downloadDatabase();
+      const blob = new Blob([data], { type: data.type });
 
-        // Revoke the blob URL to free up memory
-        window.URL.revokeObjectURL(fileUrl);
+      // Create a temporary anchor element
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `emsch_db_${new Date()}.xlsx`; // Set the desired file name and extension
 
-        alert('Файл успешно сохранен');
-      } else {
-        alert('Что-то пошло не так... Файл не был сохранен');
-      }
+      // Append the anchor to the document body
+      document.body.appendChild(link);
+
+      // Programmatically click the anchor to trigger the download
+      link.click();
+
+      // Remove the anchor from the document body
+      document.body.removeChild(link);
+
+      // Revoke the object URL to free up memory
+      window.URL.revokeObjectURL(link.href);
+      alert('Файл успешно скачан!')
     } catch {
-      alert('Что-то пошло не так... Файл не был сохранен');
+      alert('Упс... что-то пошло не так. Файл не был сохранен');
     }
   }
 

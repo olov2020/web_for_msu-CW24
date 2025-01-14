@@ -328,7 +328,7 @@ export const downloadDatabase = async () => {
   });
 
   try {
-    return window.URL.createObjectURL(new Blob([response.data]));
+    return response.data;
   } catch (error) {
     return new Error(error);
   }
