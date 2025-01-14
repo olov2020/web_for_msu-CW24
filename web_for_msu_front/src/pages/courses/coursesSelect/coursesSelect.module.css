@@ -9,10 +9,16 @@
         display: flex;
         flex-direction: column;
         width: auto;
-        gap: 1rem 0;
+        gap: 2.3rem 0;
 
         > * {
             white-space: nowrap;
         }
+    }
+}
+
+.name, .time, .info {
+    > h2 {
+        margin-bottom: .35rem;
     }
 }
