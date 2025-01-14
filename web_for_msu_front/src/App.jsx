@@ -20,7 +20,7 @@ const App = () => {
     } catch {
       dispatch(setNotAuthAction());
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
