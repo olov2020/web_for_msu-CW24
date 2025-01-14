@@ -55,12 +55,16 @@
 }
 
 .asideRight {
-    position: absolute;
-    right: 2rem;
+    @media (min-width: 600px) {
+        position: absolute;
+        right: 2rem;
+    }
 }
 
 .asideLeft {
-    position: absolute;
-    left: 2rem;
-    top: 20%;
+    @media (min-width: 600px) {
+        position: absolute;
+        left: 2rem;
+        top: 20%;
+    }
 }
