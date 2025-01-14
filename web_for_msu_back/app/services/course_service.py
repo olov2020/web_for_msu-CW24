@@ -278,11 +278,15 @@ class CourseService:
         p = 0
         while p < 10 and flag:
             # TODO add mark_type
-            mark_type = "Оценка с весом"  # mark_type
             if data[ind + p][1] is None:
                 p += 1
                 continue
             name = data[ind + p][1]
+            # mark_type
+            if data[ind + p][2] is None or data[ind + p][2].lower() == "пусто":
+                p += 1
+                continue
+            mark_type = data[ind + p][2]
             if data[ind + p][3] is None:
                 coefficient = 1
             else:
@@ -375,6 +379,7 @@ class CourseService:
                     while j < len(formulas) and k < len(data["formulas"]):
                         formulas[j].name = data["formulas"][k]["name"]
                         formulas[j].coefficient = data["formulas"][k]["coefficient"]
+                        formulas[j].mark_type = data["formulas"][k]["mark_type"]
                         j += 1
                         k += 1
                     if len(data["formulas"]) == k:
