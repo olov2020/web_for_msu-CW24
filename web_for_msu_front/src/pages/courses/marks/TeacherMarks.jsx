@@ -2,11 +2,13 @@ import {useEffect, useState} from 'react';
 import {getTeacherMarksByCourseId, getTeacherMarksByCourseId2} from "../../../api/coursesApi.js";
 import style from './teacherMarks.module.css';
 import Form from "../../../generic/form/Form.jsx";
+import {useLocation} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const TeacherMarks = ({courseId}) => {
 
   const [marks, setMarks] = useState({});
+  const {pathname} = useLocation();
 
   const [marks2, setMarks2] = useState(undefined);
 
@@ -28,7 +30,7 @@ const TeacherMarks = ({courseId}) => {
     }
 
     getMarks2();*/
-  }, [])
+  }, [pathname])
 
   const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
