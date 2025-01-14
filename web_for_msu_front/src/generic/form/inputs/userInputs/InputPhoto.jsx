@@ -1,11 +1,11 @@
 import styleFileInput from "../userInputs/inputFile.module.css";
 import styleInput from "../userInputs/input.module.css";
-import {useState, useRef} from "react";
+import {useState, useRef, useEffect} from "react";
 import defaultNewsImage from "../../../../../public/msu_logo.png";
 import defaultUserImage from '../../../../../public/generic/default_user.svg';
 
 // eslint-disable-next-line react/prop-types
-const InputPhoto = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
+const InputPhoto = ({value, name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
 
   const [error, setError] = useState('');
   const [imageUrl, setImageUrl] = useState(name.includes('news') ? defaultNewsImage : defaultUserImage);
@@ -13,6 +13,10 @@ const InputPhoto = ({name = '', fieldName, accept = '', multiple = false, requir
   const errors = {
     empty: 'Данное поле не может быть пустым',
   }
+
+  useEffect(() => {
+    setImageUrl(value);
+  }, [value]);
 
   const handleInputChange = ((e) => {
     e.preventDefault();
