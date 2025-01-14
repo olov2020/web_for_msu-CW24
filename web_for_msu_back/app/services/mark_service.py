@@ -26,10 +26,9 @@ class MarkService:
         self.pupil_service = pupil_service
 
     def get_pupils_marks(self, course_id: int, lessons: list[Schedule], pupils: list[Pupil]) \
-            -> dict[int, list[list[str]]]:
+            -> dict[int, list[list[Mark]]]:
         course_marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id,
                                                                                asc(Mark.schedule_id)).all()
-        lessons_ids = [lesson.id for lesson in lessons]
         lessons_ids_set = set(lesson.id for lesson in lessons)
         formulas = Formula.query.filter(Formula.course_id == course_id).order_by(Formula.id).all()
         formulas_ids = [formula.id for formula in formulas]
@@ -42,18 +41,17 @@ class MarkService:
                     pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, []).append(mark)
             marks_grouped[key] = pupil_marks
 
-            # marks_grouped[key] = [mark for mark in marks if mark.schedule_id in lessons_ids]
         for pupil in pupils:
             pupil_marks = marks_grouped.get(pupil.id, dict())
             pupil_marks = self.extend_pupil_marks(pupil.id, course_id, pupil_marks, lessons, formulas_ids)
-            marks_grouped[pupil.id] = self.make_pupil_marks_list(pupil.id, course_id, pupil_marks, lessons_ids,
+            marks_grouped[pupil.id] = self.make_pupil_marks_list(pupil.id, course_id, pupil_marks,
                                                                  formulas_ids)
         return marks_grouped
 
     def make_pupil_marks_list(self, pupil_id: int, course_id: int, pupil_marks: dict[int, list[Mark]],
-                              lessons_ids: list[int], formulas_ids: list[int]):
+                              formulas_ids: list[int]):
         pupil_marks_list = []
-        dates = sorted(list(pupil_marks.keys()), key=lambda mark: lessons_ids.index(mark.schedule_id))
+        dates = sorted(list(pupil_marks.keys()))
         for date in dates:
             pupil_marks[date].sort(key=lambda mark: formulas_ids.index(mark.formula_id))
             i = j = 0
@@ -75,6 +73,8 @@ class MarkService:
         sums = dict()
         for lesson_marks in pupil_marks:
             for mark in lesson_marks:
+                if not mark.mark:
+                    continue
                 types[mark.formula_id] = types.get(mark.formula_id, 0) + 1
                 sums[mark.formula_id] = sums.get(mark.formula_id, 0) + float(mark.mark)
         for formula_id in types.keys():
@@ -120,7 +120,7 @@ class MarkService:
             teacher_pupil_marks.append({
                 'id': pupil.id,
                 'name': self.pupil_service.get_full_name(pupil),
-                'marks': pupil_course_marks,
+                'marks': [[mark.mark for mark in lesson] for lesson in pupil_course_marks],
                 'result': round(self.calculate_result(pupil_course_marks), 2)
             })
 
@@ -133,7 +133,7 @@ class MarkService:
             'visits': visits,
         }
         try:
-            marks_dto = MarksDTO().load(marks_data)
+            marks_dto = MarksDTO().dump(marks_data)
         except ValidationError as e:
             return e.messages, 400
         return marks_dto, 200
@@ -241,11 +241,10 @@ class MarkService:
                  .order_by(Mark.schedule_id).all())
         formulas = Formula.query.filter(Formula.course_id == course_id).order_by(Formula.id).all()
         formulas_ids = [formula.id for formula in formulas]
-        lessons_ids = [lesson.id for lesson in lessons]
         pupil_marks = {}
         for mark in marks:
             pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, []).append(mark)
-        return self.make_pupil_marks_list(pupil_id, course_id, pupil_marks, lessons_ids, formulas_ids)
+        return self.make_pupil_marks_list(pupil_id, course_id, pupil_marks, formulas_ids)
 
     def extend_pupil_marks(self, pupil_id: int, course_id: int, pupil_marks: dict[int, list[Mark]],
                            lessons: list[Schedule],

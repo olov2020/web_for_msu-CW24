@@ -7,4 +7,4 @@ class MarksDTO(Schema):
     dates = fields.List(fields.String(), required=True)
     mark_type_choices = fields.List(fields.String(), required=True)  # Список возможных типов отметок
     pupils = fields.List(fields.Nested(TeacherPupilMarksDTO), required=True)
-    visits = fields.List(fields.String(), required=True)
+    visits = fields.List(fields.String(), required=True, allow_none=True)

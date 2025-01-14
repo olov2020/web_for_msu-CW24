@@ -277,16 +277,23 @@ class CourseService:
         formulas = []
         p = 0
         while p < 10 and flag:
-            if data[ind+p][1] is None:
-                break
-            name = data[ind+p][1]
-            coefficient = data[ind+p][3].replace(',', '.')
+            # TODO add mark_type
+            mark_type = "Оценка с весом"  # mark_type
+            if data[ind + p][1] is None:
+                p += 1
+                continue
+            name = data[ind + p][1]
+            if data[ind + p][3] is None:
+                coefficient = 1
+            else:
+                coefficient = data[ind + p][3].replace(',', '.')
             try:
                 coefficient = float(coefficient)
             except ValueError:
                 continue
             formula_data = {
                 "name": name,
+                "mark_type": mark_type,  # mark_type
                 "coefficient": coefficient
             }
             formulas.append(formula_data)
@@ -378,7 +385,8 @@ class CourseService:
                         for i in range(k, len(data["formulas"])):
                             course.formulas.append(Formula(course_id=course_id,
                                                            name=data["formulas"][i]["name"],
-                                                           coefficient=data["formulas"][i]["coefficient"]))
+                                                           coefficient=data["formulas"][i]["coefficient"],
+                                                           mark_type=data["formulas"][i]["mark_type"]))
 
                 case "schedules":
                     schedules = Schedule.query.where(Schedule.course_id == course_id).order_by(

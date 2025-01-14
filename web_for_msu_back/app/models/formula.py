@@ -10,7 +10,8 @@ class Formula(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     marks = db.relationship("Mark", back_populates="formula")
 
-    def __init__(self, course_id, name, coefficient):
+    def __init__(self, course_id, name, coefficient, mark_type):
         self.course_id = course_id
         self.name = name
         self.coefficient = coefficient
+        self.mark_type = mark_type

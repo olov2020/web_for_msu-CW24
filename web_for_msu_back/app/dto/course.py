@@ -98,11 +98,6 @@ class CourseDTO(Schema):
                 formula_data.setdefault("course_id", course.id)
                 formula = Formula(**formula_data)
                 course.formulas.append(formula)
-        course.formulas.append(Formula(
-            course_id=course.id,
-            name="Баллы",
-            coefficient=1
-        ))
 
         # Добавляем связанных учителей (teachers)
         if "teachers" in data:
