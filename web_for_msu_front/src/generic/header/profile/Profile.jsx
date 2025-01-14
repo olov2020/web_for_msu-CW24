@@ -51,9 +51,7 @@ const Profile = ({deviceType}) => {
     return (
       <div className={styleHeader.menu__item}>
         <Link to={ADMIN_ROUTE}>
-          <div className={styleHeader.menu__name} style={{
-            whiteSpace: 'nowrap',
-          }}>
+          <div className={styleHeader.menu__name}>
             <h2>Админ панель</h2>
           </div>
         </Link>
