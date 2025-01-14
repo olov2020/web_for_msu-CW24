@@ -9,8 +9,11 @@
     > section {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         width: auto;
         gap: .5rem 0;
+
+        > h2 {
+            white-space: nowrap;
+        }
     }
 }
