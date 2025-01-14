@@ -277,7 +277,6 @@ class CourseService:
         formulas = []
         p = 0
         while p < 10 and flag:
-            # TODO add mark_type
             if data[ind + p][1] is None:
                 p += 1
                 continue
