@@ -29,10 +29,8 @@ const CourseItem = () => {
             <h2>Ведомость оценок</h2>
             {userStatus.includes('teacher') ? (
               <TeacherMarks courseId={state.courseData.id}/>
-            ) : userStatus.includes('pupil') ?(
-              <PupilMarks courseId={state.courseData.id}/>
             ) : (
-              <></>
+              <PupilMarks courseId={state.courseData.id}/>
             )}
           </>
         ))
@@ -46,13 +44,13 @@ const CourseItem = () => {
         </section>
       }
 
-      {/*{state.isMyCourses && userStatus.includes('teacher') &&
+      {state.isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
           <AddPupilOnCourse courseId={state.courseData.id}/>
         </section>
-      }*/}
+      }
 
       {userStatus.includes('admin') &&
         <section style={{
