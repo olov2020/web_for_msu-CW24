@@ -8,7 +8,7 @@ const TeacherMarks = ({courseId}) => {
 
   const [marks, setMarks] = useState({});
 
-  const [marks2, setMarks2] = useState({});
+  const [marks2, setMarks2] = useState(undefined);
 
   useEffect(() => {
     const getMarks = async () => {
@@ -123,7 +123,7 @@ const TeacherMarks = ({courseId}) => {
 
   return (
     <>
-      {marks2 && marks2.pupils && marks2.pupils.length !== 0 &&
+      {/*{marks2 && marks2.pupils && marks2.pupils.length !== 0 &&
         <section className={style.marksSection}>
           <section className={style.columnForTextData}>
             {marks2.pupils.map((pupil) => (
@@ -170,7 +170,7 @@ const TeacherMarks = ({courseId}) => {
             ))}
           </section>
         </section>
-      }
+      }*/}
       <section className={style.marksSection}>
         <section className={style.columnForTextData}>
           {marks.pupils.map((pupil) => (
