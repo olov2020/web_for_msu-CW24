@@ -7,7 +7,7 @@ class Mark(db.Model):
     pupil_id = db.Column(db.Integer, db.ForeignKey('pupil.id'), nullable=False)
     schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.id'), nullable=False)
     pupil = db.relationship('Pupil', back_populates='schedules')
-    schedule = db.relationship('Schedule', back_populates='pupils')
+    schedule = db.relationship('Schedule', back_populates='marks')
     formula_id = db.Column(db.Integer, db.ForeignKey('formula.id'), nullable=False)
     formula = db.relationship('Formula', back_populates='marks')
     mark = db.Column(db.String(), nullable=False)

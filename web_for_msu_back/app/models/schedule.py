@@ -11,10 +11,8 @@ class Schedule(db.Model):
     theme = db.Column(db.String())
     plan = db.Column(db.String())
     additional_info = db.Column(db.String())
-    pupils = db.relationship('Mark', back_populates='schedule')
-    formula_id = db.Column(db.Integer, db.ForeignKey('formula.id'))
-    formulas = db.relationship('Formula', backref='schedules')
-    visits = db.Column(db.Integer, nullable=True)
+    marks = db.relationship('Mark', back_populates='schedule')
+    visits = db.Column(db.String(), nullable=True)
 
     def __init__(self, course_id, lesson_number, date, theme, plan, additional_info):
         self.course_id = course_id

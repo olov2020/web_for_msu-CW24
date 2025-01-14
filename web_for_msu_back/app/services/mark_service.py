@@ -38,7 +38,8 @@ class MarkService:
             pupil_marks = dict()
             for mark in marks:
                 if mark.schedule_id in lessons_ids_set:
-                    pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, []).append(mark)
+                    pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, [])
+                    pupil_marks[mark.schedule_id].append(mark)
             marks_grouped[key] = pupil_marks
 
         for pupil in pupils:
@@ -57,11 +58,11 @@ class MarkService:
             i = j = 0
             marks_list = []
             while i < len(formulas_ids) and j < len(formulas_ids):
-                if formulas_ids[i] == pupil_marks[date][j].formula_id:
+                if j < len(pupil_marks[date]) and formulas_ids[i] == pupil_marks[date][j].formula_id:
                     marks_list.append(pupil_marks[date][j])
                     i += 1
                     j += 1
-                elif formulas_ids[i] < pupil_marks_list[date][j].formula_id:
+                elif j >= len(pupil_marks[date]) or formulas_ids[i] < pupil_marks[date][j].formula_id:
                     marks_list.append(Mark(date, pupil_id, "", "", course_id, formulas_ids[i]))
                     i += 1
             pupil_marks_list.append(marks_list)
@@ -110,8 +111,6 @@ class MarkService:
         mark_types = []
         dates = []
         for lesson in lessons:
-            formula_name = lesson.formulas.name if lesson.formulas else 'Присутствие'
-            mark_types.append(formula_name)
             dates.append(lesson.date.strftime('%d.%m.%Y'))
 
         teacher_pupil_marks = []
@@ -166,85 +165,65 @@ class MarkService:
 
         lessons = self.get_lessons_by_part(course, course_id, part)
 
-        return self.update_journal_part(course_id, request, lessons)
+        return self.update_journal_part(course_id, course, request, lessons)
 
-    def update_journal_part(self, course_id: int, request: flask.Request, lessons) -> (dict, int):
-
-        try:
-            marks_dto = MarksDTO().load(request.json)
-        except ValidationError as e:
-            return e.messages, 400
-        lessons_ids = set(lesson.id for lesson in lessons)
-        formula_vals = Formula.query.filter_by(course_id=course_id).all()
-        formulas = {formula.name: formula for formula in formula_vals}
-
-        visit_count = [0] * len(lessons)
-        mark_sum = [0] * len(lessons)
-        mark_count = [0] * len(lessons)
-        new_marks = []
-
-        for i in range(len(marks_dto["dates"])):
-            if marks_dto["mark_types"][i] != 'Присутствие':
-                lesson = lessons[i]
-                lesson.formulas = formulas[marks_dto["mark_types"][i]]
-
-        marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
-        marks_grouped = {}
-        for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
-            marks_grouped[key] = {mark.schedule_id: mark for mark in group if mark.schedule_id in lessons_ids}
-
-        for i in range(len(marks_dto["pupils"])):
-            for j in range(len(marks_dto["dates"])):
-                mark = marks_dto["pupils"][i]["marks"][j]
-                lesson = lessons[j]
-                prev_mark = marks_grouped.get(marks_dto["pupils"][i]["id"], {}).get(lesson.id)
-
-                if mark.upper() not in ["H", "Н"]:
-                    visit_count[j] += 1
-                    if mark.isdigit():
-                        mark_sum[j] += int(mark)
-                        mark_count[j] += 1
-
-                if prev_mark:
-                    if mark:
-                        prev_mark.mark = mark
-                    else:
-                        self.db.session.delete(prev_mark)
-                elif mark:
-                    new_marks.append(Mark(lesson.id, marks_dto["pupils"][i]["id"], mark, None, course_id))
-            marks_dto["pupils"][i]["result"] = round(
-                self.calculate_result(marks_dto["pupils"][i]["marks"], marks_dto["mark_types"], formula_vals), 2)
-
-            pupil_marks = marks_dto["pupils"][i]["marks"]
-            mark_types = marks_dto["mark_types"]
-            current_mark = self.calculate_result(pupil_marks, mark_types, formula_vals)
-            pupil_course = PupilCourse.query.filter_by(pupil_id=marks_dto["pupils"][i]["id"],
-                                                       course_id=course_id).first()
-            if pupil_course:
-                pupil_course.current_mark = round(current_mark, 2)
-
-        visits = []
-        averages = []
-        for i in range(len(lessons)):
-            visits.append(str(visit_count[i]))
-            averages.append(float(mark_sum[i]) / float(mark_count[i]) if mark_count[i] != 0 else 0)
-
-        marks_dto["visits"] = visits
-        marks_dto["averages"] = averages
-
-        self.db.session.bulk_save_objects(new_marks)
+    def update_journal_part(self, course_id: int, course: Course, request: flask.Request, lessons: list[Schedule]) -> (
+            dict, int):
+        lessons_dict = {lesson.date.isoformat(): lesson for lesson in lessons}
+        formulas = course.formulas
+        data = request.json
+        for key in data:
+            if "visits" in key:
+                date = key.split()[-1]
+                visits = data[key]
+                if date not in lessons_dict:
+                    continue
+                lessons_dict[date].visits = visits
+            else:
+                pupil_id, date, name = key.split(maxsplit=2)
+                if not pupil_id.isdigit():
+                    continue
+                pupil_id = int(pupil_id)
+                mark = data[key]
+                if date not in lessons_dict:
+                    continue
+                formula_id = 0
+                for formula in formulas:
+                    if formula.name == name:
+                        formula_id = formula.id
+                        break
+                if formula_id == 0:
+                    continue
+                mark_objects = lessons_dict[date].marks
+                flag = True
+                for mark_object in mark_objects:
+                    if mark_object.pupil_id == pupil_id and mark_object.formula_id == formula_id:
+                        mark_object.mark = mark
+                        flag = False
+                        break
+                if flag:
+                    lessons_dict[date].marks.append(
+                        Mark(lessons_dict[date].id, pupil_id, mark, "", course_id, formula_id))
         self.db.session.commit()
-        return marks_dto, 200
+        return {"msg": "Оценки сохранены"}, 200
 
-    def get_pupil_marks(self, course_id: int, pupil_id: int, lessons: list[Schedule]) -> list[list[Mark]]:
+    def get_pupil_marks(self, course_id: int, pupil_id: int, lessons: list[Schedule]) \
+            -> (list[list[Mark]], list[str]):
         marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
                  .order_by(Mark.schedule_id).all())
         formulas = Formula.query.filter(Formula.course_id == course_id).order_by(Formula.id).all()
         formulas_ids = [formula.id for formula in formulas]
         pupil_marks = {}
+        marked_lessons = set()
         for mark in marks:
-            pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, []).append(mark)
-        return self.make_pupil_marks_list(pupil_id, course_id, pupil_marks, formulas_ids)
+            pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, [])
+            pupil_marks[mark.schedule_id].append(mark)
+            marked_lessons.add(mark.schedule_id)
+        sorted_marked_dates = []
+        for lesson in lessons:
+            if lesson.id in marked_lessons:
+                sorted_marked_dates.append(lesson.date.strftime("%d.%m.%Y"))
+        return self.make_pupil_marks_list(pupil_id, course_id, pupil_marks, formulas_ids), sorted_marked_dates
 
     def extend_pupil_marks(self, pupil_id: int, course_id: int, pupil_marks: dict[int, list[Mark]],
                            lessons: list[Schedule],
@@ -265,11 +244,9 @@ class MarkService:
             return {'error': 'Ученик не записан на этот курс'}, 404
         formulas = course.formulas
         lessons = self.get_lessons_by_part(course, course_id, "current")
-        marks = self.get_pupil_marks(course_id, pupil_id, lessons)
-        lessons = [lesson_marks[0].schedule for lesson_marks in marks]
-        dates = [lesson.date.strftime('%d.%m.%Y') for lesson in lessons]
+        marks, dates = self.get_pupil_marks(course_id, pupil_id, lessons)
         mark_type_choices = [formula.name for formula in sorted(formulas, key=lambda x: x.id)]
-        result = self.calculate_result(marks)
+        result = round(self.calculate_result(marks), 2)
         marks = [[mark.mark for mark in lesson_mark] for lesson_mark in marks]
         data = {
             'dates': dates,
