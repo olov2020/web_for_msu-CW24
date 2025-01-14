@@ -6,7 +6,7 @@ import Form from "../../../generic/form/Form.jsx";
 // eslint-disable-next-line react/prop-types
 const TeacherMarks = ({courseId}) => {
 
-  const [marks, setMarks] = useState({});
+  const [marks, setMarks] = useState(undefined);
 
   const [marks2, setMarks2] = useState(undefined);
 
@@ -28,7 +28,7 @@ const TeacherMarks = ({courseId}) => {
     }
 
     getMarks2();*/
-  }, [courseId])
+  }, [])
 
   console.log(marks)
 
