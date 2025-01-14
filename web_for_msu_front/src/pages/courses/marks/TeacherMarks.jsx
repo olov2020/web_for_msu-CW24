@@ -123,7 +123,7 @@ const TeacherMarks = ({courseId}) => {
 
   return (
     <>
-      {marks2 &&
+      {marks2 && marks2.pupils && marks2.pupils.length !== 0 &&
         <section className={style.marksSection}>
           <section className={style.columnForTextData}>
             {marks2.pupils.map((pupil) => (
