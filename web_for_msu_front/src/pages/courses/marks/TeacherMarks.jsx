@@ -28,7 +28,9 @@ const TeacherMarks = ({courseId}) => {
     }
 
     getMarks2();*/
-  }, [marks])
+  }, [courseId])
+
+  console.log(marks)
 
   const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
