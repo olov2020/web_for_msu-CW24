@@ -392,7 +392,7 @@ const ListOfPeople = () => {
                                     onClick={() => setUpdateList(!updateList)}
                                     funcOn={async () => await addAdminRole(person.id, 'setDirectoryTeacher')}
                                     funcOff={async () => await deleteAdminRole(person.id, 'deleteDirectoryTeacher')}/>
-                      <ToggleSwitch value={person.roles.includes('sover')}
+                      <ToggleSwitch value={person.roles.includes('sovet')}
                                     onClick={() => setUpdateList(!updateList)}
                                     funcOn={async () => await addAdminRole(person.id, 'setSovetTeacher')}
                                     funcOff={async () => await deleteAdminRole(person.id, 'deleteSovetTeacher')}/>

@@ -117,7 +117,7 @@ const TeacherMarks = ({courseId}) => {
 
   }, [marks2]);
 
-  if (!marks) {
+  if (!marks || marks.pupils.length === 0 || !marks.pupil) {
     return <h3>Оценок пока нет</h3>;
   }
 
