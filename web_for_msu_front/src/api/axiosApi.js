@@ -1,6 +1,6 @@
 import axios from "axios";
 import {LOGIN_ROUTE} from "../routing/consts.js";
-import {setNotAuthAction} from "../store/UserReducers.js";
+import {setAuthAction, setNotAuthAction} from "../store/UserReducers.js";
 import store from "../store/index.js";
 
 export const $host = axios.create({
@@ -23,6 +23,7 @@ const refreshToken = async () => {
     });
     const {access_token} = response.data;
     localStorage.setItem("token", access_token);
+    store.dispatch(setAuthAction(access_token));
     return access_token;
   } catch (error) {
     console.error("Refresh token failed:", error);

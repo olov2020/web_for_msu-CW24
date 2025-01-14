@@ -10,7 +10,7 @@ const TeacherMarks = ({courseId}) => {
   const [marks, setMarks] = useState({});
   const {pathname} = useLocation();
 
-  const [marks2, setMarks2] = useState(undefined);
+  const [marks2, setMarks2] = useState({});
 
   useEffect(() => {
     const getMarks = async () => {
@@ -122,7 +122,7 @@ const TeacherMarks = ({courseId}) => {
 
   }, [marks2]);*/
 
-  if (!marks || !marks.pupils || !marks.dates || !marks.mark_type_choices) {
+  if (!marks) {
     return <h3>Оценок пока нет</h3>;
   }
 
