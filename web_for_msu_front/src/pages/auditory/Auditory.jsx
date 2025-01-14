@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getCoursesAuditoriums} from "../../api/adminApi.js";
 import Form from "../../generic/form/Form.jsx";
 import style from './auditory.module.css'
@@ -37,59 +37,24 @@ const Auditory = () => {
       <h1>Назначение аудиторий</h1>
 
       <section className={style.section}>
-        <section>
-          <h2 style={{
-            width: '18%',
-            alignSelf: 'center',
-            textAlign: 'center',
-          }}>Предмет</h2>
-          <h2 style={{
-            width: '18%',
-            alignSelf: 'center',
-            textAlign: 'center',
-          }}>Время проведения</h2>
-          <h2 style={{
-            width: '60%',
-            textAlign: 'center',
-          }}>
-            Аудитория / zoom
-          </h2>
-        </section>
-        <section>
-          <section style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '36%',
-            gap: '.56rem 0',
-          }}>
-            {courses && courses.length > 0 && courses.map((course) => (
-              <div key={course.id} style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                borderBottom: '1px dashed #9F1A59',
-                padding: '.7rem 0',
-              }}>
-                <h3 style={{
-                  width: '40%',
-                  alignSelf: 'center',
-                }}>{course.name}</h3>
-                <p style={{
-                  width: '40%',
-                  alignSelf: 'center',
-                  textAlign: 'center',
-                }}>{course.lesson_time}</p>
-              </div>
-            ))}
-          </section>
-
-          <div style={{
-            width: '60%',
-          }}>
-            <Form inputs={inputs} values={auditoriums} buttonText='Сохранить выбор' type='setCoursesAuditoriums'/>
-          </div>
+        <section className={style.subject}>
+          <h2>Предмет</h2>
+          {courses.map(course => (
+            <h3 key={course.id}>{course.name}</h3>
+          ))}
         </section>
 
+        <section className={style.time}>
+          <h2>Время проведения</h2>
+          {courses.map(course => (
+            <h3 key={course.id}>{course.lesson_time}</h3>
+          ))}
+        </section>
+
+        <section className={style.auditory}>
+          <h2>Аудитория / zoom</h2>
+          <Form inputs={inputs} values={auditoriums} buttonText='Сохранить выбор' type='setCoursesAuditoriums'/>
+        </section>
       </section>
     </article>
   );
