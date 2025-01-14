@@ -81,7 +81,7 @@ export const getTeacherMarksByCourseId2 = async ({courseId}) => {
 }
 
 export const updateTeacherMarksByCourseId = async (courseId, marks) => {
-  const response = await $authHost.patch(`/teacher/update_journal/${courseId}/`, marks, {
+  const response = await $authHost.put(`/teacher/update_journal/${courseId}/`, marks, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -95,7 +95,7 @@ export const updateTeacherMarksByCourseId = async (courseId, marks) => {
 }
 
 export const updateTeacherMarksByCourseId2 = async (courseId, marks) => {
-  const response = await $authHost.patch(`/teacher/update_journal2/${courseId}/`, marks, {
+  const response = await $authHost.put(`/teacher/update_journal2/${courseId}/`, marks, {
     headers: {
       'Content-Type': 'application/json',
     }
