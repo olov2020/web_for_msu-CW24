@@ -19,7 +19,7 @@
     display: flex;
     max-width: 80%;
     width: auto;
-    min-width: 30%;
+    min-width: 80%;
     overflow-x: auto;
     gap: 0 3rem;
 
