@@ -10,7 +10,8 @@ const NotFound = () => {
   return (
     <article>
       <h1 style={{
-        fontSize: '5rem',
+        fontSize: '3rem',
+        textAlign: 'center',
       }}>Ошибка 404, страница не найдена</h1>
 
       <div>
