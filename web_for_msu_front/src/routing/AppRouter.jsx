@@ -21,7 +21,7 @@ const AppRouter = ({setShowContext}) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     setShowContext(0);
-  }, [pathname]);
+  }, [pathname, authStatus]);
 
   return (
     <Routes>
