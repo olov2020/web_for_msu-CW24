@@ -25,18 +25,49 @@ class MarkService:
         self.course_service = course_service
         self.pupil_service = pupil_service
 
-    def get_pupils_marks(self, course_id: int, lessons: list[Schedule], pupils: list[Pupil]) -> dict[str, list[str]]:
-        marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id, asc(Mark.schedule_id)).all()
-        lessons_ids = set(lesson.id for lesson in lessons)
-        marks_grouped = {}
-        for key, group in itertools.groupby(marks, key=attrgetter('pupil_id')):
-            marks_grouped[key] = [mark for mark in group if mark.schedule_id in lessons_ids]
+    def get_pupils_marks(self, course_id: int, lessons: list[Schedule], pupils: list[Pupil]) \
+            -> dict[int, list[list[str]]]:
+        course_marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id,
+                                                                               asc(Mark.schedule_id)).all()
+        lessons_ids = [lesson.id for lesson in lessons]
+        lessons_ids_set = set(lesson.id for lesson in lessons)
+        formulas = Formula.query.filter(Formula.course_id == course_id).order_by(Formula.id).all()
+        formulas_ids = [formula.id for formula in formulas]
+        marks_grouped = dict()
+        for key, marks in itertools.groupby(course_marks, key=attrgetter('pupil_id')):
+
+            pupil_marks = dict()
+            for mark in marks:
+                if mark.schedule_id in lessons_ids_set:
+                    pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, []).append(mark)
+            marks_grouped[key] = pupil_marks
+
+            # marks_grouped[key] = [mark for mark in marks if mark.schedule_id in lessons_ids]
         for pupil in pupils:
-            if pupil.id not in marks_grouped:
-                marks_grouped[pupil.id] = []
-        for key, group in marks_grouped.items():
-            marks_grouped[key] = self.extend_pupil_marks(group, lessons)
+            pupil_marks = marks_grouped.get(pupil.id, dict())
+            pupil_marks = self.extend_pupil_marks(pupil.id, course_id, pupil_marks, lessons, formulas_ids)
+            marks_grouped[pupil.id] = self.make_pupil_marks_list(pupil.id, course_id, pupil_marks, lessons_ids,
+                                                                 formulas_ids)
         return marks_grouped
+
+    def make_pupil_marks_list(self, pupil_id: int, course_id: int, pupil_marks: dict[int, list[Mark]],
+                              lessons_ids: list[int], formulas_ids: list[int]):
+        pupil_marks_list = []
+        dates = sorted(list(pupil_marks.keys()), key=lambda mark: lessons_ids.index(mark.schedule_id))
+        for date in dates:
+            pupil_marks[date].sort(key=lambda mark: formulas_ids.index(mark.formula_id))
+            i = j = 0
+            marks_list = []
+            while i < len(formulas_ids) and j < len(formulas_ids):
+                if formulas_ids[i] == pupil_marks[date][j].formula_id:
+                    marks_list.append(pupil_marks[date][j])
+                    i += 1
+                    j += 1
+                elif formulas_ids[i] < pupil_marks_list[date][j].formula_id:
+                    marks_list.append(Mark(date, pupil_id, "", "", course_id, formulas_ids[i]))
+                    i += 1
+            pupil_marks_list.append(marks_list)
+        return pupil_marks_list
 
     def calculate_result(self, pupil_marks: list[list[Mark]]) -> float:
         result = 0
@@ -67,10 +98,10 @@ class MarkService:
         return self.get_journal_part(course, course_id, lessons)
 
     def get_journal_part(self, course: Course, course_id: int, lessons: list[Schedule]) -> (dict, int):
-        formulas = course.formulas
-        choices = [formula.name for formula in formulas] + ['Присутствие']
         if not lessons:
             return {'error': 'Уроков пока нет'}, 404
+        formulas = course.formulas
+        choices = [formula.name for formula in formulas]
 
         # Fetch all pupils and their marks at once
         pupils = self.course_service.get_pupils(course_id)
@@ -83,38 +114,23 @@ class MarkService:
             mark_types.append(formula_name)
             dates.append(lesson.date.strftime('%d.%m.%Y'))
 
-        mark_sum = [0] * len(lessons)
-        mark_count = [0] * len(lessons)
-        visit_count = [0] * len(lessons)
         teacher_pupil_marks = []
         for pupil in pupils:
             pupil_course_marks = pupil_marks.get(pupil.id, [])
-
-            for i, mark in enumerate(pupil_course_marks):
-                if mark.isdigit():
-                    mark_sum[i] += int(mark)
-                    mark_count[i] += 1
-                if mark.upper() not in ["H", "Н"]:
-                    visit_count[i] += 1
             teacher_pupil_marks.append({
                 'id': pupil.id,
                 'name': self.pupil_service.get_full_name(pupil),
                 'marks': pupil_course_marks,
-                'result': round(self.calculate_result(pupil_course_marks, mark_types, formulas), 2)
+                'result': round(self.calculate_result(pupil_course_marks), 2)
             })
 
-        visits = []
-        averages = []
-        for i in range(len(lessons)):
-            visits.append(str(visit_count[i]))
-            averages.append(float(mark_sum[i]) / float(mark_count[i]) if mark_count[i] != 0 else 0)
+        visits = [lesson.visits for lesson in lessons]
         marks_data = {
             'dates': dates,
             'mark_types': mark_types,
             'mark_type_choices': mark_type_choices,
             'pupils': teacher_pupil_marks,
             'visits': visits,
-            'averages': averages
         }
         try:
             marks_dto = MarksDTO().load(marks_data)
@@ -229,36 +245,16 @@ class MarkService:
         pupil_marks = {}
         for mark in marks:
             pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, []).append(mark)
-        pupil_marks_list = []
-        dates = sorted(list(pupil_marks.keys()), key=lambda mark: lessons_ids.index(mark.schedule_id))
-        for date in dates:
-            pupil_marks[date].sort(key=lambda mark: formulas_ids.index(mark.formula_id))
-            i = j = 0
-            marks_list = []
-            while i < len(formulas_ids) and j < len(formulas_ids):
-                if formulas_ids[i] == pupil_marks[date][j].formula_id:
-                    marks_list.append(pupil_marks[date][j])
-                    i += 1
-                    j += 1
-                elif formulas_ids[i] < pupil_marks_list[date][j].formula_id:
-                    marks_list.append(Mark(date, pupil_id, "", "", course_id, formulas_ids[i]))
-                    i += 1
-            pupil_marks_list.append(marks_list)
-        return pupil_marks_list
+        return self.make_pupil_marks_list(pupil_id, course_id, pupil_marks, lessons_ids, formulas_ids)
 
-    def extend_pupil_marks(self, marks: list[Mark], lessons: list[Schedule]) -> list[str]:
-        pupil_marks = marks
-        pupil_marks_res = []
+    def extend_pupil_marks(self, pupil_id: int, course_id: int, pupil_marks: dict[int, list[Mark]],
+                           lessons: list[Schedule],
+                           formulas_ids: list[int]) -> dict[int, list[Mark]]:
         for lesson in lessons:
-            flag = False
-            for mark in pupil_marks:
-                if mark.schedule_id == lesson.id:
-                    pupil_marks_res.append(mark.mark)
-                    flag = True
-                    break
-            if not flag:
-                pupil_marks_res.append('')
-        return pupil_marks_res
+            if lesson.id not in pupil_marks:
+                pupil_marks[lesson.id] = [Mark(lesson.id, pupil_id, "", "", course_id, formulas_ids[i]) for i in
+                                          range(len(formulas_ids))]
+        return pupil_marks
 
     def get_pupil_marks_model(self, course_id: int, pupil_id: int) -> (PupilMarksDTO, int):
         course = Course.query.get(course_id)
