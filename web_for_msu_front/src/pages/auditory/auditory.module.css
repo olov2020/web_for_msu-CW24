@@ -3,6 +3,7 @@
     flex-direction: column;
     width: auto;
     max-width: 90%;
+    min-width: 90%;
     overflow-x: auto;
     gap: 1rem 0;
 
