@@ -63,7 +63,7 @@ const AdminPanel = () => {
         display: 'flex',
         flexDirection: 'column',
         width: '90%',
-        gap: '0 1rem',
+        gap: '1rem 0',
       }}>
         {registrationStatus ?
           <h3>Регистрация на вступительные <strong>открыта</strong></h3> :

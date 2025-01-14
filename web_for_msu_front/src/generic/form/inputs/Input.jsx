@@ -10,14 +10,14 @@ const Input = ({fieldName = '', placeholder = '', isValid = true, error = '', ..
         {fieldName}
       </h3>
       
-      <input {...props}
-             placeholder={placeholder ? placeholder : ''}
+      <input placeholder={placeholder ? placeholder : ''}
              className={
                `${isValid ?
                  `${styleInput.valid}` :
                  `${styleInput.invalid}`}
                   ${styleInput.input}`
              }
+             {...props}
       />
 
       <p className={styleInput.errorMessage}>
