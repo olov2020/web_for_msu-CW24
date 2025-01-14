@@ -14,6 +14,7 @@ import {
   SCHEDULE_ROUTE, TEACHERS_ROUTE
 } from "../../../routing/consts.js";
 import {useSelector} from "react-redux";
+import {authRoutes} from "../../../routing/routes.jsx";
 
 const Menu = () => {
 
@@ -82,7 +83,7 @@ const Menu = () => {
     })
   }
 
-  if (userStatus === 'pupil') {
+  if (userStatus.includes('pupil') && !userStatus.includes('retired')) {
     menu[1].dropdown.push({
       title: 'Выбор курсов', link: COURSES_SELECT_ROUTE, id: menu[1].length,
     })

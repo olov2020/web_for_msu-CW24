@@ -3,12 +3,14 @@ import {getTeacherMarksByCourseId, getTeacherMarksByCourseId2} from "../../../ap
 import style from './teacherMarks.module.css';
 import Form from "../../../generic/form/Form.jsx";
 import {useLocation} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 // eslint-disable-next-line react/prop-types
 const TeacherMarks = ({courseId}) => {
 
   const [marks, setMarks] = useState({});
   const {pathname} = useLocation();
+  const authStatus = useSelector((state) => state.user.authStatus);
 
   const [marks2, setMarks2] = useState({});
 
@@ -30,7 +32,7 @@ const TeacherMarks = ({courseId}) => {
     }
 
     getMarks2();
-  }, [pathname])
+  }, [pathname, authStatus])
 
   const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
@@ -38,15 +40,15 @@ const TeacherMarks = ({courseId}) => {
   const [values2, setValues2] = useState({});
 
   useEffect(() => {
-    const inputsNew = marks['dates'].flatMap((date) =>
-      marks['pupils'].flatMap((pupil) =>
-        marks['mark_type_choices'].map((markType) =>
+    const inputsNew = marks.dates.flatMap((date) =>
+      marks.pupils.flatMap((pupil) =>
+        marks.mark_type_choices.map((markType) =>
           `${pupil.id} ${date} ${markType}`
         )
       )
     );
 
-    marks['dates'].forEach((date) => {
+    marks.dates.forEach((date) => {
       inputsNew.push(`visits ${date}`)
     })
 
@@ -61,16 +63,16 @@ const TeacherMarks = ({courseId}) => {
 
     setInputs(inputsDict);
 
-    const valuesNew = marks['dates'].reduce((acc, date, index) => {
-      marks['pupils'].forEach((pupil) => {
-        marks['mark_type_choices'].forEach((markType, index2) => {
+    const valuesNew = marks.dates.reduce((acc, date, index) => {
+      marks.pupils.forEach((pupil) => {
+        marks.mark_type_choices.forEach((markType, index2) => {
           acc[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
         });
       });
       return acc;
     }, {});
 
-    marks['dates'].forEach((date, index) => {
+    marks.dates.forEach((date, index) => {
       valuesNew[`visits ${date}`] = marks.visits[index];
     })
 
@@ -178,7 +180,7 @@ const TeacherMarks = ({courseId}) => {
       }
       <section className={style.marksSection}>
         <section className={style.columnForTextData}>
-          {marks['pupils'].map((pupil) => (
+          {marks.pupils.map((pupil) => (
             <h3 key={pupil.id}>{pupil.name}</h3>
           ))}
           <h3>Посещения</h3>
@@ -186,12 +188,12 @@ const TeacherMarks = ({courseId}) => {
 
         <section>
           <section className={style.datesSection}>
-            {marks['dates'].map((date, index) => (
+            {marks.dates.map((date, index) => (
               <div key={index} className={style.column}>
                 <h3>{date}</h3>
 
                 <div className={style.markTypes}>
-                  {marks['mark_type_choices'].map((mark_type, index2) => (
+                  {marks.mark_type_choices.map((mark_type, index2) => (
                     <p key={index2}>{mark_type}</p>
                   ))}
                 </div>
@@ -217,7 +219,7 @@ const TeacherMarks = ({courseId}) => {
           alignItems: 'flex-start',
         }}>
           <h3>Итог</h3>
-          {marks['pupils'].map((pupil) => (
+          {marks.pupils.map((pupil) => (
             <h3 key={pupil.id}>{pupil.result}</h3>
           ))}
         </section>
