@@ -18,7 +18,7 @@ const authInterceptor = config => {
 
 const refreshToken = async () => {
   try {
-    const response = await $authHost.post('/home/refresh', {
+    const response = await $authHost.post('/home/refresh/', {
       refresh_token: localStorage.getItem("refreshToken")
     });
     const {access_token} = response.data;

@@ -16,9 +16,9 @@ const Courses = () => {
     const getCourses = async () => {
       const data = url.includes('/my') ?
         (
-          authStatus.includes('pupil') ?
-          await getMyCoursesPupil() :
-          await getMyCoursesTeacher()
+          authStatus.includes('teacher') ?
+            await getMyCoursesTeacher() :
+            await getMyCoursesPupil()
         ) :
         url.includes('/all') && await getAllCourses();
 
