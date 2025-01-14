@@ -40,7 +40,6 @@ const Auditory = () => {
         flexDirection: 'column',
         width: 'auto',
         maxWidth: '90%',
-        minWidth: '90%',
         overflowX: 'auto',
         gap: '1rem 0',
       }}>
