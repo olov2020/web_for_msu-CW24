@@ -1,7 +1,8 @@
 .sectionPupils {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    max-width: 90%;
+    overflow-x: auto;
     gap: .5rem 0;
 }
 
@@ -20,7 +21,8 @@
 
 .sectionTeachers {
     display: flex;
-    width: 90%;
+    max-width: 90%;
+    overflow-x: auto;
     gap: 0 2rem;
 
     > .teachers, .email, .actions {

@@ -59,7 +59,7 @@ const NewsItem = () => {
 
       <p style={{
         margin: '0 2rem',
-        width: '60%',
+        width: '80%',
       }}
       >
         {state.description}

@@ -5,8 +5,11 @@ import {
   openRegistrationCourses
 } from "../../api/adminApi.js";
 import {ADD_NEW_COURSE_ROUTE, AUDITORY_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE} from "../../routing/consts.js";
+import {useState} from "react";
 
 const AdminPanel = () => {
+
+  const [registrationStatus, setRegistrationStatus] = useState(false)
 
   const openCourseRegistration = async () => {
     const data = await openRegistrationCourses();
@@ -58,9 +61,13 @@ const AdminPanel = () => {
 
       <section style={{
         display: 'flex',
-        width: '30%',
+        width: '90%',
         gap: '0 1rem',
       }}>
+        {registrationStatus ?
+          <h3>Регистрация на вступительные <strong>открыта</strong></h3> :
+          <h3>Регистрация на вступительные <strong>закрыта</strong></h3>
+        }
         <ButtonSubmit text='Открыть запись на курсы' onClick={openCourseRegistration}/>
         <ButtonSubmit text='Закрыть запись на курсы' onClick={closeCourseRegistration}
                       type='delete'
@@ -74,7 +81,7 @@ const AdminPanel = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '30%',
+        width: '90%',
         gap: '1rem 0',
       }}>
         <ButtonSubmit text='Список всех учеников' onClick={() => navigate('/admin/list/pupils')}/>
@@ -88,7 +95,7 @@ const AdminPanel = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '30%',
+        width: '90%',
         gap: '1rem 0',
       }}>
         <ButtonSubmit text='Добавить новый курс' onClick={() => navigate(ADD_NEW_COURSE_ROUTE)}/>
@@ -104,7 +111,7 @@ const AdminPanel = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '30%',
+        width: '90%',
         gap: '1rem 0',
       }}>
         <ButtonSubmit text='Сделать выгрузку' onClick={downloadDatabaseFunc}/>
