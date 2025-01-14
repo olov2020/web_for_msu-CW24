@@ -244,12 +244,11 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       case 'email': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [email, setEmail] = useState(values.email);
-        setEmail(values.email);
         console.log(values.email);
         console.log(email);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
-        formValues.email = email;
+        formValues.email = email || values.email;
         formErrors.email = error;
         return <InputEmail name={input} value={email} setValue={setEmail} formErrors={setError}
                            placeholder='Введите вашу почту' fieldName='Почта*'
