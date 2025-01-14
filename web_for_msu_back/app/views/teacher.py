@@ -38,8 +38,18 @@ class TeacherView(FlaskView):
     def get_journal(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
-        response, code = mark_service.get_current_journal(course_id, g.current_user.id,
-                                                          "admin" in get_jwt_identity()["roles"], "current")
+        response, code = mark_service.get_journal(course_id, g.current_user.id,
+                                                  "admin" in get_jwt_identity()["roles"], "first")
+        return response, code
+
+    @method("GET")
+    @auth_required
+    @roles_required('teacher')
+    def get_journal2(self, course_id: int):
+        services = get_services()
+        mark_service: MarkService = services["mark_service"]
+        response, code = mark_service.get_journal(course_id, g.current_user.id,
+                                                  "admin" in get_jwt_identity()["roles"], "second")
         return response, code
 
     @method("PUT")
@@ -48,8 +58,18 @@ class TeacherView(FlaskView):
     def update_journal(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
-        response, code = mark_service.update_current_journal(course_id, g.current_user.id, request,
-                                                             "admin" in get_jwt_identity()["roles"], "current")
+        response, code = mark_service.update_journal(course_id, g.current_user.id, request,
+                                                     "admin" in get_jwt_identity()["roles"], "first")
+        return response, code
+
+    @method("PUT")
+    @auth_required
+    @roles_required('teacher')
+    def update_journal2(self, course_id: int):
+        services = get_services()
+        mark_service: MarkService = services["mark_service"]
+        response, code = mark_service.update_journal(course_id, g.current_user.id, request,
+                                                     "admin" in get_jwt_identity()["roles"], "second")
         return response, code
 
     @method("PUT")

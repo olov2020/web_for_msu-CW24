@@ -86,7 +86,7 @@ class MarkService:
                 result += sums[formula_id] * formula.coefficient / types[formula_id]
         return result
 
-    def get_current_journal(self, course_id: int, current_user_id: int, is_admin: bool, part: str) -> (dict, int):
+    def get_journal(self, course_id: int, current_user_id: int, is_admin: bool, part: str) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
@@ -96,11 +96,12 @@ class MarkService:
 
         lessons = self.get_lessons_by_part(course, course_id, part)
 
+        if not lessons:
+            return {'error': 'Уроков пока нет'}, 404
+
         return self.get_journal_part(course, course_id, lessons)
 
     def get_journal_part(self, course: Course, course_id: int, lessons: list[Schedule]) -> (dict, int):
-        if not lessons:
-            return {'error': 'Уроков пока нет'}, 404
         formulas = course.formulas
         choices = [formula.name for formula in formulas]
 
@@ -138,13 +139,30 @@ class MarkService:
         return marks_dto, 200
 
     def get_lessons_by_part(self, course, course_id, part):
-        if part == "current":
-            year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
-            if year == course.year:
+        year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
+        # date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
+        date = datetime(year, 1, 26, tzinfo=pytz.timezone("Europe/Moscow"))
+        start_of_year = datetime(year, 1, 1, tzinfo=pytz.timezone("Europe/Moscow"))
+        term1_start = datetime(year, 9, 1, tzinfo=pytz.timezone("Europe/Moscow"))
+        term1_end = datetime(year, 1, 25, tzinfo=pytz.timezone("Europe/Moscow"))
+        term2_start = datetime(year, 1, 10, tzinfo=pytz.timezone("Europe/Moscow"))
+        term2_end = datetime(year, 5, 20, tzinfo=pytz.timezone("Europe/Moscow"))
+        # part here - the number of the called api
+        if part == "first":
+            if (year == course.year and date >= term1_start
+                    or ((year - 1) == course.year
+                        and start_of_year <= date <= term1_end)):
                 part = "first"
-            else:
+            elif (year - 1) == course.year and term1_end < date <= term2_end:
                 part = "second"
-
+            else:
+                return []
+        elif part == "second":
+            if (year - 1) == course.year and term2_start <= date <= term1_end:
+                part = "second"
+            else:
+                return []
+        # part here - the number of the term
         match part:
             case "first":
                 lessons = self.course_service.get_lessons_first_part(course_id)
@@ -154,8 +172,8 @@ class MarkService:
                 lessons = self.course_service.get_lessons(course_id)
         return lessons
 
-    def update_current_journal(self, course_id: int, current_user_id: int, request: flask.Request, is_admin: bool,
-                               part: str) -> (dict, int):
+    def update_journal(self, course_id: int, current_user_id: int, request: flask.Request, is_admin: bool,
+                       part: str) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
@@ -164,6 +182,9 @@ class MarkService:
             return {'error': 'У вас нет доступа к этому курсу'}, 403
 
         lessons = self.get_lessons_by_part(course, course_id, part)
+
+        if not lessons:
+            return {'error': 'Уроков пока нет'}, 404
 
         return self.update_journal_part(course_id, course, request, lessons)
 
@@ -234,7 +255,7 @@ class MarkService:
                                           range(len(formulas_ids))]
         return pupil_marks
 
-    def get_pupil_marks_model(self, course_id: int, pupil_id: int) -> (PupilMarksDTO, int):
+    def get_pupil_marks_model(self, course_id: int, pupil_id: int, part: str) -> (PupilMarksDTO, int):
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
@@ -242,8 +263,10 @@ class MarkService:
                                                 PupilCourse.pupil_id == pupil_id).first()
         if not pupil_course:
             return {'error': 'Ученик не записан на этот курс'}, 404
+        lessons = self.get_lessons_by_part(course, course_id, part)
+        if not lessons:
+            return {'error': 'Уроков пока нет'}, 404
         formulas = course.formulas
-        lessons = self.get_lessons_by_part(course, course_id, "current")
         marks, dates = self.get_pupil_marks(course_id, pupil_id, lessons)
         mark_type_choices = [formula.name for formula in sorted(formulas, key=lambda x: x.id)]
         result = round(self.calculate_result(marks), 2)
