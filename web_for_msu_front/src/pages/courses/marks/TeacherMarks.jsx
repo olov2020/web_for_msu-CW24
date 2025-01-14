@@ -6,7 +6,7 @@ import Form from "../../../generic/form/Form.jsx";
 // eslint-disable-next-line react/prop-types
 const TeacherMarks = ({courseId}) => {
 
-  const [marks, setMarks] = useState(undefined);
+  const [marks, setMarks] = useState({});
 
   const [marks2, setMarks2] = useState(undefined);
 
@@ -29,8 +29,6 @@ const TeacherMarks = ({courseId}) => {
 
     getMarks2();*/
   }, [])
-
-  console.log(marks)
 
   const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
@@ -77,6 +75,9 @@ const TeacherMarks = ({courseId}) => {
     setValues(valuesNew);
 
   }, [marks]);
+
+
+  console.log(marks)
 
   /*useEffect(() => {
     const inputsNew = marks2.dates.flatMap((date) =>
