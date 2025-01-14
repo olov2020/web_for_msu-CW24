@@ -54,7 +54,7 @@ const CoursesSelect = () => {
     <article>
       <h1>Выбор курсов</h1>
 
-      {userStatus === 'pupil' ?
+      {userStatus.includes('pupil') && !userStatus.includes('retired') ?
         <section style={{
           display: "flex",
           width: '90%',
