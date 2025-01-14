@@ -38,13 +38,13 @@ const CourseItem = () => {
         ))
       }
 
-      {state.isMyCourses && userStatus.includes('teacher') &&
+      {/*{state.isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
           <ApprovePupils courseId={state.courseData.id}/>
         </section>
-      }
+      }*/}
 
       {/*{state.isMyCourses && userStatus.includes('teacher') &&
         <section style={{
