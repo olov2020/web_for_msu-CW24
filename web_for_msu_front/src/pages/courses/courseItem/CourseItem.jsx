@@ -46,13 +46,13 @@ const CourseItem = () => {
         </section>
       }
 
-      {state.isMyCourses && userStatus.includes('teacher') &&
+      {/*{state.isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
           <AddPupilOnCourse courseId={state.courseData.id}/>
         </section>
-      }
+      }*/}
 
       {userStatus.includes('admin') &&
         <section style={{
