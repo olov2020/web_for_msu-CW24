@@ -46,7 +46,7 @@ const Auditory = () => {
       }}>
         <section style={{
           display: 'flex',
-          width: '100%',
+          width: 'auto',
           justifyContent: 'space-between',
         }}>
           <h2 style={{
@@ -68,7 +68,8 @@ const Auditory = () => {
         </section>
         <section style={{
           display: 'flex',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          width: 'auto',
         }}>
           <section style={{
             display: 'flex',
