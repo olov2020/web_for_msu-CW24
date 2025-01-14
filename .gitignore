@@ -2,3 +2,5 @@
 .env
 venv
 __pycache__/
+/web_for_msu_back/app/.env
+/web_for_msu_back/.env
