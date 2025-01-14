@@ -250,7 +250,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         const [error, setError] = useState(false);
         formValues.email = email || values.email;
         formErrors.email = error;
-        return <InputEmail name={input} value={email} setValue={setEmail} formErrors={setError}
+        return <InputEmail name={input} value={email || values.email} setValue={setEmail} formErrors={setError}
                            placeholder='Введите вашу почту' fieldName='Почта*'
         />
       }
