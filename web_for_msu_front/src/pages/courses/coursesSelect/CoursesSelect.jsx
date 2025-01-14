@@ -2,6 +2,7 @@ import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {getCoursesSelect, getCoursesSelectStatus} from "../../../api/coursesApi.js";
 import Form from "../../../generic/form/Form.jsx";
+import style from './coursesSelect.module.css';
 
 const CoursesSelect = () => {
 
@@ -55,34 +56,30 @@ const CoursesSelect = () => {
       <h1>Выбор курсов</h1>
 
       {userStatus.includes('pupil') && !userStatus.includes('retired') ?
-        <section style={{
-          display: "flex",
-          width: '90%',
-        }}>
-          <section style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '60%',
-            gap: '.56rem 0',
-          }}>
+        <section className={style.section}>
+          <section className={style.name}>
+            <h2>Название</h2>
             {courses.map((course) => (
-              <div key={course.id} style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-around',
-                borderBottom: '1px dashed #9F1A59',
-                padding: '.7rem 0',
-              }}>
-                <h3>{course.name}</h3>
-                <p><span>{course.lesson_time}</span></p>
-                <p>{course.direction}: {course.emsh_grades} - <span>{course.crediting}</span></p>
-              </div>
+              <h3 key={course.id}>course.name</h3>
             ))}
           </section>
 
-          <section style={{
-            width: '30%',
-          }}>
+          <section className={style.time}>
+            <h2>Время</h2>
+            {courses.map((course) => (
+              <p key={course.id}>course.lesson_time</p>
+            ))}
+          </section>
+
+          <section className={style.info}>
+            <h2>Общая информация</h2>
+            {courses.map((course) => (
+              <p key={course.id}>{course.direction}: {course.emsh_grades} - <span>{course.crediting}</span></p>
+            ))}
+          </section>
+
+          <section className={style.choice}>
+            <h2>Выбор курса</h2>
             <Form inputs={inputs} values={values} buttonText='Сохранить выбор' type='selectCourses'/>
           </section>
         </section> :

@@ -1,0 +1,18 @@
+.section {
+    display: flex;
+    width: 90%;
+    max-width: 90%;
+    overflow: auto;
+    gap: 0 1rem;
+
+    > section {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        gap: 1rem 0;
+
+        > * {
+            white-space: nowrap;
+        }
+    }
+}
