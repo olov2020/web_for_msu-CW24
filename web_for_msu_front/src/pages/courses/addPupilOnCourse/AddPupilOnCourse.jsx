@@ -33,10 +33,6 @@ const AddPupilOnCourse = ({courseId}) => {
     }
   }
 
-  if (!pupils || pupils.length === 0) {
-    return <></>;
-  }
-
   return (
     <section>
       <h2 style={{
