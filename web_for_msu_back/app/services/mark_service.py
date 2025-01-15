@@ -251,10 +251,10 @@ class MarkService:
                            lessons: list[Schedule],
                            formulas_ids: list[int]) -> dict[int, list[Mark]]:
         for lesson in lessons:
+            print("\n\n")
+            print("FORMULAS")
+            print(formulas_ids)
             if lesson.id not in pupil_marks:
-                print("\n\n")
-                print("FORMULAS")
-                print(formulas_ids)
                 pupil_marks[lesson.id] = [Mark(lesson.id, pupil_id, "", "", course_id, formulas_ids[i]) for i in
                                           range(len(formulas_ids))]
         return pupil_marks
