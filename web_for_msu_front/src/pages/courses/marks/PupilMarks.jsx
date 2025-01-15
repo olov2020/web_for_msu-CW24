@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import {getPupilMarksByCourseId, getPupilMarksByCourseId2} from "../../../api/coursesApi.js";
 import style from './pupilMarks.module.css';
+import {useLocation} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 // eslint-disable-next-line react/prop-types
 const PupilMarks = ({courseId}) => {
@@ -8,6 +10,8 @@ const PupilMarks = ({courseId}) => {
   const [marks, setMarks] = useState({});
 
   const [marks2, setMarks2] = useState({});
+  const {pathname} = useLocation();
+  const authStatus = useSelector((state) => state.user.authStatus);
 
   useEffect(() => {
     const getMarks = async () => {
@@ -27,7 +31,7 @@ const PupilMarks = ({courseId}) => {
     }
 
     getMarks2();
-  }, [courseId])
+  }, [pathname, authStatus])
 
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
@@ -87,10 +91,9 @@ const PupilMarks = ({courseId}) => {
               <h3>Итог - {marks2.result}</h3>
             </section>
           </section>
-
-
         </section>
       }
+
       <section style={{
         display: 'flex',
         justifyContent: 'center',
