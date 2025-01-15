@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {getCoursesAuditoriums} from "../../api/adminApi.js";
 import Form from "../../generic/form/Form.jsx";
 import style from './auditory.module.css'
+import {useLocation} from "react-router-dom";
 
 const Auditory = () => {
 
@@ -9,15 +10,17 @@ const Auditory = () => {
 
   const [auditoriums, setAuditoriums] = useState({});
   const [inputs, setInputs] = useState([]);
-
-  const getCoursesAuditoriumsFunc = async () => {
-    const data = await getCoursesAuditoriums();
-    setCourses(data);
-  };
+  const {pathname} = useLocation();
+  const authStatus = useState(state => state.user.authStatus);
 
   useEffect(() => {
+    const getCoursesAuditoriumsFunc = async () => {
+      const data = await getCoursesAuditoriums();
+      setCourses(data);
+    };
+
     getCoursesAuditoriumsFunc();
-  }, []);
+  }, [pathname, authStatus]);
 
   useEffect(() => {
     const auditoriumsNew = courses.reduce((acc, course) => {
@@ -39,14 +42,14 @@ const Auditory = () => {
       <section className={style.section}>
         <section className={style.subject}>
           <h2>Предмет</h2>
-          {courses.map(course => (
+          {courses && courses.length !== 0 && courses.map(course => (
             <h3 key={course.id}>{course.name}</h3>
           ))}
         </section>
 
         <section className={style.time}>
           <h2>Время проведения</h2>
-          {courses.map(course => (
+          {courses && courses.length !== 0 && courses.map(course => (
             <h3 key={course.id}>{course.lesson_time}</h3>
           ))}
         </section>
