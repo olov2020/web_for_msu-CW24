@@ -34,9 +34,9 @@ const TeacherMarks = ({courseId}) => {
     getMarks2();
   }, [pathname, authStatus])
 
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState([]);
   const [values, setValues] = useState({});
-  const [inputs2, setInputs2] = useState({});
+  const [inputs2, setInputs2] = useState([]);
   const [values2, setValues2] = useState({});
 
   useEffect(() => {
@@ -52,16 +52,16 @@ const TeacherMarks = ({courseId}) => {
       inputsNew.push(`visits ${date}`)
     })
 
-    const inputsDict = inputsNew.reduce((acc, input) => {
+    /*const inputsDict = inputsNew.reduce((acc, input) => {
       const [pupilId] = input.split(' ');
       if (!acc[pupilId]) {
         acc[pupilId] = [];
       }
       acc[pupilId].push(input);
       return acc;
-    }, {});
+    }, {});*/
 
-    setInputs(inputsDict);
+    setInputs(inputsNew);
 
     const valuesNew = marks.dates.reduce((acc, date, index) => {
       marks.pupils.forEach((pupil) => {
@@ -94,16 +94,16 @@ const TeacherMarks = ({courseId}) => {
       inputsNew.push(`visits ${date}`)
     })
 
-    const inputsDict = inputsNew.reduce((acc, input) => {
+    /*const inputsDict = inputsNew.reduce((acc, input) => {
       const [pupilId] = input.split(' ');
       if (!acc[pupilId]) {
         acc[pupilId] = [];
       }
       acc[pupilId].push(input);
       return acc;
-    }, {});
+    }, {});*/
 
-    setInputs2(inputsDict);
+    setInputs2(inputsNew);
 
     const valuesNew = marks2.dates.reduce((acc, date, index) => {
       marks2.pupils.forEach((pupil) => {
