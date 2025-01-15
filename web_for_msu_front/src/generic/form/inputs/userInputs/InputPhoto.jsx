@@ -18,12 +18,14 @@ const InputPhoto = ({value, name = '', fieldName, accept = '', multiple = false,
   const {pathname} = useLocation();
 
   useEffect(() => {
-    setImageUrl(value);
-    const reader = new FileReader();
-    reader.readAsDataURL(value);
+    if (value) {
+      setImageUrl(value);
+    } else {
+      setImageUrl(name.includes('news') ? defaultNewsImage : defaultUserImage);
+    }
   }, [value, pathname]);
 
-  const handleInputChange = ((e) => {
+  const handleInputChange = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
     const error = validateInput(file);
@@ -39,7 +41,7 @@ const InputPhoto = ({value, name = '', fieldName, accept = '', multiple = false,
       };
       reader.readAsDataURL(file);
     }
-  })
+  }
 
   const validateInput = (value) => {
     if (!value) {
