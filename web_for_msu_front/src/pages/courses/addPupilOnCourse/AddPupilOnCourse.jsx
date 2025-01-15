@@ -2,12 +2,14 @@ import {useEffect, useState} from "react";
 import {getPupilsOnCourse, setPupilsOnCourse} from "../../../api/coursesApi.js";
 import InputText from "../../../generic/form/inputs/userInputs/InputText.jsx";
 import style from './addPupilOnCourse.module.css';
+import {useLocation} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const AddPupilOnCourse = ({courseId}) => {
   const [pupils, setPupils] = useState([]);
 
   const [value, setValue] = useState('');
+  const {pathname} = useLocation();
 
   useEffect(() => {
     const getPupilsOnCourseFunc = async () => {
@@ -16,7 +18,7 @@ const AddPupilOnCourse = ({courseId}) => {
     };
 
     getPupilsOnCourseFunc();
-  }, [courseId]); // Use courseId as dependency to avoid infinite loop
+  }, [pathname]);
 
   const filteredPupils = pupils.filter(pupil =>
     pupil.name.toLowerCase().includes(value.toLowerCase())

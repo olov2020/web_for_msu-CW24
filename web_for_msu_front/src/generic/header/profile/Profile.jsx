@@ -60,17 +60,11 @@ const Profile = ({deviceType}) => {
             <h3>{user.surname}</h3>
           </div>
 
-          {deviceType !== 'phone' ?
-            (user.photo ?
+          {deviceType !== 'phone' &&
               <img className={style.profile__photo}
                    alt='Фотография профиля'
                    src={user.photo}
-              /> :
-              <img className={style.profile__photo}
-                   alt='Фотография профиля'
-                   src={defaultUserImage}
-              />) :
-            <></>
+              />
           }
         </Link>) :
       (
