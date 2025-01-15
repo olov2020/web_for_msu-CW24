@@ -1,0 +1,28 @@
+sudo apt upgrade
+sudo apt update
+sudo apt-get install git
+sudo apt-get install openssl
+openssl genpkey -algorithm RSA -out example.key -aes256
+openssl req -new -key example.key -out example.csr
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout example.key -out example.crt
+
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+git clone https://github.com/olov2020/web_for_msu-CW24.git
+cd web_for_msu-CW24
+git checkout work
+docker compose up -d --build
