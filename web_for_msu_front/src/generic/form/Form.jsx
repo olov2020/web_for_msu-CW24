@@ -60,6 +60,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
   const [errors, setErrors] = useState({});
   const location = useLocation();
   useEffect(() => {
+    values = JSON.parse(values);
     setAuditoriums(values);
     setCoursesSelect(values);
     setTeacherMarks(values);

@@ -109,7 +109,7 @@ const PupilMarks = ({courseId}) => {
           gap: '2.2rem 0',
           width: 'auto',
         }}>
-          {marks.dates.map((date) => (
+          {marks['dates'].map((date) => (
             <h3 key={date}>{date}</h3>
           ))}
         </section>
@@ -134,7 +134,7 @@ const PupilMarks = ({courseId}) => {
             flexDirection: 'column',
             gap: '2rem 0',
           }}>
-            {marks.marks.map((marksRow, rowIndex) => (
+            {marks['marks'].map((marksRow, rowIndex) => (
               <div key={rowIndex} className={style.row}>
                 {marksRow.map((mark, markIndex) => (
                   <p key={markIndex}>{mark}</p>
