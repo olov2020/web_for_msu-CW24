@@ -1,11 +1,13 @@
 import {useEffect, useState} from "react";
 import {approvePupilsOnCourse, deletePupilsFromCourse, getAllPupilsOnCourse} from "../../../api/coursesApi.js";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
+import {useLocation} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const ApprovePupils = ({courseId}) => {
 
   const [pupils, setPupils] = useState([])
+  const {pathname} = useLocation();
 
   useEffect(() => {
     const getAllPupilsOnCourseFunc = async () => {
@@ -14,15 +16,15 @@ const ApprovePupils = ({courseId}) => {
     }
 
     getAllPupilsOnCourseFunc();
-  }, []);
+  }, [pathname, pupils]);
 
-  const handleApprovePupils = async () => {
-    const data = await approvePupilsOnCourse();
+  const handleApprovePupils = async (pupilId) => {
+    const data = await approvePupilsOnCourse({courseId, pupilId});
     data ? alert('Ученик успешно принят на курс') : alert('Упс... Что-то пошло не так');
   }
 
-  const handleDeletePupils = async () => {
-    const data = await deletePupilsFromCourse();
+  const handleDeletePupils = async (pupilId) => {
+    const data = await deletePupilsFromCourse({courseId, pupilId});
     data ? alert('Ученик успешно принят на курс') : alert('Упс... Что-то пошло не так');
   }
 
@@ -57,8 +59,8 @@ const ApprovePupils = ({courseId}) => {
             width: '25%',
             gap: '0 2rem',
           }}>
-            <ButtonSubmit text='Принять' onClick={() => handleApprovePupils()}/>
-            <ButtonSubmit text='Не принять' type='delete' onClick={() => handleDeletePupils()}/>
+            <ButtonSubmit text='Принять' onClick={() => handleApprovePupils(pupil.id)}/>
+            <ButtonSubmit text='Не принять' type='delete' onClick={() => handleDeletePupils(pupil.id)}/>
           </div>
         </div>
       ))}

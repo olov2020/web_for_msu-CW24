@@ -177,7 +177,7 @@ export const selectCourses = async (formValues) => {
 }
 
 
-export const approvePupilsOnCourse = async (courseId, pupilId) => {
+export const approvePupilsOnCourse = async ({courseId, pupilId}) => {
   const response = await $authHost.put(`/teacher/approve_pupils/${courseId}/${pupilId}/`);
 
   try {
@@ -187,7 +187,7 @@ export const approvePupilsOnCourse = async (courseId, pupilId) => {
   }
 }
 
-export const deletePupilsFromCourse = async (courseId, pupilId) => {
+export const deletePupilsFromCourse = async ({courseId, pupilId}) => {
   const response = await $authHost.delete(`/teacher/delete_pupils/${courseId}/${pupilId}/`);
 
   try {
