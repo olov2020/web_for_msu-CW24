@@ -13,7 +13,7 @@ from marshmallow import ValidationError
 from sqlalchemy import desc
 from werkzeug.datastructures import FileStorage
 
-from functions import send_reset_email
+from web_for_msu_back.app.functions import send_reset_email
 from web_for_msu_back.app.dto.login import LoginDTO
 from web_for_msu_back.app.dto.pupil_admin_list import PupilAdminListDTO
 from web_for_msu_back.app.dto.role import RoleDTO
