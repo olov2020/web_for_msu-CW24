@@ -285,8 +285,8 @@ class MarkService:
 
     def finish_term(self):
         print("Семестр закончен")
-        date = datetime(2025,1, 26, tzinfo=pytz.timezone('Europe/Moscow'))
-        # date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
+        # date = datetime(2025,1, 26, tzinfo=pytz.timezone('Europe/Moscow'))
+        date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
         month = date.month
         day = date.day
         if month == 1 and day == 26:

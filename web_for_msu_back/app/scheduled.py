@@ -9,9 +9,9 @@ def add_scheduled_jobs(scheduler):
         func=mark_service.finish_term,
         trigger='cron',
         month='1',
-        day='15',
-        hour='5',
-        minute='6'
+        day='26',
+        hour='0',
+        minute='0'
     )
 
     scheduler.add_job(
