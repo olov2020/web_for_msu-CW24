@@ -21,6 +21,12 @@ class BaseConfig:
     SECURITY_UNAUTHORIZED_VIEW = 'home.login'
     SCHEDULER_API_ENABLED = True
     SCHEDULER_TIMEZONE = pytz.timezone("Europe/Moscow")
+    MAIL_SERVER = os.getenv("MAIL_SERVER")
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
 
     # ##### настройка Flask-Mail #####
     # MAIL_SERVER = 'smtp.googlemail.com'

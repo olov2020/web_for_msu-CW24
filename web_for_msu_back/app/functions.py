@@ -1,9 +1,12 @@
 import json
+import os
 from datetime import timedelta
 from functools import wraps
 
 from flask import jsonify, g, make_response
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
+from web_for_msu_back.app import mail
 
 
 def get_next_monday(date_start):
@@ -95,3 +98,11 @@ def output_json(data, code, headers=None):
         headers = {'Content-Type': content_type}
     response = make_response(dumped, code, headers)
     return response
+
+
+def send_reset_email(email, reset_link):
+    from flask_mail import Message
+    msg = Message("Смена пароля", recipients=[email])
+    print(os.getenv("MAIL_SERVER"))
+    msg.body = f"Перейдите по этой ссылке, чтобы сбросить пароль: {reset_link}"
+    mail.send(msg)

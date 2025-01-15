@@ -1,16 +1,19 @@
 from __future__ import annotations  # Поддержка строковых аннотаций
 
 import json
+import os
 from datetime import datetime
 from typing import TYPE_CHECKING
 
 import flask
 import pytz
 from flask_jwt_extended import get_jwt_identity, create_access_token, create_refresh_token, decode_token
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from marshmallow import ValidationError
 from sqlalchemy import desc
 from werkzeug.datastructures import FileStorage
 
+from functions import send_reset_email
 from web_for_msu_back.app.dto.login import LoginDTO
 from web_for_msu_back.app.dto.pupil_admin_list import PupilAdminListDTO
 from web_for_msu_back.app.dto.role import RoleDTO
@@ -329,3 +332,36 @@ class UserService:
         identity = self.create_user_identity(user)
         access_token = create_access_token(identity=identity, fresh=False)
         return {"msg": "Фотография изменена", "access_token": access_token}, 200
+
+    def change_password(self, email: str) -> (dict, int):
+        user = self.get_user_by_email(email)
+        if not user:
+            return {"error": "Пользователь с такой почтой не найден"}, 404
+
+        s = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
+        token = s.dumps(email, salt=os.getenv("PASSWORD_RESET_SALT"))
+        # TODO check link
+        reset_link = f"{os.getenv("APP_NAME")}/reset_password/{token}/"
+        send_reset_email(email, reset_link)
+        return {"msg": "Письмо с ссылкой для смены пароля отправлено"}, 200
+
+    def reset_password(self, request: flask.Request, token: str):
+        s = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
+        try:
+            # Декодирование токена
+            email = s.loads(token, salt=os.getenv("PASSWORD_RESET_SALT"), max_age=3600)
+        except SignatureExpired:
+            return {"error": "Ссылка просрочена, попробуйте еще раз"}, 400
+        except BadSignature:
+            return {"error": "Некорректная ссылка"}, 400
+
+        data = request.get_json()
+        new_password = data.get('new_password')
+        return self.update_password(email, new_password)
+
+    def update_password(self, email, password):
+        user = self.get_user_by_email(email)
+        if not user:
+            return {"error": "Нет такого пользователя"}, 404
+        user.set_password(password)
+        return {"msg": "Пароль успешно обновлен"}, 200

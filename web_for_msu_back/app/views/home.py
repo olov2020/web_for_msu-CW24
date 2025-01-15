@@ -125,3 +125,17 @@ class HomeView(FlaskView):
         teacher_service: TeacherService = services["teacher_service"]
         response, code = teacher_service.get_school_info()
         return jsonify(response), code
+
+    @method("POST")
+    def change_password(self, email: str):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.change_password(email)
+        return jsonify(response, code)
+
+    @method("POST")
+    def reset_password(self, token: str):
+        services = get_services()
+        user_service: UserService = services["user_service"]
+        response, code = user_service.reset_password(request, token)
+        return jsonify(response, code)
