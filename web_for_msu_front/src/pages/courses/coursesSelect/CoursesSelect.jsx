@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {getCoursesSelect, getCoursesSelectStatus} from "../../../api/coursesApi.js";
 import Form from "../../../generic/form/Form.jsx";
 import style from './coursesSelect.module.css';
+import {useLocation} from "react-router-dom";
 
 const CoursesSelect = () => {
 
@@ -13,6 +14,7 @@ const CoursesSelect = () => {
 
   const [inputs, setInputs] = useState([]);
   const [values, setValues] = useState({});
+  const {pathname} = useLocation();
 
   useEffect(() => {
     const getCoursesSelectStatusFunc = async () => {
@@ -28,7 +30,7 @@ const CoursesSelect = () => {
     }
 
     getCoursesSelectFunc();
-  }, []);
+  }, [userStatus, pathname]);
 
   useEffect(() => {
     const inputsNew = courses.map((course) => {

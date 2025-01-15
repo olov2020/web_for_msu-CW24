@@ -787,7 +787,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
             <InputDropdown
               name={input}
               placeholder='Зачетный / незачетный'
-              value={coursesSelect[courseId]}
+              value={coursesSelect[courseId] || ''}
               values={['Зачетный', 'Незачетный', '']}
               setValue={(value) => handleCoursesSelectChange(courseId, value)}
               formErrors={(error) => handleErrorChange(courseId, error)}
