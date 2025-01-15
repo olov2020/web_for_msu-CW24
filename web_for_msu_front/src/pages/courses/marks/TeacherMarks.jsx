@@ -32,7 +32,7 @@ const TeacherMarks = ({courseId}) => {
     }
 
     getMarks2();
-  }, [pathname, authStatus])
+  }, [pathname, authStatus, courseId])
 
   const [inputs, setInputs] = useState([]);
   const [values, setValues] = useState({});
@@ -121,6 +121,8 @@ const TeacherMarks = ({courseId}) => {
     setValues2(valuesNew);
 
   }, [marks2]);
+
+  console.log(marks)
 
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
