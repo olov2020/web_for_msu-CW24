@@ -12,8 +12,10 @@ class News(db.Model):
     description = db.Column(db.Text)
     date = db.Column(db.Date, default=lambda: datetime.now(tz=pytz.timezone('Europe/Moscow')).date())
     photo = db.Column(db.String(255))
+    file = db.Column(db.String(255), nullable=True)
 
-    def __init__(self, title, description, photo):
+    def __init__(self, title, description, photo, file=None):
         self.title = title
         self.description = description
         self.photo = photo
+        self.file = file

@@ -29,6 +29,12 @@ class NewsService:
                 data["photo"] = "default.jpg"
         else:
             data["photo"] = "default.jpg"
+        if "file" in request.files:
+            file = request.files['file']
+            try:
+                data["file"] = self.image_service.save_news_photo(file)
+            except Exception:
+                pass
         try:
             news = NewsDTO().load(data)
         except ValidationError as e:
@@ -41,6 +47,8 @@ class NewsService:
         news = News.query.all()
         for n in news:
             n.photo = self.image_service.get_from_yandex_s3("news", n.photo)
+            if n.file:
+                n.file = self.image_service.get_from_yandex_s3("news", n.file)
         news = NewsDTO().dump(news, many=True)
         return news, 200
 

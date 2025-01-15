@@ -12,6 +12,7 @@ class NewsDTO(Schema):
     description = fields.String()
     date = fields.DateTime(dump_only=True, default=lambda: datetime.now(tz=pytz.timezone('Europe/Moscow')).date())
     photo = fields.String(required=True, validate=lambda x: len(x) > 0)  # Фото обязательно и не может быть пустым
+    file = fields.String(required=False)
 
     @validates("date")
     def validate_date(self, value):
