@@ -34,7 +34,7 @@ class BackupService:
             # Экспортируем каждую таблицу в отдельный лист Excel
             for table_name in table_names:
                 # Читаем данные из таблицы в DataFrame
-                query = self.db.session.execute(text(f'SELECT * FROM {table_name}'))
+                query = self.db.session.execute(text(f'SELECT * FROM \"{table_name}\"'))
                 df = pd.DataFrame(query.fetchall(), columns=query.keys())
                 dfs[table_name] = df  # Сохраняем DataFrame в словаре
                 # Проверяем, не пустой ли DataFrame перед записью
