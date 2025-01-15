@@ -9,7 +9,7 @@ const PupilMarks = ({courseId}) => {
 
   const [marks, setMarks] = useState({});
 
-  /*const [marks2, setMarks2] = useState({});*/
+  const [marks2, setMarks2] = useState({});
   const {pathname} = useLocation();
   const authStatus = useSelector((state) => state.user.authStatus);
 
@@ -21,7 +21,7 @@ const PupilMarks = ({courseId}) => {
 
     getMarks();
 
-    /*const getMarks2 = async () => {
+    const getMarks2 = async () => {
       try {
         const data = await getPupilMarksByCourseId2({courseId});
         setMarks2(data);
@@ -30,7 +30,7 @@ const PupilMarks = ({courseId}) => {
       }
     }
 
-    getMarks2();*/
+    getMarks2();
   }, [pathname, authStatus])
 
   if (!marks) {
@@ -39,7 +39,7 @@ const PupilMarks = ({courseId}) => {
 
   return (
     <>
-      {/*{marks2 &&
+      {marks2 &&
         <section style={{
           display: 'flex',
           justifyContent: 'center',
@@ -55,7 +55,7 @@ const PupilMarks = ({courseId}) => {
             gap: '2.2rem 0',
             width: 'auto',
           }}>
-            {marks2.dates.map((date) => (
+            {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date) => (
               <h3 key={date}>{date}</h3>
             ))}
           </section>
@@ -69,7 +69,7 @@ const PupilMarks = ({courseId}) => {
             <section className={style.row} style={{
               border: 'none',
             }}>
-              {marks2.mark_type_choices.map((markType, index) => (
+              {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType, index) => (
                 <h3 key={index}>{markType}</h3>
               ))}
             </section>
@@ -80,7 +80,7 @@ const PupilMarks = ({courseId}) => {
               flexDirection: 'column',
               gap: '2rem 0',
             }}>
-              {marks2.marks.map((marksRow, rowIndex) => (
+              {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((marksRow, rowIndex) => (
                 <div key={rowIndex} className={style.row}>
                   {marksRow.map((mark, markIndex) => (
                     <p key={markIndex}>{mark}</p>
@@ -92,7 +92,7 @@ const PupilMarks = ({courseId}) => {
             </section>
           </section>
         </section>
-      }*/}
+      }
 
       <section style={{
         display: 'flex',
@@ -109,7 +109,7 @@ const PupilMarks = ({courseId}) => {
           gap: '2.2rem 0',
           width: 'auto',
         }}>
-          {marks.dates.map((date) => (
+          {marks.dates && marks.dates.length !== 0 && marks.dates.map((date) => (
             <h3 key={date}>{date}</h3>
           ))}
         </section>
@@ -123,7 +123,7 @@ const PupilMarks = ({courseId}) => {
           <section className={style.row} style={{
             border: 'none',
           }}>
-            {marks.mark_type_choices.map((markType, index) => (
+            {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType, index) => (
               <h3 key={index}>{markType}</h3>
             ))}
           </section>
@@ -134,7 +134,7 @@ const PupilMarks = ({courseId}) => {
             flexDirection: 'column',
             gap: '2rem 0',
           }}>
-            {marks.marks.map((marksRow, rowIndex) => (
+            {marks.marks && marks.marks.length !== 0 && marks.marks.map((marksRow, rowIndex) => (
               <div key={rowIndex} className={style.row}>
                 {marksRow.map((mark, markIndex) => (
                   <p key={markIndex}>{mark}</p>
