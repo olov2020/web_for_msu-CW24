@@ -9,7 +9,7 @@ from web_for_msu_back.app.functions import get_services, auth_required, roles_re
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import CourseService, PupilService, UserService, EventService, BackupService
+    from web_for_msu_back.app.services import CourseService, PupilService, UserService, EventService, BackupService, MarkService
 
 
 class AdminView(FlaskView):
@@ -211,6 +211,16 @@ class AdminView(FlaskView):
         event_service: EventService = services["event_service"]
         response, code = event_service.set_event_dates(event, request)
         return jsonify(response), code
+
+    @method("PATCH")
+    @auth_required
+    @roles_required("admin")
+    def finish_term(self):
+        services = get_services()
+        mark_service: MarkService = services["mark_service"]
+        mark_service.finish_term()
+        return {}, 200
+
 
     @method("GET")
     @auth_required

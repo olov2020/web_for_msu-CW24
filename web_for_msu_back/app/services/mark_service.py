@@ -282,3 +282,24 @@ class MarkService:
         except ValidationError as e:
             return e.messages, 400
         return pupil_marks_dto, 200
+
+    def finish_term(self):
+        date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
+        month = date.month
+        day = date.day
+        if month == 1 and day == 26:
+            finished = False
+        elif month == 5 and day == 20:
+            finished = True
+        else:
+            return
+        pupil_courses = PupilCourse.query.filter(~PupilCourse.finished).all()
+        for pupil_course in pupil_courses:
+            marks, dates = self.get_pupil_marks(pupil_course.course_id, pupil_course.pupil_id, [])
+            result = round(self.calculate_result(marks))
+            if finished:
+                pupil_course.term2_mark = result
+            else:
+                pupil_course.term1_mark = result
+            pupil_course.finished = finished
+        self.db.session.commit()

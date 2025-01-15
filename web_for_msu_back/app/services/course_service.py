@@ -515,6 +515,8 @@ class CourseService:
         data = self.get_base_course_info(course)
         data["current_mark"] = pupil_course.current_mark
         data["credit"] = "Зачётный" if pupil_course.crediting else "Не зачётный"
+        data["mark1"] = pupil_course.term1_mark
+        data["mark2"] = pupil_course.term2_mark
         return CourseInfoPupilDTO().dump(data)
 
     def get_course_info_teacher(self, course: Course) -> CourseInfoTeacherDTO:
@@ -597,10 +599,14 @@ class CourseService:
         pupil = Pupil.query.get(pupil_id)
         if not pupil:
             return {"error": "Ученик не найден"}
-        try:
-            courses = CourseInfoSelectionDTO().load(request.json, many=True)
-        except ValidationError as e:
-            return e.messages, 400
+        data = request.json
+        courses = []
+        for key in data:
+            course_id = key.split()[-1]
+            if not course_id.isdigit():
+                continue
+            course_id = int(course_id)
+            courses.append({"id": course_id, "selected": data[key]})
         selected_courses = [course for course in courses if course["selected"] != ""]
         crediting_courses = [course for course in courses if course["selected"] == "Зачетный"]
         crediting_count = len(crediting_courses)
@@ -619,7 +625,7 @@ class CourseService:
                 "error": f"Нельзя выбирать два зачетных курса одного направления, "
                          f"вы выбрали оба курса направления {first_crediting.direction}"}, 404
         for course in selected_courses:
-            response, code = self.add_pupil_to_course(course.id, pupil, course.selected)
+            response, code = self.add_pupil_to_course(course["id"], pupil, course["selected"])
             if code != 200:
                 return response, code
         self.db.session.commit()
