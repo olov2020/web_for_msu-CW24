@@ -145,10 +145,15 @@ class PupilService:
             data["photo"] = ""
         return PupilAccountDTO().dump(data), 200
 
-    def get_active_pupils(self) -> (list[PupilToAddDTO], int):
-        pupils = Pupil.query.filter(~Pupil.former, ~Pupil.graduated).all()
+    def get_active_pupils(self, course_id: int) -> (list[PupilToAddDTO], int):
+        pupils = (Pupil.query
+                  .filter(~Pupil.former, ~Pupil.graduated)
+                  .all())
         data = []
         for pupil in pupils:
+            b = [int(course_id) == pupil_course.id for pupil_course in pupil.courses]
+            if any(b):
+                continue
             data.append(
                 {"id": pupil.id,
                  "name": self.get_full_name(pupil),

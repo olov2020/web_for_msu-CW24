@@ -723,3 +723,24 @@ class CourseService:
                 "auditory": course.auditory,
             })
         return AuditoriumsDTO().dump(data, many=True), 200
+
+    def add_pupil_to_course_by_teacher(self, course_id: int, pupil_id: int, user_id: int, is_admin: bool) \
+            -> (dict, int):
+        if not is_admin:
+            teacher = Teacher.query.filter(Teacher.user_id == user_id).first()
+            if not teacher:
+                return {"error": "Вы не можете добавить ученика на курс, на котором не преподаете"}, 404
+        course = Course.query.get(course_id)
+        pupil = Pupil.query.get(pupil_id)
+        if not course:
+            return {"error": "Нет такого курса"}, 404
+        if not pupil:
+            return {"error": "Нет такого ученика"}, 404
+        pupil_course = PupilCourse.query.filter(PupilCourse.pupil_id == pupil_id,
+                                                PupilCourse.course_id == course_id).first()
+        if pupil_course:
+            return {"error": "Этот ученик уже подал заявку на этот курс"}, 404
+        pupil_course = PupilCourse(pupil_id, course_id, course.year, approved=True)
+        self.db.session.add(pupil_course)
+        self.db.session.commit()
+        return {"msg": "Ученик успешно зачислен на курс"}, 200

@@ -120,9 +120,20 @@ class TeacherView(FlaskView):
     @method("GET")
     @auth_required
     @roles_required("teacher")
-    def get_pupil_on_course(self):
+    def get_pupil_on_course(self, course_id: int):
         services = get_services()
         pupil_service: PupilService = services["pupil_service"]
-        response, code = pupil_service.get_active_pupils()
+        response, code = pupil_service.get_active_pupils(course_id)
+        return jsonify(response), code
+
+    @method("POST")
+    @auth_required
+    @roles_required("teacher")
+    def add_pupil_on_course(self, course_id: int, pupil_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        user_id = g.current_user.id
+        is_admin = "admin" in get_jwt_identity()["roles"]
+        response, code = course_service.add_pupil_to_course_by_teacher(course_id, pupil_id, user_id, is_admin)
         return jsonify(response), code
 
