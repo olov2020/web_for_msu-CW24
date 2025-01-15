@@ -800,7 +800,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         }
 
         if (matchMarks) {
-          const markId = matchMarks[0];
+          const markId = `${matchMarks[0]}`;
 
           return (
             <InputText

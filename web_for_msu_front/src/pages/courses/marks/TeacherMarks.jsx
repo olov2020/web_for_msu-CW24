@@ -81,8 +81,6 @@ const TeacherMarks = ({courseId}) => {
   }, [marks]);
 
 
-  console.log(marks)
-
   useEffect(() => {
     const inputsNew = marks2.dates.flatMap((date) =>
       marks2.pupils.flatMap((pupil) =>
