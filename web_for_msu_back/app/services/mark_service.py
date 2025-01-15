@@ -141,8 +141,7 @@ class MarkService:
 
     def get_lessons_by_part(self, course, course_id, part):
         year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
-        # date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
-        date = datetime(year, 1, 26, tzinfo=pytz.timezone("Europe/Moscow"))
+        date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
         start_of_year = datetime(year, 1, 1, tzinfo=pytz.timezone("Europe/Moscow"))
         term1_start = datetime(year, 9, 1, tzinfo=pytz.timezone("Europe/Moscow"))
         term1_end = datetime(year, 1, 25, tzinfo=pytz.timezone("Europe/Moscow"))
@@ -251,9 +250,6 @@ class MarkService:
                            lessons: list[Schedule],
                            formulas_ids: list[int]) -> dict[int, list[Mark]]:
         for lesson in lessons:
-            print("\n\n")
-            print("FORMULAS")
-            print(formulas_ids)
             if lesson.id not in pupil_marks:
                 pupil_marks[lesson.id] = [Mark(lesson.id, pupil_id, "", "", course_id, formulas_ids[i]) for i in
                                           range(len(formulas_ids))]
