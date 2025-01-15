@@ -29,8 +29,8 @@ export const userLogin = async (email, password) => {
     })
 
     const {access_token, refresh_token} = response.data;
-    localStorage.setItem('token', access_token)
-    localStorage.setItem('refreshToken', refresh_token)
+    localStorage.setItem('token', access_token);
+    localStorage.setItem('refreshToken', refresh_token);
 
     return access_token;
   } catch (error) {
@@ -54,7 +54,8 @@ export const pupilChangeData = async (photo, email, phone, school) => {
   })
 
   try {
-    return response.data
+    localStorage.setItem('token', response.data.access_token);
+    return response.data.access_token;
   } catch (error) {
     return new Error(error);
   }
@@ -77,7 +78,8 @@ export const teacherChangeData = async (photo, email, phone, university, work) =
   })
 
   try {
-    return response.data
+    localStorage.setItem('token', response.data.access_token);
+    return response.data.access_token;
   } catch (error) {
     return new Error(error);
   }
