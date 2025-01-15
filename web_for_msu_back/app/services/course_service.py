@@ -77,6 +77,8 @@ class CourseService:
         pupil = Pupil.query.get(pupil_id)
         if not pupil:
             return {"error": "Нет такого ученика"}, 404
+        pupil_courses = pupil.courses
+        pupil_courses_dict = {pupil_course.course_id: pupil_course.crediting for pupil_course in pupil_courses}
         grade = pupil.school_grade
         year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
         if datetime.now(tz=pytz.timezone('Europe/Moscow')).month in range(7):
@@ -88,7 +90,8 @@ class CourseService:
                     grade == 9 and "8" in course.emsh_grades and "10" in course.emsh_grades) or (
                     grade == 10 and "9" in course.emsh_grades and "11" in course.emsh_grades):
                 available_courses.append(course)
-        courses_for_selection = [self.get_course_info_selection(course) for course in available_courses]
+        courses_for_selection = [self.get_course_info_selection(course, str(pupil_courses_dict.get(course.id, ""))) for
+                                 course in available_courses]
         return courses_for_selection, 200
 
     def add_pupil_to_course(self, course_id: int, pupil: Pupil, crediting_selected: str) -> (dict, int):
@@ -530,7 +533,13 @@ class CourseService:
         data["pupils_number"] = len(self.get_pupils(course.id))
         return CourseInfoTeacherDTO().dump(data)
 
-    def get_course_info_selection(self, course: Course) -> CourseInfoSelectionDTO:
+    def get_course_info_selection(self, course: Course, crediting) -> CourseInfoSelectionDTO:
+        if crediting == "True":
+            selected = "Зачетный"
+        elif crediting == "False":
+            selected = "Незачетный"
+        else:
+            selected = ""
         data = {
             "id": course.id,
             "name": course.name,
@@ -539,7 +548,7 @@ class CourseService:
             "direction": course.direction,
             "auditory": course.auditory,
             "lesson_time": course.lesson_time,
-            "selected": "",
+            "selected": selected,
         }
         return CourseInfoSelectionDTO().dump(data)
 
