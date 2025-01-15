@@ -195,7 +195,7 @@ class AdminView(FlaskView):
         response, code = course_service.get_auditoriums()
         return jsonify(response), code
 
-    @route("/courses-ids", methods=["GET"])
+    @route("/courses-ids/", methods=["GET"])
     @auth_required
     @roles_required("admin", "marksmaker")
     def get_courses_ids(self):
