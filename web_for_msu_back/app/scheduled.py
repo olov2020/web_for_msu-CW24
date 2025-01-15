@@ -1,4 +1,4 @@
-from functions import get_services
+from web_for_msu_back.app.functions import get_services
 
 
 def add_scheduled_jobs(scheduler, app):
