@@ -781,7 +781,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
               placeholder='Введите аудиторию / zoom'
               value={auditoriums[auditoryId]}
               setValue={(value) => handleAuditoryChange(auditoryId, value)}
-              formErrors={(error) => handleErrorChange(auditoryId, error)}
             />
           );
         }
