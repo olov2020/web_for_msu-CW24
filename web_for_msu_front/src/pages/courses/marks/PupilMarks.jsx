@@ -16,7 +16,7 @@ const PupilMarks = ({courseId}) => {
   useEffect(() => {
     const getMarks = async () => {
       const data = await getPupilMarksByCourseId({courseId});
-      setMarks(data.marks);
+      setMarks(data);
     }
 
     getMarks();
@@ -24,7 +24,7 @@ const PupilMarks = ({courseId}) => {
     const getMarks2 = async () => {
       try {
         const data = await getPupilMarksByCourseId2({courseId});
-        setMarks2(data.marks);
+        setMarks2(data);
       } catch {
         setMarks2(null);
       }
