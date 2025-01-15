@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import Form from "../../../generic/form/Form.jsx";
 import {useEffect, useState} from "react";
 import {getEventsOpenChampionshipDate} from "../../../api/eventsApi.js";
+import {useLocation} from "react-router-dom";
 
 const EventsOpenChampionship = () => {
 
@@ -14,6 +15,7 @@ const EventsOpenChampionship = () => {
   const authStatus = useSelector(state => state.user.authStatus);
   const [dates, setDates] = useState({});
   const numOfChampionships = new Date().getFullYear() - 2010;
+  const {pathname} = useLocation();
 
   useEffect(() => {
     const getEventsOpenChampionshipDateFunc = async () => {
@@ -22,7 +24,7 @@ const EventsOpenChampionship = () => {
     }
 
     getEventsOpenChampionshipDateFunc();
-  }, []);
+  }, [authStatus, pathname]);
 
   return (
     <article>

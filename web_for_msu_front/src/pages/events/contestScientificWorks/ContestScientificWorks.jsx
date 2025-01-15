@@ -7,7 +7,7 @@ import {
 import ContactsSection from "../contactsSection/ContactsSection.jsx";
 import subjectObjectImg from '../../../../public/knr/1.jpg';
 import diagram1 from '../../../../public/knr/2.jpg';
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {EVENTS_RESIDENTIAL_SCHOOL_ROUTE} from "../../../routing/consts.js";
 import Form from "../../../generic/form/Form.jsx";
 import {useSelector} from "react-redux";
@@ -17,6 +17,7 @@ const ContestScientificWorks = () => {
   const authStatus = useSelector(state => state.user.authStatus);
   const [teachers, setTeachers] = useState([]);
   const [dates, setDates] = useState({});
+  const {pathname} = useLocation();
 
   useEffect(() => {
     const getEventsContestScientificWorksTeachersFunc = async () => {
@@ -32,7 +33,7 @@ const ContestScientificWorks = () => {
     }
 
     getEventsContestScientificWorksDateFunc();
-  }, []);
+  }, [authStatus, pathname]);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const hintText = 'Тьюторы – это консультанты из состава преподавателей ЭМШ, к которым можно обратиться, если есть вопросы';
