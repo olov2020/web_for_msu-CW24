@@ -57,7 +57,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
   const [auditoriums, setAuditoriums] = useState({});
   const [coursesSelect, setCoursesSelect] = useState({});
   const [teacherMarks, setTeacherMarks] = useState({});
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState(false);
   const location = useLocation();
   useEffect(() => {
     setAuditoriums(values);
@@ -795,7 +795,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
             <InputDropdown
               name={input}
               placeholder='Зачетный / незачетный'
-              value={coursesSelect[courseId] || ''}
+              value={coursesSelect[courseId]}
               values={['Зачетный', 'Незачетный', '']}
               setValue={(value) => handleCoursesSelectChange(courseId, value)}
               formErrors={(error) => handleErrorChange(courseId, error)}
