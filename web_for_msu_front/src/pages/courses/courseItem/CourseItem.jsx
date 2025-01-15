@@ -28,9 +28,11 @@ const CourseItem = () => {
           width: '90%',
         }}>
           <h3>Оценка за первый
-            семестр: {state.courseData.mark1 ? state.courseData.mark1 : 'пока итоговая оценка не выставлена'}</h3>
+            семестр: <strong>{state.courseData.mark1 ? state.courseData.mark1 : 'пока итоговая оценка не выставлена'}</strong>
+          </h3>
           <h3>Оценка за второй
-            семестр: {state.courseData.mark2 ? state.courseData.mark2 : 'пока итоговая оценка не выставлена'}</h3>
+            семестр: <strong>{state.courseData.mark2 ? state.courseData.mark2 : 'пока итоговая оценка не выставлена'}</strong>
+          </h3>
         </section>
       }
 
