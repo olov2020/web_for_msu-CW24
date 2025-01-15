@@ -25,13 +25,14 @@ class MarkService:
         self.course_service = course_service
         self.pupil_service = pupil_service
 
-    def get_pupils_marks(self, course_id: int, lessons: list[Schedule], pupils: list[Pupil]) \
+    def get_pupils_marks(self, course_id: int, lessons: list[Schedule], pupils: list[Pupil], formulas: list[Formula]) \
             -> dict[int, list[list[Mark]]]:
         course_marks = Mark.query.filter(Mark.course_id == course_id).order_by(Mark.pupil_id,
                                                                                asc(Mark.schedule_id)).all()
         lessons_ids_set = set(lesson.id for lesson in lessons)
-        formulas = Formula.query.filter(Formula.course_id == course_id).order_by(Formula.id).all()
+        formulas = formulas
         formulas_ids = [formula.id for formula in formulas]
+
         marks_grouped = dict()
         for key, marks in itertools.groupby(course_marks, key=attrgetter('pupil_id')):
 
@@ -107,7 +108,7 @@ class MarkService:
 
         # Fetch all pupils and their marks at once
         pupils = self.course_service.get_pupils(course_id)
-        pupil_marks = self.get_pupils_marks(course_id, lessons, pupils)
+        pupil_marks = self.get_pupils_marks(course_id, lessons, pupils, formulas)
         mark_type_choices = choices
         mark_types = []
         dates = []
@@ -251,6 +252,7 @@ class MarkService:
                            formulas_ids: list[int]) -> dict[int, list[Mark]]:
         for lesson in lessons:
             if lesson.id not in pupil_marks:
+                print(formulas_ids)
                 pupil_marks[lesson.id] = [Mark(lesson.id, pupil_id, "", "", course_id, formulas_ids[i]) for i in
                                           range(len(formulas_ids))]
         return pupil_marks
