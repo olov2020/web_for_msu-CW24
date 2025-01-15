@@ -9,19 +9,20 @@ const Input = ({fieldName = '', placeholder = '', isValid = true, error = '', ..
       }}>
         {fieldName}
       </h3>
-      
-      <input placeholder={placeholder ? placeholder : ''}
-             className={
-               `${isValid ?
-                 `${styleInput.valid}` :
-                 `${styleInput.invalid}`}
+
+      <input
+        {...props}
+        placeholder={placeholder ? placeholder : ''}
+        className={
+          `${isValid ?
+            `${styleInput.valid}` :
+            `${styleInput.invalid}`}
                   ${styleInput.input}`
-             }
-             {...props}
+        }
       />
 
       <p className={styleInput.errorMessage}>
-      {error}
+        {error}
       </p>
     </label>
   );
