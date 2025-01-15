@@ -1,7 +1,7 @@
 .section {
     display: flex;
     justify-content: center;
-    width: 90%;
+    width: auto;
     max-width: 90%;
     overflow: auto;
     gap: 0 1rem;
@@ -9,7 +9,6 @@
     > section {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         width: auto;
         gap: 2.3rem 0;
 
