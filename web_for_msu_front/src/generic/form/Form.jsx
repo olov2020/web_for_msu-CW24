@@ -60,6 +60,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
   const [errors, setErrors] = useState({});
   const location = useLocation();
   useEffect(() => {
+    console.log(values);
+    console.log(JSON.stringify(values));
     values = JSON.stringify(values);
     setAuditoriums(values);
     setCoursesSelect(values);
@@ -784,7 +786,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         if (matchCourse) {
           const courseId = `course ${matchCourse[1]}`;
           console.log(coursesSelect[courseId])
-          console.log(values)
 
           return (
             <InputDropdown

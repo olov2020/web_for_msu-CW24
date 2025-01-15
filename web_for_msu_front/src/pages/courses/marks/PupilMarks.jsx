@@ -9,7 +9,7 @@ const PupilMarks = ({courseId}) => {
 
   const [marks, setMarks] = useState({});
 
-  const [marks2, setMarks2] = useState({});
+  /*const [marks2, setMarks2] = useState({});*/
   const {pathname} = useLocation();
   const authStatus = useSelector((state) => state.user.authStatus);
 
@@ -21,7 +21,7 @@ const PupilMarks = ({courseId}) => {
 
     getMarks();
 
-    const getMarks2 = async () => {
+    /*const getMarks2 = async () => {
       try {
         const data = await getPupilMarksByCourseId2({courseId});
         setMarks2(data);
@@ -30,7 +30,7 @@ const PupilMarks = ({courseId}) => {
       }
     }
 
-    getMarks2();
+    getMarks2();*/
   }, [pathname, authStatus])
 
   if (!marks) {
@@ -39,7 +39,7 @@ const PupilMarks = ({courseId}) => {
 
   return (
     <>
-      {marks2 &&
+      {/*{marks2 &&
         <section style={{
           display: 'flex',
           justifyContent: 'center',
@@ -92,7 +92,7 @@ const PupilMarks = ({courseId}) => {
             </section>
           </section>
         </section>
-      }
+      }*/}
 
       <section style={{
         display: 'flex',
