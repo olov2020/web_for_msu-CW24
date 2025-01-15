@@ -43,7 +43,7 @@ const CoursesSelect = () => {
       return acc;
     }, {})
     setValues(valuesNew);
-  }, [courses]);
+  }, [courses, pathname]);
 
   if (!selectCoursesStatus) {
     return (
