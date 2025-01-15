@@ -106,6 +106,10 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       alert('Заполните все обязательные поля.');
       return;
     }
+    if (errors) {
+      alert('Заполните поля в правильном формате.');
+      return;
+    }
     if (type === 'login') {
       try {
         const accessToken = await userLogin(formValues.email, formValues.password);
@@ -782,6 +786,8 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
         if (matchCourse) {
           const courseId = `course ${matchCourse[1]}`;
+          console.log(coursesSelect)
+          console.log(JSON.stringify(values));
           console.log(coursesSelect[courseId])
 
           return (
@@ -811,8 +817,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
         if (matchVisits) {
           const visitId = `${matchVisits[0]}`;
-          formValues[visitId] = teacherMarks[visitId];
-          formErrors[visitId] = errors[visitId];
 
           return (
             <InputText
