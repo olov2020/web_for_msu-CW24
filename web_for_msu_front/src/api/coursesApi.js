@@ -44,7 +44,7 @@ export const getPupilMarksByCourseId = async ({courseId}) => {
   const response = await $authHost.get(`/pupil/marks/${courseId}/`)
 
   try {
-    return response.data;
+    return JSON.stringify(response.data);
   } catch (error) {
     return new Error(error);
   }
