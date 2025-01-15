@@ -67,14 +67,14 @@ const CoursesSelect = () => {
           <section className={style.time}>
             <h2>Время</h2>
             {courses.map((course) => (
-              <p key={course.id}>{course.lesson_time}</p>
+              <h3 key={course.id}>{course.lesson_time}</h3>
             ))}
           </section>
 
           <section className={style.info}>
             <h2>Общая информация</h2>
             {courses.map((course) => (
-              <p key={course.id}>{course.direction}: {course.emsh_grades} - <span>{course.crediting}</span></p>
+              <h3 key={course.id}>{course.direction}: {course.emsh_grades} - <span>{course.crediting}</span></h3>
             ))}
           </section>
 
