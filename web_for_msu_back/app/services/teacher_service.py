@@ -98,12 +98,15 @@ class TeacherService:
         if not teacher:
             return {"error": "Пользователь не найден"}, 404
         data = {
-            "photo": user.image,
             "email": teacher.email,
             "phone": teacher.phone,
             "university": teacher.university,
             "work": teacher.workplace,
         }
+        if not user.image.endswith("default.svg"):
+            data["photo"] = self.image_service.get_from_yandex_s3("images", user.image)
+        else:
+            data["photo"] = ""
         return TeacherAccountDTO().dump(data), 200
 
     def get_school_info(self):
