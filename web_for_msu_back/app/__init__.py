@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_apscheduler import APScheduler
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 # from flask_migrate import Migrate
@@ -8,6 +9,7 @@ from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+scheduler = APScheduler()
 
 
 # mail = Mail()
@@ -40,6 +42,7 @@ def create_app(config):
     TeacherView.register(app)
     NewsView.register(app)
 
+    scheduler.init_app(app)
 
     # with app.test_request_context():  # Необходимо для доступа к url_map вне контекста запроса
     #     for rule in app.url_map.iter_rules():

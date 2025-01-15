@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 
+import pytz
 from dotenv import load_dotenv
 
 app_dir = os.path.abspath(os.path.dirname(__file__))
@@ -18,6 +19,8 @@ class BaseConfig:
     SECURITY_MSG_UNAUTHORIZED = ("У вас нет прав доступа к этой странице", "error")
     WTF_CSRF_ENABLED = True
     SECURITY_UNAUTHORIZED_VIEW = 'home.login'
+    SCHEDULER_API_ENABLED = True
+    SCHEDULER_TIMEZONE = pytz.timezone("Europe/Moscow")
 
     # ##### настройка Flask-Mail #####
     # MAIL_SERVER = 'smtp.googlemail.com'
