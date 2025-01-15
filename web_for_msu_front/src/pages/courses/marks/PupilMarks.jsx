@@ -16,7 +16,7 @@ const PupilMarks = ({courseId}) => {
   useEffect(() => {
     const getMarks = async () => {
       const data = await getPupilMarksByCourseId({courseId});
-      setMarks(JSON.stringify(data));
+      setMarks(data);
     }
 
     getMarks();

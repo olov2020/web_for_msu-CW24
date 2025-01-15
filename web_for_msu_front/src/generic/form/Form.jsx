@@ -60,9 +60,9 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
   const [errors, setErrors] = useState({});
   const location = useLocation();
   useEffect(() => {
-    setAuditoriums(JSON.stringify(values));
-    setCoursesSelect(JSON.stringify(values));
-    setTeacherMarks(JSON.stringify(values));
+    setAuditoriums(values);
+    setCoursesSelect(values);
+    setTeacherMarks(values);
   }, [location.pathname, JSON.stringify(values)]);
 
   const handleAuditoryChange = (auditoryId, value) => {
