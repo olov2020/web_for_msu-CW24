@@ -142,14 +142,16 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
     } else if (type === 'pupilChangeData') {
       try {
-        await pupilChangeData(formValues.photo, formValues.email, formValues.phone, formValues.school);
+        const accessToken = await pupilChangeData(formValues.photo, formValues.email, formValues.phone, formValues.school);
+        dispatch(setAuthFromToken(accessToken));
         alert('Данные успешно изменены!');
       } catch (error) {
         alert(`Упс, что-то пошло не так...\nОшибка: ${error}`)
       }
     } else if (type === 'teacherChangeData') {
       try {
-        await teacherChangeData(formValues.photo, formValues.email, formValues.phone, formValues.university, formValues.work);
+        const accessToken = await teacherChangeData(formValues.photo, formValues.email, formValues.phone, formValues.university, formValues.work);
+        dispatch(setAuthFromToken(accessToken));
         alert('Данные успешно изменены!');
       } catch (error) {
         alert(`Упс, что-то пошло не так...\nОшибка: ${error}`)
