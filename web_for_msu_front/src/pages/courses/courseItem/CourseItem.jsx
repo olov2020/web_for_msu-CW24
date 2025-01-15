@@ -23,6 +23,15 @@ const CourseItem = () => {
         {state.year}
       </h3>
 
+      {state.isMyCourses && userStatus.includes('pupil') &&
+        <>
+          <h3>Оценка за первый
+            семестр: {state.courseData.mark1 ? state.courseData.mark1 : 'пока итоговая оценка не выставлена'}</h3>
+          <h3>Оценка за второй
+            семестр: {state.courseData.mark2 ? state.courseData.mark2 : 'пока итоговая оценка не выставлена'}</h3>
+        </>
+      }
+
       {state.isMyCourses &&
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>

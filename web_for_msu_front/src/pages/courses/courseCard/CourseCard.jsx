@@ -30,7 +30,7 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
           <p><span className={courseData.credit === 'Зачётный' ? style.credit : ''}>{courseData.credit}</span></p>
           <p>{courseData.lesson_time}</p>
           <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
-          <p><span>Текущая оценка:</span> {courseData.current_mark ? courseData.auditory : 'оценок пока нет'}</p>
+          <p><span>Текущая оценка:</span> {courseData.current_mark ? courseData.current_mark : 'оценок пока нет'}</p>
         </>
       }
       {isMyCourses && userStatus.includes('teacher') &&

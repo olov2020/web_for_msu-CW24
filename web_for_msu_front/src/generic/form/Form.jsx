@@ -786,10 +786,6 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
 
         if (matchCourse) {
           const courseId = `course ${matchCourse[1]}`;
-          console.log(coursesSelect)
-          console.log(JSON.stringify(values));
-          console.log(courseId)
-          console.log(coursesSelect[courseId])
 
           return (
             <InputDropdown
