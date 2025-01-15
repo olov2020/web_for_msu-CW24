@@ -283,15 +283,14 @@ class MarkService:
             return e.messages, 400
         return pupil_marks_dto, 200
 
-    def finish_term(self):
-        print("Семестр закончен")
-        # date = datetime(2025,1, 26, tzinfo=pytz.timezone('Europe/Moscow'))
-        date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
-        month = date.month
-        day = date.day
-        if month == 1 and day == 26:
+    def finish_term(self, term):
+        if term not in ["first", "second"]:
+            print("Ошибка запроса во время завершения семестра")
+            return {"error": "Ошибка запроса во время завершения семестра"}, 404
+        print("Семестр завершен")
+        if term == "first":
             finished = False
-        elif month == 5 and day == 20:
+        elif term == "second":
             finished = True
         else:
             return
@@ -305,3 +304,4 @@ class MarkService:
                 pupil_course.term1_mark = result
             pupil_course.finished = finished
         self.db.session.commit()
+        return {"msg": "Семестр завершен"}, 200

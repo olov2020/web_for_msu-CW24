@@ -56,6 +56,7 @@ class PupilService:
         return Pupil.query.filter_by(email=email).first()
 
     def increase_grade(self) -> (dict, int):
+        print("Выполнен переход на следующий год")
         pupils = Pupil.query.all()
         for pupil in pupils:
             if pupil.graduated:

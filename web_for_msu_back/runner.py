@@ -12,7 +12,7 @@ with app.app_context():
     db.create_all()
     create_roles()
     create_admin()
-    add_scheduled_jobs(scheduler)
+    add_scheduled_jobs(scheduler, app)
 
 if __name__ == '__main__':
     scheduler.start()
