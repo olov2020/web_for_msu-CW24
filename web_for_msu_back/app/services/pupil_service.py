@@ -9,6 +9,7 @@ from marshmallow import ValidationError
 
 from web_for_msu_back.app.dto.pupil import PupilDTO
 from web_for_msu_back.app.dto.pupil_account import PupilAccountDTO
+from web_for_msu_back.app.dto.pupil_to_add import PupilToAddDTO
 from web_for_msu_back.app.models import Pupil, Role, User
 
 if TYPE_CHECKING:
@@ -143,3 +144,14 @@ class PupilService:
         else:
             data["photo"] = ""
         return PupilAccountDTO().dump(data), 200
+
+    def get_active_pupils(self) -> (list[PupilToAddDTO], int):
+        pupils = Pupil.query.filter(~Pupil.former, ~Pupil.graduated).all()
+        data = []
+        for pupil in pupils:
+            data.append(
+                {"id": pupil.id,
+                 "name": self.get_full_name(pupil),
+                 "grade": pupil.school_grade}
+            )
+        return PupilToAddDTO().dump(data, many=True), 200

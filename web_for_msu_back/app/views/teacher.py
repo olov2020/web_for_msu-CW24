@@ -10,7 +10,7 @@ from web_for_msu_back.app.functions import auth_required, roles_required, get_se
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
-    from web_for_msu_back.app.services import MarkService, CourseService, TeacherService
+    from web_for_msu_back.app.services import MarkService, CourseService, TeacherService, PupilService
 
 
 class TeacherView(FlaskView):
@@ -116,3 +116,13 @@ class TeacherView(FlaskView):
         teacher_service: TeacherService = services["teacher_service"]
         response, code = teacher_service.change_account(g.current_user.id, request)
         return jsonify(response), code
+
+    @method("GET")
+    @auth_required
+    @roles_required("teacher")
+    def get_pupil_on_course(self):
+        services = get_services()
+        pupil_service: PupilService = services["pupil_service"]
+        response, code = pupil_service.get_active_pupils()
+        return jsonify(response), code
+
