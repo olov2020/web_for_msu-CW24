@@ -515,6 +515,8 @@ class CourseService:
         data = self.get_base_course_info(course)
         data["current_mark"] = pupil_course.current_mark
         data["credit"] = "Зачётный" if pupil_course.crediting else "Не зачётный"
+        data["mark1"] = pupil_course.term1_mark
+        data["mark2"] = pupil_course.term2_mark
         return CourseInfoPupilDTO().dump(data)
 
     def get_course_info_teacher(self, course: Course) -> CourseInfoTeacherDTO:
