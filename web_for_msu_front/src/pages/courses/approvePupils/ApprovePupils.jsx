@@ -8,6 +8,7 @@ const ApprovePupils = ({courseId}) => {
 
   const [pupils, setPupils] = useState([])
   const {pathname} = useLocation();
+  const [updatePupils, setUpdatePupils] = useState(false);
 
   useEffect(() => {
     const getAllPupilsOnCourseFunc = async () => {
@@ -16,16 +17,26 @@ const ApprovePupils = ({courseId}) => {
     }
 
     getAllPupilsOnCourseFunc();
-  }, [pathname, pupils]);
+  }, [pathname, updatePupils]);
 
   const handleApprovePupils = async (pupilId) => {
     const data = await approvePupilsOnCourse({courseId, pupilId});
-    data ? alert('Ученик успешно принят на курс') : alert('Упс... Что-то пошло не так');
+    if (data) {
+      setUpdatePupils(!updatePupils);
+      alert('Ученик успешно принят на курс');
+    } else {
+      alert('Упс... Что-то пошло не так');
+    }
   }
 
   const handleDeletePupils = async (pupilId) => {
     const data = await deletePupilsFromCourse({courseId, pupilId});
-    data ? alert('Ученик успешно принят на курс') : alert('Упс... Что-то пошло не так');
+    if (data) {
+      setUpdatePupils(!updatePupils);
+      alert('Ученик успешно удален с курса');
+    } else {
+      alert('Упс... Что-то пошло не так');
+    }
   }
 
   if (!pupils || pupils.length === 0) {
