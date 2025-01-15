@@ -118,13 +118,19 @@ class CourseService:
                                  f"а на курс могут поступить только учащиеся {course.emsh_grades} классов"}, 404
             case _:
                 return {"error": "Некорректный тип курса, может быть только Зачетный или Незачетный"}, 404
-        pupil_course = PupilCourse(
-            pupil_id=pupil.id,
-            course_id=course.id,
-            year=year,
-            crediting=crediting
-        )
-        self.db.session.add(pupil_course)
+        pupil_course = PupilCourse.query.filter(PupilCourse.pupil_id == pupil.id,
+                                                PupilCourse.course_id == course.id,
+                                                PupilCourse.year == year).first()
+        if pupil_course:
+            pupil_course.crediting = crediting
+        else:
+            pupil_course = PupilCourse(
+                pupil_id=pupil.id,
+                course_id=course.id,
+                year=year,
+                crediting=crediting
+            )
+            self.db.session.add(pupil_course)
         return {"msg": f"Заявка на курс {course.name} подана"}, 200
 
     def add_teacher_to_course(self, course_id, teacher_id, year):
