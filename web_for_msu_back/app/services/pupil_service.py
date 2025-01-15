@@ -134,9 +134,12 @@ class PupilService:
         if not pupil:
             return {"error": "Пользователь не найден"}, 404
         data = {
-            "photo": user.image,
             "email": pupil.email,
             "phone": pupil.phone,
             "school": pupil.school,
         }
+        if not user.image.endswith("default.svg"):
+            data["photo"] = self.image_service.get_from_yandex_s3("images", user.image)
+        else:
+            data["photo"] = ""
         return PupilAccountDTO().dump(data), 200
