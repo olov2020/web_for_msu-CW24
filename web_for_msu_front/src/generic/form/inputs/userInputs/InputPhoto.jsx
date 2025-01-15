@@ -3,6 +3,7 @@ import styleInput from "../userInputs/input.module.css";
 import {useState, useRef, useEffect} from "react";
 import defaultNewsImage from "../../../../../public/msu_logo.png";
 import defaultUserImage from '../../../../../public/generic/default_user.svg';
+import {useLocation} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const InputPhoto = ({value, name = '', fieldName, accept = '', multiple = false, required = false, setValue}) => {
@@ -14,9 +15,13 @@ const InputPhoto = ({value, name = '', fieldName, accept = '', multiple = false,
     empty: 'Данное поле не может быть пустым',
   }
 
+  const {pathname} = useLocation();
+
   useEffect(() => {
     setImageUrl(value);
-  }, [value]);
+    const reader = new FileReader();
+    reader.readAsDataURL(value);
+  }, [value, pathname]);
 
   const handleInputChange = ((e) => {
     e.preventDefault();
