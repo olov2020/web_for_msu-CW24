@@ -13,7 +13,10 @@ const EventsOpenChampionship = () => {
   ];
 
   const authStatus = useSelector(state => state.user.authStatus);
-  const [dates, setDates] = useState({});
+  const [dates, setDates] = useState({
+    dateOchStartEvents: '',
+    dateOchEndEvents: '',
+  });
   const numOfChampionships = new Date().getFullYear() - 2010;
   const {pathname} = useLocation();
 

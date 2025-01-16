@@ -25,7 +25,6 @@ const AppRouter = ({setShowContext}) => {
 
   return (
     <Routes>
-      <PageReloadDetector />
       {(authStatus.includes('admin') || authStatus.includes('auditorymaker')) && auditorymakerRoutes.map(({path, Element}) => {
         return <Route key={path} path={path} element={Element}/>
       })}

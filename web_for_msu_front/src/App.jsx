@@ -7,6 +7,7 @@ import Frontend from "./generic/header/developers/Frontend.jsx";
 import Backend from "./generic/header/developers/Backend.jsx";
 import {setAuthFromToken, setNotAuthAction} from "./store/UserReducers.js";
 import {useDispatch} from "react-redux";
+import PageReloadDetector from "./pages/pageReload/PageReloadDetector.jsx";
 
 const App = () => {
 
@@ -24,6 +25,8 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <PageReloadDetector />
+
       <Header setShowContext={setShowContext}/>
 
       {showContext === 1 ?
@@ -34,6 +37,7 @@ const App = () => {
       <AppRouter setShowContext={setShowContext}/>
 
       <div style={{marginTop: '5rem',}}></div>
+
       <Footer/>
     </BrowserRouter>
   )
