@@ -44,9 +44,9 @@ const TeacherMarks = ({courseId}) => {
     getMarks2();
   }, [pathname, authStatus, courseId])
 
-  const [inputs, setInputs] = useState([]);
+  const [inputs, setInputs] = useState({});
   const [values, setValues] = useState({});
-  const [inputs2, setInputs2] = useState([]);
+  const [inputs2, setInputs2] = useState({});
   const [values2, setValues2] = useState({});
 
   useEffect(() => {
@@ -64,9 +64,18 @@ const TeacherMarks = ({courseId}) => {
       marks.dates.forEach((date) => {
         inputsNew.push(`visits ${date}`);
       });
-    }
 
-    setInputs(inputsNew);
+      const inputsDict = inputsNew.reduce((acc, input) => {
+        const [pupilId] = input.split(' ');
+        if (!acc[pupilId]) {
+          acc[pupilId] = [];
+        }
+        acc[pupilId].push(input);
+        return acc;
+      }, {});
+
+      setInputs(inputsDict);
+    }
 
     const valuesNew = {};
 
@@ -92,7 +101,6 @@ const TeacherMarks = ({courseId}) => {
   }, [marks]);
 
 
-
   useEffect(() => {
     const inputsNew = [];
 
@@ -108,9 +116,18 @@ const TeacherMarks = ({courseId}) => {
       marks2.dates.forEach((date) => {
         inputsNew.push(`visits ${date}`);
       });
-    }
 
-    setInputs2(inputsNew);
+      const inputsDict = inputsNew.reduce((acc, input) => {
+        const [pupilId] = input.split(' ');
+        if (!acc[pupilId]) {
+          acc[pupilId] = [];
+        }
+        acc[pupilId].push(input);
+        return acc;
+      }, {});
+
+      setInputs2(inputsDict);
+    }
 
     const valuesNew = {};
 
@@ -146,7 +163,7 @@ const TeacherMarks = ({courseId}) => {
       {marks2 &&
         <section className={style.marksSection}>
           <section className={style.columnForTextData}>
-            {marks2.pupils && marks2.pupils.length !== 0 && marks2.pupils.map((pupil) => (
+            {marks2.pupils.length !== 0 && marks2.pupils.map((pupil) => (
               <h3 key={pupil.id}>{pupil.name}</h3>
             ))}
             <h3>Посещения</h3>
@@ -154,12 +171,12 @@ const TeacherMarks = ({courseId}) => {
 
           <section>
             <section className={style.datesSection}>
-              {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date, index) => (
+              {marks2.dates.length !== 0 && marks2.dates.map((date, index) => (
                 <div key={index} className={style.column}>
                   <h3>{date}</h3>
 
                   <div className={style.markTypes}>
-                    {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((mark_type, index2) => (
+                    {marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((mark_type, index2) => (
                       <p key={index2}>{mark_type}</p>
                     ))}
                   </div>
@@ -185,7 +202,7 @@ const TeacherMarks = ({courseId}) => {
             alignItems: 'flex-start',
           }}>
             <h3>Итог</h3>
-            {marks2.pupils && marks2.pupils.length !== 0 && marks2.pupils.map((pupil) => (
+            {marks2.pupils.length !== 0 && marks2.pupils.map((pupil) => (
               <h3 key={pupil.id}>{pupil.result}</h3>
             ))}
           </section>
@@ -194,7 +211,7 @@ const TeacherMarks = ({courseId}) => {
 
       <section className={style.marksSection}>
         <section className={style.columnForTextData}>
-          {marks.pupils && marks.pupils.length !== 0 && marks.pupils.map((pupil) => (
+          {marks.pupils.length !== 0 && marks.pupils.map((pupil) => (
             <h3 key={pupil.id}>{pupil.name}</h3>
           ))}
           <h3>Посещения</h3>
@@ -202,12 +219,12 @@ const TeacherMarks = ({courseId}) => {
 
         <section>
           <section className={style.datesSection}>
-            {marks.dates && marks.dates.length !== 0 && marks.dates.map((date, index) => (
+            {marks.dates.length !== 0 && marks.dates.map((date, index) => (
               <div key={index} className={style.column}>
                 <h3>{date}</h3>
 
                 <div className={style.markTypes}>
-                  {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((mark_type, index2) => (
+                  {marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((mark_type, index2) => (
                     <p key={index2}>{mark_type}</p>
                   ))}
                 </div>
@@ -233,12 +250,12 @@ const TeacherMarks = ({courseId}) => {
           alignItems: 'flex-start',
         }}>
           <h3>Итог</h3>
-          {marks.pupils && marks.pupils.length !== 0 && marks.pupils.map((pupil) => (
+          {marks.pupils.length !== 0 && marks.pupils.map((pupil) => (
             <h3 key={pupil.id}>{pupil.result}</h3>
           ))}
         </section>
       </section>
-  </>
+    </>
   );
 };
 

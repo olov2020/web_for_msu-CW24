@@ -34,8 +34,8 @@ import {useDispatch} from "react-redux";
 import {setAuthFromToken} from "../../store/UserReducers.js";
 import {setCoursesAuditoriums} from "../../api/adminApi.js";
 
-// eslint-disable-next-line react/prop-types
-const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
+// eslint-disable-next-line react/prop-types,no-constant-binary-expression
+const Form = ({inputs = [] || {}, values = {}, buttonText, type, id = undefined}) => {
 
   const dispatch = useDispatch();
   const formValues = useState({});
@@ -831,7 +831,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
     }
   }
 
-  if (inputs.length === 0) {
+  if (inputs.length === 0 || !inputs) {
     return <></>;
   }
 
