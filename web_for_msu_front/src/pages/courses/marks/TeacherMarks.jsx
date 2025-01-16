@@ -51,6 +51,7 @@ const TeacherMarks = ({courseId}) => {
 
   useEffect(() => {
     if (marks.dates.length === 0 || marks.mark_type_choices.length === 0 || marks.pupils.length === 0 || marks.visits.length === 0) {
+      setMarks(null);
       return;
     }
 
@@ -88,6 +89,7 @@ const TeacherMarks = ({courseId}) => {
 
   useEffect(() => {
     if (marks2.dates.length === 0 || marks2.mark_type_choices.length === 0 || marks2.pupils.length === 0 || marks2.visits.length === 0) {
+      setMarks2(null);
       return;
     }
 
