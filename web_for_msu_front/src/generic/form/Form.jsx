@@ -808,7 +808,6 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
               name={input}
               value={teacherMarks[markId]}
               setValue={(value) => handleTeacherMarksChange(markId, value)}
-              formErrors={(error) => handleErrorChange(markId, error)}
             />
           );
         }
@@ -821,7 +820,6 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
               name={input}
               value={teacherMarks[visitId]}
               setValue={(value) => handleTeacherMarksChange(visitId, value)}
-              formErrors={(error) => handleErrorChange(visitId, error)}
             />
           );
         }
