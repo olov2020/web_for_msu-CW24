@@ -6,23 +6,16 @@ const PageReloadDetector = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      console.log('Page is about to be unloaded');
-      event.returnValue = 'Are you sure you want to leave?';
-    };
+    const isHardReload = sessionStorage.getItem('hardReload') !== localStorage.getItem('hardReload');
 
-    const handleUnload = () => {
-      console.log('Page is being unloaded');
+    if (isHardReload) {
       navigate(HOME_ROUTE);
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('unload', handleUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('unload', handleUnload);
-    };
+      localStorage.setItem('hardReload', sessionStorage.getItem('hardReload'));
+    } else {
+      const uniqueId = Date.now().toString();
+      sessionStorage.setItem('hardReload', uniqueId);
+      localStorage.setItem('hardReload', uniqueId);
+    }
   }, [navigate]);
 
   return null;

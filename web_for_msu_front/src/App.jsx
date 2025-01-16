@@ -25,7 +25,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <PageReloadDetector />
+      <PageReloadDetector/>
 
       <Header setShowContext={setShowContext}/>
 

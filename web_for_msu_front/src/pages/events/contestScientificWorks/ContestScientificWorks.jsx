@@ -17,9 +17,9 @@ const ContestScientificWorks = () => {
   const authStatus = useSelector(state => state.user.authStatus);
   const [teachers, setTeachers] = useState([]);
   const [dates, setDates] = useState({
-    dateKnrFirstEvents: '',
-    dateKnrSecondEvents: '',
-    dateKnrThirdEvents: '',
+    date_first: '',
+    date_second: '',
+    date_third: '',
   });
   const {pathname} = useLocation();
 
