@@ -835,9 +835,13 @@ const Form = ({inputs = [] || {}, values = {}, buttonText, type, id = undefined}
     return <></>;
   }
 
+  if (inputs.length !== 0 && inputs.includes('courseFile')) {
+    (inputs.map((input) => showInput(input)))
+  }
+
   return (
     <form className={style.form} onSubmit={onSubmit}>
-      {id && !inputs.includes('courseFile') ?
+      {id ?
         <section style={{
           display: 'flex',
           flexDirection: 'column',
