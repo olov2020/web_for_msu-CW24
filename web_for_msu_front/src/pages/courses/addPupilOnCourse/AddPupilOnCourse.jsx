@@ -18,7 +18,7 @@ const AddPupilOnCourse = ({courseId}) => {
     };
 
     getPupilsOnCourseFunc();
-  }, [pathname]);
+  }, [pathname, courseId]);
 
   const filteredPupils = pupils.filter(pupil =>
     pupil.name.toLowerCase().includes(value.toLowerCase())

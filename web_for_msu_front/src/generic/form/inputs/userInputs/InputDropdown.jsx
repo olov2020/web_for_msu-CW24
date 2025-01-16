@@ -18,7 +18,7 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
 
     if (error) {
       setIsValid(false);
-      formErrors(error);
+      formErrors(true);
       setError(error);
     }
   })

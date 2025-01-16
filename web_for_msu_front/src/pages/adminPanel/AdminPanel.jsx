@@ -5,11 +5,21 @@ import {
   openRegistrationCourses
 } from "../../api/adminApi.js";
 import {ADD_NEW_COURSE_ROUTE, AUDITORY_ROUTE, CREATE_NEWS_ROUTE, MARKS_ROUTE} from "../../routing/consts.js";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getCoursesSelectStatus} from "../../api/coursesApi.js";
 
 const AdminPanel = () => {
 
   const [registrationStatus, setRegistrationStatus] = useState(false)
+
+  useEffect(() => {
+    const getCoursesSelectStatusFunc = async () => {
+      const data = await getCoursesSelectStatus();
+      setRegistrationStatus(data);
+    }
+
+    getCoursesSelectStatusFunc();
+  }, []);
 
   const openCourseRegistration = async () => {
     const data = await openRegistrationCourses();

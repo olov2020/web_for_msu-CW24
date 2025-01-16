@@ -87,13 +87,6 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
     }));
   };
 
-  const handleErrorChange = (id, error) => {
-    setErrors(prev => ({
-      ...prev,
-      [id]: error,
-    }));
-  };
-
   const navigate = useNavigate();
 
   const checkFormErrors = () => {
@@ -795,7 +788,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
               value={coursesSelect[courseId]}
               values={['Зачетный', 'Незачетный', '']}
               setValue={(value) => handleCoursesSelectChange(courseId, value)}
-              formErrors={(error) => handleErrorChange(courseId, error)}
+              formErrors={setErrors()}
             />
           );
         }

@@ -152,8 +152,6 @@ const TeacherMarks = ({courseId}) => {
     setValues2(valuesNew);
   }, [marks2]);
 
-  console.log(marks)
-
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
   }
