@@ -50,6 +50,10 @@ const TeacherMarks = ({courseId}) => {
   const [values2, setValues2] = useState({});
 
   useEffect(() => {
+    if (marks.dates.length === 0 || marks.mark_type_choices.length === 0 || marks.pupils.length === 0 || marks.visits.length === 0) {
+      return;
+    }
+
     const inputsNew = marks.dates.flatMap((date) =>
       marks.pupils.flatMap((pupil) =>
         marks.mark_type_choices.map((markType) =>
@@ -83,6 +87,10 @@ const TeacherMarks = ({courseId}) => {
 
 
   useEffect(() => {
+    if (marks2.dates.length === 0 || marks2.mark_type_choices.length === 0 || marks2.pupils.length === 0 || marks2.visits.length === 0) {
+      return;
+    }
+
     const inputsNew = marks2.dates.flatMap((date) =>
       marks2.pupils.flatMap((pupil) =>
         marks2.mark_type_choices.map((markType) =>
