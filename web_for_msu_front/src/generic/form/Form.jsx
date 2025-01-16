@@ -695,7 +695,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
 
       case 'dateOchStartEvents': {
-        const dateArr = values.dateOchStartEvents.split('.');
+        const dateArr = values.date_start.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchStartEvents, setDateOchStartEvents] = useState(undefined);
@@ -709,7 +709,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'dateOchEndEvents': {
-        const dateArr = values.dateOchEndEvents.split('.');
+        const dateArr = values.date_end.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateOchEndEvents, setDateOchEndEvents] = useState(undefined);
@@ -724,7 +724,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
       }
 
       case 'dateKnrFirstEvents': {
-        const dateArr = values.dateKnrFirstEvents.split('.');
+        const dateArr = values.date_first.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrFirstEvents, setDateKnrFirstEvents] = useState(undefined);
@@ -738,7 +738,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'dateKnrSecondEvents': {
-        const dateArr = values.dateKnrSecondEvents.split('.');
+        const dateArr = values.date_second.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrSecondEvents, setDateKnrSecondEvents] = useState(undefined);
@@ -752,7 +752,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         />
       }
       case 'dateKnrThirdEvents': {
-        const dateArr = values.dateKnrThirdEvents.split('.');
+        const dateArr = values.date_third.split('.');
         const date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [dateKnrThirdEvents, setDateKnrThirdEvents] = useState(undefined);

@@ -55,7 +55,7 @@ const EventsOpenChampionship = () => {
           }}>
             {authStatus.includes('admin') ?
               <Form inputs={['dateOchStartEvents', 'dateOchEndEvents']}
-                    values={{dateOchStartEvents: dates.date_start, dateOchEndEvents: dates.date_end}}
+                    values={dates}
                     type='setDateOpenChampionship'
                     buttonText='Сохранить даты'
               /> :

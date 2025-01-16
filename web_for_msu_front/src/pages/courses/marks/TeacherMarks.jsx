@@ -8,11 +8,21 @@ import {useSelector} from "react-redux";
 // eslint-disable-next-line react/prop-types
 const TeacherMarks = ({courseId}) => {
 
-  const [marks, setMarks] = useState({});
+  const [marks, setMarks] = useState({
+    dates: [],
+    mark_type_choices: [],
+    pupils: [],
+    visits: [],
+  });
   const {pathname} = useLocation();
   const authStatus = useSelector((state) => state.user.authStatus);
 
-  const [marks2, setMarks2] = useState({});
+  const [marks2, setMarks2] = useState({
+    dates: [],
+    mark_type_choices: [],
+    pupils: [],
+    visits: [],
+  });
 
   useEffect(() => {
     const getMarks = async () => {
@@ -52,15 +62,6 @@ const TeacherMarks = ({courseId}) => {
       inputsNew.push(`visits ${date}`)
     })
 
-    /*const inputsDict = inputsNew.reduce((acc, input) => {
-      const [pupilId] = input.split(' ');
-      if (!acc[pupilId]) {
-        acc[pupilId] = [];
-      }
-      acc[pupilId].push(input);
-      return acc;
-    }, {});*/
-
     setInputs(inputsNew);
 
     const valuesNew = marks.dates.reduce((acc, date, index) => {
@@ -93,15 +94,6 @@ const TeacherMarks = ({courseId}) => {
     marks2.dates.forEach((date) => {
       inputsNew.push(`visits ${date}`)
     })
-
-    /*const inputsDict = inputsNew.reduce((acc, input) => {
-      const [pupilId] = input.split(' ');
-      if (!acc[pupilId]) {
-        acc[pupilId] = [];
-      }
-      acc[pupilId].push(input);
-      return acc;
-    }, {});*/
 
     setInputs2(inputsNew);
 
