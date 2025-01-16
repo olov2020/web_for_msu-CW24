@@ -788,7 +788,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
               value={coursesSelect[courseId]}
               values={['Зачетный', 'Незачетный', '']}
               setValue={(value) => handleCoursesSelectChange(courseId, value)}
-              formErrors={setErrors()}
+              formErrors={setErrors}
             />
           );
         }
