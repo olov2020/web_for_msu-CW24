@@ -35,7 +35,7 @@ import {setAuthFromToken} from "../../store/UserReducers.js";
 import {setCoursesAuditoriums} from "../../api/adminApi.js";
 
 // eslint-disable-next-line react/prop-types,no-constant-binary-expression
-const Form = ({inputs = [] || {}, values = {}, buttonText, type, id = undefined}) => {
+const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = undefined}) => {
 
   const dispatch = useDispatch();
   const formValues = useState({});
@@ -835,13 +835,9 @@ const Form = ({inputs = [] || {}, values = {}, buttonText, type, id = undefined}
     return <></>;
   }
 
-  if (inputs.length !== 0 && inputs.includes('courseFile')) {
-    (inputs.map((input) => showInput(input)))
-  }
-
   return (
     <form className={style.form} onSubmit={onSubmit}>
-      {id ?
+      {id && type.includes('saveTeacherMarks') ?
         <section style={{
           display: 'flex',
           flexDirection: 'column',
