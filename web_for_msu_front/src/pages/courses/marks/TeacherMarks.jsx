@@ -50,78 +50,89 @@ const TeacherMarks = ({courseId}) => {
   const [values2, setValues2] = useState({});
 
   useEffect(() => {
-    if (marks.dates.length === 0 || marks.mark_type_choices.length === 0 || marks.pupils.length === 0 || marks.visits.length === 0) {
-      setMarks(null);
-      return;
+    const inputsNew = [];
+
+    if (marks.dates.length > 0 && marks.pupils.length > 0 && marks.mark_type_choices.length > 0) {
+      marks.dates.forEach((date) => {
+        marks.pupils.forEach((pupil) => {
+          marks.mark_type_choices.forEach((markType) => {
+            inputsNew.push(`${pupil.id} ${date} ${markType}`);
+          });
+        });
+      });
+
+      marks.dates.forEach((date) => {
+        inputsNew.push(`visits ${date}`);
+      });
     }
-
-    const inputsNew = marks.dates.flatMap((date) =>
-      marks.pupils.flatMap((pupil) =>
-        marks.mark_type_choices.map((markType) =>
-          `${pupil.id} ${date} ${markType}`
-        )
-      )
-    );
-
-    marks.dates.forEach((date) => {
-      inputsNew.push(`visits ${date}`)
-    })
 
     setInputs(inputsNew);
 
-    const valuesNew = marks.dates.reduce((acc, date, index) => {
-      marks.pupils.forEach((pupil) => {
-        marks.mark_type_choices.forEach((markType, index2) => {
-          acc[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
+    const valuesNew = {};
+
+    if (marks.dates.length > 0 && marks.pupils.length > 0 && marks.mark_type_choices.length > 0) {
+      marks.dates.forEach((date, index) => {
+        marks.pupils.forEach((pupil) => {
+          marks.mark_type_choices.forEach((markType, index2) => {
+            if (pupil.marks[index] && pupil.marks[index][index2] !== undefined) {
+              valuesNew[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
+            }
+          });
         });
       });
-      return acc;
-    }, {});
 
-    marks.dates.forEach((date, index) => {
-      valuesNew[`visits ${date}`] = marks.visits[index];
-    })
+      marks.dates.forEach((date, index) => {
+        if (marks.visits[index] !== undefined) {
+          valuesNew[`visits ${date}`] = marks.visits[index];
+        }
+      });
+    }
 
     setValues(valuesNew);
-
   }, [marks]);
 
 
+
   useEffect(() => {
-    if (marks2.dates.length === 0 || marks2.mark_type_choices.length === 0 || marks2.pupils.length === 0 || marks2.visits.length === 0) {
-      setMarks2(null);
-      return;
+    const inputsNew = [];
+
+    if (marks2.dates.length > 0 && marks2.pupils.length > 0 && marks2.mark_type_choices.length > 0) {
+      marks2.dates.forEach((date) => {
+        marks2.pupils.forEach((pupil) => {
+          marks2.mark_type_choices.forEach((markType) => {
+            inputsNew.push(`${pupil.id} ${date} ${markType}`);
+          });
+        });
+      });
+
+      marks2.dates.forEach((date) => {
+        inputsNew.push(`visits ${date}`);
+      });
     }
-
-    const inputsNew = marks2.dates.flatMap((date) =>
-      marks2.pupils.flatMap((pupil) =>
-        marks2.mark_type_choices.map((markType) =>
-          `${pupil.id} ${date} ${markType}`
-        )
-      )
-    );
-
-    marks2.dates.forEach((date) => {
-      inputsNew.push(`visits ${date}`)
-    })
 
     setInputs2(inputsNew);
 
-    const valuesNew = marks2.dates.reduce((acc, date, index) => {
-      marks2.pupils.forEach((pupil) => {
-        marks2.mark_type_choices.forEach((markType, index2) => {
-          acc[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
+    const valuesNew = {};
+
+    if (marks2.dates.length > 0 && marks2.pupils.length > 0 && marks2.mark_type_choices.length > 0) {
+      marks2.dates.forEach((date, index) => {
+        marks2.pupils.forEach((pupil) => {
+          marks2.mark_type_choices.forEach((markType, index2) => {
+            if (pupil.marks[index] && pupil.marks[index][index2] !== undefined) {
+              valuesNew[`${pupil.id} ${date} ${markType}`] = pupil.marks[index][index2];
+            }
+          });
         });
       });
-      return acc;
-    }, {});
 
-    marks2.dates.forEach((date, index) => {
-      valuesNew[`visits ${date}`] = marks2.visits[index];
-    })
+      marks2.dates.forEach((date, index) => {
+        if (marks2.visits[index] !== undefined) {
+          valuesNew[`visits ${date}`] = marks2.visits[index];
+        }
+      });
+    }
 
     setValues2(valuesNew);
-
   }, [marks2]);
 
   console.log(marks)
@@ -180,6 +191,7 @@ const TeacherMarks = ({courseId}) => {
           </section>
         </section>
       }
+
       <section className={style.marksSection}>
         <section className={style.columnForTextData}>
           {marks.pupils && marks.pupils.length !== 0 && marks.pupils.map((pupil) => (
