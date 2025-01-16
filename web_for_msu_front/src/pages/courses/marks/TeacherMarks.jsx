@@ -152,8 +152,8 @@ const TeacherMarks = ({courseId}) => {
     setValues2(valuesNew);
   }, [marks2]);
 
-  if (!marks) {
-    return <h3>Оценок пока нет</h3>;
+  if (marks.pupils.length === 0) {
+    return <h3>На курсе пока нет учеников</h3>;
   }
 
   return (
