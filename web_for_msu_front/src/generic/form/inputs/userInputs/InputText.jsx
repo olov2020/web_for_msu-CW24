@@ -2,7 +2,7 @@ import {useState} from "react";
 import Input from "../Input.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InputText = ({name = '', placeholder='', fieldName, value, setValue, formErrors = undefined}) => {
+const InputText = ({name = '', placeholder='', fieldName, value, setValue, formErrors = () => {}}) => {
 
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
