@@ -102,7 +102,7 @@ const NewsItem = () => {
         <section style={{
           width: 'auto',
         }}>
-          {state.file}
+          <p>У этой новости есть вложенный файл, вы можете его скачать ниже.</p>
         <ButtonSubmit onClick={() => handleFileDownload(state.file, state.title)} text='Скачать файл'/>
         </section>
       }
