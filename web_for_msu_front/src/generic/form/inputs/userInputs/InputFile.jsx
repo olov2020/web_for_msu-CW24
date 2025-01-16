@@ -3,7 +3,7 @@ import styleInput from "./input.module.css";
 import {useRef, useState} from "react";
 
 // eslint-disable-next-line react/prop-types
-const InputFile = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue, formErrors}) => {
+const InputFile = ({name = '', fieldName, accept = '', multiple = false, required = false, setValue, formErrors = () => {}}) => {
 
   const fileUploader = useRef(null);
   const [isValid, setIsValid] = useState(true);

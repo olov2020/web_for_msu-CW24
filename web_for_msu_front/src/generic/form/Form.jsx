@@ -674,7 +674,7 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [newsFile, setNewsFile] = useState(undefined);
         formValues.newsFile = newsFile;
-        return <InputFile name={input} accept='.pdf, .xls, .xlsx, .csv, .docx, .pptx'
+        return <InputFile name={input} accept='.pdf, .xls, .xlsx, .csv, .docx, .pptx, .doc'
                           fieldName='Файл новости'
                           setValue={setNewsFile}
         />
