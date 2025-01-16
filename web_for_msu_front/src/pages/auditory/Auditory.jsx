@@ -3,6 +3,7 @@ import {getCoursesAuditoriums} from "../../api/adminApi.js";
 import Form from "../../generic/form/Form.jsx";
 import style from './auditory.module.css'
 import {useLocation} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Auditory = () => {
 
@@ -11,7 +12,7 @@ const Auditory = () => {
   const [auditoriums, setAuditoriums] = useState({});
   const [inputs, setInputs] = useState([]);
   const {pathname} = useLocation();
-  const authStatus = useState(state => state.user.authStatus);
+  const authStatus = useSelector(state => state.user.authStatus);
 
   useEffect(() => {
     const getCoursesAuditoriumsFunc = async () => {
