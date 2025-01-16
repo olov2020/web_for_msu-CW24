@@ -831,6 +831,10 @@ const Form = ({inputs = [], values = {}, buttonText, type, id = undefined}) => {
     }
   }
 
+  if (inputs.length === 0) {
+    return <></>;
+  }
+
   return (
     <form className={style.form} onSubmit={onSubmit}>
       {id && !inputs.includes('courseFile') ?
