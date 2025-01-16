@@ -62,7 +62,7 @@ const AdminPanel = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '90%',
+        width: 'auto',
         gap: '1rem 0',
       }}>
         {registrationStatus ?
@@ -82,7 +82,7 @@ const AdminPanel = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '90%',
+        width: 'auto',
         gap: '1rem 0',
       }}>
         <ButtonSubmit text='Список всех учеников' onClick={() => navigate('/admin/list/pupils')}/>
@@ -97,7 +97,7 @@ const AdminPanel = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '90%',
+        width: 'auto',
         gap: '1rem 0',
       }}>
         <ButtonSubmit text='Добавить новый курс' onClick={() => navigate(ADD_NEW_COURSE_ROUTE)}/>
@@ -113,7 +113,7 @@ const AdminPanel = () => {
       <section style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '90%',
+        width: 'auto',
         gap: '1rem 0',
       }}>
         <ButtonSubmit text='Сделать выгрузку' onClick={downloadDatabaseFunc}/>

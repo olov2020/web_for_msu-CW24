@@ -99,7 +99,12 @@ const NewsItem = () => {
       </p>
 
       {state.file &&
+        <section style={{
+          width: 'auto',
+        }}>
+          {state.file}
         <ButtonSubmit onClick={() => handleFileDownload(state.file, state.title)} text='Скачать файл'/>
+        </section>
       }
     </article>
   );
