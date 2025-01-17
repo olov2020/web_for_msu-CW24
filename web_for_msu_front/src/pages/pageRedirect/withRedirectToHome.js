@@ -1,20 +1,25 @@
-import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import {useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const withRedirectToHome = (WrappedComponent) => {
-  return (props) => {
+  const WithRedirect = (props) => {
     const history = useHistory();
 
     useEffect(() => {
-      // eslint-disable-next-line react/prop-types
       if (props.showContext === null) {
         history.push('/');
       }
-      // eslint-disable-next-line react/prop-types
     }, [props.showContext, history]);
 
     return <WrappedComponent {...props} />;
   };
+
+  WithRedirect.propTypes = {
+    showContext: PropTypes.any,
+  };
+
+  return WithRedirect;
 };
 
 export default withRedirectToHome;

@@ -1,17 +1,16 @@
-import {BrowserRouter} from "react-router-dom";
-import AppRouter from "./routing/AppRouter.jsx";
-import Header from "./generic/header/Header.jsx";
-import Footer from "./generic/footer/Footer.jsx";
-import {useEffect, useState} from "react";
-import Frontend from "./generic/header/developers/Frontend.jsx";
-import Backend from "./generic/header/developers/Backend.jsx";
-import {setAuthFromToken, setNotAuthAction} from "./store/UserReducers.js";
-import {useDispatch} from "react-redux";
-import withRedirectToHome from "./pages/pageRedirect/withRedirectToHome.js";
+import {BrowserRouter} from 'react-router-dom';
+import AppRouter from './routing/AppRouter.jsx';
+import Header from './generic/header/Header.jsx';
+import Footer from './generic/footer/Footer.jsx';
+import {useEffect, useState} from 'react';
+import Frontend from './generic/header/developers/Frontend.jsx';
+import Backend from './generic/header/developers/Backend.jsx';
+import {setAuthFromToken, setNotAuthAction} from './store/UserReducers.js';
+import {useDispatch} from 'react-redux';
+import withRedirectToHome from './pages/pageRedirect/withRedirectToHome.js';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
 const App = ({showContext, setShowContext}) => {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,20 +24,24 @@ const App = ({showContext, setShowContext}) => {
   return (
     <>
       <Header setShowContext={setShowContext}/>
-
-      {showContext === 1 ?
-        <Frontend setShowContext={setShowContext}/> :
-        showContext === 2 ?
-          <Backend setShowContext={setShowContext}/> : <></>}
-
+      {showContext === 1 ? (
+        <Frontend setShowContext={setShowContext}/>
+      ) : showContext === 2 ? (
+        <Backend setShowContext={setShowContext}/>
+      ) : (
+        <></>
+      )}
       <AppRouter setShowContext={setShowContext}/>
-
-      <div style={{marginTop: '5rem',}}></div>
-
+      <div style={{marginTop: '5rem'}}></div>
       <Footer/>
     </>
-  )
-}
+  );
+};
+
+App.propTypes = {
+  showContext: PropTypes.any.isRequired,
+  setShowContext: PropTypes.func.isRequired,
+};
 
 const AppWithRedirect = withRedirectToHome(App);
 
@@ -47,7 +50,7 @@ const Root = () => {
 
   return (
     <BrowserRouter>
-      <AppWithRedirect setShowContext={setShowContext} showContext={showContext} />
+      <AppWithRedirect setShowContext={setShowContext} showContext={showContext}/>
     </BrowserRouter>
   );
 };
