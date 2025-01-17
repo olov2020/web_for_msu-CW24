@@ -145,11 +145,11 @@ class TeacherService:
             teacher_events_roles = set(roles).intersection(set(events_roles))
             what = [events_roles_names[i] for i in range(len(events_roles)) if events_roles[i] in teacher_events_roles]
             teachers_data.append(
-                {"id": teacher.user.id, "name": self.get_full_name(teacher), "subjects": ";".join(subjects)}
+                {"id": teacher.user.id, "name": self.get_full_name(teacher), "subjects": ", ".join(subjects)}
             )
 
             organizers_data.append(
-                {"id": teacher.user.id, "name": self.get_full_name(teacher), "what": ";".join(what)}
+                {"id": teacher.user.id, "name": self.get_full_name(teacher), "what": ", ".join(what)}
             )
         school_data = {
             "directory": directory_data,
