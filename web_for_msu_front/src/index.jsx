@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import {Provider} from 'react-redux';
 import store from './store/index.js';
 import Root from './App.jsx';
