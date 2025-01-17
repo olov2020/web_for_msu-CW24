@@ -45,7 +45,7 @@ const DeletePupilOnCourse = ({courseId}) => {
         marginBottom: "1rem",
       }}>Удаление учеников с курса</h2>
       <InputText
-        name='search pupils'
+        name='delete pupils'
         placeholder='Начните вводить ФИО ученика'
         value={value}
         setValue={setValue}
