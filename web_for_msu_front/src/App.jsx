@@ -7,11 +7,10 @@ import Frontend from "./generic/header/developers/Frontend.jsx";
 import Backend from "./generic/header/developers/Backend.jsx";
 import {setAuthFromToken, setNotAuthAction} from "./store/UserReducers.js";
 import {useDispatch} from "react-redux";
-import Redirect from "./pages/pagesRedirect/Redirect.jsx";
+import withRedirectToHome from "./pages/pageRedirect/withRedirectToHome.js";
 
-const App = () => {
-
-  const [showContext, setShowContext] = useState(0);
+// eslint-disable-next-line react/prop-types
+const App = ({showContext, setShowContext}) => {
 
   const dispatch = useDispatch();
 
@@ -24,9 +23,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <BrowserRouter>
-      <Redirect/>
-
+    <>
       <Header setShowContext={setShowContext}/>
 
       {showContext === 1 ?
@@ -39,8 +36,20 @@ const App = () => {
       <div style={{marginTop: '5rem',}}></div>
 
       <Footer/>
-    </BrowserRouter>
+    </>
   )
 }
 
-export default App
+const AppWithRedirect = withRedirectToHome(App);
+
+const Root = () => {
+  const [showContext, setShowContext] = useState(0);
+
+  return (
+    <BrowserRouter>
+      <AppWithRedirect setShowContext={setShowContext} showContext={showContext} />
+    </BrowserRouter>
+  );
+};
+
+export default Root;
