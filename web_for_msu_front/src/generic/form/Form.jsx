@@ -224,7 +224,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
       }
     } else if (type === 'resetPassword') {
       try {
-        await resetPassword(formValues.password);
+        await resetPassword(formValues.password, id);
         alert('Пароль успешно изменен');
       } catch {
         alert(`Упс... Что-то пошло не так`);

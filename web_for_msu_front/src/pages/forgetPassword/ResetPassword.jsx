@@ -5,7 +5,6 @@ const ResetPassword = () => {
 
   const {pathname} = useLocation();
   const accessToken = pathname.split("/")[pathname.length - 2];
-  localStorage.setItem("accessToken", accessToken);
 
   return (
     <article>
@@ -19,7 +18,7 @@ const ResetPassword = () => {
       }}>
         <h3>Придумайте новый пароль и введите его в поле ниже.</h3>
 
-        <Form inputs={['password']} type='resetPassword' buttonText='Обновить пароль'/>
+        <Form inputs={['password']} type='resetPassword' buttonText='Обновить пароль' id={accessToken}/>
       </section>
     </article>
   );
