@@ -9,7 +9,8 @@ const ResetPassword = () => {
   const [accessToken, setAccessToken] = useState(undefined);
 
   useEffect(() => {
-    setAccessToken(pathname.split("/")[pathname.length - 2]);
+    const arr = pathname.split("/");
+    setAccessToken(arr[arr.length - 2]);
   }, [pathname]);
 
   return (
