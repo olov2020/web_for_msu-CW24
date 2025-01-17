@@ -138,6 +138,7 @@ class TeacherService:
             subjects = (Course.query.with_entities(Course.name)
                         .join(TeacherCourse, TeacherCourse.course_id == Course.id)
                         .filter(TeacherCourse.teacher_id == teacher.id, Course.year == year).all())
+            subjects = [subject[0] for subject in subjects]
             events_roles = ["tests_online", "tests_offline", "knr", "vsh", "lsh"]
             events_roles_names = ["Вступительные испытания очно", "Вступительные испытания онлайн",
                                   "Конкурс начных работ", "Выездная школа", "Летняя школа"]
