@@ -26,6 +26,7 @@ const Profile = ({deviceType}) => {
     }
   }
 
+  console.log(user)
   console.log(user.photo)
 
   if (location.pathname === '/account' || location.pathname === '/admin') {
