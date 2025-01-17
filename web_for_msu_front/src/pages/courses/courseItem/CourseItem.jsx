@@ -77,14 +77,7 @@ const CourseItem = () => {
       }
 
       <section className={style.courseItem}>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          width: '80%',
-          gap: '1rem 0',
-        }}
-        >
+        <div className={style.mainInfo}>
           <h2 style={{
             alignSelf: 'center',
           }}>Информация о курсе</h2>
@@ -101,9 +94,7 @@ const CourseItem = () => {
           <p><span>Дополнительная информация:</span> {state.courseData.additional_info}</p>
         </div>
 
-        <div style={{
-          width: '20%'
-        }}>
+        <div className={style.asideInfo}>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -153,12 +144,7 @@ const CourseItem = () => {
           alignSelf: 'center',
         }}>Занятия и темы</h2>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '1rem',
-          marginTop: '2rem',
-        }}>
+        <div className={style.lessons}>
           {state.courseData.lessons && state.courseData.lessons.length > 0 && state.courseData.lessons.map((lesson) => (
             <div key={lesson.lesson_number} className={style.lesson}>
               <h3><span style={{fontSize: "inherit"}}>Тема:</span> {lesson.theme}</h3>
