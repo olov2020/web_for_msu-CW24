@@ -1,14 +1,15 @@
 import {useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {useNavigate} from "react-router-dom";
+import {HOME_ROUTE} from "../../routing/consts.js";
 
 const withRedirectToHome = (WrappedComponent) => {
   const WithRedirect = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
       if (props.showContext === null) {
-        history.push('/');
+        navigate(HOME_ROUTE);
       }
     }, [props.showContext, history]);
 
