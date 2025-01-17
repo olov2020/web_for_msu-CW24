@@ -1,10 +1,6 @@
 import Form from "../../generic/form/Form.jsx";
-import {useLocation} from "react-router-dom";
 
 const ForgetPassword = () => {
-
-  const {pathname} = useLocation();
-  console.log(pathname);
 
   return (
     <article>
