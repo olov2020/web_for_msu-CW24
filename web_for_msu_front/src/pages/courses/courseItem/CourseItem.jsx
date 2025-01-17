@@ -5,6 +5,7 @@ import TeacherMarks from "../marks/TeacherMarks.jsx";
 import ChangeCourse from "../changeCourse/ChangeCourse.jsx";
 import ApprovePupils from "../approvePupils/ApprovePupils.jsx";
 import AddPupilOnCourse from "../addPupilOnCourse/AddPupilOnCourse.jsx";
+import style from '../course.module.css';
 
 const CourseItem = () => {
 
@@ -75,13 +76,7 @@ const CourseItem = () => {
         </section>
       }
 
-      <section style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '90%',
-        gap: '0 2rem',
-      }}
-      >
+      <section className={style.courseItem}>
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -165,20 +160,9 @@ const CourseItem = () => {
           marginTop: '2rem',
         }}>
           {state.courseData.lessons && state.courseData.lessons.length > 0 && state.courseData.lessons.map((lesson) => (
-            <div key={lesson.lesson_number} style={{
-              display: 'flex',
-              flexDirection: 'column',
-              padding: '1rem',
-              gap: '1rem 0',
-              border: '1px dotted #9F1A59',
-              borderRadius: '1rem',
-              height: 'auto',
-            }}>
+            <div key={lesson.lesson_number} className={style.lesson}>
               <h3><span style={{fontSize: "inherit"}}>Тема:</span> {lesson.theme}</h3>
               <p><span>План занятия:</span> {lesson.plan}</p>
-              {/*<p>
-                <span>Дополнительная информация:</span> {lesson.additional_info ? lesson.additional_info : 'отсутствует'}
-              </p>*/}
               <p style={{
                 alignSelf: 'flex-end',
               }}><span>Дата:</span> {lesson.date}</p>

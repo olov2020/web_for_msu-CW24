@@ -23,8 +23,6 @@ const Auditory = () => {
     getCoursesAuditoriumsFunc();
   }, [pathname, authStatus]);
 
-  console.log(courses);
-
   useEffect(() => {
     const auditoriumsNew = courses.reduce((acc, course) => {
       acc[`auditory ${course.id}`] = course.auditory;

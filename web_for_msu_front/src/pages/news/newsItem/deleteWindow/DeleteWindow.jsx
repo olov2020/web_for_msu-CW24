@@ -29,11 +29,12 @@ const DeleteWindow = ({setShowDeleteWindow, newsId}) => {
       alignItems: 'center',
       position: 'absolute',
       marginTop: '3rem',
-      marginLeft: '-15rem',
+      marginLeft: '-20rem',
       width: '20rem',
       padding: '1rem',
       gap: '2rem 0',
       border: '1px dotted gray',
+      backgroundColor: 'white',
     }}
     >
       <h3>Вы уверены, что хотите удалить новость?</h3>
