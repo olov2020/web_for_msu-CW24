@@ -4,7 +4,7 @@ import {
   getPupilsOnCourseToDelete,
 } from "../../../api/coursesApi.js";
 import InputText from "../../../generic/form/inputs/userInputs/InputText.jsx";
-import style from './addPupilOnCourse.module.css';
+import style from '../addPupilOnCourse/addPupilOnCourse.module.css';
 import {useLocation} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
