@@ -244,7 +244,10 @@ class MarkService:
         formulas_ids = [formula.id for formula in formulas]
         pupil_marks = {}
         marked_lessons = set()
+        lessons_id = set([lesson.id for lesson in lessons])
         for mark in marks:
+            if mark.schedule_id not in lessons_id:
+                continue
             pupil_marks[mark.schedule_id] = pupil_marks.get(mark.schedule_id, [])
             pupil_marks[mark.schedule_id].append(mark)
             marked_lessons.add(mark.schedule_id)
