@@ -196,6 +196,10 @@ class MarkService:
         for key in data:
             if "visits" in key:
                 date = key.split()[-1]
+                try:
+                    date = '-'.join(date.split('.')[::-1])
+                except Exception:
+                    continue
                 visits = data[key]
                 if date not in lessons_dict:
                     continue
@@ -206,6 +210,10 @@ class MarkService:
                     continue
                 pupil_id = int(pupil_id)
                 mark = data[key]
+                try:
+                    date = '-'.join(date.split('.')[::-1])
+                except Exception:
+                    continue
                 if date not in lessons_dict:
                     continue
                 formula_id = 0
