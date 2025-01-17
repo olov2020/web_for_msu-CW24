@@ -23,7 +23,7 @@ import {
   EVENTS_CONTEST_SCIENTIFIC_WORKS_ROUTE,
   EVENTS_RESIDENTIAL_SCHOOL_ROUTE,
   EVENTS_SUMMER_SCHOOL_ROUTE,
-  EVENTS_SUMMER_CAMP_ROUTE, TEACHERS_ROUTE, AUDITORY_ROUTE, FORGET_PASSWORD_ROUTE,
+  EVENTS_SUMMER_CAMP_ROUTE, TEACHERS_ROUTE, AUDITORY_ROUTE, FORGET_PASSWORD_ROUTE, RESET_PASSWORD_ROUTE,
 } from "./consts.js";
 import Home from "../pages/home/Home.jsx";
 import NotFound from "../pages/notFound/NotFound.jsx";
@@ -52,6 +52,7 @@ import SummerCamp from "../pages/events/summerCamp/SummerCamp.jsx";
 import Teachers from "../pages/teachers/Teachers.jsx";
 import Auditory from "../pages/auditory/Auditory.jsx";
 import ForgetPassword from "../pages/forgetPassword/ForgetPassword.jsx";
+import ResetPassword from "../pages/forgetPassword/ResetPassword.jsx";
 
 export const publicRoutes = [
   {
@@ -125,6 +126,10 @@ export const publicRoutes = [
   {
     path: FORGET_PASSWORD_ROUTE,
     Element: <ForgetPassword/>,
+  },
+  {
+    path: RESET_PASSWORD_ROUTE,
+    Element: <ResetPassword/>,
   },
 ]
 

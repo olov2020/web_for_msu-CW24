@@ -4,7 +4,7 @@ import InputPassword from "./inputs/userInputs/InputPassword.jsx";
 import ButtonSubmit from "./submit/ButtonSubmit.jsx";
 import {
   changePassword,
-  pupilChangeData, pupilRegistration, teacherChangeData, teacherRegistration, userLogin
+  pupilChangeData, pupilRegistration, resetPassword, teacherChangeData, teacherRegistration, userLogin
 } from "../../api/userApi.js";
 import InputFile from "./inputs/userInputs/InputFile.jsx";
 import InputName from "./inputs/userInputs/InputName.jsx";
@@ -218,6 +218,13 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
     } else if (type === 'forgetPassword') {
       try {
         await changePassword(formValues.forgetPassword);
+        alert('На почту отправлена инструкция для изменения пароля');
+      } catch {
+        alert(`Упс... Что-то пошло не так`);
+      }
+    } else if (type === 'resetPassword') {
+      try {
+        await resetPassword(formValues.password);
         alert('Пароль успешно изменен');
       } catch {
         alert(`Упс... Что-то пошло не так`);

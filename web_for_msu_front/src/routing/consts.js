@@ -5,6 +5,7 @@ export const REGISTRATION_TEACHER_ROUTE = '/registration/teacher';
 
 export const LOGIN_ROUTE = '/login';
 export const FORGET_PASSWORD_ROUTE = '/forget-password';
+export const RESET_PASSWORD_ROUTE = '/reset-password/:access_token';
 
 export const ACCOUNT_ROUTE = '/account';
 

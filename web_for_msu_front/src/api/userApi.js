@@ -186,3 +186,13 @@ export const changePassword = async (email) => {
     return new Error(error);
   }
 }
+
+export const resetPassword = async () => {
+  const response = await $host.post(`/home/reset_password/${token}/`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
