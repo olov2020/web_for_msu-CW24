@@ -218,8 +218,28 @@ export const getPupilsOnCourse = async ({courseId}) => {
   }
 }
 
+export const getPupilsOnCourseToDelete = async ({courseId}) => {
+  const response = await $authHost.get(`/teacher/get_pupil_on_course_delete/${courseId}/`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 export const setPupilsOnCourse = async ({courseId, pupilId}) => {
   const response = await $authHost.post(`/teacher/add_pupil_on_course/${courseId}/${pupilId}/`);
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const deletePupilsOnCourse = async ({courseId, pupilId}) => {
+  const response = await $authHost.post(`/teacher/delete_pupil_on_course/${courseId}/${pupilId}/`);
 
   try {
     return response.data;

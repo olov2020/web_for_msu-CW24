@@ -6,6 +6,7 @@ import ChangeCourse from "../changeCourse/ChangeCourse.jsx";
 import ApprovePupils from "../approvePupils/ApprovePupils.jsx";
 import AddPupilOnCourse from "../addPupilOnCourse/AddPupilOnCourse.jsx";
 import style from '../course.module.css';
+import DeletePupilOnCourse from "../deletePupilOnCourse/DeletePupilOnCourse.jsx";
 
 const CourseItem = () => {
 
@@ -63,6 +64,14 @@ const CourseItem = () => {
           width: '90%',
         }}>
           <AddPupilOnCourse courseId={state.courseData.id}/>
+        </section>
+      }
+
+      {state.isMyCourses && userStatus.includes('teacher') &&
+        <section style={{
+          width: '90%',
+        }}>
+          <DeletePupilOnCourse courseId={state.courseData.id}/>
         </section>
       }
 
