@@ -39,6 +39,7 @@ const Teachers = () => {
                 listStyle: 'none',
                 display: 'flex',
                 justifyContent: 'center',
+                alignItems: 'center',
               }}>
                 <h3 style={{
                   minWidth: '30%',
