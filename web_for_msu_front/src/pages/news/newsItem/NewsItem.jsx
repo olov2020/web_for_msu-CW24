@@ -19,7 +19,7 @@ const NewsItem = () => {
       });
 
       // Create a Blob from the response data
-      const blob = new Blob([response.data], { type: response.data.type });
+      const blob = new Blob([response.data], { type: response.headers['content-type']  });
 
       // Create a temporary anchor element
       const link = document.createElement('a');
