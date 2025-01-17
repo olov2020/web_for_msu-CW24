@@ -56,6 +56,7 @@ const Profile = ({deviceType}) => {
           display: 'flex',
           alignItems: 'center',
           width: 'auto',
+          gap: '0 1rem',
         }}>
           <div>
             <h3>{user.name}</h3>

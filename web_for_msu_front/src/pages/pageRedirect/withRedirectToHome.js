@@ -18,6 +18,7 @@ const withRedirectToHome = (WrappedComponent) => {
 
   WithRedirect.propTypes = {
     showContext: PropTypes.any,
+    setShowContext: PropTypes.func,
   };
 
   return WithRedirect;
