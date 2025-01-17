@@ -5,6 +5,8 @@ const ResetPassword = () => {
 
   const {pathname} = useLocation();
   const accessToken = pathname.split("/")[pathname.length - 2];
+  console.log(accessToken)
+  console.log(pathname.split("/"))
 
   return (
     <article>
