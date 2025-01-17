@@ -5,7 +5,6 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADMIN_ROUTE, HOME_ROUTE, LOGIN_ROUTE} from "../../../routing/consts.js";
 import ButtonSubmit from "../../form/submit/ButtonSubmit.jsx";
 import {setNotAuthAction} from "../../../store/UserReducers.js";
-import defaultUserImage from '../../../../public/generic/default_user.svg';
 
 // eslint-disable-next-line react/prop-types
 const Profile = ({deviceType}) => {
@@ -26,6 +25,8 @@ const Profile = ({deviceType}) => {
       alert(`Выход из аккаунта не выполнен, повторите попытку позже.\nОшибка: ${error}`)
     }
   }
+
+  console.log(user.photo)
 
   if (location.pathname === '/account' || location.pathname === '/admin') {
     return (

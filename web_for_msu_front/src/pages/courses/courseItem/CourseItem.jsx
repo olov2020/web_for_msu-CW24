@@ -13,9 +13,6 @@ const CourseItem = () => {
 
   const {state} = useLocation();
 
-  const {pathname} = useLocation();
-  console.log(pathname);
-
   return (
     <article key={state.courseData.id}>
       <h1>{state.courseData.name}</h1>

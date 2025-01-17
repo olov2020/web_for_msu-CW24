@@ -4,7 +4,8 @@ import {useLocation} from "react-router-dom";
 const ResetPassword = () => {
 
   const {pathname} = useLocation();
-  console.log(pathname);
+  const accessToken = pathname.split("/").pop();
+  localStorage.setItem("accessToken", accessToken);
 
   return (
     <article>
