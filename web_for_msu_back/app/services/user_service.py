@@ -356,7 +356,7 @@ class UserService:
             return {"error": "Некорректная ссылка"}, 400
 
         data = request.get_json()
-        new_password = data.get('new_password')
+        new_password = data.get('password')
         return self.update_password(email, new_password)
 
     def update_password(self, email, password):
