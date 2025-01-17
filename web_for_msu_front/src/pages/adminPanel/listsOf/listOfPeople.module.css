@@ -3,6 +3,7 @@
     max-width: 90%;
     overflow-x: auto;
     gap: 0 2rem;
+    padding-bottom: 1rem;
 
     > .teachers, .email, .actions, .grade, .status {
         display: flex;
