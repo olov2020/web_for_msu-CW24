@@ -370,7 +370,6 @@ class CourseService:
         return {'msg': 'Курс успешно добавлен'}, 201
 
     def update_course(self, course_id: int, request: flask.Request) -> (dict, int):
-        # TODO update other parts of course
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Курс не найден'}, 404

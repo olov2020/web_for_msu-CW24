@@ -340,7 +340,6 @@ class UserService:
 
         s = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
         token = s.dumps(email, salt=os.getenv("PASSWORD_RESET_SALT"))
-        # TODO check link
         reset_link = f"{os.getenv("APP_NAME")}/reset-password/{token}/"
         send_reset_email(email, reset_link)
         return {"msg": "Письмо с ссылкой для смены пароля отправлено"}, 200

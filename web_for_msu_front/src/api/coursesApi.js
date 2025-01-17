@@ -239,7 +239,7 @@ export const setPupilsOnCourse = async ({courseId, pupilId}) => {
 }
 
 export const deletePupilsOnCourse = async ({courseId, pupilId}) => {
-  const response = await $authHost.post(`/teacher/delete_pupil_on_course/${courseId}/${pupilId}/`);
+  const response = await $authHost.delete(`/teacher/delete_pupil_on_course/${courseId}/${pupilId}/`);
 
   try {
     return response.data;
