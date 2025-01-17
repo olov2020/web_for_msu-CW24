@@ -60,7 +60,7 @@ export const setAuthFromToken = (token) => {
         name: decodedToken.sub.name,
         surname: decodedToken.sub.surname,
         email: decodedToken.sub.email,
-        photo: decodedToken.sub.photo,
+        photo: decodedToken.sub.image,
         admin: decodedToken.sub.admin,
     });
 }
