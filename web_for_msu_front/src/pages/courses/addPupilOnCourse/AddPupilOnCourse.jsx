@@ -50,7 +50,7 @@ const AddPupilOnCourse = ({courseId}) => {
       {value && filteredPupils.map(pupil => (
         <h3 key={pupil.id} onClick={() => setPupilsOnCourseFunc(pupil.id)}
             className={style.addPupils}
-        >{pupil.name}</h3>
+        >{pupil.name} - {pupil.grade} класс</h3>
       ))}
     </section>
   );
