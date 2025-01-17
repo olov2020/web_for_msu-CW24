@@ -18,9 +18,9 @@ from web_for_msu_back.app.dto.course_info_teacher import CourseInfoTeacherDTO
 from web_for_msu_back.app.dto.courses_ids import CoursesIdsDTO
 from web_for_msu_back.app.dto.lesson_schedule import LessonScheduleDTO
 from web_for_msu_back.app.dto.pupil_course_approval_list import PupilCourseApprovalListDTO
+from web_for_msu_back.app.dto.pupil_to_add import PupilToAddDTO
 from web_for_msu_back.app.functions import get_next_monday
-from web_for_msu_back.app.models import User, Pupil, Teacher, Course, PupilCourse, TeacherCourse, Schedule, Formula, \
-    CourseRegistrationPeriod
+from web_for_msu_back.app.models import *
 
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
@@ -662,7 +662,7 @@ class CourseService:
         self.db.session.commit()
         return {"msg": "Ученик успешно добавлен на курс"}, 200
 
-    def delete_pupil_course(self, course_id: int, pupil_id: int) -> (dict, int):
+    def delete_pupil_course(self, course_id: int, pupil_id: int, existing=False) -> (dict, int):
         course = Course.query.get(course_id)
         pupil = Pupil.query.get(pupil_id)
         if not course:
@@ -673,8 +673,14 @@ class CourseService:
                                                 PupilCourse.course_id == course_id).first()
         if not pupil_course:
             return {"error": "Этот ученик не подавал заявку на этот курс"}, 404
-        if pupil_course.approved:
+        if not existing and pupil_course.approved:
             return {"error": "Этот ученик уже записан на курс"}, 404
+        if pupil_course.crediting:
+            return {
+                "error": "Для ученика этот курс зачетный, чтобы отчислить его с курса, его необходимо отчислить"}, 404
+        marks = Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id).all()
+        for mark_to_delete in marks:
+            self.db.session.delete(mark_to_delete)
         self.db.session.delete(pupil_course)
         self.db.session.commit()
         return {"msg": "Ученику отказано в зачислении на курс"}, 200
@@ -745,3 +751,21 @@ class CourseService:
         self.db.session.add(pupil_course)
         self.db.session.commit()
         return {"msg": "Ученик успешно зачислен на курс"}, 200
+
+    def get_course_pupils_to_delete(self, course_id: int) -> (list[PupilToAddDTO], int):
+        pupils = self.get_pupils(course_id)
+        data = []
+        for pupil in pupils:
+            data.append(
+                {"id": pupil.id,
+                 "name": pupil.surname + ' ' + pupil.name + ' ' + pupil.patronymic,
+                 "grade": pupil.school_grade}
+            )
+        return PupilToAddDTO().dump(data, many=True), 200
+
+    def delete_pupil_from_course_by_teacher(self, course_id: int, pupil_id: int, user_id: int) \
+            -> (dict, int):
+        teacher = Teacher.query.filter(Teacher.user_id == user_id).first()
+        if not teacher:
+            return {"error": "Вы не можете добавить ученика на курс, на котором не преподаете"}, 404
+        return self.delete_pupil_course(course_id, pupil_id, True)

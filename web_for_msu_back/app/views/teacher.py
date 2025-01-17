@@ -137,3 +137,22 @@ class TeacherView(FlaskView):
         response, code = course_service.add_pupil_to_course_by_teacher(course_id, pupil_id, user_id, is_admin)
         return jsonify(response), code
 
+    @method("GET")
+    @auth_required
+    @roles_required("teacher")
+    def get_pupil_on_course_delete(self, course_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.get_course_pupils_to_delete(course_id)
+        return jsonify(response), code
+
+    @method("DELETE")
+    @auth_required
+    @roles_required("teacher")
+    def delete_pupil_on_course(self, course_id: int, pupil_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        user_id = g.current_user.id
+        response, code = course_service.delete_pupil_from_course_by_teacher(course_id, pupil_id, user_id)
+        return jsonify(response), code
+
