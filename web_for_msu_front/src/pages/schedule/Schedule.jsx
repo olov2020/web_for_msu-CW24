@@ -19,19 +19,19 @@ const Schedule = () => {
     <article>
       <h1>Расписание</h1>
 
-      <div
+      <section
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          width: '100%',
+          width: '90%',
           gap: '5rem 0',
         }}
       >
         <OneWeek header='Текущая неделя' data={schedule.lessons_in_week}/>
 
         <OneWeek header='Следующая неделя' data={schedule.lessons_in_two_weeks}/>
-      </div>
+      </section>
     </article>
   );
 };

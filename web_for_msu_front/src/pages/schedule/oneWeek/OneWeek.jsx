@@ -8,7 +8,7 @@ const OneWeek = ({header, data}) => {
     <section style={{
       display: 'flex',
       flexDirection: 'column',
-      width: '90%',
+      width: '100%',
       gap: '1rem 0',
     }}
     >
