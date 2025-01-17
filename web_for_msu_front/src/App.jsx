@@ -7,7 +7,7 @@ import Frontend from './generic/header/developers/Frontend.jsx';
 import Backend from './generic/header/developers/Backend.jsx';
 import {setAuthFromToken, setNotAuthAction} from './store/UserReducers.js';
 import {useDispatch} from 'react-redux';
-import withRedirectToHome from './pages/pageRedirect/withRedirectToHome.js';
+import withRedirectToHome from './pages/pageRedirect/withRedirectToHome.jsx';
 import PropTypes from 'prop-types';
 
 const App = ({showContext, setShowContext}) => {
