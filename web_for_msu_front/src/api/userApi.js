@@ -187,10 +187,15 @@ export const changePassword = async (email) => {
   }
 }
 
-export const resetPassword = async () => {
-  const response = await $host.post(`/home/reset_password/${token}/`);
+export const resetPassword = async (password) => {
+  const response = await $host.post(`/home/reset_password/${localStorage.getItem('accessToken')}/`, password, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
 
   try {
+    localStorage.removeItem('accessToken');
     return response.data;
   } catch (error) {
     return new Error(error);
