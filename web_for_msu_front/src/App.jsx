@@ -7,7 +7,7 @@ import Frontend from "./generic/header/developers/Frontend.jsx";
 import Backend from "./generic/header/developers/Backend.jsx";
 import {setAuthFromToken, setNotAuthAction} from "./store/UserReducers.js";
 import {useDispatch} from "react-redux";
-import PageReloadDetector from "./pages/pageReload/PageReloadDetector.jsx";
+import Redirect from "./pages/pagesRedirect/Redirect.jsx";
 
 const App = () => {
 
@@ -25,7 +25,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <PageReloadDetector/>
+      <Redirect/>
 
       <Header setShowContext={setShowContext}/>
 
