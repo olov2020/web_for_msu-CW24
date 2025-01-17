@@ -26,9 +26,6 @@ const Profile = ({deviceType}) => {
     }
   }
 
-  console.log(user)
-  console.log(user.photo)
-
   if (location.pathname === '/account' || location.pathname === '/admin') {
     return (
       <ButtonSubmit text='Выйти из аккаунта' onClick={userLogout} type='delete'
