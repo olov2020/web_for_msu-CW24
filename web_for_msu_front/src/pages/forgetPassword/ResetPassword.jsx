@@ -1,12 +1,16 @@
 import Form from "../../generic/form/Form.jsx";
 import {useLocation} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const ResetPassword = () => {
 
   const {pathname} = useLocation();
-  const accessToken = pathname.split("/")[pathname.length - 2];
-  console.log(accessToken)
-  console.log(pathname.split("/"))
+
+  const [accessToken, setAccessToken] = useState(undefined);
+
+  useEffect(() => {
+    setAccessToken(pathname.split("/")[pathname.length - 2]);
+  }, [pathname]);
 
   return (
     <article>
