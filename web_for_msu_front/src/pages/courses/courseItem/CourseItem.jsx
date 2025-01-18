@@ -15,10 +15,11 @@ const CourseItem = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {state} = useLocation();
+  console.log(state)
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!state.id) {
+    if (!state) {
       navigate(ALL_COURSES_ROUTE);
     }
   }, [state]);
