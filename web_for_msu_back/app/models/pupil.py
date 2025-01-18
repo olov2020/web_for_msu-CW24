@@ -43,6 +43,7 @@ class Pupil(db.Model):
     achievements = db.Column(db.String())
     courses = db.relationship('PupilCourse', back_populates='pupil')
     schedules = db.relationship('Mark', back_populates='pupil')
+    registrations = db.relationship('PupilCourseRegistration', back_populates='pupil')
     former = db.Column(db.Boolean, default=False)
     graduated = db.Column(db.Boolean, default=False)
 

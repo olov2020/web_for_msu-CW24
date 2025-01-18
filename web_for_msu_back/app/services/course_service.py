@@ -609,11 +609,16 @@ class CourseService:
         return False, 200
 
     def add_pupil_to_courses(self, pupil_id: int, request: flask.Request):
-        if not self.is_courses_registration_opened():
+        opened = CourseRegistrationPeriod.query.filter_by(is_open=True).first()
+        if not opened:
             return {"error": "Сейчас нельзя записаться на курс"}
-        pupil = Pupil.query.get(pupil_id)
+        pupil: Pupil = Pupil.query.get(pupil_id)
         if not pupil:
             return {"error": "Ученик не найден"}
+        pupil_registration = PupilCourseRegistration.query.filter_by(registration_id=opened.id,
+                                                                     pupil_id=pupil_id).first()
+        if pupil_registration:
+            return {"error": "Вы уже подали заявки на курсы в этом периоде записи на курсы"}, 404
         data = request.json
         courses = []
         for key in data:
@@ -643,6 +648,8 @@ class CourseService:
             response, code = self.add_pupil_to_course(course["id"], pupil, course["selected"])
             if code != 200:
                 return response, code
+        registration = PupilCourseRegistration(pupil_id, opened.id)
+        self.db.session.add(registration)
         self.db.session.commit()
         return {"msg": "Заявки успешно поданы на все курсы"}, 200
 
