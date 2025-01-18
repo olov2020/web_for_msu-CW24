@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {getPupilMarksByCourseId, getPupilMarksByCourseId2} from "../../../api/coursesApi.js";
-import style from './teacherMarks.module.css';
+import style from './pupilMarks.module.css';
 import {useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 
