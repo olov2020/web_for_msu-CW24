@@ -21,8 +21,7 @@ const CourseItem = () => {
     if (!state || !state.courseData) {
       navigate(ALL_COURSES_ROUTE);
     }
-  }, [state, userStatus]);
-  console.log(state)
+  }, []);
 
   return (
     <article key={state.courseData.id}>
