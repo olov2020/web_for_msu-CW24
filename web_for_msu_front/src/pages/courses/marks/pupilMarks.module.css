@@ -9,7 +9,7 @@
     > section {
         display: flex;
         width: auto;
-        gap: 2.3rem 0;
+        gap: 0 2rem;
 
         > * {
             white-space: nowrap;
