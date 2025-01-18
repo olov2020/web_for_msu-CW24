@@ -76,8 +76,9 @@ const TeacherMarks = ({courseId}) => {
       setInputsTeacherResult(teacherResults);
 
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
+        const pupilId = teacherResult.split(' ')[1];
         const index = marks.pupils.filter((pupil, index) => {
-          if (pupil.id === teacherResult.pupilId) {
+          if (pupil.id === pupilId) {
             return index;
           }
         })[0];
@@ -145,8 +146,9 @@ const TeacherMarks = ({courseId}) => {
       setInputsTeacherResult2(teacherResults);
 
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
+        const pupilId = teacherResult.split(' ')[1];
         const index = marks2.pupils.filter((pupil, index) => {
-          if (pupil.id === teacherResult.pupilId) {
+          if (pupil.id === pupilId) {
             return index;
           }
         })[0];
