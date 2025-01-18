@@ -3,7 +3,7 @@
     display: flex;
     max-width: 90%;
     overflow: auto;
-    padding-bottom: 1rem;
+    padding-bottom: .5rem;
 }
 
 .datesSection {
