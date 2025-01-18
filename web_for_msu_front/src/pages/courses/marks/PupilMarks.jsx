@@ -85,7 +85,9 @@ const PupilMarks = ({courseId}) => {
               <h3>{markType}</h3>
 
               {marks.marks && marks.marks.length !== 0 && marks.marks.map((markArray) => (
-                <p key={markArray}>{markArray[index]}</p>
+                markArray && markArray.length !== 0 && (
+                  <p key={markArray}>{markArray[index]}</p>
+                )
               ))}
             </div>
           ))}
