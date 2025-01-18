@@ -1,15 +1,17 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import deleteIcon from '../../../../public/generic/deleteIcon.svg'
 import DeleteWindow from "./deleteWindow/DeleteWindow.jsx";
 import {useState} from "react";
 import {useSelector} from "react-redux";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
+import {NEWS_ROUTE} from "../../../routing/consts.js";
 
 const NewsItem = () => {
 
   const {state} = useLocation();
   const [showDeleteWindow, setShowDeleteWindow] = useState(false);
   const authStatus = useSelector(state => state.user.authStatus);
+  const navigate = useNavigate();
 
   const handleFileDownload = async (fileUrl, fileName) => {
     try {
@@ -31,6 +33,11 @@ const NewsItem = () => {
       alert('Упс... что-то пошло не так. Файл не был скачан!');
     }
   };
+
+  if (!state.id) {
+    navigate(NEWS_ROUTE);
+    return;
+  }
 
   return (
     <article key={state.id}>

@@ -1,4 +1,4 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import PupilMarks from "../marks/PupilMarks.jsx";
 import TeacherMarks from "../marks/TeacherMarks.jsx";
@@ -7,12 +7,19 @@ import ApprovePupils from "../approvePupils/ApprovePupils.jsx";
 import AddPupilOnCourse from "../addPupilOnCourse/AddPupilOnCourse.jsx";
 import style from '../course.module.css';
 import DeletePupilOnCourse from "../deletePupilOnCourse/DeletePupilOnCourse.jsx";
+import {ALL_COURSES_ROUTE} from "../../../routing/consts.js";
 
 const CourseItem = () => {
 
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {state} = useLocation();
+  const navigate = useNavigate();
+
+  if (!state.courseData.id) {
+    navigate(ALL_COURSES_ROUTE);
+    return;
+  }
 
   return (
     <article key={state.courseData.id}>
