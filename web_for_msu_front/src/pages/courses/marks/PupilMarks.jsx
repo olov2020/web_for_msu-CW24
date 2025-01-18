@@ -88,7 +88,8 @@ const PupilMarks = ({courseId}) => {
                 </div>
               ))}
 
-              <h3>Итог - {marks2.result}</h3>
+              <h3>Предварительный итог - {marks2.result}</h3>
+              <h3>Итог - {marks2.teacher_result}</h3>
             </section>
           </section>
         </section>
@@ -142,7 +143,8 @@ const PupilMarks = ({courseId}) => {
               </div>
             ))}
 
-            <h3>Итог - {marks.result}</h3>
+            <h3>Предварительный итог - {marks.result}</h3>
+            <h3>Итог - {marks.teacher_result}</h3>
           </section>
         </section>
 
