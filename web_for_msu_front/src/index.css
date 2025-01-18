@@ -21,6 +21,11 @@ article {
     width: 100%;
 
     gap: 2rem;
+
+    > h1 {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 span {
@@ -45,7 +50,9 @@ h2 {
 
 h3 {
     font-size: 1.3rem;
-    font-weight: 540;
+    @media (min-width: 600px) {
+        font-weight: 540;
+    }
 }
 
 p {

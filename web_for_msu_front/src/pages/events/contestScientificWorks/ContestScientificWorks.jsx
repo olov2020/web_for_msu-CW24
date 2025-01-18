@@ -93,7 +93,7 @@ const ContestScientificWorks = () => {
             padding: '1rem',
             borderRadius: '.5rem',
             marginTop: '-4rem',
-            width: 'max-content',
+            width: '100%',
           }}>
             <p>{hintText}</p>
           </div>

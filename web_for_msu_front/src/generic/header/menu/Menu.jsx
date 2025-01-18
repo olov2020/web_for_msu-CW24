@@ -61,7 +61,7 @@ const Menu = () => {
       ],
     },
     {
-      title: 'Сообщество',
+      title: 'Школа',
       id: 3,
       dropdown: [
         {

@@ -40,115 +40,59 @@ const PupilMarks = ({courseId}) => {
   return (
     <>
       {marks2 &&
-        <section style={{
-          display: 'flex',
-          justifyContent: 'center',
-          textAlign: 'center',
-          width: '90%',
-          gap: '0 2rem',
-        }}>
-          <section style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '5rem',
-            gap: '2.2rem 0',
-            width: 'auto',
-          }}>
-            {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date) => (
+        <section className={style.marksSection}>
+          <section className={style.datesSection}>
+            {marks2.dates.length !== 0 && marks2.dates.map((date) => (
               <h3 key={date}>{date}</h3>
             ))}
           </section>
 
-          <section style={{
-            width: '50%',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2rem 0',
-          }}>
-            <section className={style.row} style={{
-              border: 'none',
-            }}>
-              {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType, index) => (
-                <h3 key={index}>{markType}</h3>
-              ))}
-            </section>
+          <section className={style.markTypesSection}>
+            {marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType) => (
+              <section key={markType} className={style.markType}>
+                <h3>{markType}</h3>
 
-            <section style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '2rem 0',
-            }}>
-              {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((marksRow, rowIndex) => (
-                <div key={rowIndex} className={style.row}>
-                  {marksRow.map((mark, markIndex) => (
-                    <p key={markIndex}>{mark}</p>
+                <section className={style.marks}>
+                  {marks2.marks.length !== 0 && marks2.marks.map((mark) => (
+                    <p key={mark}>{mark}</p>
                   ))}
-                </div>
-              ))}
+                </section>
+              </section>
+            ))}
+          </section>
 
-              <h3>Предварительный итог - {marks2.result}</h3>
-              <h3>Итог - {marks2.teacher_result}</h3>
-            </section>
+          <section className={style.results}>
+            <h3>Предварительный итог - {marks2.result}</h3>
+            <h3>Итог - {marks2.teacher_result}</h3>
           </section>
         </section>
       }
 
-      <section style={{
-        display: 'flex',
-        justifyContent: 'center',
-        textAlign: 'center',
-        width: '90%',
-        gap: '0 2rem',
-      }}>
-        <section style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: '5rem',
-          gap: '2.2rem 0',
-          width: 'auto',
-        }}>
-          {marks.dates && marks.dates.length !== 0 && marks.dates.map((date) => (
+      <section className={style.marksSection}>
+        <section className={style.datesSection}>
+          {marks.dates.length !== 0 && marks.dates.map((date) => (
             <h3 key={date}>{date}</h3>
           ))}
         </section>
 
-        <section style={{
-          width: '50%',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2rem 0',
-        }}>
-          <section className={style.row} style={{
-            border: 'none',
-          }}>
-            {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType, index) => (
-              <h3 key={index}>{markType}</h3>
-            ))}
-          </section>
+        <section className={style.markTypesSection}>
+          {marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType) => (
+            <section key={markType} className={style.markType}>
+              <h3>{markType}</h3>
 
-          <section style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2rem 0',
-          }}>
-            {marks.marks && marks.marks.length !== 0 && marks.marks.map((marksRow, rowIndex) => (
-              <div key={rowIndex} className={style.row}>
-                {marksRow.map((mark, markIndex) => (
-                  <p key={markIndex}>{mark}</p>
+              <section className={style.marks}>
+                {marks.marks.length !== 0 && marks.marks.map((mark) => (
+                  <p key={mark}>{mark}</p>
                 ))}
-              </div>
-            ))}
-
-            <h3>Предварительный итог - {marks.result}</h3>
-            <h3>Итог - {marks.teacher_result}</h3>
-          </section>
+              </section>
+            </section>
+          ))}
         </section>
 
-
+        <section className={style.results}>
+          <h3>Предварительный итог - {marks.result}</h3>
+          <h3>Итог - {marks.teacher_result}</h3>
+        </section>
       </section>
     </>
   );
