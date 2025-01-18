@@ -618,8 +618,9 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         formValues.agreement = agreement;
         formErrors.agreement = error;
         return <InputCheckbox name={input} formErrors={setError}
-                          fieldName='Согласие на обработку персональных данных*'
-                          setValue={setAgreement}
+                              fieldName='Согласие на обработку персональных данных*'
+                              setValue={setAgreement}
+                              value={agreement}
         />
       }
       case 'howToKnow': {

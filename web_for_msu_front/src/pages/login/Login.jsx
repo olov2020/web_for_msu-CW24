@@ -15,6 +15,12 @@ const Login = () => {
 
       <div className={style.links}>
         <p>Зарегистрироваться</p>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '0 .5rem',
+        }}>
         <Link to={REGISTRATION_PUPIL_ROUTE}>
           <p>Ученику</p>
         </Link>
@@ -22,6 +28,7 @@ const Login = () => {
         <Link to={REGISTRATION_TEACHER_ROUTE}>
           <p>Преподавателю</p>
         </Link>
+        </div>
       </div>
 
       <div className={style.links}>
