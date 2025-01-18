@@ -612,12 +612,12 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
       }
       case 'agreement': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [agreement, setAgreement] = useState(undefined);
+        const [agreement, setAgreement] = useState(true);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.agreement = agreement;
         formErrors.agreement = error;
-        return <InputFile name={input} accept='.pdf' formErrors={setError}
+        return <InputCheckbox name={input} formErrors={setError}
                           fieldName='Согласие на обработку персональных данных*'
                           setValue={setAgreement}
         />

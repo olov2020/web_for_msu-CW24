@@ -14,7 +14,6 @@ import {
   SCHEDULE_ROUTE, TEACHERS_ROUTE
 } from "../../../routing/consts.js";
 import {useSelector} from "react-redux";
-import {authRoutes} from "../../../routing/routes.jsx";
 
 const Menu = () => {
 

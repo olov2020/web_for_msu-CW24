@@ -115,7 +115,6 @@ export const pupilRegistration = async (formValues) => {
   };
   formData.append('data', JSON.stringify(value));
   formData.append('image', formValues.photo);
-  formData.append('agreement', formValues.agreement);
 
   const response = await $host.post(`/pupil/add_pupil/`, formData, {
     headers: {
@@ -152,7 +151,6 @@ export const teacherRegistration = async (formValues) => {
   };
   formData.append('data', JSON.stringify(value));
   formData.append('image', formValues.photo);
-  formData.append('agreement', formValues.agreement);
 
   const response = await $host.post(`/teacher/add_teacher/`, formData, {
     headers: {
