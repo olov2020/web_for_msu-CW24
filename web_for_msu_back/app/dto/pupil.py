@@ -49,7 +49,6 @@ class PupilDTO(Schema):
     def make_pupil(self, data, **kwargs):
         data.setdefault('nickname', 'Школьник')
         data.setdefault('enroll_way', 'Вступительные')  # Пример для других полей
-        data.setdefault('agreement', None)
         data.setdefault('organization_fee', '')
         data.setdefault('present_FA', '')
         data.setdefault('security_key_card', '')

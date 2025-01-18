@@ -38,7 +38,6 @@ class TeacherService:
         except ValidationError as e:
             return e.messages, 400
         teacher.user_id = result['user_id']
-        teacher.agreement = self.image_service.save_user_agreement(request.files['agreement'])
         self.db.session.add(teacher)
         self.db.session.commit()
         return {'msg': 'Преподаватель успешно добавлен'}, 201

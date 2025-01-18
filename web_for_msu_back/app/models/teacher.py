@@ -29,7 +29,7 @@ class Teacher(db.Model):
     passport_date = db.Column(db.Date())
     passport_issued_by = db.Column(db.String())
     registration_address = db.Column(db.String(), nullable=False)
-    agreement = db.Column(db.String, nullable=False)
+    agreement = db.Column(db.String, nullable=True)
     was_pupil = db.Column(db.Boolean, default=False)
     courses = db.relationship('TeacherCourse', back_populates='teacher')
 
