@@ -42,18 +42,18 @@ const PupilMarks = ({courseId}) => {
       {marks2 &&
         <section className={style.marksSection}>
           <section className={style.datesSection}>
-            {marks2.dates.length !== 0 && marks2.dates.map((date, index) => (
+            {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date, index) => (
               <h3 key={index}>{date}</h3>
             ))}
           </section>
 
           <section className={style.markTypesSection}>
-            {marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType) => (
+            {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType) => (
               <section key={markType} className={style.markType}>
                 <h3>{markType}</h3>
 
                 <section className={style.marks}>
-                  {marks2.marks.length !== 0 && marks2.marks.map((markArray, index) => (
+                  {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((markArray, index) => (
                     <div key={index}>
                       {markArray.map((mark) => (
                         <p key={mark}>{mark}</p>
@@ -74,18 +74,18 @@ const PupilMarks = ({courseId}) => {
 
       <section className={style.marksSection}>
         <section className={style.datesSection}>
-          {marks.dates.length !== 0 && marks.dates.map((date) => (
+          {marks.dates && marks.dates.length !== 0 && marks.dates.map((date) => (
             <h3 key={date}>{date}</h3>
           ))}
         </section>
 
         <section className={style.markTypesSection}>
-          {marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType) => (
+          {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType) => (
             <section key={markType} className={style.markType}>
               <h3>{markType}</h3>
 
               <section className={style.marks}>
-                {marks.marks.length !== 0 && marks.marks.map((markArray, index) => (
+                {marks.marks && marks.marks.length !== 0 && marks.marks.map((markArray, index) => (
                   <div key={index}>
                     {markArray.map((mark) => (
                       <p key={mark}>{mark}</p>
