@@ -48,7 +48,7 @@ const News = () => {
 
     setNewsSearch(newsSearch.toLowerCase());
     const newsNew = backupNews.filter((newsItem) => {
-      if (newsItem.title.includes(newsSearch) || newsItem.description.includes(newsSearch)) {
+      if (newsItem.title.toLowerCase().includes(newsSearch) || newsItem.description.toLowerCase().includes(newsSearch)) {
         return newsItem;
       }
     })
