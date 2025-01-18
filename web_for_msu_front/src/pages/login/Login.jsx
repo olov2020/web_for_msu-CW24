@@ -21,23 +21,21 @@ const Login = () => {
           justifyContent: 'center',
           gap: '0 .5rem',
         }}>
-        <Link to={REGISTRATION_PUPIL_ROUTE}>
-          <p>Ученику</p>
-        </Link>
-        <p>/</p>
-        <Link to={REGISTRATION_TEACHER_ROUTE}>
-          <p>Преподавателю</p>
-        </Link>
+          <Link to={REGISTRATION_PUPIL_ROUTE}>
+            <p>Ученику</p>
+          </Link>
+          <p>/</p>
+          <Link to={REGISTRATION_TEACHER_ROUTE}>
+            <p>Преподавателю</p>
+          </Link>
         </div>
       </div>
 
-      <div className={style.links}>
-        <Link to={FORGET_PASSWORD_ROUTE}>
-          <p>Забыли пароль?</p>
-        </Link>
-      </div>
+      <Link to={FORGET_PASSWORD_ROUTE}>
+        <h3>Забыли пароль?</h3>
+      </Link>
     </article>
-);
+  );
 };
 
 export default Login;
