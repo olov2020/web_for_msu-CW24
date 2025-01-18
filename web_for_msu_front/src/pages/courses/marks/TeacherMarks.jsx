@@ -76,8 +76,12 @@ const TeacherMarks = ({courseId}) => {
       setInputsTeacherResult(teacherResults);
 
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
-        const pupilId = teacherResult.split(' ')[1];
-        acc[teacherResult] = marks.pupils[pupilId].teacher_result;
+        const index = marks.pupils.filter((pupil, index) => {
+          if (pupil.id === teacherResult.pupilId) {
+            return index;
+          }
+        });
+        acc[teacherResult] = marks.pupils[index].teacher_result;
         return acc;
       }, {});
       setValuesTeacherResult(teacherResultsValues);
@@ -141,8 +145,12 @@ const TeacherMarks = ({courseId}) => {
       setInputsTeacherResult2(teacherResults);
 
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
-        const pupilId = teacherResult.split(' ')[1];
-        acc[teacherResult] = marks2.pupils[pupilId].teacher_result;
+        const index = marks2.pupils.filter((pupil, index) => {
+          if (pupil.id === teacherResult.pupilId) {
+            return index;
+          }
+        });
+        acc[teacherResult] = marks2.pupils[index].teacher_result;
         return acc;
       }, {});
       setValuesTeacherResult2(teacherResultsValues);
