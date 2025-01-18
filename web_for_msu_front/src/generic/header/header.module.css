@@ -7,6 +7,9 @@
     align-items: center;
 
     @media (max-width: 600px) {
+        left: 0;
+        margin-left: auto;
+        margin-right: auto;
         width: 95%;
     }
     @media (min-width: 600px) {
