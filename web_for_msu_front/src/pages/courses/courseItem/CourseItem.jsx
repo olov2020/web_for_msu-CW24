@@ -14,14 +14,14 @@ const CourseItem = () => {
 
   const userStatus = useSelector(state => state.user.authStatus);
 
-  const {state} = useLocation();
+  const {pathname, state} = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!state || !state.courseData) {
+    if (!state) {
       navigate(ALL_COURSES_ROUTE);
     }
-  }, []);
+  }, [pathname]);
 
   return (
     <article key={state.courseData.id}>
@@ -39,10 +39,10 @@ const CourseItem = () => {
           width: '90%',
         }}>
           <h3>Оценка за первый
-            семестр: <strong>{state.courseData.mark1 ? state.courseData.mark1 : 'пока итоговая оценка не выставлена'}</strong>
+            семестр: <strong>{state.courseData.mark1 ? state.courseData.mark1 : 'пока оценка не выставлена'}</strong>
           </h3>
           <h3>Оценка за второй
-            семестр: <strong>{state.courseData.mark2 ? state.courseData.mark2 : 'пока итоговая оценка не выставлена'}</strong>
+            семестр: <strong>{state.courseData.mark2 ? state.courseData.mark2 : 'пока оценка не выставлена'}</strong>
           </h3>
         </section>
       }

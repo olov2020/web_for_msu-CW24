@@ -48,6 +48,10 @@ const TeacherMarks = ({courseId}) => {
   const [values, setValues] = useState({});
   const [inputs2, setInputs2] = useState({});
   const [values2, setValues2] = useState({});
+  const [inputsTeacherResult, setInputsTeacherResult] = useState([]);
+  const [valuesTeacherResult, setValuesTeacherResult] = useState({});
+  const [inputsTeacherResult2, setInputsTeacherResult2] = useState([]);
+  const [valuesTeacherResult2, setValuesTeacherResult2] = useState({});
 
   useEffect(() => {
     const inputsNew = [];
@@ -64,6 +68,19 @@ const TeacherMarks = ({courseId}) => {
       marks.dates.forEach((date) => {
         inputsNew.push(`visits ${date}`);
       });
+
+      const teacherResults = [];
+      marks.pupils.forEach((pupil) => {
+        teacherResults.push(`teacher_result ${pupil.id}`);
+      });
+      setInputsTeacherResult(teacherResults);
+
+      const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
+        const pupilId = teacherResult.split(' ')[1];
+        acc[teacherResult] = marks.pupils[pupilId].teacher_result;
+        return acc;
+      }, {});
+      setValuesTeacherResult(teacherResultsValues);
 
       const inputsDict = inputsNew.reduce((acc, input) => {
         const [pupilId] = input.split(' ');
@@ -116,6 +133,19 @@ const TeacherMarks = ({courseId}) => {
       marks2.dates.forEach((date) => {
         inputsNew.push(`visits ${date}`);
       });
+
+      const teacherResults = [];
+      marks2.pupils.forEach((pupil) => {
+        teacherResults.push(`teacher_result ${pupil.id}`);
+      });
+      setInputsTeacherResult2(teacherResults);
+
+      const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
+        const pupilId = teacherResult.split(' ')[1];
+        acc[teacherResult] = marks2.pupils[pupilId].teacher_result;
+        return acc;
+      }, {});
+      setValuesTeacherResult2(teacherResultsValues);
 
       const inputsDict = inputsNew.reduce((acc, input) => {
         const [pupilId] = input.split(' ');
@@ -204,6 +234,16 @@ const TeacherMarks = ({courseId}) => {
               <h3 key={pupil.id}>{pupil.result}</h3>
             ))}
           </section>
+
+          <section>
+            <Form
+              buttonText='Сохранить итог'
+              inputs={inputsTeacherResult2}
+              values={valuesTeacherResult2}
+              type='saveTeacherResults2'
+              id={courseId}
+            />
+          </section>
         </section>
       }
 
@@ -251,6 +291,16 @@ const TeacherMarks = ({courseId}) => {
           {marks.pupils.length !== 0 && marks.pupils.map((pupil) => (
             <h3 key={pupil.id}>{pupil.result}</h3>
           ))}
+        </section>
+
+        <section>
+          <Form
+            buttonText='Сохранить итог'
+            inputs={inputsTeacherResult}
+            values={valuesTeacherResult}
+            type='saveTeacherResults'
+            id={courseId}
+          />
         </section>
       </section>
     </>

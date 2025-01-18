@@ -25,12 +25,12 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
 
   const validateInput = (inputValue) => {
     // eslint-disable-next-line react/prop-types
-    if (inputValue.length === 0 && !name.includes('course')) {
+    if (inputValue.length === 0 && !name.includes('course') && !name.includes('teacher_result')) {
       return errors.empty;
     }
 
     // eslint-disable-next-line react/prop-types
-    if (name.includes('course') && !values.includes(inputValue)) {
+    if ((name.includes('course') || name.includes('teacher_result')) && !values.includes(inputValue)) {
       return errors.notInList;
     }
 
@@ -41,9 +41,6 @@ const InputDropdown = ({name, placeholder, fieldName, values = [], value, setVal
   }
 
   return (
-    /*TODO
-    переделать под стандартный Input
-    */
     <label className={styleInput.label}>
       <h3 style={{
         alignSelf: 'flex-start',

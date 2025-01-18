@@ -108,6 +108,34 @@ export const updateTeacherMarksByCourseId2 = async (courseId, marks) => {
   }
 }
 
+export const setTeacherResultsByCourseId = async (courseId, results) => {
+  const response = await $authHost.patch(`/teacher/update_results/${courseId}/`, results, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const setTeacherResultsByCourseId2 = async (courseId, results) => {
+  const response = await $authHost.patch(`/teacher/update_results2/${courseId}/`, results, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 
 export const courseAdd = async (file) => {
   const formData = new FormData();

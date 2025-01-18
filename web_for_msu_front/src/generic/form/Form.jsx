@@ -25,7 +25,7 @@ import {ALL_COURSES_ROUTE, HOME_ROUTE, LOGIN_ROUTE, NEWS_ROUTE} from "../../rout
 import {
   courseAdd,
   courseChange,
-  selectCourses,
+  selectCourses, setTeacherResultsByCourseId, setTeacherResultsByCourseId2,
   updateTeacherMarksByCourseId,
   updateTeacherMarksByCourseId2
 } from "../../api/coursesApi.js";
@@ -57,12 +57,14 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
   const [auditoriums, setAuditoriums] = useState({});
   const [coursesSelect, setCoursesSelect] = useState({});
   const [teacherMarks, setTeacherMarks] = useState({});
+  const [teacherResults, setTeacherResults] = useState({});
   const [errors, setErrors] = useState(false);
   const location = useLocation();
   useEffect(() => {
     setAuditoriums(values);
     setCoursesSelect(values);
     setTeacherMarks(values);
+    setTeacherResults(values);
   }, [location.pathname, JSON.stringify(values)]);
 
   const handleAuditoryChange = (auditoryId, value) => {
@@ -84,6 +86,13 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
     setTeacherMarks(prev => ({
       ...prev,
       [markId]: value,
+    }));
+  };
+
+  const handleTeacherResultsChange = (resultId, value) => {
+    setTeacherResults(prev => ({
+      ...prev,
+      [resultId]: value,
     }));
   };
 
@@ -212,6 +221,20 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
       try {
         await updateTeacherMarksByCourseId2(id, teacherMarks);
         alert('Оценки успешно сохранены');
+      } catch {
+        alert(`Упс... Что-то пошло не так`);
+      }
+    } else if (type === 'saveTeacherResults') {
+      try {
+        await setTeacherResultsByCourseId(id, teacherResults);
+        alert('Итоги успешно сохранены');
+      } catch {
+        alert(`Упс... Что-то пошло не так`);
+      }
+    } else if (type === 'saveTeacherResults2') {
+      try {
+        await setTeacherResultsByCourseId2(id, teacherResults);
+        alert('Итоги успешно сохранены');
       } catch {
         alert(`Упс... Что-то пошло не так`);
       }
@@ -786,6 +809,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         const matchCourse = input.match(/^course (\d+)/);  // for selecting courses for pupils
         const matchMarks = input.match(/^\d+\s\d{2}\.\d{2}\.\d{4}\s([A-Za-zА-Яа-я]+\s?)+$/);  // for filling marks for teachers
         const matchVisits = input.match(/^visits\s\d{2}\.\d{2}\.\d{4}$/);  // for num of visits of each date
+        const matchTeacherResult = input.match(/^teacher_result\s\d{2}\.\d{2}\.\d{4}$/);  // for num of visits of each date
 
         if (matchAuditory) {
           const auditoryId = `auditory ${matchAuditory[1]}`;
@@ -835,6 +859,21 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
               name={input}
               value={teacherMarks[visitId]}
               setValue={(value) => handleTeacherMarksChange(visitId, value)}
+            />
+          );
+        }
+
+        if (matchTeacherResult) {
+          const resultId = `teacher_result ${matchTeacherResult[1]}`;
+
+          return (
+            <InputDropdown
+              name={input}
+              placeholder='Итог'
+              value={teacherResults[resultId]}
+              values={['5', '4', '3', '2', 'Зачетный', 'Незачетный', '']}
+              setValue={(value) => handleTeacherResultsChange(resultId, value)}
+              formErrors={setErrors}
             />
           );
         }
