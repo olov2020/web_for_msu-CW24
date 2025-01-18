@@ -81,6 +81,8 @@ const TeacherMarks = ({courseId}) => {
           if (pupil.id === pupilId) {
             return index;
           }
+          console.log(pupil.id === pupilId)
+          console.log(pupil.id, pupilId)
         })[0];
         acc[teacherResult] = marks.pupils[index].teacher_result;
         return acc;
