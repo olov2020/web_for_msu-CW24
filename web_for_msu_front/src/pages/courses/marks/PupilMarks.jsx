@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {getPupilMarksByCourseId, getPupilMarksByCourseId2} from "../../../api/coursesApi.js";
-import style from './pupilMarks.module.css';
+import style from './teacherMarks.module.css';
 import {useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 
@@ -42,8 +42,8 @@ const PupilMarks = ({courseId}) => {
       {marks2 &&
         <section className={style.marksSection}>
           <section className={style.datesSection}>
-            {marks2.dates.length !== 0 && marks2.dates.map((date) => (
-              <h3 key={date}>{date}</h3>
+            {marks2.dates.length !== 0 && marks2.dates.map((date, index) => (
+              <h3 key={index}>{date}</h3>
             ))}
           </section>
 
@@ -53,8 +53,12 @@ const PupilMarks = ({courseId}) => {
                 <h3>{markType}</h3>
 
                 <section className={style.marks}>
-                  {marks2.marks.length !== 0 && marks2.marks.map((mark) => (
-                    <p key={mark}>{mark}</p>
+                  {marks2.marks.length !== 0 && marks2.marks.map((markArray, index) => (
+                    <div key={index}>
+                      {markArray.map((mark) => (
+                        <p key={mark}>{mark}</p>
+                      ))}
+                    </div>
                   ))}
                 </section>
               </section>
