@@ -8,6 +8,7 @@ import AddPupilOnCourse from "../addPupilOnCourse/AddPupilOnCourse.jsx";
 import style from '../course.module.css';
 import DeletePupilOnCourse from "../deletePupilOnCourse/DeletePupilOnCourse.jsx";
 import {ALL_COURSES_ROUTE} from "../../../routing/consts.js";
+import {useEffect} from "react";
 
 const CourseItem = () => {
 
@@ -16,10 +17,11 @@ const CourseItem = () => {
   const {state} = useLocation();
   const navigate = useNavigate();
 
-  if (!state.courseData.id) {
-    navigate(ALL_COURSES_ROUTE);
-    return;
-  }
+  useEffect(() => {
+    if (!state.id) {
+      navigate(ALL_COURSES_ROUTE);
+    }
+  }, [state]);
 
   return (
     <article key={state.courseData.id}>

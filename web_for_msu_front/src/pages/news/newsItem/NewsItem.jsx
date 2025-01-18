@@ -1,7 +1,7 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import deleteIcon from '../../../../public/generic/deleteIcon.svg'
 import DeleteWindow from "./deleteWindow/DeleteWindow.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
 import {NEWS_ROUTE} from "../../../routing/consts.js";
@@ -34,10 +34,11 @@ const NewsItem = () => {
     }
   };
 
-  if (!state.id) {
-    navigate(NEWS_ROUTE);
-    return;
-  }
+  useEffect(() => {
+    if (!state.id) {
+      navigate(NEWS_ROUTE);
+    }
+  }, [state]);
 
   return (
     <article key={state.id}>
@@ -102,7 +103,7 @@ const NewsItem = () => {
           <div style={{
             width: 'auto',
           }}>
-        <ButtonSubmit onClick={() => handleFileDownload(state.file, state.title)} text='Скачать файл'/>
+            <ButtonSubmit onClick={() => handleFileDownload(state.file, state.title)} text='Скачать файл'/>
           </div>
         </section>
       }
