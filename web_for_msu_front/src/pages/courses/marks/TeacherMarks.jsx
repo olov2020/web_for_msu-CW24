@@ -78,8 +78,6 @@ const TeacherMarks = ({courseId}) => {
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
         const pupilId = Number(teacherResult.split(' ')[1]);
         const index = marks.pupils.filter((pupil, index) => {
-          console.log(pupil.id === pupilId)
-          console.log(pupil.id, pupilId)
           if (pupil.id === pupilId) {
             return index;
           }
