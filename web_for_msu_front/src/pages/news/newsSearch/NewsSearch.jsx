@@ -12,7 +12,7 @@ const NewsSearch = ({newsSearch, setNewsSearch}) => {
       gap: '1rem 0',
     }}>
       <h2>Поиск новостей</h2>
-      <InputText name='search news' value={newsSearch} setInput={setNewsSearch} placeholder='Найти новость'/>
+      <InputText name='search news' value={newsSearch} setValue={setNewsSearch} placeholder='Найти новость'/>
     </sectrion>
   );
 };
