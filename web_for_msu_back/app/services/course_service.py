@@ -608,13 +608,13 @@ class CourseService:
             return True, 200
         return False, 200
 
-    def add_pupil_to_courses(self, pupil_id: int, request: flask.Request):
+    def add_pupil_to_courses(self, pupil_id: int, request: flask.Request) -> (dict, int):
         opened = CourseRegistrationPeriod.query.filter_by(is_open=True).first()
         if not opened:
-            return {"error": "Сейчас нельзя записаться на курс"}
+            return {"error": "Сейчас нельзя записаться на курс"}, 404
         pupil: Pupil = Pupil.query.get(pupil_id)
         if not pupil:
-            return {"error": "Ученик не найден"}
+            return {"error": "Ученик не найден"}, 404
         pupil_registration = PupilCourseRegistration.query.filter_by(registration_id=opened.id,
                                                                      pupil_id=pupil_id).first()
         if pupil_registration:
