@@ -80,7 +80,7 @@ const TeacherMarks = ({courseId}) => {
           if (pupil.id === teacherResult.pupilId) {
             return index;
           }
-        });
+        })[0];
         acc[teacherResult] = marks.pupils[index].teacher_result;
         return acc;
       }, {});
@@ -149,7 +149,7 @@ const TeacherMarks = ({courseId}) => {
           if (pupil.id === teacherResult.pupilId) {
             return index;
           }
-        });
+        })[0];
         acc[teacherResult] = marks2.pupils[index].teacher_result;
         return acc;
       }, {});
