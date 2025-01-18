@@ -14,7 +14,7 @@ const CourseItem = () => {
 
   const userStatus = useSelector(state => state.user.authStatus);
 
-  const {state} = useLocation();
+  const {pathname, state} = useLocation();
   console.log(state)
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const CourseItem = () => {
     if (!state) {
       navigate(ALL_COURSES_ROUTE);
     }
-  }, [state]);
+  }, [state, userStatus, pathname]);
 
   return (
     <article key={state.courseData.id}>
