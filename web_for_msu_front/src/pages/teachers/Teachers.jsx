@@ -37,12 +37,14 @@ const Teachers = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: '100%',
             gap: '1rem 0',
           }}>
             {teacherGroup[1].map((teacher, teacherIndex) => (
               <li key={teacherIndex} style={{
                 listStyle: 'none',
                 display: 'flex',
+                width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: '0 2rem',
@@ -57,6 +59,7 @@ const Teachers = () => {
                   <p style={{
                     minWidth: '30%',
                     textAlign: 'center',
+                    whiteSpace: 'nowrap',
                   }}><a href={`mailto:${teacher.email}`}>{teacher.email}</a></p>
                 }
 
