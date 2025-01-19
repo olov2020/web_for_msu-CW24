@@ -10,6 +10,7 @@ import pytz
 from marshmallow import ValidationError
 from sqlalchemy import asc
 
+from web_for_msu_back.app.functions import arithmetic_round
 from web_for_msu_back.app.dto.marks import MarksDTO
 from web_for_msu_back.app.dto.pupil_marks import PupilMarksDTO
 from web_for_msu_back.app.models import Mark, Course, Schedule, Formula, PupilCourse, Pupil
@@ -123,7 +124,7 @@ class MarkService:
                 'id': pupil.id,
                 'name': self.pupil_service.get_full_name(pupil),
                 'marks': [[mark.mark for mark in lesson] for lesson in pupil_course_marks],
-                'result': round(self.calculate_result(pupil_course_marks), 2),
+                'result': arithmetic_round(self.calculate_result(pupil_course_marks), 2),
                 'teacher_result': pupil_course.term1_mark if part == "first" else pupil_course.term2_mark
             })
 
@@ -286,7 +287,7 @@ class MarkService:
         formulas = course.formulas
         marks, dates = self.get_pupil_marks(course_id, pupil_id, lessons)
         mark_type_choices = [formula.name for formula in sorted(formulas, key=lambda x: x.id)]
-        result = round(self.calculate_result(marks), 2)
+        result = arithmetic_round(self.calculate_result(marks), 2)
         marks = [[mark.mark for mark in lesson_mark] for lesson_mark in marks]
         data = {
             'dates': dates,
@@ -319,7 +320,7 @@ class MarkService:
                 mark2 = pupil_course.term2_mark
                 if mark1.isdigit() and mark2.isdigit():
                     mark1, mark2 = int(mark1), int(mark2)
-                    result = round((mark1 + mark2) / 2)
+                    result = arithmetic_round((mark1 + mark2) / 2)
                 elif "Незачет" in [mark1, mark2]:
                     result = "Незачет"
                 elif mark1 == "Зачет" and mark2 == "Зачет":

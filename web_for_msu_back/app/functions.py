@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import timedelta
+from decimal import Decimal, ROUND_HALF_UP
 from functools import wraps
 
 from flask import jsonify, g, make_response
@@ -106,3 +107,8 @@ def send_reset_email(email, reset_link):
     print(os.getenv("MAIL_SERVER"))
     msg.body = f"Перейдите по этой ссылке, чтобы сбросить пароль: {reset_link}"
     mail.send(msg)
+
+
+def arithmetic_round(number, decimals=0):
+    factor = Decimal(10) ** -decimals
+    return float(Decimal(number).quantize(factor, rounding=ROUND_HALF_UP))
