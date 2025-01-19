@@ -105,6 +105,17 @@ class CourseService:
                 available_courses.append(course)
         courses_for_selection = [self.get_course_info_selection(course, str(pupil_courses_dict.get(course.id, ""))) for
                                  course in available_courses]
+        lesson_times = ["Понедельник 17:20 - 18:40",
+                        "Понедельник 18:55 - 20:15",
+                        "Вторник 17:20 - 18:40",
+                        "Вторник 18:55 - 20:15",
+                        "Среда 17:20 - 18:40",
+                        "Среда 18:55 - 20:15",
+                        "Четверг 17:20 - 18:40",
+                        "Четверг 18:55 - 20:15",
+                        "Пятница 17:20 - 18:40",
+                        "Пятница 18:55 - 20:15", ]
+        courses_for_selection.sort(key=lambda x: (lesson_times.index(x["lesson_time"]), x["name"]))
         return courses_for_selection, 200
 
     def add_pupil_to_course(self, course_id: int, pupil: Pupil, crediting_selected: str) -> (dict, int):
@@ -568,6 +579,16 @@ class CourseService:
         return CourseInfoSelectionDTO().dump(data)
 
     def get_pupil_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
+        lesson_times = ["Понедельник 17:20 - 18:40",
+                        "Понедельник 18:55 - 20:15",
+                        "Вторник 17:20 - 18:40",
+                        "Вторник 18:55 - 20:15",
+                        "Среда 17:20 - 18:40",
+                        "Среда 18:55 - 20:15",
+                        "Четверг 17:20 - 18:40",
+                        "Четверг 18:55 - 20:15",
+                        "Пятница 17:20 - 18:40",
+                        "Пятница 18:55 - 20:15", ]
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
             return [], 403
@@ -580,9 +601,21 @@ class CourseService:
             if year not in grouped_courses:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_pupil(assoc, assoc.course))
+        for year in grouped_courses:
+            grouped_courses[year].sort(key=lambda x: (lesson_times.index(x["lesson_time"]), x["name"]))
         return grouped_courses, 200
 
     def get_teacher_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
+        lesson_times = ["Понедельник 17:20 - 18:40",
+                        "Понедельник 18:55 - 20:15",
+                        "Вторник 17:20 - 18:40",
+                        "Вторник 18:55 - 20:15",
+                        "Среда 17:20 - 18:40",
+                        "Среда 18:55 - 20:15",
+                        "Четверг 17:20 - 18:40",
+                        "Четверг 18:55 - 20:15",
+                        "Пятница 17:20 - 18:40",
+                        "Пятница 18:55 - 20:15", ]
         teacher = Teacher.query.filter_by(user_id=user_id).first()
         if not teacher:
             return [], 403
@@ -592,6 +625,8 @@ class CourseService:
             if year not in grouped_courses:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info_teacher(assoc.course))
+        for year in grouped_courses:
+            grouped_courses[year].sort(key=lambda x: (lesson_times.index(x["lesson_time"]), x["name"]))
         return grouped_courses, 200
 
     def open_courses_registration(self) -> (dict, int):
@@ -763,6 +798,17 @@ class CourseService:
                 "lesson_time": course.lesson_time,
                 "auditory": course.auditory,
             })
+        lesson_times = ["Понедельник 17:20 - 18:40",
+                        "Понедельник 18:55 - 20:15",
+                        "Вторник 17:20 - 18:40",
+                        "Вторник 18:55 - 20:15",
+                        "Среда 17:20 - 18:40",
+                        "Среда 18:55 - 20:15",
+                        "Четверг 17:20 - 18:40",
+                        "Четверг 18:55 - 20:15",
+                        "Пятница 17:20 - 18:40",
+                        "Пятница 18:55 - 20:15", ]
+        data.sort(key=lambda x: (lesson_times.index(x["lesson_time"]), x["name"]))
         return AuditoriumsDTO().dump(data, many=True), 200
 
     def add_pupil_to_course_by_teacher(self, course_id: int, pupil_id: int, user_id: int, is_admin: bool) \
