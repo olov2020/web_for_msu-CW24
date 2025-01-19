@@ -44,7 +44,7 @@ const Teachers = () => {
               <li key={teacherIndex} style={{
                 listStyle: 'none',
                 display: 'flex',
-                width: 'auto',
+                width: '100%',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 gap: '0 2rem',
@@ -55,7 +55,7 @@ const Teachers = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  width: 'auto',
+                  width: '30%',
                   gap: '.5rem 0',
                 }}>
                 <h3>{teacher.name}</h3>
@@ -69,7 +69,7 @@ const Teachers = () => {
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    width: 'auto',
+                    width: '30%',
                   }}>
                     {teacher.subjects}
                   </div>
@@ -79,7 +79,7 @@ const Teachers = () => {
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    width: 'auto',
+                    width: '30%',
                   }}>
                     {teacher.what}
                   </div>
