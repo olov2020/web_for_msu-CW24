@@ -245,7 +245,7 @@ class MarkService:
 
     def get_pupil_marks(self, course_id: int, pupil_id: int, lessons: list[Schedule]) \
             -> (list[list[Mark]], list[str]):
-        marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id)
+        marks = (Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id, Mark.mark != "")
                  .order_by(Mark.schedule_id).all())
         formulas = Formula.query.filter(Formula.course_id == course_id).order_by(Formula.id).all()
         formulas_ids = [formula.id for formula in formulas]
