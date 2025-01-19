@@ -241,7 +241,7 @@ const TeacherMarks = ({courseId}) => {
 
           <section className={style.columnForTextData} style={{
             margin: '2rem',
-            alignItems: 'flex-start',
+            alignItems: 'center',
           }}>
             <h3>Предварительный итог</h3>
             {marks2.pupils.length !== 0 && marks2.pupils.map((pupil) => (
@@ -300,7 +300,7 @@ const TeacherMarks = ({courseId}) => {
 
         <section className={style.columnForTextData} style={{
           margin: '2rem',
-          alignItems: 'flex-start',
+          alignItems: 'center',
         }}>
           <h3>Итог</h3>
           {marks.pupils.length !== 0 && marks.pupils.map((pupil) => (

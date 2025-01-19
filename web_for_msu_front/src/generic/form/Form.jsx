@@ -208,9 +208,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         await selectCourses(coursesSelect);
         alert('Курсы выбраны успешно');
       } catch (error) {
-        console.log(error)
-        console.log(error.message)
-        alert(`Упс... Что-то пошло не так. Выберете ровно 2 зачетных курса из разных категорий`);
+        alert(error.response.data.error);
       }
     } else if (type === 'saveTeacherMarks') {
       try {
