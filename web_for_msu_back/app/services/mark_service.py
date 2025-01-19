@@ -360,4 +360,4 @@ class MarkService:
                 case _:
                     pass
         self.db.session.commit()
-        return {"msg", "Оценки успешно сохранены"}, 200
+        return {"msg": "Оценки успешно сохранены"}, 200
