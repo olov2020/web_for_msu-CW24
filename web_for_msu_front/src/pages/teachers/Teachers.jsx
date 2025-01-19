@@ -40,7 +40,7 @@ const Teachers = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: '1rem 2rem',
+                gap: '2rem',
               }}>
                 <h3 style={{
                   minWidth: '30%',
