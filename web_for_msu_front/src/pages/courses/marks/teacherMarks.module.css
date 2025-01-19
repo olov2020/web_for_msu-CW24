@@ -48,3 +48,18 @@
         text-align: right;
     }
 }
+
+.teacherResult {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 2rem;
+
+    > h3 {
+        margin: 1rem;
+        text-align: center;
+    }
+
+    > * {
+        white-space: nowrap;
+    }
+}

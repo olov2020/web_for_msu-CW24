@@ -249,12 +249,7 @@ const TeacherMarks = ({courseId}) => {
             ))}
           </section>
 
-          <section style={{
-            margin: '2rem',
-            alignItems: 'flex-start',
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
+          <section className={style.teacherResult}>
             <h3>Итог</h3>
             <Form
               buttonText='Сохранить итог'
@@ -313,12 +308,7 @@ const TeacherMarks = ({courseId}) => {
           ))}
         </section>
 
-        <section style={{
-          margin: '2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-        }}>
+        <section className={style.teacherResult}>
           <h3>Итог</h3>
           <Form
             buttonText='Сохранить итог'
