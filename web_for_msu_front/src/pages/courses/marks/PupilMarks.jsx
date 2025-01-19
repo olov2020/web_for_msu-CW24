@@ -41,22 +41,21 @@ const PupilMarks = ({courseId}) => {
     <>
       {marks2 &&
         <section className={style.marksSection}>
-          <section className={style.datesSection}>
+          <section className={style.markTypes}>
             <h3>Тип оценки / Даты</h3>
-            {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date, index) => (
-              <h3 key={index}>{date}</h3>
+            {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType) => (
+              <h3 key={markType}><span>{markType}</span></h3>
             ))}
           </section>
 
-          <section className={style.markTypesSection}>
-            {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType, index) => (
-              <div key={markType} className={style.markType}>
-                <h3><span>{markType}</span></h3>
-
-                {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((markArray) => (
-                  markArray && markArray.length !== 0 && (
-                    <p key={markArray}>{markArray[index]}</p>
-                  )
+          <section className={style.marks}>
+            {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date, dateIndex) => (
+              <div key={dateIndex}>
+                <h3>{date}</h3>
+                {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((markArray, arrayIndex) => (
+                  markArray && markArray.length !== 0 && markArray.map((mark, markIndex) => (
+                    <p key={`${dateIndex}-${arrayIndex}-${markIndex}`}>{mark}</p>
+                  ))
                 ))}
               </div>
             ))}
@@ -72,7 +71,7 @@ const PupilMarks = ({courseId}) => {
       <section className={style.marksSection}>
         <section className={style.markTypes}>
           <h3>Тип оценки / Даты</h3>
-          {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.dates.map((markType) => (
+          {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType) => (
             <h3 key={markType}><span>{markType}</span></h3>
           ))}
         </section>
