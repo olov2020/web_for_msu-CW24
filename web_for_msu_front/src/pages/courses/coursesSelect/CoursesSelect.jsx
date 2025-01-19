@@ -57,7 +57,10 @@ const CoursesSelect = () => {
     <article>
       <h1>Выбор курсов</h1>
 
-      <h3>Форму можно заполнить только 1 раз! Следующая возможность выбрать курсы будет во время Юрьево дня</h3>
+      <h3 style={{
+        width: '90%',
+        textAlign: 'center',
+      }}>Форму можно заполнить только 1 раз! Следующая возможность выбрать курсы будет во время Юрьево дня</h3>
 
       {userStatus.includes('pupil') && !userStatus.includes('retired') ?
         <section className={style.section}>
