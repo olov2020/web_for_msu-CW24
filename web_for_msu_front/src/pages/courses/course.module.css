@@ -12,7 +12,6 @@
 
     border: 1px dashed #9F1A59;
     border-radius: 1rem;
-    white-space: nowrap;
 
     &:hover {
         background-color: #F7B7CE;
@@ -33,12 +32,7 @@
         display: flex;
         justify-content: center;
 
-        @media (min-width: 600px) {
-            width: 20%;
-        }
-        @media (max-width: 600px) {
-            width: auto;
-        }
+        width: auto;
         color: black !important;
     }
 }
