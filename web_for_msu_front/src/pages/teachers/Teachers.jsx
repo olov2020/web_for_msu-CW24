@@ -6,8 +6,6 @@ const Teachers = () => {
   const [teachers, setTeachers] = useState({});
 
   const teachersList = Object.entries(teachers);
-  const [subjects, setSubjects] = useState([]);
-  const [what, setWhat] = useState([]);
 
   const titles = ['Дирекция', 'Совет', 'Преподаватели', 'Организаторы'];
 
@@ -15,8 +13,6 @@ const Teachers = () => {
     const getAllTeachersFunc = async () => {
       const data = await getDirectoryTeachers();
       setTeachers(data);
-      setSubjects(data.subjects.split(', '));
-      setWhat(data.what.split(', '));
     }
 
     getAllTeachersFunc();
@@ -44,6 +40,7 @@ const Teachers = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                gap: '0 2rem',
               }}>
                 <h3 style={{
                   minWidth: '30%',
@@ -60,24 +57,20 @@ const Teachers = () => {
                 {teacher.subjects &&
                   <div style={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '30%',
                   }}>
-                    {subjects.map((subject, index) => (
-                      <p key={index}>{subject}</p>
-                    ))}
+                    {teacher.subjects}
                   </div>
                 }
 
                 {teacher.what &&
                   <div style={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '30%',
                   }}>
-                    {what.map((whatItem, index) => (
-                      <p key={index}>{whatItem}</p>
-                    ))}
+                    {teacher.what}
                   </div>
                 }
               </li>
