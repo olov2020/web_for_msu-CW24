@@ -10,6 +10,7 @@
     > section {
         display: flex;
         flex-direction: column;
+        flex-shrink: 0;
         width: auto;
         gap: 2.3rem 0;
 

@@ -9,6 +9,7 @@
     gap: 0 1rem;
 
     > section {
+        flex-shrink: 0;
         > * {
             text-align: center;
             white-space: nowrap;
