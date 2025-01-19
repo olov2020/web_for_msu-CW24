@@ -20,7 +20,7 @@ const Teachers = () => {
 
   return (
     <article>
-      <h1>Преподаватели и дирекция ЭМШ</h1>
+      <h1>Преподаватели и контакты ЭМШ</h1>
 
       {teachersList.map((teacherGroup, index) => (
         <section key={index} style={{
