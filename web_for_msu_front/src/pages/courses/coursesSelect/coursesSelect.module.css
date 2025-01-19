@@ -1,13 +1,14 @@
 .section {
     display: flex;
     justify-content: center;
-    width: auto;
+    width: 90%;
     max-width: 90%;
-    overflow: auto;
+    overflow-x: auto;
     padding-bottom: .5rem;
     gap: 0 1rem;
 
     > section {
+        flex: 0 0 auto;
         display: flex;
         flex-direction: column;
         width: auto;
