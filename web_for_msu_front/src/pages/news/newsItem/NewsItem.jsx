@@ -8,7 +8,7 @@ import {NEWS_ROUTE} from "../../../routing/consts.js";
 
 const NewsItem = () => {
 
-  const {state} = useLocation();
+  const {pathname, state} = useLocation();
   const [showDeleteWindow, setShowDeleteWindow] = useState(false);
   const authStatus = useSelector(state => state.user.authStatus);
   const navigate = useNavigate();
@@ -35,10 +35,10 @@ const NewsItem = () => {
   };
 
   useEffect(() => {
-    if (!state.id) {
+    if (!state) {
       navigate(NEWS_ROUTE);
     }
-  }, [state]);
+  }, [state, pathname, navigate]);
 
   return (
     <article key={state.id}>
