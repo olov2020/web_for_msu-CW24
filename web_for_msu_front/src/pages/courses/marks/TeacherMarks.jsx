@@ -82,7 +82,9 @@ const TeacherMarks = ({courseId}) => {
             return index;
           }
         })[0];
-        acc[teacherResult] = marks.pupils[index].teacher_result;
+        if (marks.pupils[index]) {
+          acc[teacherResult] = marks.pupils[index].teacher_result;
+        }
         return acc;
       }, {});
       setValuesTeacherResult(teacherResultsValues);
@@ -152,7 +154,9 @@ const TeacherMarks = ({courseId}) => {
             return index;
           }
         })[0];
-        acc[teacherResult] = marks2.pupils[index].teacher_result;
+        if (marks2.pupils[index]) {
+          acc[teacherResult] = marks2.pupils[index].teacher_result;
+        }
         return acc;
       }, {});
       setValuesTeacherResult2(teacherResultsValues);
