@@ -644,6 +644,16 @@ class CourseService:
             return {
                 "error": f"Нельзя выбирать два зачетных курса одного направления, "
                          f"вы выбрали оба курса направления {first_crediting.direction}"}, 404
+        closed = (CourseRegistrationPeriod.query
+                  .filter_by(is_open=False)
+                  .order_by(desc(CourseRegistrationPeriod.opened_at))
+                  .first())
+        if closed:
+            year = closed.opened_at.year
+            pupil_courses = PupilCourse.query.filter_by(pupil_id=pupil_id, year=year).all()
+            for pupil_course in pupil_courses:
+                self.delete_pupil_course(pupil_course.course_id, pupil_id, True)
+
         for course in selected_courses:
             response, code = self.add_pupil_to_course(course["id"], pupil, course["selected"])
             if code != 200:
