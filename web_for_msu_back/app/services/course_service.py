@@ -164,7 +164,7 @@ class CourseService:
             lessons = course.lessons
             for lesson in lessons:
                 if date_start <= lesson.date < get_next_monday(date_start):
-                    course_type = str(assoc.crediting) if user.is_pupil() else 'none'
+                    course_type = str(assoc.crediting) if user.is_pupil() else None
                     data = {
                         "course_name": course.name,
                         "course_type": course_type,
