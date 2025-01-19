@@ -52,11 +52,10 @@ const PupilMarks = ({courseId}) => {
             {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date, dateIndex) => (
               <div key={dateIndex}>
                 <h3>{date}</h3>
-                {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((markArray, arrayIndex) => (
-                  markArray && markArray.length !== 0 && markArray.map((mark, markIndex) => (
-                    <p key={`${dateIndex}-${arrayIndex}-${markIndex}`}>{mark}</p>
-                  ))
-                ))}
+                {marks2.marks[dateIndex] && marks2.marks[dateIndex].length !== 0 && marks2.marks[dateIndex].map((mark, markIndex) =>
+                  (
+                    <p key={`${dateIndex}-${markIndex}`}>{mark}</p>
+                  ))}
               </div>
             ))}
           </section>
@@ -80,11 +79,10 @@ const PupilMarks = ({courseId}) => {
           {marks.dates && marks.dates.length !== 0 && marks.dates.map((date, dateIndex) => (
             <div key={dateIndex}>
               <h3>{date}</h3>
-              {marks.marks && marks.marks.length !== 0 && marks.marks.map((markArray, arrayIndex) => (
-                markArray && markArray.length !== 0 && markArray.map((mark, markIndex) => (
-                  <p key={`${dateIndex}-${arrayIndex}-${markIndex}`}>{mark}</p>
-                ))
-              ))}
+              {marks.marks[dateIndex] && marks.marks[dateIndex].length !== 0 && marks.marks[dateIndex].map((mark, markIndex) =>
+                (
+                  <p key={`${dateIndex}-${markIndex}`}>{mark}</p>
+                ))}
             </div>
           ))}
         </section>
