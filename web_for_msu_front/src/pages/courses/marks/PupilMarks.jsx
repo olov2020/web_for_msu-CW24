@@ -51,7 +51,7 @@ const PupilMarks = ({courseId}) => {
           <section className={style.markTypesSection}>
             {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType, index) => (
               <div key={markType} className={style.markType}>
-                <h3>{markType}</h3>
+                <h3><span>{markType}</span></h3>
 
                 {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((markArray) => (
                   markArray && markArray.length !== 0 && (
@@ -63,8 +63,8 @@ const PupilMarks = ({courseId}) => {
           </section>
 
           <section className={style.results}>
-            <h3>Предварительный итог - {marks2.result ? marks2.result : 'оценка отсутствует'}</h3>
-            <h3>Итог - {marks2.teacher_result ? marks2.teacher_result : 'оценка отсутствует'}</h3>
+            <h3><span>Предварительный итог</span> - {marks2.result ? marks2.result : 'оценка отсутствует'}</h3>
+            <h3><span>Итог</span> - {marks2.teacher_result ? marks2.teacher_result : 'оценка отсутствует'}</h3>
           </section>
         </section>
       }
@@ -80,7 +80,7 @@ const PupilMarks = ({courseId}) => {
         <section className={style.markTypesSection}>
           {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType, index) => (
             <div key={markType} className={style.markType}>
-              <h3>{markType}</h3>
+              <h3><span>{markType}</span></h3>
 
               {marks.marks && marks.marks.length !== 0 && marks.marks.map((markArray) => (
                 markArray && markArray.length !== 0 && (
@@ -92,8 +92,8 @@ const PupilMarks = ({courseId}) => {
         </section>
 
         <section className={style.results}>
-          <h3>Предварительный итог - {marks.result ? marks.result: 'оценка отсутствует'}</h3>
-          <h3>Итог - {marks.teacher_result ? marks.teacher_result: 'оценка отсутствует'}</h3>
+          <h3><span>Предварительный итог</span> - {marks.result ? marks.result: 'оценка отсутствует'}</h3>
+          <h3><span>Итог</span> - {marks.teacher_result ? marks.teacher_result: 'оценка отсутствует'}</h3>
         </section>
       </section>
     </>

@@ -17,6 +17,8 @@
 
 .datesSection {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     gap: 0 2rem;
 }
@@ -32,6 +34,7 @@
     display: flex;
     width: 100%;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem 2rem;
 
     > * {
