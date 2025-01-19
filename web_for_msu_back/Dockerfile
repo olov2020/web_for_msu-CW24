@@ -21,5 +21,5 @@ ENV PYTHONPATH=/web_for_msu-CW24
 
 EXPOSE 5000
 
-CMD ["sh", "-c", "wait-for-it.sh postgres:5432 -- gunicorn --bind 0.0.0.0:5000 --limit-request-line 52428800 web_for_msu_back.runner:app"]
+CMD ["sh", "-c", "wait-for-it.sh postgres:5432 -- gunicorn --bind 0.0.0.0:5000 --limit-request-line 52428800 --workers 2 web_for_msu_back.runner:app"]
 
