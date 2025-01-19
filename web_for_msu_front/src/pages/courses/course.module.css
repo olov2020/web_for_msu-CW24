@@ -12,6 +12,7 @@
 
     border: 1px dashed #9F1A59;
     border-radius: 1rem;
+    white-space: nowrap;
 
     &:hover {
         background-color: #F7B7CE;
