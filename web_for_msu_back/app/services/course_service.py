@@ -621,13 +621,16 @@ class CourseService:
             return {"error": "Вы уже подали заявки на курсы в этом периоде записи на курсы"}, 404
         data = request.json
         courses = []
+        courses_ids = set()
         for key in data:
             course_id = key.split()[-1]
             if not course_id.isdigit():
                 continue
             course_id = int(course_id)
             courses.append({"id": course_id, "selected": data[key]})
-        selected_courses = [course for course in courses if course["selected"] != ""]
+            if data[key]:
+                courses_ids.add(course_id)
+        selected_courses = [course for course in courses if course["selected"]]
         crediting_courses = [course for course in courses if course["selected"] == "Зачетный"]
         crediting_count = len(crediting_courses)
         if crediting_count != 2:
@@ -644,6 +647,10 @@ class CourseService:
             return {
                 "error": f"Нельзя выбирать два зачетных курса одного направления, "
                          f"вы выбрали оба курса направления {first_crediting.direction}"}, 404
+        for course in selected_courses:
+            response, code = self.add_pupil_to_course(course["id"], pupil, course["selected"])
+            if code != 200:
+                return response, code
         closed = (CourseRegistrationPeriod.query
                   .filter_by(is_open=False)
                   .order_by(desc(CourseRegistrationPeriod.opened_at))
@@ -652,12 +659,8 @@ class CourseService:
             year = closed.opened_at.year
             pupil_courses = PupilCourse.query.filter_by(pupil_id=pupil_id, year=year).all()
             for pupil_course in pupil_courses:
-                self.delete_pupil_course(pupil_course.course_id, pupil_id, True)
-
-        for course in selected_courses:
-            response, code = self.add_pupil_to_course(course["id"], pupil, course["selected"])
-            if code != 200:
-                return response, code
+                if pupil_course.course_id not in courses_ids:
+                    self.delete_pupil_course(pupil_course.course_id, pupil_id, True)
         registration = PupilCourseRegistration(pupil_id, opened.id)
         self.db.session.add(registration)
         self.db.session.commit()
