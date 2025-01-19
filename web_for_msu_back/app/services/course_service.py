@@ -175,7 +175,9 @@ class CourseService:
                     }
                     result.append((LessonScheduleDTO().dump(data), lesson.date))
 
-        lesson_times = ["Вторник 17:20 - 18:40",
+        lesson_times = ["Понедельник 17:20 - 18:40",
+                        "Понедельник 18:55 - 20:15",
+                        "Вторник 17:20 - 18:40",
                         "Вторник 18:55 - 20:15",
                         "Среда 17:20 - 18:40",
                         "Среда 18:55 - 20:15",
