@@ -33,6 +33,7 @@ const Teachers = () => {
             marginTop: '5rem',
             marginBottom: '1rem',
           }}>{titles[index]}</h2>
+
           <ul style={{
             display: 'flex',
             flexDirection: 'column',
@@ -55,7 +56,7 @@ const Teachers = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  width: '30%',
+                  width: 'auto',
                   gap: '.5rem 0',
                 }}>
                 <h3>{teacher.name}</h3>
