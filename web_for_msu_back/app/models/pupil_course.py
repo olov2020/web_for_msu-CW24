@@ -13,8 +13,8 @@ class PupilCourse(db.Model):
     finished = db.Column(db.Boolean, default=False)
     approved = db.Column(db.Boolean, default=False)
     current_mark = db.Column(db.Float)
-    term1_mark = db.Column(db.Integer)
-    term2_mark = db.Column(db.Integer)
+    term1_mark = db.Column(db.String)
+    term2_mark = db.Column(db.String)
 
     def __init__(self, pupil_id, course_id, year, crediting=False, finished=False, approved=False, current_mark=None,
                  term1_mark=None, term2_mark=None):
