@@ -150,6 +150,8 @@ const TeacherMarks = ({courseId}) => {
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
         const pupilId = Number(teacherResult.split(' ')[1]);
         const index = marks2.pupils.filter((pupil, index) => {
+          console.log(pupil.id, pupilId)
+          console.log(pupil.id === pupilId)
           if (pupil.id === pupilId) {
             return index;
           }
@@ -160,6 +162,7 @@ const TeacherMarks = ({courseId}) => {
         return acc;
       }, {});
       setValuesTeacherResult2(teacherResultsValues);
+      console.log(valuesTeacherResult2)
 
       const inputsDict = inputsNew.reduce((acc, input) => {
         const [pupilId] = input.split(' ');
