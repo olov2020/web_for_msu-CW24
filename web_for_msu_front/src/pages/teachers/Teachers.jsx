@@ -55,7 +55,7 @@ const Teachers = () => {
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
                   width: 'auto',
                   gap: '.5rem 0',
                 }}>
