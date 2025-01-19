@@ -77,16 +77,13 @@ const TeacherMarks = ({courseId}) => {
 
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
         const pupilId = Number(teacherResult.split(' ')[1]);
-        const index = marks.pupils.filter((pupil, index) => {
-          if (pupil.id === pupilId) {
-            return index;
-          }
-        })[0];
-        if (marks.pupils[index]) {
+        const index = marks.pupils.findIndex((pupil) => pupil.id === pupilId);
+        if (index !== -1) {
           acc[teacherResult] = marks.pupils[index].teacher_result;
         }
         return acc;
       }, {});
+
       setValuesTeacherResult(teacherResultsValues);
 
       const inputsDict = inputsNew.reduce((acc, input) => {
@@ -149,21 +146,15 @@ const TeacherMarks = ({courseId}) => {
 
       const teacherResultsValues = teacherResults.reduce((acc, teacherResult) => {
         const pupilId = Number(teacherResult.split(' ')[1]);
-        const index = marks2.pupils.filter((pupil, index) => {
-          console.log(pupil.id, pupilId)
-          console.log(pupil.id === pupilId)
-          if (pupil.id === pupilId) {
-            return index;
-          }
-        })[0];
-        if (marks2.pupils[index]) {
+        const index = marks2.pupils.findIndex((pupil) => pupil.id === pupilId);
+        if (index !== -1) {
           acc[teacherResult] = marks2.pupils[index].teacher_result;
         }
-        console.log(acc)
         return acc;
       }, {});
+
+      console.log(teacherResultsValues)
       setValuesTeacherResult2(teacherResultsValues);
-      console.log(valuesTeacherResult2)
 
       const inputsDict = inputsNew.reduce((acc, input) => {
         const [pupilId] = input.split(' ');
