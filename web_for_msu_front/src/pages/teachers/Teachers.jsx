@@ -6,6 +6,8 @@ const Teachers = () => {
   const [teachers, setTeachers] = useState({});
 
   const teachersList = Object.entries(teachers);
+  const [subjects, setSubjects] = useState([]);
+  const [what, setWhat] = useState([]);
 
   const titles = ['Дирекция', 'Совет', 'Преподаватели', 'Организаторы'];
 
@@ -13,6 +15,8 @@ const Teachers = () => {
     const getAllTeachersFunc = async () => {
       const data = await getDirectoryTeachers();
       setTeachers(data);
+      setSubjects(data.subjects.split(', '));
+      setWhat(data.what.split(', '));
     }
 
     getAllTeachersFunc();
@@ -54,17 +58,27 @@ const Teachers = () => {
                 }
 
                 {teacher.subjects &&
-                  <p style={{
-                    minWidth: '30%',
-                    textAlign: 'center',
-                  }}>{teacher.subjects}</p>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}>
+                    {subjects.map((subject, index) => (
+                      <p key={index}>{subject}</p>
+                    ))}
+                  </div>
                 }
 
                 {teacher.what &&
-                  <p style={{
-                    minWidth: '30%',
-                    textAlign: 'center',
-                  }}>{teacher.what}</p>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}>
+                    {what.map((whatItem, index) => (
+                      <p key={index}>{whatItem}</p>
+                    ))}
+                  </div>
                 }
               </li>
             ))}
