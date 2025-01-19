@@ -63,8 +63,8 @@ const PupilMarks = ({courseId}) => {
           </section>
 
           <section className={style.results}>
-            <h3>Предварительный итог - {marks2.result}</h3>
-            <h3>Итог - {marks2.teacher_result}</h3>
+            <h3>Предварительный итог - {marks2.result ? marks2.result : 'оценка отсутствует'}</h3>
+            <h3>Итог - {marks2.teacher_result ? marks2.teacher_result : 'оценка отсутствует'}</h3>
           </section>
         </section>
       }
@@ -92,8 +92,8 @@ const PupilMarks = ({courseId}) => {
         </section>
 
         <section className={style.results}>
-          <h3>Предварительный итог - {marks.result}</h3>
-          <h3>Итог - {marks.teacher_result}</h3>
+          <h3>Предварительный итог - {marks.result ? marks.result: 'оценка отсутствует'}</h3>
+          <h3>Итог - {marks.teacher_result ? marks.teacher_result: 'оценка отсутствует'}</h3>
         </section>
       </section>
     </>
