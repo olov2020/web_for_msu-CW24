@@ -878,7 +878,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
               name={input}
               placeholder='Итог'
               value={teacherResults[resultId]}
-              values={['5', '4', '3', '2', 'Зачетный', 'Незачетный', '']}
+              values={['5', '4', '3', '2', 'Зачет', 'Незачет', '']}
               setValue={(value) => handleTeacherResultsChange(resultId, value)}
               formErrors={setErrors}
             />
