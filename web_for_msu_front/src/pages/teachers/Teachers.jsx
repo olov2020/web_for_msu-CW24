@@ -37,7 +37,7 @@ const Teachers = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '2rem 0',
+            gap: '1rem 0',
           }}>
             {teacherGroup[1].map((teacher, teacherIndex) => (
               <li key={teacherIndex} style={{
@@ -50,6 +50,7 @@ const Teachers = () => {
                 <h3 style={{
                   minWidth: '30%',
                   textAlign: 'center',
+                  whiteSpace: 'nowrap',
                 }}>{teacher.name}</h3>
 
                 {teacher.email &&
