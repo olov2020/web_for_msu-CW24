@@ -619,11 +619,16 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         const [error, setError] = useState(false);
         formValues.agreement = agreement;
         formErrors.agreement = error;
-        return <InputCheckbox name={input} formErrors={setError}
-                              fieldName='Согласие на обработку персональных данных*'
+        return (
+        <div>
+<h3><a href='../../../public/Согласие%20на%20обработку%20персональных%20данных.pdf'>Согласие на обработку персональных данных*</a></h3>
+        <InputCheckbox name={input} formErrors={setError}
+                              fieldName=''
                               setValue={setAgreement}
                               value={agreement}
         />
+        </div>
+        )
       }
       case 'howToKnow': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
