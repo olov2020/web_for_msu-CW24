@@ -132,6 +132,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         if (error.message.includes(400)) {
           alert('Пользователь с такой почтой уже существует');
         }
+        alert('Упс... что-то пошло не так');
       }
     } else if (type === 'teacherRegistration') {
       try {
@@ -141,6 +142,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         if (error.message.includes(400)) {
           alert('Пользователь с такой почтой уже существует');
         }
+        alert('Упс... что-то пошло не так');
       }
     } else if (type === 'pupilChangeData') {
       try {

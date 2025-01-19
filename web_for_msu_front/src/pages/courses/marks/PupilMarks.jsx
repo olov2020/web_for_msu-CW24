@@ -42,6 +42,7 @@ const PupilMarks = ({courseId}) => {
       {marks2 &&
         <section className={style.marksSection}>
           <section className={style.datesSection}>
+            <h3>Тип оценки / Даты</h3>
             {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date, index) => (
               <h3 key={index}>{date}</h3>
             ))}
@@ -74,6 +75,7 @@ const PupilMarks = ({courseId}) => {
 
       <section className={style.marksSection}>
         <section className={style.datesSection}>
+          <h3>Тип оценки / Даты</h3>
           {marks.dates && marks.dates.length !== 0 && marks.dates.map((date) => (
             <h3 key={date}>{date}</h3>
           ))}

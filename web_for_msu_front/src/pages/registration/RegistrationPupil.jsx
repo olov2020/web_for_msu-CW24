@@ -26,7 +26,6 @@ const RegistrationPupil = () => {
         <Link to={REGISTRATION_TEACHER_ROUTE}>
           <p>Зарегистрироваться Преподавателю</p>
         </Link>
-        <p>/</p>
         <Link to={LOGIN_ROUTE}>
           <p>Вернуться на страницу входа</p>
         </Link>
