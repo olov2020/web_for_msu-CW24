@@ -33,6 +33,7 @@ import {setEventsContestScientificWorksDate, setEventsOpenChampionshipDate} from
 import {useDispatch} from "react-redux";
 import {setAuthFromToken} from "../../store/UserReducers.js";
 import {setCoursesAuditoriums} from "../../api/adminApi.js";
+import personalDataFile from '../../../public/Согласие на обработку персональных данных.pdf';
 
 // eslint-disable-next-line react/prop-types,no-constant-binary-expression
 const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = undefined}) => {
@@ -622,9 +623,8 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         return (
           <InputCheckbox name={input} formErrors={setError}
                          setValue={setAgreement}
-                         fieldName={<h3><a href='/public/Согласие%20на%20обработку%20персональных%20данных.pdf'>Согласие
-                           на обработку
-                           персональных данных*</a></h3>}
+                         fieldName={<a href={personalDataFile}>Согласие
+                           на обработку персональных данных*</a>}
                          value={agreement}
           />
         )
