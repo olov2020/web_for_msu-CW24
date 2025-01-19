@@ -812,7 +812,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         const matchCourse = input.match(/^course (\d+)/);  // for selecting courses for pupils
         const matchMarks = input.match(/^\d+\s\d{2}\.\d{2}\.\d{4}\s([A-Za-zА-Яа-я]+\s?)+$/);  // for filling marks for teachers
         const matchVisits = input.match(/^visits\s\d{2}\.\d{2}\.\d{4}$/);  // for num of visits of each date
-        const matchTeacherResult = input.match(/^teacher_result\s\d{2}\.\d{2}\.\d{4}$/);  // for num of visits of each date
+        const matchTeacherResult = input.match(/^teacher_result (\d+)/);  // for num of visits of each date
 
         if (matchAuditory) {
           const auditoryId = `auditory ${matchAuditory[1]}`;

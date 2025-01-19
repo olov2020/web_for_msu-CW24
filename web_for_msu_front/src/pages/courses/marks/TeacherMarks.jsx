@@ -243,13 +243,19 @@ const TeacherMarks = ({courseId}) => {
             margin: '2rem',
             alignItems: 'flex-start',
           }}>
-            <h3>Итог</h3>
+            <h3>Предварительный итог</h3>
             {marks2.pupils.length !== 0 && marks2.pupils.map((pupil) => (
               <h3 key={pupil.id}>{pupil.result}</h3>
             ))}
           </section>
 
-          <section>
+          <section style={{
+            margin: '2rem',
+            alignItems: 'flex-start',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <h3>Итог</h3>
             <Form
               buttonText='Сохранить итог'
               inputs={inputsTeacherResult2}
@@ -307,7 +313,13 @@ const TeacherMarks = ({courseId}) => {
           ))}
         </section>
 
-        <section>
+        <section style={{
+          margin: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+        }}>
+          <h3>Итог</h3>
           <Form
             buttonText='Сохранить итог'
             inputs={inputsTeacherResult}
