@@ -21,6 +21,7 @@
 }
 
 .name, .time, .info {
+    flex-shrink: 0;
     > h2 {
         margin-bottom: .35rem;
     }
