@@ -623,9 +623,9 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
           <div style={{
             display: 'flex',
             alignItems: 'center',
+            height: 'auto',
           }}>
             <InputCheckbox name={input} formErrors={setError}
-                           fieldName=''
                            setValue={setAgreement}
                            value={agreement}
             />

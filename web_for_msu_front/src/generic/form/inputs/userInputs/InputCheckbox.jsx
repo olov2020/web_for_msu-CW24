@@ -40,7 +40,6 @@ const InputCheckbox = ({name, required = false, fieldName, setValue, value, form
   }
 
   return (
-
     <label className={styleCheckboxInput.checkboxContainer}>
       <h3 style={{
         alignSelf: 'flex-start',
