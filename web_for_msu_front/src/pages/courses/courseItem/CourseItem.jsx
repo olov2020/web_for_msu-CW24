@@ -19,7 +19,7 @@ const CourseItem = () => {
 
   useEffect(() => {
     if (!state) {
-      navigate(ALL_COURSES_ROUTE);
+      return navigate(ALL_COURSES_ROUTE);
     }
   }, [state, pathname, navigate]);
 

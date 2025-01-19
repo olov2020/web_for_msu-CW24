@@ -1,11 +1,11 @@
 .marksSection {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     max-width: 90%;
     overflow: auto;
     padding-bottom: .5rem;
-    gap: 1rem 0;
+    gap: 0 1rem;
 
     > section {
         > * {
@@ -15,31 +15,12 @@
     }
 }
 
-.datesSection {
+.markTypes, .marks {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     gap: 0 2rem;
-}
-
-.markTypesSection {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 1rem 0;
-}
-
-.markType {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem 2rem;
-
-    > * {
-        text-align: center;
-    }
 }
 
 .results {

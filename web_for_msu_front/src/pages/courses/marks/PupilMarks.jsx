@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getPupilMarksByCourseId, getPupilMarksByCourseId2} from "../../../api/coursesApi.js";
 import style from './pupilMarks.module.css';
 import {useLocation} from "react-router-dom";
@@ -70,34 +70,34 @@ const PupilMarks = ({courseId}) => {
       }
 
       <section className={style.marksSection}>
-        <section className={style.datesSection}>
+        <section className={style.markTypes}>
           <h3>Тип оценки / Даты</h3>
-          {marks.dates && marks.dates.length !== 0 && marks.dates.map((date) => (
-            <h3 key={date}>{date}</h3>
+          {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.dates.map((markType) => (
+            <h3 key={markType}><span>{markType}</span></h3>
           ))}
         </section>
 
-        <section className={style.markTypesSection}>
-          {marks.mark_type_choices && marks.mark_type_choices.length !== 0 && marks.mark_type_choices.map((markType, index) => (
-            <div key={markType} className={style.markType}>
-              <h3><span>{markType}</span></h3>
-
-              {marks.marks && marks.marks.length !== 0 && marks.marks.map((markArray) => (
-                markArray && markArray.length !== 0 && (
-                  <p key={markArray}>{markArray[index]}</p>
-                )
+        <section className={style.marks}>
+          {marks.dates && marks.dates.length !== 0 && marks.dates.map((date, dateIndex) => (
+            <div key={dateIndex}>
+              <h3>{date}</h3>
+              {marks.marks && marks.marks.length !== 0 && marks.marks.map((markArray, arrayIndex) => (
+                markArray && markArray.length !== 0 && markArray.map((mark, markIndex) => (
+                  <p key={`${dateIndex}-${arrayIndex}-${markIndex}`}>{mark}</p>
+                ))
               ))}
             </div>
           ))}
         </section>
 
         <section className={style.results}>
-          <h3><span>Предварительный итог</span> - {marks.result ? marks.result: 'оценка отсутствует'}</h3>
-          <h3><span>Итог</span> - {marks.teacher_result ? marks.teacher_result: 'оценка отсутствует'}</h3>
+          <h3><span>Предварительный итог</span> - {marks.result ? marks.result : 'оценка отсутствует'}</h3>
+          <h3><span>Итог</span> - {marks.teacher_result ? marks.teacher_result : 'оценка отсутствует'}</h3>
         </section>
       </section>
     </>
-  );
+  )
+    ;
 };
 
 export default PupilMarks;
