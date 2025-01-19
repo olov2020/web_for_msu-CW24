@@ -153,7 +153,6 @@ const TeacherMarks = ({courseId}) => {
         return acc;
       }, {});
 
-      console.log(teacherResultsValues)
       setValuesTeacherResult2(teacherResultsValues);
 
       const inputsDict = inputsNew.reduce((acc, input) => {
