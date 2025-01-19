@@ -49,20 +49,16 @@ const PupilMarks = ({courseId}) => {
           </section>
 
           <section className={style.markTypesSection}>
-            {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType) => (
-              <section key={markType} className={style.markType}>
+            {marks2.mark_type_choices && marks2.mark_type_choices.length !== 0 && marks2.mark_type_choices.map((markType, index) => (
+              <div key={markType} className={style.markType}>
                 <h3>{markType}</h3>
 
-                <section className={style.marks}>
-                  {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((markArray, index) => (
-                    <div key={index}>
-                      {markArray.map((mark) => (
-                        <p key={mark}>{mark}</p>
-                      ))}
-                    </div>
-                  ))}
-                </section>
-              </section>
+                {marks2.marks && marks2.marks.length !== 0 && marks2.marks.map((markArray) => (
+                  markArray && markArray.length !== 0 && (
+                    <p key={markArray}>{markArray[index]}</p>
+                  )
+                ))}
+              </div>
             ))}
           </section>
 
