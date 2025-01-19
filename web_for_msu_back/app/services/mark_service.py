@@ -141,7 +141,7 @@ class MarkService:
             return e.messages, 400
         return marks_dto, 200
 
-    def get_lessons_by_part(self, course, course_id, part):
+    def get_term_by_requested_journal_part(self, course: Course, part: str) -> str:
         year = datetime.now(tz=pytz.timezone('Europe/Moscow')).year
         date = datetime.now(tz=pytz.timezone('Europe/Moscow'))
         start_of_year = datetime(year, 1, 1, tzinfo=pytz.timezone("Europe/Moscow"))
@@ -158,12 +158,16 @@ class MarkService:
             elif (year - 1) == course.year and term1_end < date <= term2_end:
                 part = "second"
             else:
-                return []
+                return ""
         elif part == "second":
             if (year - 1) == course.year and term2_start <= date <= term1_end:
                 part = "second"
             else:
-                return []
+                return ""
+        return part
+
+    def get_lessons_by_part(self, course, course_id, part):
+        part = self.get_term_by_requested_journal_part(course, part)
         # part here - the number of the term
         match part:
             case "first":
@@ -171,7 +175,7 @@ class MarkService:
             case "second":
                 lessons = self.course_service.get_lessons_second_part(course_id)
             case _:
-                lessons = self.course_service.get_lessons(course_id)
+                lessons = []
         return lessons, part
 
     def update_journal(self, course_id: int, current_user_id: int, request: flask.Request, is_admin: bool,
@@ -310,12 +314,49 @@ class MarkService:
             return
         pupil_courses = PupilCourse.query.filter(~PupilCourse.finished).all()
         for pupil_course in pupil_courses:
-            marks, dates = self.get_pupil_marks(pupil_course.course_id, pupil_course.pupil_id, [])
-            result = round(self.calculate_result(marks))
             if finished:
-                pupil_course.term2_mark = result
-            else:
-                pupil_course.term1_mark = result
+                mark1 = pupil_course.term1_mark
+                mark2 = pupil_course.term2_mark
+                if mark1.isdigit() and mark2.isdigit():
+                    mark1, mark2 = int(mark1), int(mark2)
+                    result = round((mark1 + mark2) / 2)
+                elif "Незачет" in [mark1, mark2]:
+                    result = "Незачет"
+                elif mark1 == "Зачет" and mark2 == "Зачет":
+                    result = "Зачет"
+                else:
+                    result = ""
+                pupil_course.current_mark = result
             pupil_course.finished = finished
         self.db.session.commit()
         return {"msg": "Семестр завершен"}, 200
+
+    def update_results(self, course_id: int, current_user_id: int, request: flask.Request, part: str) -> (dict, int):
+        course = Course.query.get(course_id)
+        if not course:
+            return {'error': 'Такого курса не существует'}, 404
+
+        if not (current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
+            return {'error': 'У вас нет доступа к этому курсу'}, 403
+
+        part = self.get_term_by_requested_journal_part(course, part)
+
+        return self.set_term_mark(course_id, request, part)
+
+    def set_term_mark(self, course_id: int, request: flask.Request, part: str) -> (dict, int):
+        data = request.json
+        for key in data:
+            try:
+                pupil_id = int(key.split()[-1])
+            except Exception:
+                continue
+            mark = data[key]
+            pupil_course = PupilCourse.query.filter_by(course_id=course_id, pupil_id=pupil_id).first()
+            match part:
+                case "first":
+                    pupil_course.term1_mark = mark
+                case "second":
+                    pupil_course.term2_mark = mark
+                case _:
+                    pass
+        self.db.session.commit()

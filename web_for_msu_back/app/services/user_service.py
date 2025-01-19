@@ -72,7 +72,7 @@ class UserService:
             user = User(email=email, password=password, image=image)
             user.roles = roles
             self.db.session.add(user)
-            self.db.session.commit()
+            self.db.session.flush()
         else:
             user = User.query.filter_by(email=email).first()
             if image:
@@ -80,12 +80,7 @@ class UserService:
                 user.image = image
             user.roles = roles
             user.authorized = False
-            self.db.session.commit()
-        # if user.is_teacher():
-        #     TeacherService.add_teacher(user_id=user.id, form=form)
-        # if user.is_pupil():
-        #     agreement = ImageService.save_user_agreement(form.agreement.data)
-        #     PupilService.add_pupil(user_id=user.id, form=form, agreement=agreement)
+            self.db.session.flush()
         return user
 
     def login(self, request: flask.Request) -> (dict, int):
