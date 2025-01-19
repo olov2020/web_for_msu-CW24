@@ -95,14 +95,14 @@ class MarkService:
         if not (is_admin or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
             return {'error': 'У вас нет доступа к этому курсу'}, 403
 
-        lessons = self.get_lessons_by_part(course, course_id, part)
+        lessons, part = self.get_lessons_by_part(course, course_id, part)
 
         if not lessons:
             return {'error': 'Уроков пока нет'}, 404
 
-        return self.get_journal_part(course, course_id, lessons)
+        return self.get_journal_part(course, course_id, lessons, part)
 
-    def get_journal_part(self, course: Course, course_id: int, lessons: list[Schedule]) -> (dict, int):
+    def get_journal_part(self, course: Course, course_id: int, lessons: list[Schedule], part: str) -> (dict, int):
         formulas = course.formulas
         choices = [formula.name for formula in formulas]
 
@@ -118,11 +118,13 @@ class MarkService:
         teacher_pupil_marks = []
         for pupil in pupils:
             pupil_course_marks = pupil_marks.get(pupil.id, [])
+            pupil_course = PupilCourse.query.filter_by(pupil_id=pupil.id, course_id=course_id).first()
             teacher_pupil_marks.append({
                 'id': pupil.id,
                 'name': self.pupil_service.get_full_name(pupil),
                 'marks': [[mark.mark for mark in lesson] for lesson in pupil_course_marks],
-                'result': round(self.calculate_result(pupil_course_marks), 2)
+                'result': round(self.calculate_result(pupil_course_marks), 2),
+                'teacher_result': pupil_course.term1_mark if part == "first" else pupil_course.term2_mark
             })
 
         visits = [lesson.visits for lesson in lessons]
@@ -170,7 +172,7 @@ class MarkService:
                 lessons = self.course_service.get_lessons_second_part(course_id)
             case _:
                 lessons = self.course_service.get_lessons(course_id)
-        return lessons
+        return lessons, part
 
     def update_journal(self, course_id: int, current_user_id: int, request: flask.Request, is_admin: bool,
                        part: str) -> (dict, int):
@@ -181,7 +183,7 @@ class MarkService:
         if not (is_admin or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
             return {'error': 'У вас нет доступа к этому курсу'}, 403
 
-        lessons = self.get_lessons_by_part(course, course_id, part)
+        lessons, part = self.get_lessons_by_part(course, course_id, part)
 
         if not lessons:
             return {'error': 'Уроков пока нет'}, 404
@@ -274,7 +276,7 @@ class MarkService:
                                                 PupilCourse.pupil_id == pupil_id).first()
         if not pupil_course:
             return {'error': 'Ученик не записан на этот курс'}, 404
-        lessons = self.get_lessons_by_part(course, course_id, part)
+        lessons, part = self.get_lessons_by_part(course, course_id, part)
         if not lessons:
             return {'error': 'Уроков пока нет'}, 404
         formulas = course.formulas
@@ -287,6 +289,7 @@ class MarkService:
             'mark_type_choices': mark_type_choices,
             'marks': marks,
             'result': result,
+            'teacher_result': pupil_course.term1_mark if part == "first" else pupil_course.term2_mark
         }
         try:
             pupil_marks_dto = PupilMarksDTO().load(data)
