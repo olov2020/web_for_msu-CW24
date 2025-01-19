@@ -6,3 +6,4 @@ class PupilMarksDTO(Schema):
     mark_type_choices = fields.List(fields.String(), required=True)
     marks = fields.List(fields.List(fields.String()), required=True)
     result = fields.Float(required=True)
+    teacher_result = fields.String()
