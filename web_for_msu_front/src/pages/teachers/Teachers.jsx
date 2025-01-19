@@ -48,13 +48,15 @@ const Teachers = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: '0 2rem',
+                paddingBottom: '.5rem',
+                borderBottom: '1px dotted #9F1A59',
               }}>
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   width: '30%',
-                  gap: '1rem 0',
+                  gap: '.5rem 0',
                 }}>
                 <h3 style={{
                   textAlign: 'center',
