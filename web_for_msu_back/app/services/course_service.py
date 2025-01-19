@@ -55,6 +55,16 @@ class CourseService:
         return [assoc.teacher for assoc in course.teachers]
 
     def get_all_courses(self) -> (dict[int, list[CourseInfoDTO]], int):
+        lesson_times = ["Понедельник 17:20 - 18:40",
+                        "Понедельник 18:55 - 20:15",
+                        "Вторник 17:20 - 18:40",
+                        "Вторник 18:55 - 20:15",
+                        "Среда 17:20 - 18:40",
+                        "Среда 18:55 - 20:15",
+                        "Четверг 17:20 - 18:40",
+                        "Четверг 18:55 - 20:15",
+                        "Пятница 17:20 - 18:40",
+                        "Пятница 18:55 - 20:15", ]
         courses = Course.query.all()
         grouped_courses = {}
         for course in courses:
@@ -62,6 +72,8 @@ class CourseService:
             if year not in grouped_courses:
                 grouped_courses[year] = []
             grouped_courses[year].append(self.get_course_info(course))
+        for year in grouped_courses:
+            grouped_courses[year].sort(key=lambda x: (lesson_times.index(x["lesson_time"]), x["name"]))
         return grouped_courses, 200
 
     def get_courses_ids(self) -> (dict[int, list[CoursesIdsDTO]], int):
