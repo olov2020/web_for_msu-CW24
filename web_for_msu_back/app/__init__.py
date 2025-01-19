@@ -26,7 +26,7 @@ def create_app(config):
     JWTManager(app)
     origins = [
         os.getenv("FRONTEND_HOST"),
-        os.getenv("APP_NAME")
+        # os.getenv("APP_NAME")
     ]
     CORS(app, resources={r"/*": {"origins": origins}},
          supports_credentials=True,
