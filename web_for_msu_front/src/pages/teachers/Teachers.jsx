@@ -44,7 +44,7 @@ const Teachers = () => {
               <li key={teacherIndex} style={{
                 listStyle: 'none',
                 display: 'flex',
-                width: '100%',
+                width: 'auto',
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: '0 2rem',
