@@ -29,7 +29,10 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
 
           <p><span className={courseData.credit === 'Зачётный' ? style.credit : ''}>{courseData.credit}</span></p>
           <p>{courseData.lesson_time}</p>
-          <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
+          {courseData.auditory.includes('http') ?
+            <p><a href={courseData.auditory}>Ссылка на онлайн пару</a></p> :
+            <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
+          }
           <p><span>Текущая оценка:</span> {courseData.current_mark ? courseData.current_mark : 'оценок пока нет'}</p>
         </>
       }
@@ -39,7 +42,10 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
 
           <p><span>Классы:</span> {courseData.emsh_grades}</p>
           <p>{courseData.lesson_time}</p>
-          <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
+          {courseData.auditory.includes('http') ?
+            <p><a href={courseData.auditory}>Ссылка на онлайн пару</a></p> :
+            <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
+          }
           <p><span>Количество учеников:</span> {courseData.pupils_number}</p>
         </>
       }
