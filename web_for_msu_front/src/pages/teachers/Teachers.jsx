@@ -58,16 +58,10 @@ const Teachers = () => {
                   width: 'auto',
                   gap: '.5rem 0',
                 }}>
-                <h3 style={{
-                  textAlign: 'center',
-                  whiteSpace: 'nowrap',
-                }}>{teacher.name}</h3>
+                <h3>{teacher.name}</h3>
 
                 {teacher.email &&
-                  <p style={{
-                    textAlign: 'center',
-                    whiteSpace: 'nowrap',
-                  }}><a href={`mailto:${teacher.email}`}>{teacher.email}</a></p>
+                  <p><a href={`mailto:${teacher.email}`}>{teacher.email}</a></p>
                 }
                 </div>
 
