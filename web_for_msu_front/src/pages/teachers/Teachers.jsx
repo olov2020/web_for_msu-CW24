@@ -32,6 +32,7 @@ const Teachers = () => {
             textAlign: 'center',
             marginTop: '5rem',
             marginBottom: '1rem',
+            gap: '2rem',
           }}>{titles[index]}</h2>
           <ul>
             {teacherGroup[1].map((teacher, teacherIndex) => (
