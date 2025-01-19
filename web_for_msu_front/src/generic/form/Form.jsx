@@ -620,14 +620,18 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
         formValues.agreement = agreement;
         formErrors.agreement = error;
         return (
-        <div>
-<h3><a href='../../../public/Согласие%20на%20обработку%20персональных%20данных.pdf'>Согласие на обработку персональных данных*</a></h3>
-        <InputCheckbox name={input} formErrors={setError}
-                              fieldName=''
-                              setValue={setAgreement}
-                              value={agreement}
-        />
-        </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}>
+            <InputCheckbox name={input} formErrors={setError}
+                           fieldName=''
+                           setValue={setAgreement}
+                           value={agreement}
+            />
+            <h3><a href='/public/Согласие%20на%20обработку%20персональных%20данных.pdf'>Согласие на обработку
+              персональных данных*</a></h3>
+          </div>
         )
       }
       case 'howToKnow': {
