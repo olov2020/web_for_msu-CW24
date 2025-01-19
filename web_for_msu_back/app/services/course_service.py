@@ -159,12 +159,13 @@ class CourseService:
         if not associations:
             return {"error": "У пользователя нет курсов"}, 404
         result = []
+        crediting = {True: "Зачетный", False: "Незачетный"}
         for assoc in associations:
             course = assoc.course
             lessons = course.lessons
             for lesson in lessons:
                 if date_start <= lesson.date < get_next_monday(date_start):
-                    course_type = str(assoc.crediting) if user.is_pupil() else None
+                    course_type = crediting[assoc.crediting] if user.is_pupil() else None
                     data = {
                         "course_name": course.name,
                         "course_type": course_type,
