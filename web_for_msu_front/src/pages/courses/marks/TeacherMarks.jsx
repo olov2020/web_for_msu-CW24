@@ -159,6 +159,7 @@ const TeacherMarks = ({courseId}) => {
         if (marks2.pupils[index]) {
           acc[teacherResult] = marks2.pupils[index].teacher_result;
         }
+        console.log(acc)
         return acc;
       }, {});
       setValuesTeacherResult2(teacherResultsValues);
