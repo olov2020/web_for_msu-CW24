@@ -45,7 +45,7 @@ const Teachers = () => {
                 listStyle: 'none',
                 display: 'flex',
                 width: 'auto',
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 gap: '0 2rem',
                 paddingBottom: '.5rem',
@@ -55,7 +55,7 @@ const Teachers = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  width: '30%',
+                  width: 'auto',
                   gap: '.5rem 0',
                 }}>
                 <h3 style={{
@@ -75,7 +75,7 @@ const Teachers = () => {
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    width: '30%',
+                    width: 'auto',
                   }}>
                     {teacher.subjects}
                   </div>
@@ -85,7 +85,7 @@ const Teachers = () => {
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    width: '30%',
+                    width: 'auto',
                   }}>
                     {teacher.what}
                   </div>
