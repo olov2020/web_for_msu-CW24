@@ -1,4 +1,5 @@
 .section {
+    position: relative;
     display: flex;
     justify-content: center;
     flex-shrink: 0;
@@ -21,7 +22,6 @@
 }
 
 .name, .time, .info {
-    flex-shrink: 0;
     > h2 {
         margin-bottom: .35rem;
     }
