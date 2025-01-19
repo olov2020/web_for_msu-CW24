@@ -614,7 +614,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
       }
       case 'agreement': {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [agreement, setAgreement] = useState(true);
+        const [agreement, setAgreement] = useState(false);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [error, setError] = useState(false);
         formValues.agreement = agreement;
