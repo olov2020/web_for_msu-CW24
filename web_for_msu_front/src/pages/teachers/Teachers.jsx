@@ -49,19 +49,25 @@ const Teachers = () => {
                 alignItems: 'center',
                 gap: '0 2rem',
               }}>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  width: '30%',
+                  gap: '1rem 0',
+                }}>
                 <h3 style={{
-                  minWidth: '30%',
                   textAlign: 'center',
                   whiteSpace: 'nowrap',
                 }}>{teacher.name}</h3>
 
                 {teacher.email &&
                   <p style={{
-                    minWidth: '30%',
                     textAlign: 'center',
                     whiteSpace: 'nowrap',
                   }}><a href={`mailto:${teacher.email}`}>{teacher.email}</a></p>
                 }
+                </div>
 
                 {teacher.subjects &&
                   <div style={{
