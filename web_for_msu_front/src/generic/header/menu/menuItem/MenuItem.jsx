@@ -33,7 +33,8 @@ const MenuItem = ({id, title, dropdown}) => {
       </div>
 
       {showMenu &&
-        <MenuDropdown ref={componentRef} onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)} items={dropdown} onClick={() => setShowMenu(false)}/>
+        <MenuDropdown ref={componentRef} onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)}
+                      items={dropdown} onClick={() => setShowMenu(false)}/>
       }
     </section>
   );
