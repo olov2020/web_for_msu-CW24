@@ -7,7 +7,7 @@ const Teachers = () => {
 
   const teachersList = Object.entries(teachers);
 
-  const titles = ['Дирекция', 'Совет', 'Преподаватели', 'Организаторы'];
+  const titles = ['Совет', 'Дирекция', 'Организаторы', 'Преподаватели'];
 
   useEffect(() => {
     const getAllTeachersFunc = async () => {
@@ -40,7 +40,7 @@ const Teachers = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: '0 2rem',
+                gap: '1rem 2rem',
               }}>
                 <h3 style={{
                   minWidth: '30%',
