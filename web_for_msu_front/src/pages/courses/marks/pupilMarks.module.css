@@ -11,6 +11,7 @@
 
     > section {
         flex-shrink: 0;
+        white-space: nowrap;
         > * {
             flex-shrink: 0;
             text-align: center;

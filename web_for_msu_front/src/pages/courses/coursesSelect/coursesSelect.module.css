@@ -12,6 +12,7 @@
         align-items: center;
         flex-shrink: 0;
         gap: 2.3rem 0;
+        white-space: nowrap;
 
         > * {
             white-space: nowrap;
