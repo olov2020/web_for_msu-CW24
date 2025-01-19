@@ -8,7 +8,7 @@ import NewsSearch from "./newsSearch/NewsSearch.jsx";
 const News = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3); // State for items per page
+  const [itemsPerPage, setItemsPerPage] = useState(2); // State for items per page
   const listRef = useRef(null); // Reference to the list
   const [news, setNews] = useState([]);
   const [newsSearch, setNewsSearch] = useState('');

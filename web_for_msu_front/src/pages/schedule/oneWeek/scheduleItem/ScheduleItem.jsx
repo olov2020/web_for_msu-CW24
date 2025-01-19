@@ -5,7 +5,7 @@ const ScheduleItem = ({key, date, time, courseName, auditory, credit, plan}) => 
   return (
     <section key={key} className={styleCourse.courseCard}>
       <h3>{courseName}</h3>
-      <p><span className={credit === 'Зачётный' ? styleCourse.credit : ''}>{credit}</span></p>
+      {credit && <p><span className={credit === 'Зачётный' ? styleCourse.credit : ''}>{credit}</span></p>}
       <p><span>{date}</span> {time}</p>
 
       <p><span>Аудитория: </span>{auditory ? auditory : 'уточняется'}</p>
