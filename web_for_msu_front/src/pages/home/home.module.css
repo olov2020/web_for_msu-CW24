@@ -11,6 +11,6 @@
     .home {
         display: grid;
         align-items: flex-start;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 2fr 1fr;
     }
 }

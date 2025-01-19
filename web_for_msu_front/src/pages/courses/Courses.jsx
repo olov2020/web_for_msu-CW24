@@ -38,7 +38,7 @@ const Courses = () => {
   return (
     <article>
       {
-        url === ('/courses/my') || url === '/' ?
+        (url === ('/courses/my') || url === '/') ?
           <h1>Мои курсы</h1> :
           url === ('/courses/all') ?
             <h1>Все курсы</h1> :
