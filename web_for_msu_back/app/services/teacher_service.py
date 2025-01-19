@@ -115,7 +115,7 @@ class TeacherService:
                      .join(Role, Role.id == user_role.c.role_id)
                      .filter(User.id != 1)  # for better speed, excluding admin
                      .filter(Role.name == "directory").all())
-        directory_data = [{"id": member.id, "name": f"{member.name} {member.surname} {member.patronymic}"} for member in
+        directory_data = [{"id": member.id, "name": f"{member.surname} {member.name} {member.patronymic}"} for member in
                           directory]
         council = (Teacher.query.join(User, User.id == Teacher.user_id)
                    .join(user_role, user_role.c.user_id == User.id)
