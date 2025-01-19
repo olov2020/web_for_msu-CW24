@@ -1,6 +1,7 @@
 .section {
     display: flex;
     justify-content: center;
+    flex-shrink: 0;
     max-width: 90%;
     overflow-x: auto;
     padding-bottom: .5rem;
