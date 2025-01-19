@@ -104,7 +104,6 @@ def output_json(data, code, headers=None):
 def send_reset_email(email, reset_link):
     from flask_mail import Message
     msg = Message("Смена пароля", recipients=[email])
-    print(os.getenv("MAIL_SERVER"))
     msg.body = f"Перейдите по этой ссылке, чтобы сбросить пароль: {reset_link}"
     mail.send(msg)
 
