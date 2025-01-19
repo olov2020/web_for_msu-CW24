@@ -17,11 +17,9 @@ COPY . /web_for_msu-CW24/web_for_msu_back
 # Устанавливаем переменные окружения для Flask
 ENV FLASK_APP=runner.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV PYTHONPATH=/web_for_msu-CW24/web_for_msu_back
+ENV PYTHONPATH=/web_for_msu-CW24
 
-# Открываем порт для Flask
 EXPOSE 5000
 
-# Запускаем Flask приложение
-CMD ["sh", "-c", "wait-for-it.sh postgres:5432 -- flask run"]
+CMD ["sh", "-c", "wait-for-it.sh postgres:5432 -- gunicorn --bind 0.0.0.0:5000 --limit-request-line 52428800 --workers 2 web_for_msu_back.runner:app"]
 
