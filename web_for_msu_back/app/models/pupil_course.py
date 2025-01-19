@@ -12,7 +12,7 @@ class PupilCourse(db.Model):
     crediting = db.Column(db.Boolean, default=False)
     finished = db.Column(db.Boolean, default=False)
     approved = db.Column(db.Boolean, default=False)
-    current_mark = db.Column(db.Float)
+    current_mark = db.Column(db.String)
     term1_mark = db.Column(db.String)
     term2_mark = db.Column(db.String)
 

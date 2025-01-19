@@ -660,7 +660,7 @@ class CourseService:
             pupil_courses = PupilCourse.query.filter_by(pupil_id=pupil_id, year=year).all()
             for pupil_course in pupil_courses:
                 if pupil_course.course_id not in courses_ids:
-                    self.delete_pupil_course(pupil_course.course_id, pupil_id, True)
+                    self.delete_pupil_course(pupil_course.course_id, pupil_id, True, True)
         registration = PupilCourseRegistration(pupil_id, opened.id)
         self.db.session.add(registration)
         self.db.session.commit()
@@ -681,7 +681,7 @@ class CourseService:
         self.db.session.commit()
         return {"msg": "Ученик успешно добавлен на курс"}, 200
 
-    def delete_pupil_course(self, course_id: int, pupil_id: int, existing=False) -> (dict, int):
+    def delete_pupil_course(self, course_id: int, pupil_id: int, existing=False, ignore_crediting=False) -> (dict, int):
         course = Course.query.get(course_id)
         pupil = Pupil.query.get(pupil_id)
         if not course:
@@ -694,7 +694,7 @@ class CourseService:
             return {"error": "Этот ученик не подавал заявку на этот курс"}, 404
         if not existing and pupil_course.approved:
             return {"error": "Этот ученик уже записан на курс"}, 404
-        if pupil_course.crediting:
+        if not ignore_crediting and pupil_course.crediting:
             return {
                 "error": "Для ученика этот курс зачетный, чтобы отчислить его с курса, его необходимо отчислить"}, 404
         marks = Mark.query.filter(Mark.course_id == course_id, Mark.pupil_id == pupil_id).all()
