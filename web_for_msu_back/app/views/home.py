@@ -131,11 +131,11 @@ class HomeView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         response, code = user_service.change_password(email)
-        return jsonify(response, code)
+        return jsonify(response), code
 
     @method("POST")
     def reset_password(self, token: str):
         services = get_services()
         user_service: UserService = services["user_service"]
         response, code = user_service.reset_password(request, token)
-        return jsonify(response, code)
+        return jsonify(response), code
