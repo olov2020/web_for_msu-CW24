@@ -252,6 +252,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
       try {
         await resetPassword(formValues.password, id);
         alert('Пароль успешно изменен');
+        navigate(LOGIN_ROUTE);
       } catch {
         alert(`Упс... Что-то пошло не так`);
       }
