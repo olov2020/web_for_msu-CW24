@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 import flask
 from marshmallow import ValidationError
+from sqlalchemy import desc
 
 from web_for_msu_back.app.dto.news import NewsDTO
 from web_for_msu_back.app.models import News
@@ -44,7 +45,7 @@ class NewsService:
         return {"msg": 'Новость успешно добавлена'}, 201
 
     def get_news(self) -> (list[NewsDTO], int):
-        news = News.query.all()
+        news = News.query.order_by(desc(News.date), desc(News.id)).all()
         for n in news:
             n.photo = self.image_service.get_from_yandex_s3("news", n.photo)
             if n.file:
