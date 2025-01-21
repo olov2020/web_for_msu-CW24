@@ -13,7 +13,7 @@ with app.app_context():
     create_roles()
     create_admin()
     add_scheduled_jobs(scheduler, app)
+scheduler.start()
 
 if __name__ == '__main__':
-    scheduler.start()
     app.run(host='127.0.0.1', port=5000, debug=False)
