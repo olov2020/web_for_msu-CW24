@@ -87,7 +87,7 @@
 
 ## Технологии
 
-- **Фронтенд:** JavaScript, React, HTML, CSS  
+- **Фронтенд:** JavaScript, React, Axios, React-router, HTML, CSS  
 - **Бэкенд:** Python, Flask, SQLAlchemy, PostgreSQL
 - **Инфраструктура:** Docker, Nginx
 
