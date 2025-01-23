@@ -1,4 +1,4 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import PupilMarks from "../marks/PupilMarks.jsx";
 import TeacherMarks from "../marks/TeacherMarks.jsx";
@@ -7,80 +7,105 @@ import ApprovePupils from "../approvePupils/ApprovePupils.jsx";
 import AddPupilOnCourse from "../addPupilOnCourse/AddPupilOnCourse.jsx";
 import style from '../course.module.css';
 import DeletePupilOnCourse from "../deletePupilOnCourse/DeletePupilOnCourse.jsx";
-import {ALL_COURSES_ROUTE} from "../../../routing/consts.js";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {checkIfUserIsOnCourse, getCourseById} from "../../../api/coursesApi.js";
 
 const CourseItem = () => {
 
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {pathname, state} = useLocation();
-  const navigate = useNavigate();
+  const [courseData, setCourseData] = useState({});
+  const [isMyCourses, setIsMyCourses] = useState(false);
 
   useEffect(() => {
     if (!state) {
-      return navigate(ALL_COURSES_ROUTE);
+      const pathnameArr = pathname.split("/");
+      const courseId = Number(pathnameArr[pathnameArr.length - 2]);
+      const getCourseByIdFunc = async () => {
+        const data = await getCourseById({courseId});
+        setCourseData(data);
+      }
+
+      getCourseByIdFunc();
+
+      const accessToken = localStorage.getItem("token");
+      if (accessToken) {
+
+        const checkIfUserIsOnCourseFunc = async () => {
+          const data = await checkIfUserIsOnCourse({courseId, accessToken});
+          setIsMyCourses(data);
+        }
+
+        checkIfUserIsOnCourseFunc();
+      }
+    } else {
+      setCourseData(state.courseData);
+      setIsMyCourses(state.isMyCourses);
     }
-  }, [state, pathname, navigate]);
+
+  }, [state, pathname]);
 
   return (
-    <article key={state.courseData.id}>
-      <h1>{state.courseData.name}</h1>
-      <h3 style={{
-        alignSelf: 'flex-end',
-        marginRight: '2rem',
-      }}
-      >
-        {state.year}
-      </h3>
+    <article key={courseData.id}>
+      <h1>{courseData.name}</h1>
+      {state.year &&
+        <h3 style={{
+          alignSelf: 'flex-end',
+          marginRight: '2rem',
+        }}
+        >
+          {state.year}
+        </h3>
+      }
 
-      {state.isMyCourses && userStatus.includes('pupil') &&
+      {isMyCourses && userStatus.includes('pupil') &&
         <section style={{
           width: '90%',
         }}>
           <h3>Оценка за первый
-            семестр: <strong>{state.courseData.mark1 ? state.courseData.mark1 : 'пока оценка не выставлена'}</strong>
+            семестр: <strong>{courseData.mark1 ? courseData.mark1 : 'пока оценка не выставлена'}</strong>
           </h3>
           <h3>Оценка за второй
-            семестр: <strong>{state.courseData.mark2 ? state.courseData.mark2 : 'пока оценка не выставлена'}</strong>
+            семестр: <strong>{courseData.mark2 ? courseData.mark2 : 'пока оценка не выставлена'}</strong>
           </h3>
         </section>
       }
 
-      {state.isMyCourses &&
+      {isMyCourses &&
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>
             <h2>Ведомость оценок</h2>
             {userStatus.includes('teacher') ? (
-              <TeacherMarks courseId={state.courseData.id}/>
+              <TeacherMarks courseId={courseData.id}/>
             ) : (
-              <PupilMarks courseId={state.courseData.id}/>
+              <PupilMarks courseId={courseData.id}/>
             )}
           </>
         ))
       }
 
-      {state.isMyCourses && userStatus.includes('teacher') &&
+      {isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
-          <ApprovePupils courseId={state.courseData.id}/>
+          <ApprovePupils courseId={courseData.id}/>
         </section>
       }
 
-      {state.isMyCourses && userStatus.includes('teacher') &&
+      {isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
-          <AddPupilOnCourse courseId={state.courseData.id}/>
+          <AddPupilOnCourse courseId={courseData.id}/>
         </section>
       }
 
-      {state.isMyCourses && userStatus.includes('teacher') &&
+      {isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
-          <DeletePupilOnCourse courseId={state.courseData.id}/>
+          <DeletePupilOnCourse courseId={courseData.id}/>
         </section>
       }
 
@@ -90,7 +115,7 @@ const CourseItem = () => {
           justifyContent: 'center',
           width: '90%',
         }}>
-          <ChangeCourse courseId={state.courseData.id}/>
+          <ChangeCourse courseId={courseData.id}/>
         </section>
       }
 
@@ -100,16 +125,16 @@ const CourseItem = () => {
             alignSelf: 'center',
           }}>Информация о курсе</h2>
 
-          <p><span>Цель курса:</span> {state.courseData.course_purpose}</p>
-          <p><span>Задачи курса:</span> {state.courseData.course_objectives}</p>
-          <p><span>Особенности курса:</span> {state.courseData.course_features}</p>
-          <p><span>Формат проведения занятий:</span> {state.courseData.course_format}</p>
-          <p><span>Целевая аудитория:</span> {state.courseData.target_audience}</p>
-          <p><span>Количество слушателей:</span> {state.courseData.number_of_listeners}</p>
-          <p><span>Отбор на курс:</span> {state.courseData.selection}</p>
-          <p><span>Система оценивания:</span> {state.courseData.assessment}</p>
-          <p><span>Формат проведения курса:</span> {state.courseData.platform_format}</p>
-          <p><span>Дополнительная информация:</span> {state.courseData.additional_info}</p>
+          <p><span>Цель курса:</span> {courseData.course_purpose}</p>
+          <p><span>Задачи курса:</span> {courseData.course_objectives}</p>
+          <p><span>Особенности курса:</span> {courseData.course_features}</p>
+          <p><span>Формат проведения занятий:</span> {courseData.course_format}</p>
+          <p><span>Целевая аудитория:</span> {courseData.target_audience}</p>
+          <p><span>Количество слушателей:</span> {courseData.number_of_listeners}</p>
+          <p><span>Отбор на курс:</span> {courseData.selection}</p>
+          <p><span>Система оценивания:</span> {courseData.assessment}</p>
+          <p><span>Формат проведения курса:</span> {courseData.platform_format}</p>
+          <p><span>Дополнительная информация:</span> {courseData.additional_info}</p>
         </div>
 
         <div className={style.asideInfo}>
@@ -124,7 +149,7 @@ const CourseItem = () => {
             }}>Преподаватели</h2>
 
             <div>
-              {state.courseData.teachers.map((teacher, index) => (
+              {courseData.teachers.map((teacher, index) => (
                 <p key={index}>{teacher}</p>
               ))}
             </div>
@@ -141,14 +166,14 @@ const CourseItem = () => {
               alignSelf: 'center',
             }}>Краткая информация</h2>
 
-            <p><span>Краткое описание курса:</span> {state.courseData.short_description}</p>
-            <p><span>Курс попадает под категорию:</span> {state.courseData.crediting}</p>
-            <p><span>Время проведения:</span> {state.courseData.lesson_time}</p>
-            <p><span>Классы:</span> {state.courseData.emsh_grades}</p>
-            <p><span>Направление:</span> {state.courseData.direction}</p>
-            {state.courseData.auditory && state.courseData.auditory.includes('http') ?
-              <p><a href={state.courseData.auditory}>Ссылка на онлайн пару</a></p> :
-              <p><span>Аудитория:</span> {state.courseData.auditory ? state.courseData.auditory : 'уточняется'}</p>
+            <p><span>Краткое описание курса:</span> {courseData.short_description}</p>
+            <p><span>Курс попадает под категорию:</span> {courseData.crediting}</p>
+            <p><span>Время проведения:</span> {courseData.lesson_time}</p>
+            <p><span>Классы:</span> {courseData.emsh_grades}</p>
+            <p><span>Направление:</span> {courseData.direction}</p>
+            {courseData.auditory && state.courseData.auditory.includes('http') ?
+              <p><a href={courseData.auditory}>Ссылка на онлайн пару</a></p> :
+              <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
             }
           </div>
         </div>
@@ -166,7 +191,7 @@ const CourseItem = () => {
         }}>Занятия и темы</h2>
 
         <div className={style.lessons}>
-          {state.courseData.lessons && state.courseData.lessons.length > 0 && state.courseData.lessons.map((lesson) => (
+          {courseData.lessons && courseData.lessons.length > 0 && courseData.lessons.map((lesson) => (
             <div key={lesson.lesson_number} className={style.lesson}>
               <h3><span style={{fontSize: "inherit"}}>Тема:</span> {lesson.theme}</h3>
               <p><span>План занятия:</span> {lesson.plan}</p>

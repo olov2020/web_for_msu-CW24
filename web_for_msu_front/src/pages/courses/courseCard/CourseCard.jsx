@@ -8,7 +8,7 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
   const userStatus = useSelector(state => state.user.authStatus)
 
   return (
-    <Link to={`/courses/${year}/${courseData.name}`}
+    <Link to={`/courses/${year}/${courseData.name}/${courseData.id}`}
           state={{year, courseData, isMyCourses}}
           key={key}
           className={style.courseCard}

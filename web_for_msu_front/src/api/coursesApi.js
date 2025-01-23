@@ -10,6 +10,26 @@ export const getAllCourses = async () => {
   }
 }
 
+export const getCourseById = async ({courseId}) => {
+  const response = await $host.get(`/home/all_courses/${courseId}/`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
+export const checkIfUserIsOnCourse = async ({courseId, accessToken}) => {
+  const response = await $authHost.get(`/home/check_user_on_course/${courseId}/${accessToken}/`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 export const getMyCoursesPupil = async () => {
   const response = await $authHost.get(`/pupil/my_courses/`)
 
