@@ -5,7 +5,7 @@ import style from '../news.module.css'
 const NewsCard = ({photo = null, title, date, description, id, file}) => {
 
   return (
-    <Link to={`/news/${title}/${date}`}
+    <Link to={`/news/${title}/${date}/${id}`}
           state={{id, photo, title, description, date, file}}
           className={style.newsCard}
           key={id}

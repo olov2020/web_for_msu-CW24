@@ -10,6 +10,16 @@ export const getAllNews = async () => {
   }
 }
 
+export const getNewsById = async ({newsId}) => {
+  const response = await $host.get(`/news/${newsId}/`)
+
+  try {
+    return response.data;
+  } catch (error) {
+    return new Error(error);
+  }
+}
+
 export const addNewsItem = async (title, description, photo, file) => {
   const formData = new FormData();
   const value = {

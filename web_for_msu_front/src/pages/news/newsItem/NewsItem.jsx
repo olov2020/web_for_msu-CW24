@@ -1,17 +1,17 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import deleteIcon from '../../../../public/generic/deleteIcon.svg'
 import DeleteWindow from "./deleteWindow/DeleteWindow.jsx";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import ButtonSubmit from "../../../generic/form/submit/ButtonSubmit.jsx";
-import {NEWS_ROUTE} from "../../../routing/consts.js";
+import {getNewsById} from "../../../api/newsApi.js";
 
 const NewsItem = () => {
 
   const {pathname, state} = useLocation();
   const [showDeleteWindow, setShowDeleteWindow] = useState(false);
   const authStatus = useSelector(state => state.user.authStatus);
-  const navigate = useNavigate();
+  const [newsInfo, setNewsInfo] = useState({});
 
   const handleFileDownload = async (fileUrl, fileName) => {
     try {
@@ -36,13 +36,22 @@ const NewsItem = () => {
 
   useEffect(() => {
     if (!state) {
-      navigate(NEWS_ROUTE);
+      const pathnameArr = pathname.split("/");
+      const newsId = Number(pathnameArr[pathnameArr.length - 2]);
+      const getNewsByIdFunc = async () => {
+        const data = await getNewsById({newsId});
+        setNewsInfo(data);
+      }
+
+      getNewsByIdFunc();
+    } else {
+      setNewsInfo(state);
     }
-  }, [state, pathname, navigate]);
+  }, [state, pathname]);
 
   return (
-    <article key={state.id}>
-      <h1>{state.title}</h1>
+    <article key={newsInfo.id}>
+      <h1>{newsInfo.title}</h1>
 
       <section
         style={{
@@ -54,7 +63,7 @@ const NewsItem = () => {
         }}
       >
         <h3>
-          {state.date}
+          {newsInfo.date}
         </h3>
 
         {(authStatus.includes('admin') || authStatus.includes('newsmaker')) &&
@@ -73,13 +82,13 @@ const NewsItem = () => {
                    setShowDeleteWindow(!showDeleteWindow)
                  }}
             />
-            {showDeleteWindow && <DeleteWindow setShowDeleteWindow={setShowDeleteWindow} newsId={state.id}/>}
+            {showDeleteWindow && <DeleteWindow setShowDeleteWindow={setShowDeleteWindow} newsId={newsInfo.id}/>}
           </div>
         }
       </section>
 
-      {state.photo &&
-        <img src={state.photo} alt={state.title}
+      {newsInfo.photo &&
+        <img src={newsInfo.photo} alt={newsInfo.title}
              style={{
                width: "30vw",
                objectFit: 'contain',
@@ -92,10 +101,10 @@ const NewsItem = () => {
         width: '80%',
       }}
       >
-        {state.description}
+        {newsInfo.description}
       </p>
 
-      {state.file &&
+      {newsInfo.file &&
         <section style={{
           width: '90%',
         }}>
@@ -103,7 +112,7 @@ const NewsItem = () => {
           <div style={{
             width: 'auto',
           }}>
-            <ButtonSubmit onClick={() => handleFileDownload(state.file, state.title)} text='Скачать файл'/>
+            <ButtonSubmit onClick={() => handleFileDownload(newsInfo.file, newsInfo.title)} text='Скачать файл'/>
           </div>
         </section>
       }

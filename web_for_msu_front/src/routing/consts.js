@@ -20,7 +20,7 @@ export const AUDITORY_ROUTE = '/auditory';
 
 export const NEWS_ROUTE = '/news';
 export const CREATE_NEWS_ROUTE = '/news/add';
-export const NEWS_ITEM_ROUTE = '/news/:title/:date';
+export const NEWS_ITEM_ROUTE = '/news/:title/:date/:id';
 
 export const ABOUT_ROUTE = '/about';
 export const TEACHERS_ROUTE = '/teachers';
