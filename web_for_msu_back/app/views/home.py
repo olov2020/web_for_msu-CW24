@@ -58,6 +58,13 @@ class HomeView(FlaskView):
         return jsonify(result), code
 
     @method("GET")
+    def course(self, course_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        result, code = course_service.get_course(course_id)
+        return jsonify(result), code
+
+    @method("GET")
     def all_roles(self):
         services = get_services()
         user_service: UserService = services["user_service"]
@@ -138,4 +145,12 @@ class HomeView(FlaskView):
         services = get_services()
         user_service: UserService = services["user_service"]
         response, code = user_service.reset_password(request, token)
+        return jsonify(response), code
+
+    @method("GET")
+    @auth_required
+    def check_user_on_course(self, course_id: int):
+        services = get_services()
+        course_service: CourseService = services["course_service"]
+        response, code = course_service.check_user_on_course(course_id, g.current_user.id)
         return jsonify(response), code

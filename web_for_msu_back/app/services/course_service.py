@@ -86,6 +86,12 @@ class CourseService:
             })
         return CoursesIdsDTO().dump(data, many=True), 200
 
+    def get_course(self, course_id: int) -> (CourseInfoDTO, int):
+        course = Course.query.get(course_id)
+        if not course:
+            return {"error": "Нет такого курса"}, 404
+        return self.get_course_info(course), 200
+
     def get_all_current_courses(self, pupil_id: int) -> (list[CourseInfoSelectionDTO], int):
         pupil = Pupil.query.get(pupil_id)
         if not pupil:
@@ -849,3 +855,21 @@ class CourseService:
         if not teacher:
             return {"error": "Вы не можете добавить ученика на курс, на котором не преподаете"}, 404
         return self.delete_pupil_course(course_id, pupil_id, True)
+
+    def check_user_on_course(self, course_id: int, user_id: int) -> (bool, int):
+        user = User.query.get(user_id)
+        if not user:
+            return False, 404
+        try:
+            if user.is_pupil():
+                pupil = user.pupil[0]
+                user_course = PupilCourse.query.filter_by(pupil_id=pupil.id, course_id=course_id).first()
+            else:
+                teacher = user.teacher[0]
+                user_course = TeacherCourse.query.filter_by(teacher_id=teacher.id, course_id=course_id).first()
+            if user_course:
+                return True, 200
+            else:
+                return False, 200
+        except Exception:
+            return False, 404
