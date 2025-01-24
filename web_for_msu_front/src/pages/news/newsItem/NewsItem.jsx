@@ -37,7 +37,7 @@ const NewsItem = () => {
   useEffect(() => {
     if (!state) {
       const pathnameArr = pathname.split("/");
-      const newsId = Number(pathnameArr[pathnameArr.length - 2]);
+      const newsId = Number(pathnameArr[pathnameArr.length - 1]);
       const getNewsByIdFunc = async () => {
         const data = await getNewsById({newsId});
         setNewsInfo(data);

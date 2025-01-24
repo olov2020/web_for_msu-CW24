@@ -17,7 +17,6 @@ const CourseItem = () => {
   const {pathname, state} = useLocation();
   const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
-  const [courseId, setCourseId] = useState(undefined);
   const [year, setYear] = useState(undefined);
 
   useEffect(() => {
