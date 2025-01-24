@@ -11,7 +11,7 @@ export const getAllCourses = async () => {
 }
 
 export const getCourseById = async ({courseId}) => {
-  const response = await $host.get(`/home/all_courses/${courseId}/`)
+  const response = await $host.get(`/home/course/${courseId}/`)
 
   try {
     return response.data;
