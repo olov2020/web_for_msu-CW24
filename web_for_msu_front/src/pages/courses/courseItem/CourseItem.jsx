@@ -33,7 +33,7 @@ const CourseItem = () => {
       if (accessToken) {
 
         const checkIfUserIsOnCourseFunc = async () => {
-          const data = await checkIfUserIsOnCourse({courseId, accessToken});
+          const data = await checkIfUserIsOnCourse({courseId});
           setIsMyCourses(data);
         }
 

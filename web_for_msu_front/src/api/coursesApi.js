@@ -20,8 +20,8 @@ export const getCourseById = async ({courseId}) => {
   }
 }
 
-export const checkIfUserIsOnCourse = async ({courseId, accessToken}) => {
-  const response = await $authHost.get(`/home/check_user_on_course/${courseId}/${accessToken}/`)
+export const checkIfUserIsOnCourse = async ({courseId}) => {
+  const response = await $authHost.get(`/home/check_user_on_course/${courseId}/`)
 
   try {
     return response.data;
