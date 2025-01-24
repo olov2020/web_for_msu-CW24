@@ -22,8 +22,8 @@ const CourseItem = () => {
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
-    setCourseId(Number(pathnameArr[pathnameArr.length - 1]));
-    setYear(Number(pathnameArr[pathnameArr.length - 3]));
+    setCourseId(pathnameArr[pathnameArr.length - 1]);
+    setYear(pathnameArr[pathnameArr.length - 3]);
 
     if (!state) {
       const getCourseByIdFunc = async () => {
