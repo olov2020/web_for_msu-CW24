@@ -17,11 +17,13 @@ const CourseItem = () => {
   const {pathname, state} = useLocation();
   const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
+  const [courseId, setCourseId] = useState(undefined);
 
   useEffect(() => {
+    const pathnameArr = pathname.split("/");
+    setCourseId(Number(pathnameArr[pathnameArr.length - 2]));
+
     if (!state) {
-      const pathnameArr = pathname.split("/");
-      const courseId = Number(pathnameArr[pathnameArr.length - 2]);
       const getCourseByIdFunc = async () => {
         const data = await getCourseById({courseId});
         setCourseData(data);
