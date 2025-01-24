@@ -26,7 +26,7 @@ class NewsView(FlaskView):
         return jsonify(response), code
 
     @method("GET")
-    def get(self):
+    def get_all(self):
         services = get_services()
         news_service: NewsService = services["news_service"]
         response, code = news_service.get_news()
