@@ -1,4 +1,5 @@
 import {jwtDecode} from "jwt-decode";
+import axios from "axios";
 
 const authStatus = {
     none: 'none',
@@ -57,12 +58,8 @@ export const setAuthFromToken = (token) => {
 
     const fetchPhoto = async (url) => {
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const blob = await response.blob();
-            return blob;
+            const response = await axios.get(url, { responseType: 'blob' });
+            return response.data;
         } catch (error) {
             console.error('Error fetching the photo:', error);
             throw error;
@@ -91,6 +88,7 @@ export const setAuthFromToken = (token) => {
     };
 
     downloadPhoto();
+
     return setAuthAction({
         id: decodedToken.sub.id,
         authStatus: decodedToken.sub.roles,
