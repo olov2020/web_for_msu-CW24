@@ -1,7 +1,7 @@
 import {$authHost, $host} from "./axiosApi.js";
 
 export const getAllNews = async () => {
-  const response = await $host.get(`/news/`)
+  const response = await $host.get(`/news/get_all/`)
 
   try {
     return response.data;
