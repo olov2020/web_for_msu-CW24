@@ -315,6 +315,7 @@ class CourseService:
                     flag = True
                     break
             ind += 1
+        mark_type = data[ind][1]
         ind += 2
         formulas = []
         p = 0
@@ -323,11 +324,6 @@ class CourseService:
                 p += 1
                 continue
             name = data[ind + p][1]
-            # mark_type
-            if data[ind + p][2] is None or data[ind + p][2].lower() == "пусто":
-                p += 1
-                continue
-            mark_type = data[ind + p][2]
             if data[ind + p][3] is None:
                 coefficient = 1
             else:
