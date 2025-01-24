@@ -53,6 +53,15 @@ class NewsService:
         news = NewsDTO().dump(news, many=True)
         return news, 200
 
+    def get_news_by_id(self, news_id) -> (NewsDTO, int):
+        news = News.query.get(news_id)
+        if not news:
+            return {"error": "Нет такой новости"}, 404
+        news.photo = self.image_service.get_from_yandex_s3("news", news.photo)
+        if news.file:
+            news.file = self.image_service.get_from_yandex_s3("news", news.file)
+        return NewsDTO().dump(news), 200
+
     def delete_news(self, news_id: int) -> (dict, int):
         news = News.query.get(news_id)
         if not news:
