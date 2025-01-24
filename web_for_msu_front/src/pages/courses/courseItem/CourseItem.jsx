@@ -149,7 +149,7 @@ const CourseItem = () => {
             }}>Преподаватели</h2>
 
             <div>
-              {courseData.teachers.map((teacher, index) => (
+              {courseData.teachers.length !== 0 && courseData.teachers.map((teacher, index) => (
                 <p key={index}>{teacher}</p>
               ))}
             </div>
