@@ -18,10 +18,12 @@ const CourseItem = () => {
   const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [courseId, setCourseId] = useState(undefined);
+  const [year, setYear] = useState(undefined);
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
-    setCourseId(Number(pathnameArr[pathnameArr.length - 2]));
+    setCourseId(Number(pathnameArr[pathnameArr.length - 1]));
+    setYear(Number(pathnameArr[pathnameArr.length - 3]));
 
     if (!state) {
       const getCourseByIdFunc = async () => {
@@ -51,13 +53,13 @@ const CourseItem = () => {
   return (
     <article key={courseData.id}>
       <h1>{courseData.name}</h1>
-      {state.year &&
+      {year &&
         <h3 style={{
           alignSelf: 'flex-end',
           marginRight: '2rem',
         }}
         >
-          {state.year}
+          {year}
         </h3>
       }
 
