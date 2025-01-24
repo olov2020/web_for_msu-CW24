@@ -66,6 +66,7 @@ const News = () => {
   }, [])
 
   useEffect(() => {
+    handlePageChange(1);
     setDisplayedNews(news.slice(0, Math.min(itemsPerPage, news.length)));
   }, [itemsPerPage, news])
 
