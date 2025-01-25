@@ -66,22 +66,12 @@ export const setAuthFromToken = (token) => {
         }
     };
 
-    const blobToBase64 = (blob) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-        });
-    };
-
     const downloadPhoto = async () => {
         try {
             const blob = await fetchPhoto(decodedToken.sub.image);
 
-            // Save to local storage
-            const base64String = await blobToBase64(blob);
-            localStorage.setItem('photo', base64String);
+            const localUrl = URL.createObjectURL(blob);
+            localStorage.setItem('photo', localUrl);
         } catch (error) {
             console.error('Error downloading the photo:', error);
         }
