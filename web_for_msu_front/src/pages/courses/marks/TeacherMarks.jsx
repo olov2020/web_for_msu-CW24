@@ -123,6 +123,10 @@ const TeacherMarks = ({courseId}) => {
 
 
   useEffect(() => {
+    if (!marks2) {
+      return;
+    }
+
     const inputsNew = [];
 
     if (marks2.dates.length > 0 && marks2.pupils.length > 0 && marks2.mark_type_choices.length > 0) {
