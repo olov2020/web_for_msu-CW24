@@ -315,6 +315,7 @@ class CourseService:
                     flag = True
                     break
             ind += 1
+        ind += 1
         mark_type = data[ind][1]
         ind += 2
         formulas = []
