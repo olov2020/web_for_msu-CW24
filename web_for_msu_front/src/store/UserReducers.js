@@ -43,8 +43,10 @@ export const userReducer = (state = defaultState, action) => {
                 admin: payload.admin,
             }
 
-        case SET_NOTAUTH:
+        case SET_NOTAUTH: {
+            localStorage.deleteItem('photo');
             return {...defaultState}
+        }
         default:
             return state
     }
