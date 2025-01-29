@@ -44,7 +44,7 @@ export const userReducer = (state = defaultState, action) => {
             }
 
         case SET_NOTAUTH: {
-            localStorage.deleteItem('photo');
+            localStorage.removeItem('photo');
             return {...defaultState}
         }
         default:
