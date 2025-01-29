@@ -59,7 +59,7 @@ export const setAuthFromToken = (token) => {
     const fetchPhoto = async (url) => {
         try {
             const response = await axios.get(url, { responseType: 'blob' });
-            return response.data;
+            return response;
         } catch (error) {
             console.error('Error fetching the photo:', error);
             throw error;
