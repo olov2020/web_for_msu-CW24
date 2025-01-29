@@ -145,7 +145,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
           }
         };
 
-        downloadPhoto();
+        await downloadPhoto();
         dispatch(setAuthFromToken(accessToken));
         navigate(HOME_ROUTE);
       } catch (error) {
