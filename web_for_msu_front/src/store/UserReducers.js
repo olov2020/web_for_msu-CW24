@@ -70,7 +70,7 @@ export const setAuthFromToken = (token) => {
         try {
             const blob = await fetchPhoto(decodedToken.sub.image);
 
-            const localUrl = URL.createObjectURL(blob);
+            const localUrl = new Blob([blob.data], { type: blob.data.type });
             localStorage.setItem('photo', localUrl);
         } catch (error) {
             console.error('Error downloading the photo:', error);
