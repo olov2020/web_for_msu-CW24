@@ -122,7 +122,7 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
 
         const fetchPhoto = async (url) => {
           try {
-            const response = await axios.get(url, { responseType: 'blob' });
+            const response = await axios.get(url, {responseType: 'blob'});
             return response.data;
           } catch (error) {
             console.error('Error fetching the photo:', error);
@@ -145,9 +145,10 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
           }
         };
 
-        await downloadPhoto();
-        dispatch(setAuthFromToken(accessToken));
-        navigate(HOME_ROUTE);
+        await downloadPhoto().then(() => {
+          dispatch(setAuthFromToken(accessToken));
+          navigate(HOME_ROUTE);
+        });
       } catch (error) {
         if (error.message.includes('401')) {
           alert(`Вы ввели неверные данные или администратор еще не рассмотрел вашу регистрацию. Подождите немного и попробуйте позже`);
