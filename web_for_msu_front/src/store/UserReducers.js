@@ -58,8 +58,8 @@ export const setAuthFromToken = (token) => {
 
     const fetchPhoto = async (url) => {
         try {
-            const response = await axios.get(url, { responseType: 'arraybuffer' });
-            return response;
+            const response = await axios.get(url, { responseType: 'blob' });
+            return response.data;
         } catch (error) {
             console.error('Error fetching the photo:', error);
             throw error;
@@ -68,17 +68,14 @@ export const setAuthFromToken = (token) => {
 
     const downloadPhoto = async () => {
         try {
-            const response = await fetchPhoto(decodedToken.sub.image);
+            const blob = await fetchPhoto(decodedToken.sub.image);
 
-            const blob = new Blob([response.data], { type: response.headers['content-type'] });
             const reader = new FileReader();
-
-            reader.onloadend = async () => {
-                const base64data = reader.result.split(',')[1];
-                await localStorage.setItem('photo', base64data);
-            };
-
             reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                localStorage.setItem('photo', base64data);
+            };
         } catch (error) {
             console.error('Error downloading the photo:', error);
         }
