@@ -18,6 +18,7 @@ const Profile = ({deviceType}) => {
     try {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('photo');
       dispatch(setNotAuthAction());
       navigate(HOME_ROUTE);
       return true;
