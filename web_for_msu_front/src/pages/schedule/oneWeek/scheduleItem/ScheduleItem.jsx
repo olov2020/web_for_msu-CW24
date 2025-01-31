@@ -6,7 +6,9 @@ const ScheduleItem = ({key, date, time, courseName, auditory = '', credit, theme
     <section key={key} className={styleCourse.courseCard}>
       <h3>{courseName}</h3>
       {credit && <p><span className={credit === 'Зачётный' ? styleCourse.credit : ''}>{credit}</span></p>}
-      <p><span>{date}</span> {time}</p>
+      <p><span>{date}</span> <span style={{
+        whiteSpace: 'nowrap',
+      }}>{time}</span></p>
 
       {auditory && auditory.includes('http') ?
         <p><a href={auditory}>Ссылка на онлайн пару</a></p> :
