@@ -10,7 +10,7 @@ const PupilMarks = ({courseId}) => {
   const [marks, setMarks] = useState({});
 
   const [marks2, setMarks2] = useState({});
-  const {pathname, state} = useLocation();
+  const {pathname} = useLocation();
   const authStatus = useSelector((state) => state.user.authStatus);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const PupilMarks = ({courseId}) => {
     }
 
     getMarks2();
-  }, [pathname, authStatus, state])
+  }, [])
 
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
@@ -52,7 +52,7 @@ const PupilMarks = ({courseId}) => {
             {marks2.dates && marks2.dates.length !== 0 && marks2.dates.map((date, dateIndex) => (
               <div key={dateIndex}>
                 <h3>{date}</h3>
-                {marks2.marks && marks2.marks[dateIndex] && marks2.marks[dateIndex].length !== 0 && marks2.marks[dateIndex].map((mark, markIndex) =>
+                {marks2.marks[dateIndex] && marks2.marks[dateIndex].length !== 0 && marks2.marks[dateIndex].map((mark, markIndex) =>
                   (mark === '' ?
                       <h3 key={`${dateIndex}-${markIndex}`}>-</h3> :
                       <h3 key={`${dateIndex}-${markIndex}`}>{mark}</h3>
@@ -80,7 +80,7 @@ const PupilMarks = ({courseId}) => {
           {marks.dates && marks.dates.length !== 0 && marks.dates.map((date, dateIndex) => (
             <div key={dateIndex}>
               <h3>{date}</h3>
-              {marks.marks && marks.marks[dateIndex] && marks.marks[dateIndex].length !== 0 && marks.marks[dateIndex].map((mark, markIndex) =>
+              {marks.marks[dateIndex] && marks.marks[dateIndex].length !== 0 && marks.marks[dateIndex].map((mark, markIndex) =>
                 (mark === '' ?
                     <h3 key={`${dateIndex}-${markIndex}`}>-</h3> :
                     <h3 key={`${dateIndex}-${markIndex}`}>{mark}</h3>
