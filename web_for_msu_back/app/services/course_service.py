@@ -287,7 +287,7 @@ class CourseService:
         }
 
         schedules = []
-        for i in range(62, 102):
+        for i in range(63, 102):
             if data[i][0] is None:
                 continue
             lesson_number = data[i][0]

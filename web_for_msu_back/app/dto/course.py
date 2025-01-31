@@ -26,7 +26,7 @@ class CourseDTO(Schema):
          'зачётный только для 8-9-ти классников', 'зачётный только для 8-10-ти классников',
          'зачётный только для 9-10-ти классников', 'зачётный только для 9-11-ти классников',
          'зачётный только для 10-11-ти классников', 'факультативный для всех']))  # Система зачета
-    distribution = fields.String(required=True, validate=Length(min=1))  # Распределение
+    distribution = fields.String(allow_none=True)  # Распределение
     intern_work = fields.String(allow_none=True)  # Работа со стажёрами
     lesson_time = fields.String(required=True, validate=OneOf(
         ['Понедельник 17:20 - 18:40', 'Понедельник 18:55 - 20:15', 'Вторник 17:20 - 18:40', 'Вторник 18:55 - 20:15',
