@@ -19,10 +19,10 @@ const CourseItem = () => {
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(undefined);
   const [loading, setLoading] = useState(true);
+  const pathnameArr = pathname.split("/");
+  const courseId = pathnameArr[pathnameArr.length - 1];
 
   useEffect(() => {
-    const pathnameArr = pathname.split("/");
-    const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
 
     try {
@@ -91,7 +91,7 @@ const CourseItem = () => {
             {userStatus.includes('teacher') ? (
               <TeacherMarks courseId={courseData.id}/>
             ) : (
-              <PupilMarks courseId={courseData.id}/>
+              <PupilMarks courseId={courseId}/>
             )}
           </>
         ))

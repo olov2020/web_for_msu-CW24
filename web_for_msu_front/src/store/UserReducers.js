@@ -52,7 +52,7 @@ export const userReducer = (state = defaultState, action) => {
 export const setAuthAction = (payload) => ({type: SET_AUTH, payload})
 export const setNotAuthAction = (payload) => ({type: SET_NOTAUTH, payload})
 
-export const setAuthFromToken = (token) => {
+export const setAuthFromToken = (token, photo) => {
     const decodedToken = jwtDecode(token);
 
     return setAuthAction({
@@ -61,7 +61,7 @@ export const setAuthFromToken = (token) => {
         name: decodedToken.sub.name,
         surname: decodedToken.sub.surname,
         email: decodedToken.sub.email,
-        photo: localStorage.getItem('photo'),
+        photo: photo,
         admin: decodedToken.sub.admin,
     });
 }
