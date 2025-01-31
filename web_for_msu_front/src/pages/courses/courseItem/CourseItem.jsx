@@ -23,7 +23,6 @@ const CourseItem = () => {
     const pathnameArr = pathname.split("/");
     const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
-    console.log(pathnameArr);
 
     if (!state) {
       const getCourseByIdFunc = async () => {
@@ -49,6 +48,8 @@ const CourseItem = () => {
     }
 
   }, [state, pathname]);
+
+  console.log(courseData);
 
   return (
     <article key={courseData.id}>

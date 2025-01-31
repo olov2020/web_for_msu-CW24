@@ -54,7 +54,7 @@ const PupilMarks = ({courseId}) => {
                 <h3>{date}</h3>
                 {marks2.marks[dateIndex] && marks2.marks[dateIndex].length !== 0 && marks2.marks[dateIndex].map((mark, markIndex) =>
                   (mark === '' ?
-                      <h3 key={`${dateIndex}-${markIndex}`}>_</h3> :
+                      <h3 key={`${dateIndex}-${markIndex}`}>-</h3> :
                       <h3 key={`${dateIndex}-${markIndex}`}>{mark}</h3>
                   ))}
               </div>
@@ -82,7 +82,7 @@ const PupilMarks = ({courseId}) => {
               <h3>{date}</h3>
               {marks.marks[dateIndex] && marks.marks[dateIndex].length !== 0 && marks.marks[dateIndex].map((mark, markIndex) =>
                 (mark === '' ?
-                    <h3 key={`${dateIndex}-${markIndex}`}>_</h3> :
+                    <h3 key={`${dateIndex}-${markIndex}`}>-</h3> :
                     <h3 key={`${dateIndex}-${markIndex}`}>{mark}</h3>
                 ))}
             </div>
