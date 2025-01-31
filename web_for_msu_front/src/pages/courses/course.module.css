@@ -25,11 +25,16 @@
     > p {
         text-align: center;
         gap: 0 .2rem;
-        width: 16%;
+
+        @media (min-width: 600px) {
+            width: 16%;
+        }
     }
 
     > h3 {
-        width: 30%;
+        @media (min-width: 600px) {
+            width: 30%;
+        }
     }
 
     > * {
