@@ -55,16 +55,15 @@ export const userLogin = async (email, password) => {
         reader.onloadend = () => {
           const base64data = reader.result;
           localStorage.setItem('photo', base64data);
-          return base64data;
         };
       } catch (error) {
         console.error('Error downloading the photo:', error);
       }
     };
 
-    const photo = await downloadPhoto();
+    await downloadPhoto();
 
-    return {access_token, photo};
+    return access_token;
   } catch (error) {
     throw new Error(`Login failed: ${error}`);
   }

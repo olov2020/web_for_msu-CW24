@@ -18,45 +18,36 @@ const CourseItem = () => {
   const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(undefined);
-  const [loading, setLoading] = useState(true);
-  const pathnameArr = pathname.split("/");
-  const courseId = pathnameArr[pathnameArr.length - 1];
 
   useEffect(() => {
+    const pathnameArr = pathname.split("/");
+    const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
 
-    try {
-      if (!state) {
-        const getCourseByIdFunc = async () => {
-          const data = await getCourseById({courseId});
-          setCourseData(data);
-        }
-
-        getCourseByIdFunc();
-
-        const accessToken = localStorage.getItem("token");
-        if (accessToken) {
-
-          const checkIfUserIsOnCourseFunc = async () => {
-            const data = await checkIfUserIsOnCourse({courseId});
-            setIsMyCourses(data);
-          }
-
-          checkIfUserIsOnCourseFunc();
-        }
-      } else {
-        setCourseData(state.courseData);
-        setIsMyCourses(state.isMyCourses);
+    if (!state) {
+      const getCourseByIdFunc = async () => {
+        const data = await getCourseById({courseId});
+        setCourseData(data);
       }
-    } finally {
-      setLoading(false);
+
+      getCourseByIdFunc();
+
+      const accessToken = localStorage.getItem("token");
+      if (accessToken) {
+
+        const checkIfUserIsOnCourseFunc = async () => {
+          const data = await checkIfUserIsOnCourse({courseId});
+          setIsMyCourses(data);
+        }
+
+        checkIfUserIsOnCourseFunc();
+      }
+    } else {
+      setCourseData(state.courseData);
+      setIsMyCourses(state.isMyCourses);
     }
 
-  }, [state, pathname]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  }, [pathname]);
 
   return (
     <article key={courseData.id}>
@@ -91,7 +82,7 @@ const CourseItem = () => {
             {userStatus.includes('teacher') ? (
               <TeacherMarks courseId={courseData.id}/>
             ) : (
-              <PupilMarks courseId={courseId}/>
+              <PupilMarks courseId={courseData.id}/>
             )}
           </>
         ))

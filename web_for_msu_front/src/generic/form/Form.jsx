@@ -117,9 +117,9 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
     }
     if (type === 'login') {
       try {
-        const {access_token, photo} = await userLogin(formValues.email, formValues.password);
+        const accessToken = await userLogin(formValues.email, formValues.password);
 
-        dispatch(setAuthFromToken(access_token, photo));
+        dispatch(setAuthFromToken(accessToken));
         navigate(HOME_ROUTE);
       } catch (error) {
         if (error.message.includes('401')) {
