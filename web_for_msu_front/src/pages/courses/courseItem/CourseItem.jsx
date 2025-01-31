@@ -25,8 +25,8 @@ const CourseItem = () => {
     const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
 
-    if (!state) {
-      try {
+    try {
+      if (!state) {
         const getCourseByIdFunc = async () => {
           const data = await getCourseById({courseId});
           setCourseData(data);
@@ -44,12 +44,12 @@ const CourseItem = () => {
 
           checkIfUserIsOnCourseFunc();
         }
-      } finally {
-        setLoading(false);
+      } else {
+        setCourseData(state.courseData);
+        setIsMyCourses(state.isMyCourses);
       }
-    } else {
-      setCourseData(state.courseData);
-      setIsMyCourses(state.isMyCourses);
+    } finally {
+      setLoading(false);
     }
 
   }, [state, pathname]);
