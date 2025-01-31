@@ -19,10 +19,9 @@ const CourseItem = () => {
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(undefined);
 
-  const pathnameArr = pathname.split("/");
-  const courseId = pathnameArr[pathnameArr.length - 1];
-
   useEffect(() => {
+    const pathnameArr = pathname.split("/");
+    const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
 
     if (!state) {
@@ -32,6 +31,7 @@ const CourseItem = () => {
       }
 
       getCourseByIdFunc();
+      console.log(courseData.id)
 
       const accessToken = localStorage.getItem("token");
       if (accessToken) {
@@ -49,9 +49,10 @@ const CourseItem = () => {
     }
 
   }, [state, pathname]);
+  console.log(courseData.id)
 
   return (
-    <article key={courseId}>
+    <article key={courseData.id}>
       <h1>{courseData.name}</h1>
       {year &&
         <h3 style={{
@@ -76,50 +77,50 @@ const CourseItem = () => {
         </section>
       }
 
-      {isMyCourses &&
+      {isMyCourses && courseData.id &&
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>
             <h2>Ведомость оценок</h2>
             {userStatus.includes('teacher') ? (
-              <TeacherMarks courseId={courseId}/>
+              <TeacherMarks courseId={courseData.id}/>
             ) : (
-              <PupilMarks courseId={courseId}/>
+              <PupilMarks courseId={courseData.id}/>
             )}
           </>
         ))
       }
 
-      {isMyCourses && userStatus.includes('teacher') &&
+      {isMyCourses && courseData.id && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
-          <ApprovePupils courseId={courseId}/>
+          <ApprovePupils courseId={courseData.id}/>
         </section>
       }
 
-      {isMyCourses && userStatus.includes('teacher') &&
+      {isMyCourses && courseData.id && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
-          <AddPupilOnCourse courseId={courseId}/>
+          <AddPupilOnCourse courseId={courseData.id}/>
         </section>
       }
 
-      {isMyCourses && userStatus.includes('teacher') &&
+      {isMyCourses && courseData.id && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
-          <DeletePupilOnCourse courseId={courseId}/>
+          <DeletePupilOnCourse courseId={courseData.id}/>
         </section>
       }
 
-      {userStatus.includes('admin') &&
+      {userStatus.includes('admin') && courseData.id &&
         <section style={{
           display: 'flex',
           justifyContent: 'center',
           width: '90%',
         }}>
-          <ChangeCourse courseId={courseId}/>
+          <ChangeCourse courseId={courseData.id}/>
         </section>
       }
 
