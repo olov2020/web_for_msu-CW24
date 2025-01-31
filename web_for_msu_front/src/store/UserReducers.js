@@ -54,6 +54,7 @@ export const setNotAuthAction = (payload) => ({type: SET_NOTAUTH, payload})
 
 export const setAuthFromToken = (token) => {
     const decodedToken = jwtDecode(token);
+    const photo = localStorage.getItem('photo');
 
     return setAuthAction({
         id: decodedToken.sub.id,
@@ -61,7 +62,7 @@ export const setAuthFromToken = (token) => {
         name: decodedToken.sub.name,
         surname: decodedToken.sub.surname,
         email: decodedToken.sub.email,
-        photo: localStorage.getItem('photo'),
+        photo: photo,
         admin: decodedToken.sub.admin,
     });
 }
