@@ -1,7 +1,7 @@
 import styleCourse from '../../../courses/course.module.css'
 
 // eslint-disable-next-line react/prop-types
-const ScheduleItem = ({key, date, time, courseName, auditory = '', credit, plan}) => {
+const ScheduleItem = ({key, date, time, courseName, auditory = '', credit, theme}) => {
   return (
     <section key={key} className={styleCourse.courseCard}>
       <h3>{courseName}</h3>
@@ -13,7 +13,7 @@ const ScheduleItem = ({key, date, time, courseName, auditory = '', credit, plan}
         <p><span>Аудитория:</span> {auditory ? auditory : 'уточняется'}</p>
       }
 
-      <p><span>Тема: </span> {plan}</p>
+      <p><span>Тема: </span> {theme}</p>
     </section>
   );
 };

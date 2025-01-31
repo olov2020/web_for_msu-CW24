@@ -30,7 +30,7 @@ const OneWeek = ({header, data}) => {
               courseName={item.course_name}
               auditory={item.auditory}
               credit={item.course_type}
-              plan={item.plan}
+              theme={item.theme}
             />
           ))) :
           // eslint-disable-next-line react/prop-types
