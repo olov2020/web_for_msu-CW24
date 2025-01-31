@@ -77,7 +77,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {isMyCourses && courseData.id &&
+      {isMyCourses && courseData &&
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>
             <h2>Ведомость оценок</h2>
@@ -90,7 +90,7 @@ const CourseItem = () => {
         ))
       }
 
-      {isMyCourses && courseData.id && userStatus.includes('teacher') &&
+      {isMyCourses && courseData && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
@@ -98,7 +98,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {isMyCourses && courseData.id && userStatus.includes('teacher') &&
+      {isMyCourses && courseData && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
@@ -106,7 +106,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {isMyCourses && courseData.id && userStatus.includes('teacher') &&
+      {isMyCourses && courseData && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
@@ -114,7 +114,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {userStatus.includes('admin') && courseData.id &&
+      {userStatus.includes('admin') && courseData &&
         <section style={{
           display: 'flex',
           justifyContent: 'center',
