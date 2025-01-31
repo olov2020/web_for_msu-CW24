@@ -190,7 +190,7 @@ class CourseService:
                         "auditory": course.auditory,
                         "date": lesson.date.strftime('%d.%m'),
                         "lesson_time": course.lesson_time,
-                        "plan": lesson.plan
+                        "theme": lesson.theme
                     }
                     result.append((LessonScheduleDTO().dump(data), lesson.date))
         result.sort(key=lambda x: (x[1], lesson_times.index(x[0]["lesson_time"])))
