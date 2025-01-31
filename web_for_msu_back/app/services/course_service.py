@@ -1,5 +1,6 @@
 from __future__ import annotations  # Откладывает разрешение аннотаций типов
 
+import re
 from datetime import datetime
 from typing import TYPE_CHECKING
 
@@ -25,6 +26,14 @@ from web_for_msu_back.app.models import *
 if TYPE_CHECKING:
     # Импортируем сервисы только для целей аннотации типов
     from web_for_msu_back.app.services import TeacherService
+
+lesson_times = ['Понедельник 17:20 - 18:40', 'Понедельник 18:55 - 20:15', 'Вторник 17:20 - 18:40',
+                'Вторник 18:55 - 20:15',
+                'Среда 17:20 - 18:40', 'Среда 18:55 - 20:15', 'Четверг 17:20 - 18:40', 'Четверг 18:55 - 20:15',
+                'Пятница 17:20 - 18:40', 'Пятница 18:55 - 20:15', 'Понедельник (2 пары) 17:20 - 20:15',
+                'Вторник (2 пары) 17:20 - 20:15', 'Среда (2 пары) 17:20 - 20:15',
+                'Четверг (2 пары) 17:20 - 20:15',
+                'Пятница (2 пары) 17:20 - 20:15']
 
 
 class CourseService:
@@ -55,16 +64,6 @@ class CourseService:
         return [assoc.teacher for assoc in course.teachers]
 
     def get_all_courses(self) -> (dict[int, list[CourseInfoDTO]], int):
-        lesson_times = ["Понедельник 17:20 - 18:40",
-                        "Понедельник 18:55 - 20:15",
-                        "Вторник 17:20 - 18:40",
-                        "Вторник 18:55 - 20:15",
-                        "Среда 17:20 - 18:40",
-                        "Среда 18:55 - 20:15",
-                        "Четверг 17:20 - 18:40",
-                        "Четверг 18:55 - 20:15",
-                        "Пятница 17:20 - 18:40",
-                        "Пятница 18:55 - 20:15", ]
         courses = Course.query.all()
         grouped_courses = {}
         for course in courses:
@@ -111,16 +110,6 @@ class CourseService:
                 available_courses.append(course)
         courses_for_selection = [self.get_course_info_selection(course, str(pupil_courses_dict.get(course.id, ""))) for
                                  course in available_courses]
-        lesson_times = ["Понедельник 17:20 - 18:40",
-                        "Понедельник 18:55 - 20:15",
-                        "Вторник 17:20 - 18:40",
-                        "Вторник 18:55 - 20:15",
-                        "Среда 17:20 - 18:40",
-                        "Среда 18:55 - 20:15",
-                        "Четверг 17:20 - 18:40",
-                        "Четверг 18:55 - 20:15",
-                        "Пятница 17:20 - 18:40",
-                        "Пятница 18:55 - 20:15", ]
         courses_for_selection.sort(key=lambda x: (lesson_times.index(x["lesson_time"]), x["name"]))
         return courses_for_selection, 200
 
@@ -204,17 +193,6 @@ class CourseService:
                         "plan": lesson.plan
                     }
                     result.append((LessonScheduleDTO().dump(data), lesson.date))
-
-        lesson_times = ["Понедельник 17:20 - 18:40",
-                        "Понедельник 18:55 - 20:15",
-                        "Вторник 17:20 - 18:40",
-                        "Вторник 18:55 - 20:15",
-                        "Среда 17:20 - 18:40",
-                        "Среда 18:55 - 20:15",
-                        "Четверг 17:20 - 18:40",
-                        "Четверг 18:55 - 20:15",
-                        "Пятница 17:20 - 18:40",
-                        "Пятница 18:55 - 20:15", ]
         result.sort(key=lambda x: (x[1], lesson_times.index(x[0]["lesson_time"])))
         result = [x[0] for x in result]
         return result, 200
@@ -233,13 +211,14 @@ class CourseService:
                     data[i][j] = None
                 else:
                     # Замена переносов строк на конец предложений.
-                    sentences = str(data[i][j]).split('\n')
-                    for k in range(1, len(sentences)):
-                        for m in range(len(sentences[k])):
-                            if sentences[k][m].isalpha():
-                                sentences[k] = sentences[k][:m] + sentences[k][m].capitalize() + sentences[k][m + 1:]
-                                break
-                    data[i][j] = '. '.join(sentences)
+                    if i > 22:
+                        sentences = str(data[i][j]).split('\n')
+                        for k in range(1, len(sentences)):
+                            for m in range(len(sentences[k])):
+                                if sentences[k][m].isalpha():
+                                    sentences[k] = sentences[k][:m] + sentences[k][m].capitalize() + sentences[k][m + 1:]
+                                    break
+                        data[i][j] = '. '.join(sentences)
 
         auditory = None
         course_review_number = data[23][3]
@@ -287,7 +266,7 @@ class CourseService:
         }
 
         schedules = []
-        for i in range(62, 102):
+        for i in range(63, 102):
             if data[i][0] is None:
                 continue
             lesson_number = data[i][0]
@@ -363,12 +342,11 @@ class CourseService:
                     teachers_course[j]["leads"] = True
                     break
 
-        other = data[18][3]
+        other = str(data[18][3])
         if other is not None:
-            other = other.split(';')
-            for person in other:
-                person = person.split(',')
-                email = person[-1].strip()
+            email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+            other = re.findall(email_pattern, other)
+            for email in other:
                 teacher = Teacher.query.filter_by(email=email).first()
                 if teacher is None:
                     continue
@@ -524,7 +502,8 @@ class CourseService:
 
     def get_lessons_info(self, course: Course) -> list[dict]:
         lessons = []
-        for lesson in course.lessons:
+        course_lessons = sorted(course.lessons, key=lambda schedule: schedule.lesson_number)
+        for lesson in course_lessons:
             data = {
                 "lesson_number": lesson.lesson_number,
                 "date": lesson.date,
@@ -537,7 +516,8 @@ class CourseService:
 
     def get_formulas_info(self, course: Course) -> list[dict]:
         formulas = []
-        for formula in course.formulas:
+        course_formulas = sorted(course.formulas, key=lambda formula: formula.id)
+        for formula in course_formulas:
             data = {
                 "name": formula.name,
                 "coefficient": formula.coefficient
@@ -582,16 +562,6 @@ class CourseService:
         return CourseInfoSelectionDTO().dump(data)
 
     def get_pupil_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
-        lesson_times = ["Понедельник 17:20 - 18:40",
-                        "Понедельник 18:55 - 20:15",
-                        "Вторник 17:20 - 18:40",
-                        "Вторник 18:55 - 20:15",
-                        "Среда 17:20 - 18:40",
-                        "Среда 18:55 - 20:15",
-                        "Четверг 17:20 - 18:40",
-                        "Четверг 18:55 - 20:15",
-                        "Пятница 17:20 - 18:40",
-                        "Пятница 18:55 - 20:15", ]
         pupil = Pupil.query.filter_by(user_id=user_id).first()
         if not pupil:
             return [], 403
@@ -609,16 +579,6 @@ class CourseService:
         return grouped_courses, 200
 
     def get_teacher_courses(self, user_id: int) -> (list[CourseInfoDTO], int):
-        lesson_times = ["Понедельник 17:20 - 18:40",
-                        "Понедельник 18:55 - 20:15",
-                        "Вторник 17:20 - 18:40",
-                        "Вторник 18:55 - 20:15",
-                        "Среда 17:20 - 18:40",
-                        "Среда 18:55 - 20:15",
-                        "Четверг 17:20 - 18:40",
-                        "Четверг 18:55 - 20:15",
-                        "Пятница 17:20 - 18:40",
-                        "Пятница 18:55 - 20:15", ]
         teacher = Teacher.query.filter_by(user_id=user_id).first()
         if not teacher:
             return [], 403
@@ -801,16 +761,6 @@ class CourseService:
                 "lesson_time": course.lesson_time,
                 "auditory": course.auditory,
             })
-        lesson_times = ["Понедельник 17:20 - 18:40",
-                        "Понедельник 18:55 - 20:15",
-                        "Вторник 17:20 - 18:40",
-                        "Вторник 18:55 - 20:15",
-                        "Среда 17:20 - 18:40",
-                        "Среда 18:55 - 20:15",
-                        "Четверг 17:20 - 18:40",
-                        "Четверг 18:55 - 20:15",
-                        "Пятница 17:20 - 18:40",
-                        "Пятница 18:55 - 20:15", ]
         data.sort(key=lambda x: (lesson_times.index(x["lesson_time"]), x["name"]))
         return AuditoriumsDTO().dump(data, many=True), 200
 

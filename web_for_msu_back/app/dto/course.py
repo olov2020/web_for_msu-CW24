@@ -26,7 +26,7 @@ class CourseDTO(Schema):
          'зачётный только для 8-9-ти классников', 'зачётный только для 8-10-ти классников',
          'зачётный только для 9-10-ти классников', 'зачётный только для 9-11-ти классников',
          'зачётный только для 10-11-ти классников', 'факультативный для всех']))  # Система зачета
-    distribution = fields.String(required=True, validate=Length(min=1))  # Распределение
+    distribution = fields.String(allow_none=True)  # Распределение
     intern_work = fields.String(allow_none=True)  # Работа со стажёрами
     lesson_time = fields.String(required=True, validate=OneOf(
         ['Понедельник 17:20 - 18:40', 'Понедельник 18:55 - 20:15', 'Вторник 17:20 - 18:40', 'Вторник 18:55 - 20:15',
@@ -42,7 +42,7 @@ class CourseDTO(Schema):
     target_audience = fields.String(required=True, validate=Length(min=1))  # Целевая аудитория
     short_description = fields.String(required=True, validate=Length(min=1))  # Краткое описание
     number_of_listeners = fields.String(required=True, validate=OneOf(
-        ['до 10 человек', 'от 10 до 20 человек', 'от 20 до 30 человек', 'cвыше 30 человек']))  # Количество слушателей
+        ['до 10 человек', 'от 10 до 20 человек', 'от 20 до 30 человек', 'свыше 30 человек']))  # Количество слушателей
     selection = fields.String(required=True, validate=Length(min=1))  # Отбор
     assessment = fields.String(required=True, validate=Length(min=1))  # Оценка
     platform_format = fields.String(required=True, validate=Length(min=1))  # Формат курса: онлайн/оффлайн/гибрид
