@@ -31,6 +31,7 @@ const CourseItem = () => {
       }
 
       getCourseByIdFunc();
+      console.log(courseData.id)
 
       const accessToken = localStorage.getItem("token");
       if (accessToken) {

@@ -14,25 +14,23 @@ const PupilMarks = ({courseId}) => {
   const authStatus = useSelector((state) => state.user.authStatus);
 
   useEffect(() => {
-    if (courseId) {
-      const getMarks = async () => {
-        const data = await getPupilMarksByCourseId({courseId});
-        setMarks(data);
-      }
-
-      getMarks();
-
-      const getMarks2 = async () => {
-        try {
-          const data = await getPupilMarksByCourseId2({courseId});
-          setMarks2(data);
-        } catch {
-          setMarks2(null);
-        }
-      }
-
-      getMarks2();
+    const getMarks = async () => {
+      const data = await getPupilMarksByCourseId({courseId});
+      setMarks(data);
     }
+
+    getMarks();
+
+    const getMarks2 = async () => {
+      try {
+        const data = await getPupilMarksByCourseId2({courseId});
+        setMarks2(data);
+      } catch {
+        setMarks2(null);
+      }
+    }
+
+    getMarks2();
   }, [pathname, authStatus, courseId])
 
   if (!marks) {
