@@ -27,12 +27,13 @@ if TYPE_CHECKING:
     from web_for_msu_back.app.services import TeacherService
 
 lesson_times = ['Понедельник 17:20 - 18:40', 'Понедельник 18:55 - 20:15', 'Вторник 17:20 - 18:40',
-                        'Вторник 18:55 - 20:15',
-                        'Среда 17:20 - 18:40', 'Среда 18:55 - 20:15', 'Четверг 17:20 - 18:40', 'Четверг 18:55 - 20:15',
-                        'Пятница 17:20 - 18:40', 'Пятница 18:55 - 20:15', 'Понедельник (2 пары) 17:20 - 20:15',
-                        'Вторник (2 пары) 17:20 - 20:15', 'Среда (2 пары) 17:20 - 20:15',
-                        'Четверг (2 пары) 17:20 - 20:15',
-                        'Пятница (2 пары) 17:20 - 20:15']
+                'Вторник 18:55 - 20:15',
+                'Среда 17:20 - 18:40', 'Среда 18:55 - 20:15', 'Четверг 17:20 - 18:40', 'Четверг 18:55 - 20:15',
+                'Пятница 17:20 - 18:40', 'Пятница 18:55 - 20:15', 'Понедельник (2 пары) 17:20 - 20:15',
+                'Вторник (2 пары) 17:20 - 20:15', 'Среда (2 пары) 17:20 - 20:15',
+                'Четверг (2 пары) 17:20 - 20:15',
+                'Пятница (2 пары) 17:20 - 20:15']
+
 
 class CourseService:
     def __init__(self, db, teacher_service: TeacherService):
@@ -500,7 +501,8 @@ class CourseService:
 
     def get_lessons_info(self, course: Course) -> list[dict]:
         lessons = []
-        for lesson in course.lessons:
+        course_lessons = sorted(course.lessons, key=lambda schedule: schedule.lesson_number)
+        for lesson in course_lessons:
             data = {
                 "lesson_number": lesson.lesson_number,
                 "date": lesson.date,
@@ -513,7 +515,8 @@ class CourseService:
 
     def get_formulas_info(self, course: Course) -> list[dict]:
         formulas = []
-        for formula in course.formulas:
+        course_formulas = sorted(course.formulas, key=lambda formula: formula.id)
+        for formula in course_formulas:
             data = {
                 "name": formula.name,
                 "coefficient": formula.coefficient
