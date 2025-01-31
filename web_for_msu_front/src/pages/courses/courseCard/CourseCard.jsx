@@ -18,7 +18,7 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
           <h3>{courseData.name}</h3>
 
           <p><span>{courseData.crediting}</span></p>
-          <p>{courseData.lesson_time}</p>
+          <p style={{whiteSpace: 'nowrap'}}>{courseData.lesson_time}</p>
           <p><span>Классы:</span> {courseData.emsh_grades}</p>
           <p><span>{courseData.direction}</span></p>
         </>
@@ -28,7 +28,7 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
           <h3>{courseData.name}</h3>
 
           <p><span className={courseData.credit === 'Зачётный' ? style.credit : ''}>{courseData.credit}</span></p>
-          <p>{courseData.lesson_time}</p>
+          <p style={{whiteSpace: 'nowrap'}}>{courseData.lesson_time}</p>
           {courseData.auditory && courseData.auditory.includes('http') ?
             <p><a href={courseData.auditory}>Ссылка на онлайн пару</a></p> :
             <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
@@ -41,7 +41,7 @@ const CourseCard = ({key, year, courseData, isMyCourses}) => {
           <h3>{courseData.name}</h3>
 
           <p><span>Классы:</span> {courseData.emsh_grades}</p>
-          <p>{courseData.lesson_time}</p>
+          <p style={{whiteSpace: 'nowrap'}}>{courseData.lesson_time}</p>
           {courseData.auditory && courseData.auditory.includes('http') ?
             <p><a href={courseData.auditory}>Ссылка на онлайн пару</a></p> :
             <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
