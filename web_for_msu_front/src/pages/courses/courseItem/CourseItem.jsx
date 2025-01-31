@@ -18,13 +18,11 @@ const CourseItem = () => {
   const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(undefined);
-  const [courseId, setCourseId] = useState(undefined);
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
     const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
-    setCourseId(courseId);
 
     if (!state) {
       const getCourseByIdFunc = async () => {
@@ -51,10 +49,8 @@ const CourseItem = () => {
 
   }, [state, pathname]);
 
-  console.log(courseData);
-
   return (
-    <article key={courseId}>
+    <article key={courseData.id}>
       <h1>{courseData.name}</h1>
       {year &&
         <h3 style={{
@@ -84,9 +80,9 @@ const CourseItem = () => {
           <>
             <h2>Ведомость оценок</h2>
             {userStatus.includes('teacher') ? (
-              <TeacherMarks courseId={courseId}/>
+              <TeacherMarks courseId={courseData.id}/>
             ) : (
-              <PupilMarks courseId={courseId}/>
+              <PupilMarks courseId={courseData.id}/>
             )}
           </>
         ))
@@ -96,7 +92,7 @@ const CourseItem = () => {
         <section style={{
           width: '90%',
         }}>
-          <ApprovePupils courseId={courseId}/>
+          <ApprovePupils courseId={courseData.id}/>
         </section>
       }
 
@@ -104,7 +100,7 @@ const CourseItem = () => {
         <section style={{
           width: '90%',
         }}>
-          <AddPupilOnCourse courseId={courseId}/>
+          <AddPupilOnCourse courseId={courseData.id}/>
         </section>
       }
 
@@ -112,7 +108,7 @@ const CourseItem = () => {
         <section style={{
           width: '90%',
         }}>
-          <DeletePupilOnCourse courseId={courseId}/>
+          <DeletePupilOnCourse courseId={courseData.id}/>
         </section>
       }
 
@@ -122,7 +118,7 @@ const CourseItem = () => {
           justifyContent: 'center',
           width: '90%',
         }}>
-          <ChangeCourse courseId={courseId}/>
+          <ChangeCourse courseId={courseData.id}/>
         </section>
       }
 

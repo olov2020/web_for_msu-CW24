@@ -31,7 +31,7 @@ const PupilMarks = ({courseId}) => {
     }
 
     getMarks2();
-  }, [pathname, authStatus])
+  }, [pathname, authStatus, courseId])
 
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
