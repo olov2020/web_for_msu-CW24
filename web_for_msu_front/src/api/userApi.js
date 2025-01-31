@@ -1,4 +1,6 @@
 import {$authHost, $host} from "./axiosApi.js";
+import {jwtDecode} from "jwt-decode";
+import axios from "axios";
 
 export const getPupilInfo = async () => {
   const response = await $authHost.get('/pupil/get_account_data/');
@@ -31,6 +33,35 @@ export const userLogin = async (email, password) => {
     const {access_token, refresh_token} = response.data;
     localStorage.setItem('token', access_token);
     localStorage.setItem('refreshToken', refresh_token);
+
+    const decodedToken = jwtDecode(access_token);
+
+    const fetchPhoto = async (url) => {
+      try {
+        const response = await axios.get(url, {responseType: 'blob'});
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching the photo:', error);
+        throw error;
+      }
+    };
+
+    const downloadPhoto = async () => {
+      try {
+        const blob = await fetchPhoto(decodedToken.sub.image);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          const base64data = reader.result;
+          localStorage.setItem('photo', base64data);
+        };
+      } catch (error) {
+        console.error('Error downloading the photo:', error);
+      }
+    };
+
+    await downloadPhoto();
 
     return access_token;
   } catch (error) {
