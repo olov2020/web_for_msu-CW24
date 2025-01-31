@@ -53,7 +53,6 @@ export const setAuthAction = (payload) => ({type: SET_AUTH, payload})
 export const setNotAuthAction = (payload) => ({type: SET_NOTAUTH, payload})
 
 export const setAuthFromToken = (token) => {
-    window.location.reload();
     const decodedToken = jwtDecode(token);
 
     return setAuthAction({
