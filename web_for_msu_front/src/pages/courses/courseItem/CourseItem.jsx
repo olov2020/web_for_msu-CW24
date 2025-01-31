@@ -58,7 +58,7 @@ const CourseItem = () => {
           marginRight: '2rem',
         }}
         >
-          {year}-{year + 1}
+          {year}
         </h3>
       }
 
