@@ -18,6 +18,7 @@ const CourseItem = () => {
   const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(undefined);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
@@ -25,22 +26,26 @@ const CourseItem = () => {
     setYear(pathnameArr[pathnameArr.length - 3]);
 
     if (!state) {
-      const getCourseByIdFunc = async () => {
-        const data = await getCourseById({courseId});
-        setCourseData(data);
-      }
-
-      getCourseByIdFunc();
-
-      const accessToken = localStorage.getItem("token");
-      if (accessToken) {
-
-        const checkIfUserIsOnCourseFunc = async () => {
-          const data = await checkIfUserIsOnCourse({courseId});
-          setIsMyCourses(data);
+      try {
+        const getCourseByIdFunc = async () => {
+          const data = await getCourseById({courseId});
+          setCourseData(data);
         }
 
-        checkIfUserIsOnCourseFunc();
+        getCourseByIdFunc();
+
+        const accessToken = localStorage.getItem("token");
+        if (accessToken) {
+
+          const checkIfUserIsOnCourseFunc = async () => {
+            const data = await checkIfUserIsOnCourse({courseId});
+            setIsMyCourses(data);
+          }
+
+          checkIfUserIsOnCourseFunc();
+        }
+      } finally {
+        setLoading(false);
       }
     } else {
       setCourseData(state.courseData);
@@ -48,6 +53,10 @@ const CourseItem = () => {
     }
 
   }, [state, pathname]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <article key={courseData.id}>
