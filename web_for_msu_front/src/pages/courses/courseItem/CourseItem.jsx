@@ -22,6 +22,7 @@ const CourseItem = () => {
   useEffect(() => {
     const pathnameArr = pathname.split("/");
     const courseId = pathnameArr[pathnameArr.length - 1];
+    console.log(pathnameArr[pathnameArr.length - 3]);
     setYear(pathnameArr[pathnameArr.length - 3]);
 
     if (!state) {

@@ -8,6 +8,7 @@ const ScheduleItem = ({key, date, time, courseName, auditory = '', credit, theme
       {credit && <p><span className={credit === 'Зачётный' ? styleCourse.credit : ''}>{credit}</span></p>}
       <p><span>{date}</span> <span style={{
         whiteSpace: 'nowrap',
+        color: "inherit",
       }}>{time}</span></p>
 
       {auditory && auditory.includes('http') ?
