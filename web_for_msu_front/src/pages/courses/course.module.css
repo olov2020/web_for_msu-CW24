@@ -23,14 +23,13 @@
     }
 
     > p {
-        display: flex;
-        justify-content: center;
+        text-align: center;
         gap: 0 .2rem;
-        width: 15%;
+        width: 16%;
     }
 
     > h3 {
-        width: 35%;
+        width: 30%;
     }
 
     > * {
