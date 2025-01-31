@@ -10,7 +10,7 @@ const PupilMarks = ({courseId}) => {
   const [marks, setMarks] = useState({});
 
   const [marks2, setMarks2] = useState({});
-  const {pathname} = useLocation();
+  const {pathname, state} = useLocation();
   const authStatus = useSelector((state) => state.user.authStatus);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const PupilMarks = ({courseId}) => {
     }
 
     getMarks2();
-  }, [pathname, authStatus])
+  }, [pathname, authStatus, state])
 
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
