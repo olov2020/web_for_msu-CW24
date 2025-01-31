@@ -26,6 +26,11 @@
         display: flex;
         justify-content: center;
         gap: 0 .2rem;
+        width: 15%;
+    }
+
+    > h3 {
+        width: 35%;
     }
 
     > * {
