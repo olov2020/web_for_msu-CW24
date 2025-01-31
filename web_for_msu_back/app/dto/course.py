@@ -42,7 +42,7 @@ class CourseDTO(Schema):
     target_audience = fields.String(required=True, validate=Length(min=1))  # Целевая аудитория
     short_description = fields.String(required=True, validate=Length(min=1))  # Краткое описание
     number_of_listeners = fields.String(required=True, validate=OneOf(
-        ['до 10 человек', 'от 10 до 20 человек', 'от 20 до 30 человек', 'cвыше 30 человек']))  # Количество слушателей
+        ['до 10 человек', 'от 10 до 20 человек', 'от 20 до 30 человек', 'свыше 30 человек']))  # Количество слушателей
     selection = fields.String(required=True, validate=Length(min=1))  # Отбор
     assessment = fields.String(required=True, validate=Length(min=1))  # Оценка
     platform_format = fields.String(required=True, validate=Length(min=1))  # Формат курса: онлайн/оффлайн/гибрид
