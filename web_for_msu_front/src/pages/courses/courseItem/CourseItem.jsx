@@ -31,7 +31,6 @@ const CourseItem = () => {
       }
 
       getCourseByIdFunc();
-      console.log(courseData.id)
 
       const accessToken = localStorage.getItem("token");
       if (accessToken) {
@@ -49,7 +48,6 @@ const CourseItem = () => {
     }
 
   }, [state, pathname]);
-  console.log(courseData.id)
 
   return (
     <article key={courseData.id}>
@@ -77,7 +75,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {isMyCourses && courseData &&
+      {isMyCourses &&
         ((userStatus.includes('pupil') || userStatus.includes('teacher')) && (
           <>
             <h2>Ведомость оценок</h2>
@@ -90,7 +88,7 @@ const CourseItem = () => {
         ))
       }
 
-      {isMyCourses && courseData && userStatus.includes('teacher') &&
+      {isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
@@ -98,7 +96,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {isMyCourses && courseData && userStatus.includes('teacher') &&
+      {isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
@@ -106,7 +104,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {isMyCourses && courseData && userStatus.includes('teacher') &&
+      {isMyCourses && userStatus.includes('teacher') &&
         <section style={{
           width: '90%',
         }}>
@@ -114,7 +112,7 @@ const CourseItem = () => {
         </section>
       }
 
-      {userStatus.includes('admin') && courseData &&
+      {userStatus.includes('admin') &&
         <section style={{
           display: 'flex',
           justifyContent: 'center',
