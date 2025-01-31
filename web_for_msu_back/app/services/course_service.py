@@ -1,5 +1,6 @@
 from __future__ import annotations  # Откладывает разрешение аннотаций типов
 
+import re
 from datetime import datetime
 from typing import TYPE_CHECKING
 
@@ -210,13 +211,14 @@ class CourseService:
                     data[i][j] = None
                 else:
                     # Замена переносов строк на конец предложений.
-                    sentences = str(data[i][j]).split('\n')
-                    for k in range(1, len(sentences)):
-                        for m in range(len(sentences[k])):
-                            if sentences[k][m].isalpha():
-                                sentences[k] = sentences[k][:m] + sentences[k][m].capitalize() + sentences[k][m + 1:]
-                                break
-                    data[i][j] = '. '.join(sentences)
+                    if i > 22:
+                        sentences = str(data[i][j]).split('\n')
+                        for k in range(1, len(sentences)):
+                            for m in range(len(sentences[k])):
+                                if sentences[k][m].isalpha():
+                                    sentences[k] = sentences[k][:m] + sentences[k][m].capitalize() + sentences[k][m + 1:]
+                                    break
+                        data[i][j] = '. '.join(sentences)
 
         auditory = None
         course_review_number = data[23][3]
@@ -340,12 +342,11 @@ class CourseService:
                     teachers_course[j]["leads"] = True
                     break
 
-        other = data[18][3]
+        other = str(data[18][3])
         if other is not None:
-            other = other.split(';')
-            for person in other:
-                person = person.split(',')
-                email = person[-1].strip()
+            email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+            other = re.findall(email_pattern, other)
+            for email in other:
                 teacher = Teacher.query.filter_by(email=email).first()
                 if teacher is None:
                     continue
