@@ -233,7 +233,7 @@ const ListOfPeople = () => {
                         }}>
                           <h3>Ученик добавлен</h3>
                           <img src={checkMarkIcon} alt='Добавлен' style={{
-                            width: '2rem',
+                            width: '1.5rem',
                             objectFit: 'contain',
                           }}/>
                         </div>
@@ -424,7 +424,7 @@ const ListOfPeople = () => {
                   <>
                     <h3>Преподаватель добавлен</h3>
                     <img src={checkMarkIcon} alt='Добавлен' style={{
-                      width: '2rem',
+                      width: '1.5rem',
                       objectFit: 'contain',
                     }}/>
                   </>

@@ -18,6 +18,10 @@
 
 .actions {
     gap: .5rem 0;
+
+    > h2 {
+        margin-bottom: .5rem;
+    }
 }
 
 
