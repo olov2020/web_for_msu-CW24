@@ -52,7 +52,7 @@ const CourseItem = () => {
       setLoading(false);
     }
 
-  }, [pathname]);
+  }, [pathname, state, userStatus]);
 
   if (loading) {
     return <></>;
