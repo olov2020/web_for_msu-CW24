@@ -55,7 +55,7 @@ const CourseItem = () => {
   }, [pathname]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <></>;
   }
 
   return (

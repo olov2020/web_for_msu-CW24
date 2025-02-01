@@ -1,5 +1,4 @@
 import {jwtDecode} from "jwt-decode";
-import {useState} from "react";
 
 const authStatus = {
     none: 'none',
