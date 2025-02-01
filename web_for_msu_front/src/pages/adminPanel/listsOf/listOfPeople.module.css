@@ -12,20 +12,8 @@
         align-items: center;
         width: auto;
         white-space: nowrap;
-        gap: .5rem 0;
+        gap: 1rem 0;
     }
-}
-
-.teachers > h2 {
-    margin-bottom: 1rem;
-}
-
-.email > h2 {
-    margin-bottom: 1rem;
-}
-
-.actions > h2 {
-    margin-bottom: 1rem;
 }
 
 
