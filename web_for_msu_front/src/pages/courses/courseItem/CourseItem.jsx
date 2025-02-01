@@ -185,14 +185,14 @@ const CourseItem = () => {
               <p><a href={courseData.auditory}>Ссылка на онлайн пару</a></p> :
               <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
             }
-            {/*<div>
+            <div>
               <p><span>Формула оценивания:</span></p>
               {courseData.formulas && courseData.formulas.length > 0 && courseData.formulas.map((formula, index) => (
                 formula.coefficient === '1' ?
                   <p key={index}>{formula.name}</p> :
                   <p key={index}>{formula.name} - {formula.coefficient}</p>
               ))}
-            </div>*/}
+            </div>
           </div>
         </div>
       </section>
