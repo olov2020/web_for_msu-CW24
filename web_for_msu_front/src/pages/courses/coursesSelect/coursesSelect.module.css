@@ -19,6 +19,6 @@
 
 .name, .time, .info {
     > h2 {
-        margin-bottom: .35rem;
+        margin-bottom: .6rem;
     }
 }

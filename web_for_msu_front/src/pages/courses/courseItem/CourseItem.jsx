@@ -30,7 +30,6 @@ const CourseItem = () => {
         const getCourseByIdFunc = async () => {
           const data = await getCourseById({courseId});
           setCourseData(data);
-          console.log(data);
         };
 
         getCourseByIdFunc();
@@ -41,7 +40,6 @@ const CourseItem = () => {
           const checkIfUserIsOnCourseFunc = async () => {
             const data = await checkIfUserIsOnCourse({courseId});
             setIsMyCourses(data);
-            console.log(data);
           };
 
           checkIfUserIsOnCourseFunc();
@@ -214,7 +212,7 @@ const CourseItem = () => {
         <div className={style.lessons}>
           {courseData.lessons && courseData.lessons.length > 0 && courseData.lessons.map((lesson) => (
             <div key={lesson.lesson_number} className={style.lesson}>
-              <h3><span style={{fontSize: "inherit"}}>Тема:</span> {lesson.theme}</h3>
+              <h3><span>Тема:</span> {lesson.theme}</h3>
               <p><span>План занятия:</span> {lesson.plan}</p>
               <p style={{
                 alignSelf: 'flex-end',
