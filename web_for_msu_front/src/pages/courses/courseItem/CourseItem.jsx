@@ -17,7 +17,7 @@ const CourseItem = () => {
   const {pathname, state} = useLocation();
   const [courseData, setCourseData] = useState(undefined);
   const [isMyCourses, setIsMyCourses] = useState(false);
-  const [year, setYear] = useState('');
+  const [year, setYear] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const CourseItem = () => {
     setYear(pathnameArr[pathnameArr.length - 3]);
 
     try {
-      if (!state) {
+      if (!state || !state.courseData) {
         const getCourseByIdFunc = async () => {
           const data = await getCourseById({courseId});
           setCourseData(data);
