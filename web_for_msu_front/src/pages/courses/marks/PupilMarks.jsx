@@ -33,8 +33,6 @@ const PupilMarks = ({courseId}) => {
     getMarks2();
   }, [courseId])
 
-  console.log(courseId);
-
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
   }

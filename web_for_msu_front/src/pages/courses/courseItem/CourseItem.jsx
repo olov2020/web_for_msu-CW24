@@ -15,47 +15,40 @@ const CourseItem = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {pathname, state} = useLocation();
-  const [courseData, setCourseData] = useState({});
+  const [courseData, setCourseData] = useState(null);
   const [isMyCourses, setIsMyCourses] = useState(false);
-  const [year, setYear] = useState(undefined);
-  const [loading, setLoading] = useState(true);
+  const [year, setYear] = useState(null);
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
     const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
 
-    try {
-      if (!state) {
-        const getCourseByIdFunc = async () => {
-          const data = await getCourseById({courseId});
-          setCourseData(data);
-        }
+    const getCourseByIdFunc = async () => {
+      const data = await getCourseById({courseId});
+      setCourseData(data);
+    };
 
-        getCourseByIdFunc();
+    const checkIfUserIsOnCourseFunc = async () => {
+      const data = await checkIfUserIsOnCourse({courseId});
+      setIsMyCourses(data);
+    };
 
-        const accessToken = localStorage.getItem("token");
-        if (accessToken) {
+    if (!state) {
+      getCourseByIdFunc();
 
-          const checkIfUserIsOnCourseFunc = async () => {
-            const data = await checkIfUserIsOnCourse({courseId});
-            setIsMyCourses(data);
-          }
-
-          checkIfUserIsOnCourseFunc();
-        }
-      } else {
-        setCourseData(state.courseData);
-        setIsMyCourses(state.isMyCourses);
+      const accessToken = localStorage.getItem("token");
+      if (accessToken) {
+        checkIfUserIsOnCourseFunc();
       }
-    } finally {
-      setLoading(false);
+    } else {
+      setCourseData(state.courseData);
+      setIsMyCourses(state.isMyCourses);
     }
+  }, [pathname, state]);
 
-  }, [pathname, state, userStatus]);
-
-  if (loading) {
-    return <></>;
+  if (!courseData) {
+    return <>White page</>
   }
 
   return (
