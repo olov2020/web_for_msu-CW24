@@ -45,7 +45,7 @@ const CourseItem = () => {
       setCourseData(state.courseData);
       setIsMyCourses(state.isMyCourses);
     }
-  }, [pathname, state]);
+  }, [pathname, state, userStatus]);
 
   return (
     <article key={courseData.id}>
