@@ -238,7 +238,7 @@ const TeacherMarks = ({courseId}) => {
           </section>
 
           <section className={style.columnForTextData} style={{
-            margin: '2rem',
+            margin: '1rem',
             alignItems: 'center',
           }}>
             <h3>Предварительный итог</h3>
@@ -297,7 +297,7 @@ const TeacherMarks = ({courseId}) => {
         </section>
 
         <section className={style.columnForTextData} style={{
-          margin: '2rem',
+          margin: '1rem',
           alignItems: 'center',
         }}>
           <h3>Итог</h3>
