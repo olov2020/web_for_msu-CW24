@@ -300,7 +300,7 @@ const TeacherMarks = ({courseId}) => {
           margin: '1rem',
           alignItems: 'center',
         }}>
-          <h3>Итог</h3>
+          <h3>Предварительный итог</h3>
           {marks.pupils.length !== 0 && marks.pupils.map((pupil) => (
             <h3 key={pupil.id}>{pupil.result}</h3>
           ))}

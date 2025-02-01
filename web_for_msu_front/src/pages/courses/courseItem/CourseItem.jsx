@@ -24,21 +24,21 @@ const CourseItem = () => {
     const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
 
-    const getCourseByIdFunc = async () => {
-      const data = await getCourseById({courseId});
-      setCourseData(data);
-    };
-
-    const checkIfUserIsOnCourseFunc = async () => {
-      const data = await checkIfUserIsOnCourse({courseId});
-      setIsMyCourses(data);
-    };
-
     if (!state) {
+      const getCourseByIdFunc = async () => {
+        const data = await getCourseById({courseId});
+        setCourseData(data);
+      };
+
       getCourseByIdFunc();
 
       const accessToken = localStorage.getItem("token");
       if (accessToken) {
+        const checkIfUserIsOnCourseFunc = async () => {
+          const data = await checkIfUserIsOnCourse({courseId});
+          setIsMyCourses(data);
+        };
+
         checkIfUserIsOnCourseFunc();
       }
     } else {
