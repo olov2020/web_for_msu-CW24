@@ -8,11 +8,16 @@
     > .teachers, .email, .actions, .grade, .status {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
         width: auto;
         white-space: nowrap;
-        gap: 1rem 0;
+        gap: .5rem 0;
     }
+}
+
+.actions > h2 {
+    margin-bottom: 1rem;
 }
 
 
@@ -42,6 +47,7 @@
     justify-content: space-around;
     gap: 0 1rem;
     white-space: nowrap;
+    margin-bottom: .5rem;
 }
 
 .toggleSwitchSection {
@@ -50,6 +56,7 @@
     align-items: center;
     gap: 1rem 0;
     width: 100%;
+    margin-bottom: .5rem;
 }
 
 .switches {
