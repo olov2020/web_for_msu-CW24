@@ -7,9 +7,9 @@ import {useSelector} from "react-redux";
 // eslint-disable-next-line react/prop-types
 const PupilMarks = ({courseId}) => {
 
-  const [marks, setMarks] = useState({});
+  const [marks, setMarks] = useState(undefined);
 
-  const [marks2, setMarks2] = useState({});
+  const [marks2, setMarks2] = useState(undefined);
   const {pathname} = useLocation();
   const authStatus = useSelector((state) => state.user.authStatus);
 
@@ -31,7 +31,7 @@ const PupilMarks = ({courseId}) => {
     }
 
     getMarks2();
-  }, [pathname, authStatus])
+  }, [pathname, authStatus, courseId])
 
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
