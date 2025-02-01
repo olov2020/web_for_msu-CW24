@@ -27,6 +27,7 @@ const CourseItem = () => {
     const pathnameArr = pathname.split("/");
     const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
+    console.log(state);
 
     try {
       if (!state || !state.courseData) {
@@ -54,7 +55,7 @@ const CourseItem = () => {
     } finally {
       setLoading(false);
     }
-  }, [pathname, state, userStatus]);
+  }, [pathname, state, userStatus, courseData]);
 
   if (loading) {
     return <></>;
