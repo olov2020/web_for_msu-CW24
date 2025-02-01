@@ -16,10 +16,9 @@ const CourseItem = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {pathname, state} = useLocation();
-  const [courseData, setCourseData] = useState({});
+  const [courseData, setCourseData] = useState(undefined);
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -52,10 +51,6 @@ const CourseItem = () => {
       setIsMyCourses(state.isMyCourses);
     }
   }, [pathname, state]);
-
-  if (loading) {
-    return <></>;
-  }
 
   if (!courseData) {
     navigate(ALL_COURSES_ROUTE);
