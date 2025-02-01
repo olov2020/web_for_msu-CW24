@@ -119,6 +119,36 @@ const Form = ({inputs = [] || {}, values = {}, buttonText = '', type = '', id = 
       try {
         const accessToken = await userLogin(formValues.email, formValues.password);
 
+        const decodedToken = jwtDecode(accessToken);
+
+        const fetchPhoto = async (url) => {
+          try {
+            const response = await axios.get(url, {responseType: 'blob'});
+            return response.data;
+          } catch (error) {
+            console.error('Error fetching the photo:', error);
+            throw error;
+          }
+        };
+
+        const downloadPhoto = async () => {
+          try {
+            const blob = await fetchPhoto(decodedToken.sub.image);
+
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+              const base64data = reader.result;
+              localStorage.setItem('photo', base64data);
+              return base64data;
+            };
+          } catch (error) {
+            console.error('Error downloading the photo:', error);
+          }
+        };
+
+        await downloadPhoto();
+
         dispatch(setAuthFromToken(accessToken));
         navigate(HOME_ROUTE);
       } catch (error) {

@@ -11,6 +11,7 @@ const Profile = ({deviceType}) => {
 
   const location = useLocation();
   const user = useSelector(state => state.user);
+  user.photo = localStorage.getItem('photo');
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
