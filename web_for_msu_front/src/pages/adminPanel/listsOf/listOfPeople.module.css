@@ -16,7 +16,15 @@
     }
 }
 
-.actions, .teachers, .email > h2 {
+.teachers > h2 {
+    margin-bottom: 1rem;
+}
+
+.email > h2 {
+    margin-bottom: 1rem;
+}
+
+.actions > h2 {
     margin-bottom: 1rem;
 }
 
