@@ -30,15 +30,18 @@ const CourseItem = () => {
         const getCourseByIdFunc = async () => {
           const data = await getCourseById({courseId});
           setCourseData(data);
+          console.log(data);
         };
 
         getCourseByIdFunc();
 
         const accessToken = localStorage.getItem("token");
-        if (accessToken) {
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (accessToken || refreshToken) {
           const checkIfUserIsOnCourseFunc = async () => {
             const data = await checkIfUserIsOnCourse({courseId});
             setIsMyCourses(data);
+            console.log(data);
           };
 
           checkIfUserIsOnCourseFunc();
@@ -188,7 +191,7 @@ const CourseItem = () => {
             <div>
               <p><span>Формула оценивания:</span></p>
               {courseData.formulas && courseData.formulas.length > 0 && courseData.formulas.map((formula, index) => (
-                formula.coefficient === '1' ?
+                String(formula.coefficient) === '1' ?
                   <p key={index}>{formula.name}</p> :
                   <p key={index}>{formula.name} - {formula.coefficient}</p>
               ))}
