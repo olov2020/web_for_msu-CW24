@@ -16,7 +16,7 @@ const CourseItem = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {pathname, state} = useLocation();
-  const [courseData, setCourseData] = useState(undefined);
+  const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(null);
 
@@ -38,12 +38,11 @@ const CourseItem = () => {
       setIsMyCourses(data);
     };
 
-    if (!state || !state.courseData) {
+    if (!state) {
       getCourseByIdFunc();
 
-      const accessToken = localStorage.getItem("token");
       const refreshToken = localStorage.getItem("refreshToken");
-      if (accessToken || refreshToken) {
+      if (refreshToken) {
         checkIfUserIsOnCourseFunc();
       }
     } else {
