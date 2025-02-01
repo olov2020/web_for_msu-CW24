@@ -184,7 +184,7 @@ const CourseItem = () => {
             <p><span>Время проведения:</span> {courseData.lesson_time}</p>
             <p><span>Классы:</span> {courseData.emsh_grades}</p>
             <p><span>Направление:</span> {courseData.direction}</p>
-            {courseData.auditory && state.courseData.auditory.includes('http') ?
+            {courseData.auditory && courseData.auditory.includes('http') ?
               <p><a href={courseData.auditory}>Ссылка на онлайн пару</a></p> :
               <p><span>Аудитория:</span> {courseData.auditory ? courseData.auditory : 'уточняется'}</p>
             }
