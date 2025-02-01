@@ -15,37 +15,46 @@ const CourseItem = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {pathname, state} = useLocation();
-  const [courseData, setCourseData] = useState(undefined);
+  const [courseData, setCourseData] = useState(null);
   const [isMyCourses, setIsMyCourses] = useState(false);
-  const [year, setYear] = useState(undefined);
+  const [year, setYear] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
     const courseId = pathnameArr[pathnameArr.length - 1];
     setYear(pathnameArr[pathnameArr.length - 3]);
 
-    if (!state) {
-      const getCourseByIdFunc = async () => {
-        const data = await getCourseById({courseId});
-        setCourseData(data);
-      };
-
-      getCourseByIdFunc();
-
-      const accessToken = localStorage.getItem("token");
-      if (accessToken) {
-        const checkIfUserIsOnCourseFunc = async () => {
-          const data = await checkIfUserIsOnCourse({courseId});
-          setIsMyCourses(data);
+    try {
+      if (!state) {
+        const getCourseByIdFunc = async () => {
+          const data = await getCourseById({courseId});
+          setCourseData(data);
         };
 
-        checkIfUserIsOnCourseFunc();
+        getCourseByIdFunc();
+
+        const accessToken = localStorage.getItem("token");
+        if (accessToken) {
+          const checkIfUserIsOnCourseFunc = async () => {
+            const data = await checkIfUserIsOnCourse({courseId});
+            setIsMyCourses(data);
+          };
+
+          checkIfUserIsOnCourseFunc();
+        }
+      } else {
+        setCourseData(state.courseData);
+        setIsMyCourses(state.isMyCourses);
       }
-    } else {
-      setCourseData(state.courseData);
-      setIsMyCourses(state.isMyCourses);
+    } finally {
+      setLoading(false);
     }
   }, [pathname, state, userStatus]);
+
+  if (loading) {
+    return <></>;
+  }
 
   return (
     <article key={courseData.id}>
