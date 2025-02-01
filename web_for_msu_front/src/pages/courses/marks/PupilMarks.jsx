@@ -7,39 +7,30 @@ const PupilMarks = ({courseId}) => {
 
   const [marks, setMarks] = useState(undefined);
   const [marks2, setMarks2] = useState(undefined);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const getMarks = async () => {
-        try {
-          const data = await getPupilMarksByCourseId({courseId});
-          setMarks(data);
-        } catch {
-          setMarks2(null);
-        }
+    const getMarks = async () => {
+      try {
+        const data = await getPupilMarksByCourseId({courseId});
+        setMarks(data);
+      } catch {
+        setMarks(null);
       }
-
-      getMarks();
-
-      const getMarks2 = async () => {
-        try {
-          const data = await getPupilMarksByCourseId2({courseId});
-          setMarks2(data);
-        } catch {
-          setMarks2(null);
-        }
-      }
-
-      getMarks2();
-    } finally {
-      setLoading(false);
     }
-  }, [courseId])
 
-  if (loading) {
-    return <></>;
-  }
+    getMarks();
+
+    const getMarks2 = async () => {
+      try {
+        const data = await getPupilMarksByCourseId2({courseId});
+        setMarks2(data);
+      } catch {
+        setMarks2(null);
+      }
+    }
+
+    getMarks2();
+  }, [courseId])
 
   if (!marks) {
     return <h3>Оценок пока нет</h3>;
