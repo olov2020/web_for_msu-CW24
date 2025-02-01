@@ -15,9 +15,9 @@ const CourseItem = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {pathname, state} = useLocation();
-  const [courseData, setCourseData] = useState(null);
+  const [courseData, setCourseData] = useState(undefined);
   const [isMyCourses, setIsMyCourses] = useState(false);
-  const [year, setYear] = useState(null);
+  const [year, setYear] = useState(undefined);
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
