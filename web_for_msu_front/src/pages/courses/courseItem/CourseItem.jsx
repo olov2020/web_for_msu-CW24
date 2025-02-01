@@ -51,7 +51,7 @@ const CourseItem = () => {
       setCourseData(state.courseData);
       setIsMyCourses(state.isMyCourses);
     }
-  }, [pathname, state, userStatus]);
+  }, []);
 
   if (loading) {
     return <></>;
