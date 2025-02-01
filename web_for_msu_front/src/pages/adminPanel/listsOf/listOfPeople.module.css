@@ -16,7 +16,7 @@
     }
 }
 
-.actions > h2 {
+.actions, .teachers, .email > h2 {
     margin-bottom: 1rem;
 }
 
@@ -56,7 +56,6 @@
     align-items: center;
     gap: 1rem 0;
     width: 100%;
-    margin-bottom: .5rem;
 }
 
 .switches {
