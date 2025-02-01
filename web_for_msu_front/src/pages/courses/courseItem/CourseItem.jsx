@@ -16,7 +16,7 @@ const CourseItem = () => {
   const userStatus = useSelector(state => state.user.authStatus);
 
   const {pathname, state} = useLocation();
-  const [courseData, setCourseData] = useState(undefined);
+  const [courseData, setCourseData] = useState({});
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,21 +39,17 @@ const CourseItem = () => {
       setIsMyCourses(data);
     };
 
-    try {
-      if (!state || !state.courseData) {
-        getCourseByIdFunc();
+    if (!state || !state.courseData) {
+      getCourseByIdFunc();
 
-        const accessToken = localStorage.getItem("token");
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (accessToken || refreshToken) {
-          checkIfUserIsOnCourseFunc();
-        }
-      } else {
-        setCourseData(state.courseData);
-        setIsMyCourses(state.isMyCourses);
+      const accessToken = localStorage.getItem("token");
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (accessToken || refreshToken) {
+        checkIfUserIsOnCourseFunc();
       }
-    } finally {
-      setLoading(false);
+    } else {
+      setCourseData(state.courseData);
+      setIsMyCourses(state.isMyCourses);
     }
   }, [pathname, state, userStatus]);
 
