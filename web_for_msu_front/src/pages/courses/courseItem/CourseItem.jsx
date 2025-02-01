@@ -1,4 +1,4 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import PupilMarks from "../marks/PupilMarks.jsx";
 import TeacherMarks from "../marks/TeacherMarks.jsx";
@@ -9,6 +9,7 @@ import style from '../course.module.css';
 import DeletePupilOnCourse from "../deletePupilOnCourse/DeletePupilOnCourse.jsx";
 import {useEffect, useState} from "react";
 import {checkIfUserIsOnCourse, getCourseById} from "../../../api/coursesApi.js";
+import {ALL_COURSES_ROUTE} from "../../../routing/consts.js";
 
 const CourseItem = () => {
 
@@ -19,6 +20,8 @@ const CourseItem = () => {
   const [isMyCourses, setIsMyCourses] = useState(false);
   const [year, setYear] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const pathnameArr = pathname.split("/");
@@ -55,6 +58,10 @@ const CourseItem = () => {
 
   if (loading) {
     return <></>;
+  }
+
+  if (!courseData) {
+    navigate(ALL_COURSES_ROUTE);
   }
 
   return (

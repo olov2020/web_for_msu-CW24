@@ -15,15 +15,19 @@ export const getCourseById = async ({courseId}) => {
 
   try {
     return response.data;
-  } catch (error) {
-    return new Error(error);
+  } catch {
+    return null;
   }
 }
 
 export const checkIfUserIsOnCourse = async ({courseId}) => {
   const response = await $authHost.get(`/home/check_user_on_course/${courseId}/`)
 
-  return response.data;
+  try {
+    return response.data;
+  } catch {
+    return false;
+  }
 }
 
 export const getMyCoursesPupil = async () => {
