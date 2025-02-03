@@ -179,13 +179,13 @@ class MarkService:
                 lessons = []
         return lessons, part
 
-    def update_journal(self, course_id: int, current_user_id: int, request: flask.Request, is_admin: bool,
+    def update_journal(self, course_id: int, current_user_id: int, request: flask.Request, all_journals_allowed: bool,
                        part: str) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
 
-        if not (is_admin or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
+        if not (all_journals_allowed or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
             return {'error': 'У вас нет доступа к этому курсу'}, 403
 
         lessons, part = self.get_lessons_by_part(course, course_id, part)
