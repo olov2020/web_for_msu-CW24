@@ -10,9 +10,9 @@ import pytz
 from marshmallow import ValidationError
 from sqlalchemy import asc
 
-from web_for_msu_back.app.functions import arithmetic_round
 from web_for_msu_back.app.dto.marks import MarksDTO
 from web_for_msu_back.app.dto.pupil_marks import PupilMarksDTO
+from web_for_msu_back.app.functions import arithmetic_round
 from web_for_msu_back.app.models import Mark, Course, Schedule, Formula, PupilCourse, Pupil
 
 if TYPE_CHECKING:
@@ -88,12 +88,12 @@ class MarkService:
                 result += sums[formula_id] * formula.coefficient / types[formula_id]
         return result
 
-    def get_journal(self, course_id: int, current_user_id: int, is_admin: bool, part: str) -> (dict, int):
+    def get_journal(self, course_id: int, current_user_id: int, all_journals_allowed: bool, part: str) -> (dict, int):
         course = Course.query.get(course_id)
         if not course:
             return {'error': 'Такого курса не существует'}, 404
 
-        if not (is_admin or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
+        if not (all_journals_allowed or current_user_id in [assoc.teacher.user_id for assoc in course.teachers]):
             return {'error': 'У вас нет доступа к этому курсу'}, 403
 
         lessons, part = self.get_lessons_by_part(course, course_id, part)

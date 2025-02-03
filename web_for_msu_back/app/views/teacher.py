@@ -38,8 +38,10 @@ class TeacherView(FlaskView):
     def get_journal(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
+        roles = get_jwt_identity()["roles"]
         response, code = mark_service.get_journal(course_id, g.current_user.id,
-                                                  "admin" in get_jwt_identity()["roles"], "first")
+                                                  "admin" in roles or "marksmaker" in roles,
+                                                  "first")
         return response, code
 
     @method("GET")
@@ -48,8 +50,10 @@ class TeacherView(FlaskView):
     def get_journal2(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
+        roles = get_jwt_identity()["roles"]
         response, code = mark_service.get_journal(course_id, g.current_user.id,
-                                                  "admin" in get_jwt_identity()["roles"], "second")
+                                                  "admin" in roles or "marksmaker" in roles,
+                                                  "second")
         return response, code
 
     @method("PUT")
@@ -58,8 +62,10 @@ class TeacherView(FlaskView):
     def update_journal(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
+        roles = get_jwt_identity()["roles"]
         response, code = mark_service.update_journal(course_id, g.current_user.id, request,
-                                                     "admin" in get_jwt_identity()["roles"], "first")
+                                                     "admin" in roles or "marksmaker" in roles,
+                                                     "first")
         return response, code
 
     @method("PUT")
@@ -68,8 +74,10 @@ class TeacherView(FlaskView):
     def update_journal2(self, course_id: int):
         services = get_services()
         mark_service: MarkService = services["mark_service"]
+        roles = get_jwt_identity()["roles"]
         response, code = mark_service.update_journal(course_id, g.current_user.id, request,
-                                                     "admin" in get_jwt_identity()["roles"], "second")
+                                                     "admin" in roles or "marksmaker" in roles,
+                                                     "second")
         return response, code
 
     @method("PUT")
