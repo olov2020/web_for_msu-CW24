@@ -9,9 +9,6 @@ from web_for_msu_back.app.functions import *
 
 class TestFunctions(unittest.TestCase):
     def test_get_next_monday(self):
-        self.assertEqual(get_next_monday(datetime.datetime(2025, 2, 26)),
-                         datetime.datetime(2025, 3, 3))
-
         test_cases = [
             (
                 datetime.datetime(2025, 2, 26),
